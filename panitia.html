@@ -194,7 +194,18 @@
             }
         }
 
+        // Muat data saat halaman pertama kali dibuka
         window.addEventListener('DOMContentLoaded', loadRegistrations);
+
+        // Sinkronisasi otomatis real-time antar tab jika ada pendaftar baru
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'tournamentRegistrations') {
+                loadRegistrations();
+            }
+        });
+
+        // Backup pengecekan otomatis setiap 2 detik supaya langsung tampil tanpa refresh
+        setInterval(loadRegistrations, 2000);
     </script>
 </body>
 </html>
