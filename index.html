@@ -321,27 +321,28 @@
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-extrabold text-lg text-white mb-3 border-b border-obsidian-border pb-2">FORMULIR PENDAFTARAN</h3>
 
+            <!-- FORM DENGAN ID YANG JELAS -->
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
                 <div>
                     <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Nama Lengkap</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
+                    <input type="text" id="inputNama" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
                 </div>
                 <div>
                     <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Username / ID ML</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
+                    <input type="text" id="inputIdMl" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
                 </div>
                 <div>
                     <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Role Player</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
+                    <input type="text" id="inputRole" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
                 </div>
                 <div>
                     <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Metode Pembayaran</label>
-                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
+                    <select id="inputPayment" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs">
                         <option value="GAJIAN">GAJIAN</option>
                         <option value="UM">UM</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-crimson text-white font-tech font-bold text-xs uppercase mt-2 hover:bg-crimson-dark transition-colors">
+                <button type="submit" id="submitBtn" class="w-full py-2.5 rounded-xl bg-crimson text-white font-tech font-bold text-xs uppercase mt-2 hover:bg-crimson-dark transition-colors">
                     SUBMIT DATA
                 </button>
             </form>
@@ -363,7 +364,7 @@
         <p>&copy; 2026 TIBA TIBA TOURNAMENT. ALL RIGHTS RESERVED.</p>
     </footer>
 
-    <!-- JAVASCRIPT CONNECTED TO GOOGLE APPS SCRIPT -->
+    <!-- JAVASCRIPT FIXED SUBMISSION -->
     <script>
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -413,20 +414,16 @@
         async function handleFormSubmit(event) {
             event.preventDefault();
             
-            const form = event.target;
-            const inputs = form.querySelectorAll('input, select');
-            
-            const payload = {
-                nama: inputs[0].value.trim(),
-                idMl: inputs[1].value.trim(),
-                role: inputs[2].value.trim(),
-                payment: inputs[3].value,
-                timestamp: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
-            };
+            const nama = document.getElementById('inputNama').value.trim();
+            const idMl = document.getElementById('inputIdMl').value.trim();
+            const role = document.getElementById('inputRole').value.trim();
+            const payment = document.getElementById('inputPayment').value;
+            const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
+            const payload = { nama, idMl, role, payment, timestamp };
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxg1FhWZvwA3SdH5nPvsvHntI1_w4462CJWAgd30ONSSzm5J3bjn0TB_a1piHQ-2PSI/exec';
 
-            const submitBtn = form.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('submitBtn');
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = "MENGIRIM DATA...";
             submitBtn.disabled = true;
@@ -441,9 +438,9 @@
 
                 closeModal('registerModal');
                 openModal('messageModal');
-                form.reset();
+                document.getElementById('tournamentForm').reset();
             } catch (error) {
-                alert("Terjadi kesalahan koneksi saat menginput data.");
+                alert("Terjadi kesalahan koneksi saat mengirim data.");
                 console.error('Error:', error);
             } finally {
                 submitBtn.innerText = originalBtnText;
