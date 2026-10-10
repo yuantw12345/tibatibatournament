@@ -704,35 +704,92 @@
             </div>
 
             <div class="space-y-5 text-slate-300 text-sm leading-relaxed font-body">
+                <!-- 1. Format Turnamen -->
                 <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
                     <h4 class="font-tech font-bold text-emerald-accent text-base mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-sitemap text-sm"></i> 1. Format Turnamen & Bracket
                     </h4>
-                    <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-xs sm:text-sm">
+                    <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-xs sm:text-sm mb-3">
                         <li><strong class="text-white">Sistem Turnamen:</strong> Double Elimination (Upper Bracket & Lower Bracket).</li>
                         <li><strong class="text-white">Jumlah Tim:</strong> 7 Tim.</li>
                     </ul>
+                    <div class="border-t border-obsidian-border pt-3 mt-3">
+                        <p class="font-tech font-semibold text-xs text-white uppercase mb-1.5">Format Game:</p>
+                        <ul class="list-disc list-inside space-y-1 text-slate-300 text-xs sm:text-sm">
+                            <li><strong class="text-white">Babak Penyisihan hingga Final Bracket:</strong> Best of 3 (BO3) – Tim pertama yang meraih 2 kemenangan lolos ke babak berikutnya.</li>
+                            <li><strong class="text-white">Grand Final:</strong> Best of 5 (BO5) – Tim pertama yang meraih 3 kemenangan keluar sebagai juara.</li>
+                            <li><strong class="text-white">Sistem Seed (7 Tim):</strong> Karena jumlah tim ganjil, akan ada 1 tim yang mendapatkan Bye (langsung lolos ke ronde berikutnya di Upper Bracket berdasarkan hasil drawing acak), sementara 6 tim lainnya bertanding di ronde pertama.</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- 2. Aturan Pertandingan -->
                 <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-sky-400 text-base mb-1 flex items-center gap-2">
+                    <h4 class="font-tech font-bold text-sky-400 text-base mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-gamepad text-sm"></i> 2. Aturan Pertandingan (In-Game Rules)
                     </h4>
                     <p class="text-xs sm:text-sm text-slate-300"><strong class="text-white">Mode Game:</strong> Custom - Draft Pick (5 Ban Hero per tim, total 10 Ban).</p>
                 </div>
+
+                <!-- 3. Jadwal & Keterlambatan -->
                 <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
                     <h4 class="font-tech font-bold text-amber-400 text-base mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-clock text-sm"></i> 3. Jadwal & Keterlambatan (Tolerance Time)
                     </h4>
-                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-300 mb-3">
-                        <li><strong class="text-white">Waktu Standby:</strong> Tim wajib hadir di lobby 10 menit sebelum jadwal.</li>
-                        <li><strong class="text-white">Toleransi Keterlambatan:</strong> Maksimal 15 menit.</li>
+                    <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-300 mb-3">
+                        <li><strong class="text-white">Waktu Pemanggilan:</strong> Tim harus siap di lobby 10 menit sebelum jadwal pertandingan dimulai.</li>
+                        <li><strong class="text-white">Toleransi Keterlambatan:</strong> Maksimal 15 menit dari waktu yang ditentukan.</li>
                     </ul>
+                    <div class="border-t border-obsidian-border pt-3 mt-3">
+                        <p class="font-tech font-semibold text-xs text-crimson uppercase mb-1.5">Sanksi Keterlambatan:</p>
+                        <ul class="list-disc list-inside space-y-1 text-slate-300 text-xs sm:text-sm">
+                            <li><strong class="text-white">Keterlambatan >15 menit:</strong> Tim dianggap kalah di Game 1 (Skor 0-1).</li>
+                            <li><strong class="text-white">Keterlambatan >25 menit:</strong> Tim dianggap kalah dalam 1 Match penuh (Gugur/Diskualifikasi dari match tersebut).</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- 4. TIDAK ADA JEDA / PAUSE -->
                 <div class="bg-obsidian/80 p-5 rounded-xl border border-crimson/40">
-                    <h4 class="font-tech font-bold text-crimson text-base mb-1.5 flex items-center gap-2">
+                    <h4 class="font-tech font-bold text-crimson text-base mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-ban text-sm"></i> 4. TIDAK ADA JEDA / PAUSE
                     </h4>
-                    <p class="text-xs text-slate-400">Panitia tidak memberlakukan fitur Pause untuk kendala koneksi atau perangkat individu.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base shrink-0"></i>
+                            <span>Lag parah / Gangguan koneksi (Ping merah)</span>
+                        </div>
+                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
+                            <i class="fa-solid fa-mobile-screen-button text-crimson text-base shrink-0"></i>
+                            <span>Ponsel crash / aplikasi keluar sendiri (force close)</span>
+                        </div>
+                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base shrink-0"></i>
+                            <span>Masalah perangkat keras (layar tidak merespon, dll)</span>
+                        </div>
+                    </div>
+                    <!-- Indikator Sinyal/WiFi -->
+                    <div class="flex items-center justify-center gap-3 py-2 px-3 bg-crimson/10 border border-crimson/30 rounded-lg text-crimson font-tech text-xs tracking-wider mb-2">
+                        <i class="fa-solid fa-wifi text-sm animate-pulse"></i>
+                        <i class="fa-solid fa-signal text-sm animate-pulse"></i>
+                        <span>#TANGGUNGJAWAB SETIAP PLAYER/TIM</span>
+                    </div>
+                </div>
+
+                <!-- 5. KEPUTUSAN PANITIA -->
+                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
+                    <h4 class="font-tech font-bold text-emerald-accent text-base mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-gavel text-sm"></i> 5. KEPUTUSAN PANITIA MUTLAK
+                    </h4>
+                    <p class="text-xs text-slate-400">Seluruh keputusan panitia bersifat mutlak dan tidak dapat diganggu gugat.</p>
+                </div>
+
+                <!-- 6. Payment Pendaftaran -->
+                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
+                    <h4 class="font-tech font-bold text-amber-400 text-base mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-wallet text-sm"></i> 6. PAYMENT PENDAFTARAN
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-300">Payment pendaftaran <strong class="text-white">200k / 4k rupe / player</strong>, dan dibayarkan paling lambat setelah <strong class="text-emerald-accent">TOURNAMENT S3 SELESAI</strong>.</p>
                 </div>
             </div>
 
