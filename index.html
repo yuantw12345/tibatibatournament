@@ -410,7 +410,7 @@
             document.getElementById('content-roster').classList.add('hidden');
         }
 
-        function handleFormSubmit(event) {
+        async function handleFormSubmit(event) {
             event.preventDefault();
             
             const form = event.target;
@@ -429,50 +429,41 @@
             submitBtn.innerText = "MENGIRIM DATA...";
             submitBtn.disabled = true;
 
-            // FORMAT SHEETDB DENGAN PEMBUNGKUS data: [ { ... } ]
-            fetch(sheetDB_API, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    data: [
-                        {
-                            nama: nama,
-                            idMl: idMl,
-                            role: role,
-                            payment: payment,
-                            timestamp: timestamp
-                        }
-                    ]
-                })
-            })
-            .then(async response => {
-                const resText = await response.text();
-                let resData;
-                try {
-                    resData = JSON.parse(resText);
-                } catch(e) {
-                    resData = { message: resText };
-                }
+            try {
+                const response = await fetch(sheetDB_API, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: [
+                            {
+                                nama: nama,
+                                idMl: idMl,
+                                role: role,
+                                payment: payment,
+                                timestamp: timestamp
+                            }
+                        ]
+                    })
+                });
 
                 if (response.ok) {
                     closeModal('registerModal');
                     openModal('messageModal');
                     form.reset();
                 } else {
-                    alert("Gagal dari SheetDB: " + JSON.stringify(resData));
+                    const errText = await response.text();
+                    alert("SheetDB Menolak Data:\n" + errText);
                 }
-            })
-            .catch(error => {
-                alert("Terjadi kesalahan jaringan.");
-                console.error('Error:', error);
-            })
-            .finally(() => {
+            } catch (error) {
+                alert("Gagal terhubung ke SheetDB. Periksa koneksi internet.");
+                console.error('Fetch Error:', error);
+            } finally {
                 submitBtn.innerText = originalBtnText;
                 submitBtn.disabled = false;
-            });
+            }
         }
 
         function toggleFloatingChat() {
