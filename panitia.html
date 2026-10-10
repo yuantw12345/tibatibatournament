@@ -92,7 +92,7 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h1 class="font-bold text-xl sm:text-2xl text-slate-900">Daftar Pendaftar Masuk</h1>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time dari database pusat.</p>
                 </div>
                 <button onclick="clearRegistrations()" class="px-4 py-2 rounded-lg bg-white border border-red-300 text-red-600 hover:bg-red-50 font-semibold text-xs transition-all flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-trash-can"></i> Reset Semua Data
@@ -115,7 +115,7 @@
                             </tr>
                         </thead>
                         <tbody id="registrationTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm text-slate-700">
-                            <!-- Data masuk otomatis -->
+                            <!-- Data masuk otomatis dari Google Sheet -->
                         </tbody>
                     </table>
                 </div>
@@ -136,7 +136,7 @@
         </footer>
     </div>
 
-    <!-- SCRIPT LOGIN & DATABASE CONNECTOR -->
+    <!-- SCRIPT LOGIN & SHEETDB CONNECTOR -->
     <script>
         const validPanitia = [
             { user: 'panitia1', pass: 'tibatibaturnamen' },
@@ -145,6 +145,9 @@
             { user: 'panitia4', pass: 'tibatibaturnamen' },
             { user: 'panitia5', pass: 'tibatibaturnamen' }
         ];
+
+        // GANTI LINK DI BAWAH INI DENGAN LINK API SHEETDB MILIKMU SENDIRI
+        const sheetDB_API = 'ISI_LINK_API_SHEETDB_KAMU_DISINI';
 
         function handleLogin(event) {
             event.preventDefault();
@@ -191,66 +194,92 @@
             const tableBody = document.getElementById('registrationTableBody');
             const emptyState = document.getElementById('emptyState');
             
-            let registrations = JSON.parse(localStorage.getItem('tournamentRegistrations')) || [];
+            fetch(sheetDB_API)
+                .then(response => response.json())
+                .then(registrations => {
+                    tableBody.innerHTML = '';
 
-            tableBody.innerHTML = '';
+                    if (!registrations || registrations.length === 0) {
+                        emptyState.classList.remove('hidden');
+                        return;
+                    }
 
-            if (registrations.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            }
+                    emptyState.classList.add('hidden');
 
-            emptyState.classList.add('hidden');
-
-            registrations.forEach((reg, index) => {
-                const row = document.createElement('tr');
-                row.className = "hover:bg-slate-50 transition-colors";
-                row.innerHTML = `
-                    <td class="py-3.5 px-6 text-slate-400 font-medium">${index + 1}</td>
-                    <td class="py-3.5 px-6 font-semibold text-slate-900">${reg.nama}</td>
-                    <td class="py-3.5 px-6 font-mono text-blue-600 text-xs">${reg.idMl}</td>
-                    <td class="py-3.5 px-6"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium">${reg.role}</span></td>
-                    <td class="py-3.5 px-6">
-                        <span class="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold text-[11px]">${reg.payment}</span>
-                    </td>
-                    <td class="py-3.5 px-6 text-slate-500 text-xs">${reg.timestamp}</td>
-                    <td class="py-3.5 px-6 text-center">
-                        <button onclick="deleteRegistration(${index})" class="p-1.5 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Hapus Data">
-                            <i class="fa-solid fa-trash text-xs"></i>
-                        </button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
+                    registrations.forEach((reg, index) => {
+                        const row = document.createElement('tr');
+                        row.className = "hover:bg-slate-50 transition-colors";
+                        row.innerHTML = `
+                            <td class="py-3.5 px-6 text-slate-400 font-medium">${index + 1}</td>
+                            <td class="py-3.5 px-6 font-semibold text-slate-900">${reg.nama || '-'}</td>
+                            <td class="py-3.5 px-6 font-mono text-blue-600 text-xs">${reg.idMl || '-'}</td>
+                            <td class="py-3.5 px-6"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium">${reg.role || '-'}</span></td>
+                            <td class="py-3.5 px-6">
+                                <span class="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold text-[11px]">${reg.payment || '-'}</span>
+                            </td>
+                            <td class="py-3.5 px-6 text-slate-500 text-xs">${reg.timestamp || '-'}</td>
+                            <td class="py-3.5 px-6 text-center">
+                                <button onclick="deleteRegistration('${reg.idMl}')" class="p-1.5 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Hapus Data">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Gagal memuat data dari database:', error);
+                });
         }
 
-        function deleteRegistration(index) {
-            let registrations = JSON.parse(localStorage.getItem('tournamentRegistrations')) || [];
-            registrations.splice(index, 1);
-            localStorage.setItem('tournamentRegistrations', JSON.stringify(registrations));
-            loadRegistrations();
+        function deleteRegistration(idMl) {
+            if (confirm("Apakah kamu yakin ingin menghapus data pendaftar ini?")) {
+                fetch(`${sheetDB_API}/idMl/${idMl}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    loadRegistrations();
+                })
+                .catch(error => {
+                    alert("Gagal menghapus data.");
+                    console.error('Error:', error);
+                });
+            }
         }
 
         function clearRegistrations() {
-            if (confirm("Apakah kamu yakin ingin menghapus seluruh data pendaftar?")) {
-                localStorage.removeItem('tournamentRegistrations');
-                loadRegistrations();
+            if (confirm("Apakah kamu yakin ingin menghapus SELURUH data pendaftar di database?")) {
+                fetch(`${sheetDB_API}/all`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    loadRegistrations();
+                })
+                .catch(error => {
+                    alert("Gagal mereset data.");
+                    console.error('Error:', error);
+                });
             }
         }
 
         window.addEventListener('DOMContentLoaded', checkAuth);
 
-        window.addEventListener('storage', (event) => {
-            if (event.key === 'tournamentRegistrations' && localStorage.getItem('panitiaLoggedIn') === 'true') {
-                loadRegistrations();
-            }
-        });
-
+        // Auto-refresh data setiap 3 detik supaya panitia melihat data baru dari perangkat lain secara real-time
         setInterval(() => {
             if (localStorage.getItem('panitiaLoggedIn') === 'true') {
                 loadRegistrations();
             }
-        }, 2000);
+        }, 3000);
     </script>
 </body>
 </html>
