@@ -430,22 +430,50 @@
         }
 
         function handleFormSubmit(event) {
-            event.preventDefault();
-            const inputs = event.target.querySelectorAll('input, select');
-            const nama = inputs[0].value;
-            const idMl = inputs[1].value;
-            const role = inputs[2].value;
-            const payment = inputs[3].value;
-            const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+    event.preventDefault();
+    
+    const form = event.target;
+    const inputs = form.querySelectorAll('input, select');
+    
+    const nama = inputs[0].value;
+    const idMl = inputs[1].value;
+    const role = inputs[2].value;
+    const payment = inputs[3].value;
+    const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
-            let registrations = JSON.parse(localStorage.getItem('tournamentRegistrations')) || [];
-            registrations.push({ nama, idMl, role, payment, timestamp });
-            localStorage.setItem('tournamentRegistrations', JSON.stringify(registrations));
+    // Kirim data ke Google Sheet via SheetDB API
+    // GANTI LINK DI BAWAH INI DENGAN LINK API SHEETDB MILIKMU SENDIRI
+    const sheetDB_API = 'ISI_LINK_API_SHEETDB_KAMU_DISINI';
 
-            closeModal('registerModal');
-            openModal('messageModal');
-            event.target.reset();
-        }
+    fetch(sheetDB_API, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data: {
+                nama: nama,
+                idMl: idMl,
+                role: role,
+                payment: payment,
+                timestamp: timestamp
+            }
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        closeModal('registerModal');
+        document.getElementById('messageTitle').innerText = "REGISTRASI TERKIRIM!";
+        document.getElementById('messageText').innerText = "Data pendaftaran kamu telah berhasil disimpan di database pusat turnamen.";
+        openModal('messageModal');
+        form.reset();
+    })
+    .catch(error => {
+        alert("Gagal mengirim data. Silakan coba lagi.");
+        console.error('Error:', error);
+    });
+}
 
         function toggleFloatingChat() {
             document.getElementById('floatingChatWindow').classList.toggle('hidden');
