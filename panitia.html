@@ -19,15 +19,15 @@
         <div class="relative w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
             <div class="text-center mb-6">
                 <div class="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-500/30">
-                    <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <h2 class="text-xl font-bold text-white">LOGIN PANEL PANITIA</h2>
-                <p class="text-xs text-slate-400 mt-1">Masukkan akses resmi untuk mengelola data turnamen.</p>
+                <p class="text-xs text-slate-400 mt-1">Gunakan akun panitia (panitia1 - panitia5) untuk masuk.</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Username</label>
-                    <input type="text" id="username" required placeholder="Username panitia" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500">
+                    <input type="text" id="username" required placeholder="Contoh: panitia1" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
                     <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Password</label>
@@ -43,12 +43,15 @@
         </div>
     </div>
 
-    <!-- HALAMAN UTAMA PANEL PANITIA (Disembunyikan sebelum login) -->
+    <!-- HALAMAN UTAMA PANEL PANITIA -->
     <div id="panelContent" class="max-w-6xl mx-auto hidden">
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
-                <i class="fa-solid fa-shield-halved text-emerald-400"></i> PANEL PANITIA - DATA PENDAFTARAN
-            </h1>
+            <div class="flex items-center gap-3">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> PANEL PANITIA - DATA PENDAFTARAN
+                </h1>
+                <span id="welcomeUser" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
+            </div>
             <div class="flex items-center gap-3">
                 <button onclick="logout()" class="px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white text-xs rounded-lg transition-all border border-red-500/20">
                     <i class="fa-solid fa-right-from-bracket"></i> Keluar
@@ -79,39 +82,41 @@
     </div>
 
     <script>
-        // URL Google Apps Script Terbaru kamu
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
 
-        // Cek apakah panitia sudah login sebelumnya di browser ini
+        // Daftar username panitia yang diizinkan
+        const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
+        const validPassword = 'tibatibaturnamen';
+
         window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('panitiaLoggedIn') === 'true') {
-                showPanel();
+            const loggedUser = localStorage.getItem('panitiaUser');
+            if (loggedUser && validUsers.includes(loggedUser)) {
+                showPanel(loggedUser);
             }
         });
 
-        // Fungsi Login (Kamu bisa ganti username & password di sini sesuai keinginan)
         function handleLogin(event) {
             event.preventDefault();
-            const user = document.getElementById('username').value;
+            const user = document.getElementById('username').value.trim().toLowerCase();
             const pass = document.getElementById('password').value;
 
-            // Username default: admin | Password default: tibatiba2026 (bisa diubah sesukamu)
-            if (user === 'admin' && pass === 'tibatiba2026') {
-                localStorage.setItem('panitiaLoggedIn', 'true');
-                showPanel();
+            if (validUsers.includes(user) && pass === validPassword) {
+                localStorage.setItem('panitiaUser', user);
+                showPanel(user);
             } else {
-                alert('Username atau Password salah!');
+                alert('Username atau Password salah! Gunakan panitia1 s.d. panitia5 dengan password yang benar.');
             }
         }
 
-        function showPanel() {
+        function showPanel(username) {
             document.getElementById('loginModal').classList.add('hidden');
             document.getElementById('panelContent').classList.remove('hidden');
+            document.getElementById('welcomeUser').innerText = username.toUpperCase();
             loadData();
         }
 
         function logout() {
-            localStorage.removeItem('panitiaLoggedIn');
+            localStorage.removeItem('panitiaUser');
             location.reload();
         }
 
