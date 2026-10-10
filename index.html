@@ -321,7 +321,6 @@
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-extrabold text-lg text-white mb-3 border-b border-obsidian-border pb-2">FORMULIR PENDAFTARAN</h3>
 
-            <!-- FORM DENGAN ID YANG JELAS -->
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
                 <div>
                     <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Nama Lengkap</label>
@@ -364,7 +363,7 @@
         <p>&copy; 2026 TIBA TIBA TOURNAMENT. ALL RIGHTS RESERVED.</p>
     </footer>
 
-    <!-- JAVASCRIPT FIXED SUBMISSION -->
+    <!-- JAVASCRIPT CONNECTED TO NEW GOOGLE APPS SCRIPT URL -->
     <script>
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -421,7 +420,7 @@
             const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
             const payload = { nama, idMl, role, payment, timestamp };
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxg1FhWZvwA3SdH5nPvsvHntI1_w4462CJWAgd30ONSSzm5J3bjn0TB_a1piHQ-2PSI/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxcXY4gVLLHsUl4aZJZYRXQvPOESC2NSX3yGSypyauaPIv2onfRAhGlb5z2R2BuHjNy/exec';
 
             const submitBtn = document.getElementById('submitBtn');
             const originalBtnText = submitBtn.innerText;
