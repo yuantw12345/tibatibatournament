@@ -49,7 +49,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* KUNCI LEBAR LAYAR & SCROLLBAR */
         html, body {
             width: 100% !important;
             max-width: 100vw !important;
@@ -102,7 +101,6 @@
     <!-- HEADER FULL WIDTH -->
     <header class="sticky top-0 z-40 glass-nav w-full px-4 sm:px-8 lg:px-12">
         <div class="w-full h-16 sm:h-20 flex items-center justify-between">
-            <!-- Brand Logo & Name -->
             <a href="#hero-banner" class="flex items-center space-x-2.5 sm:space-x-3.5 group shrink-0">
                 <div class="relative w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
                     <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
@@ -115,7 +113,6 @@
                 </div>
             </a>
 
-            <!-- Desktop Nav Menu -->
             <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold shrink-0">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors">Menu Utama</a>
@@ -127,13 +124,11 @@
                 </button>
             </nav>
 
-            <!-- Mobile Hamburger Button -->
             <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white shrink-0">
                 <i class="fa-solid fa-bars text-sm"></i>
             </button>
         </div>
 
-        <!-- Mobile Nav Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card border-b border-obsidian-border px-4 py-3 space-y-2 font-tech text-xs tracking-wider uppercase w-full">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
             <a href="#main-menu" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Menu Utama</a>
@@ -147,7 +142,6 @@
     </header>
 
     <main class="flex-grow w-full px-4 sm:px-8 lg:px-12">
-        <!-- Hero Section -->
         <section id="hero-banner" class="w-full mx-auto pt-6 sm:pt-10 pb-6 flex flex-col items-center justify-center text-center">
             <div class="text-center max-w-4xl mx-auto mb-6 w-full flex flex-col items-center">
                 <div class="inline-flex items-center justify-center gap-1.5 px-3.5 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-wider uppercase mb-3">
@@ -165,7 +159,6 @@
                 </p>
             </div>
 
-            <!-- Carousel Container -->
             <div class="relative w-full max-w-7xl mx-auto rounded-xl sm:rounded-2xl overflow-hidden border border-obsidian-lightBorder bg-obsidian-card">
                 <div class="relative w-full h-[200px] sm:h-[380px] md:h-[500px] overflow-hidden">
                     <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 h-full w-full">
@@ -181,7 +174,6 @@
                     </div>
                 </div>
 
-                <!-- Carousel Controls -->
                 <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-black/60 text-white flex items-center justify-center z-10 hover:bg-crimson transition-colors">
                     <i class="fa-solid fa-chevron-left text-xs sm:text-sm"></i>
                 </button>
@@ -189,7 +181,6 @@
                     <i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i>
                 </button>
 
-                <!-- Carousel Dots -->
                 <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
                     <button onclick="currentSlide(0)" class="carousel-dot w-6 h-1.5 rounded-full bg-crimson"></button>
                     <button onclick="currentSlide(1)" class="carousel-dot w-2 h-1.5 rounded-full bg-white/30"></button>
@@ -198,7 +189,6 @@
             </div>
         </section>
 
-        <!-- MENU UTAMA SECTION -->
         <section id="main-menu" class="w-full max-w-7xl mx-auto py-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-2 border-b border-obsidian-border pb-4 w-full">
                 <div>
@@ -208,7 +198,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
-                <!-- Card 1 -->
                 <div onclick="openModal('registerModal')" class="bg-obsidian-card border border-obsidian-border hover:border-crimson/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-11 h-11 rounded-xl bg-crimson/10 border border-crimson/30 text-crimson flex items-center justify-center text-lg mb-4">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -218,7 +207,6 @@
                     <p class="text-slate-400 text-xs leading-relaxed mb-4">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
                 </div>
 
-                <!-- Card 2 -->
                 <div onclick="switchTab('champions')" class="bg-obsidian-card border border-obsidian-border hover:border-emerald-accent/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-11 h-11 rounded-xl bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-lg mb-4">
                         <i class="fa-solid fa-trophy"></i>
@@ -228,7 +216,6 @@
                     <p class="text-slate-400 text-xs leading-relaxed mb-4">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
                 </div>
 
-                <!-- Card 3 -->
                 <div onclick="switchTab('roster')" class="bg-obsidian-card border border-obsidian-border hover:border-sky-400/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-11 h-11 rounded-xl bg-sky-400/10 border border-sky-400/30 text-sky-400 flex items-center justify-center text-lg mb-4">
                         <i class="fa-solid fa-users"></i>
@@ -240,9 +227,7 @@
             </div>
         </section>
 
-        <!-- DYNAMIC SECTION -->
         <section id="dynamic-section" class="w-full max-w-7xl mx-auto pb-12">
-            <!-- Catatan Juara -->
             <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-xl sm:rounded-2xl p-5 sm:p-8 hidden w-full">
                 <div class="flex items-center justify-between mb-4 border-b border-obsidian-border pb-3">
                     <h3 class="font-display font-bold text-xl text-white">CATATAN JUARA</h3>
@@ -253,7 +238,6 @@
                 </div>
             </div>
 
-            <!-- Roster Content -->
             <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-xl sm:rounded-2xl p-5 sm:p-8 hidden w-full">
                 <div class="flex items-center justify-between mb-4 border-b border-obsidian-border pb-3">
                     <h3 class="font-display font-bold text-xl text-white">DAFTAR ROSTER TETAP</h3>
@@ -277,7 +261,6 @@
         </section>
     </main>
 
-    <!-- FLOATING BUTTONS -->
     <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." 
        target="_blank" 
        rel="noopener noreferrer" 
@@ -377,12 +360,11 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="bg-obsidian border-t border-obsidian-border py-6 text-center text-[10px] text-slate-500 font-tech w-full">
         <p>&copy; 2026 TIBA TIBA TOURNAMENT. ALL RIGHTS RESERVED.</p>
     </footer>
 
-    <!-- JAVASCRIPT CONTROLLERS & SHEETDB CONNECTOR -->
+    <!-- JAVASCRIPT -->
     <script>
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -441,7 +423,6 @@
             const payment = inputs[3].value;
             const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
-            // LINK API SHEETDB YANG BENAR
             const sheetDB_API = 'https://sheetdb.io/api/v1/brvr900rex3vo';
 
             const submitBtn = form.querySelector('button[type="submit"]');
@@ -449,6 +430,7 @@
             submitBtn.innerText = "MENGIRIM DATA...";
             submitBtn.disabled = true;
 
+            // Format pengiriman SheetDB Standar Objek Tunggal
             fetch(sheetDB_API, {
                 method: 'POST',
                 headers: {
@@ -456,15 +438,11 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    data: [
-                        {
-                            nama: nama,
-                            idMl: idMl,
-                            role: role,
-                            payment: payment,
-                            timestamp: timestamp
-                        }
-                    ]
+                    nama: nama,
+                    idMl: idMl,
+                    role: role,
+                    payment: payment,
+                    timestamp: timestamp
                 })
             })
             .then(async response => {
@@ -474,11 +452,11 @@
                     openModal('messageModal');
                     form.reset();
                 } else {
-                    alert("Gagal menyimpan data: " + (resData.error || JSON.stringify(resData)) + "\n\nPastikan akses Google Sheet diubah ke 'Siapa saja yang memiliki link' -> Editor!");
+                    alert("Gagal menyimpan data ke SheetDB: " + JSON.stringify(resData));
                 }
             })
             .catch(error => {
-                alert("Terjadi kesalahan jaringan saat mengirim data.");
+                alert("Terjadi kesalahan jaringan.");
                 console.error('Error:', error);
             })
             .finally(() => {
