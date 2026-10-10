@@ -39,11 +39,11 @@
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Username Panitia</label>
-                    <input type="text" id="usernameInput" required placeholder="Contoh: panitia1" class="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-colors">
+                    <input type="text" id="usernameInput" required class="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-colors">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Password</label>
-                    <input type="password" id="passwordInput" required placeholder="••••••••••••" class="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-colors">
+                    <input type="password" id="passwordInput" required class="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-colors">
                 </div>
                 <p id="loginError" class="text-xs text-red-600 font-medium hidden text-center">Username atau password salah!</p>
                 
@@ -138,7 +138,6 @@
 
     <!-- SCRIPT LOGIN & DATABASE CONNECTOR -->
     <script>
-        // Daftar Akun Panitia yang Diizinkan
         const validPanitia = [
             { user: 'panitia1', pass: 'tibatibaturnamen' },
             { user: 'panitia2', pass: 'tibatibaturnamen' },
@@ -239,7 +238,6 @@
             }
         }
 
-        // Cek status login saat halaman dimuat
         window.addEventListener('DOMContentLoaded', checkAuth);
 
         window.addEventListener('storage', (event) => {
@@ -248,7 +246,6 @@
             }
         });
 
-        // Interval auto-refresh tabel jika sudah login
         setInterval(() => {
             if (localStorage.getItem('panitiaLoggedIn') === 'true') {
                 loadRegistrations();
