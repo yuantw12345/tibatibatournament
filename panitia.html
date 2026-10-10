@@ -1,144 +1,96 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN DASHBOARD — TIBA TIBA TOURNAMENT</title>
+    <title>CATATAN PANITIA — ADMIN BACKEND</title>
     <!-- Favicon Custom Logo -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        obsidian: {
-                            DEFAULT: '#080a0f',
-                            card: '#0f131d',
-                            glass: 'rgba(15, 19, 29, 0.75)',
-                            border: '#1e2638',
-                            lightBorder: '#2a364f'
-                        },
-                        crimson: {
-                            DEFAULT: '#ff1e56',
-                            glow: 'rgba(255, 30, 86, 0.4)',
-                            dark: '#c40d3d'
-                        },
-                        emerald: {
-                            accent: '#00e699',
-                            glow: 'rgba(0, 230, 153, 0.4)'
-                        }
-                    },
-                    fontFamily: {
-                        display: ['Syne', 'sans-serif'],
-                        body: ['Plus Jakarta Sans', 'sans-serif'],
-                        tech: ['Space Grotesk', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'crimson-glow': '0 0 25px rgba(255, 30, 86, 0.25)',
-                        'emerald-glow': '0 0 25px rgba(0, 230, 153, 0.25)',
-                        'glass-card': '0 20px 50px rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #080a0f;
-            color: #f1f5f9;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 30, 86, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(0, 230, 153, 0.04) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-        .font-display { font-family: 'Syne', sans-serif; }
-        .font-tech { font-family: 'Space Grotesk', sans-serif; }
-        .glass-nav {
-            background: rgba(8, 10, 15, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-crimson selection:text-white">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER ADMIN -->
-    <header class="sticky top-0 z-40 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3.5">
-                <div class="w-12 h-12 flex items-center justify-center bg-crimson/10 border border-crimson/30 rounded-xl text-crimson">
-                    <i class="fa-solid fa-gauge-high text-xl"></i>
+    <!-- HEADER ADMIN BERSIH & FORMAL -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-lg shadow-sm font-bold">
+                    <i class="fa-solid fa-clipboard-list text-lg"></i>
                 </div>
                 <div>
-                    <span class="block font-display font-extrabold text-lg tracking-wider text-white">
-                        PANEL <span class="text-crimson">ADMINISTRATOR</span>
+                    <span class="block font-bold text-base tracking-tight text-slate-900">
+                        CATATAN PANITIA
                     </span>
-                    <span class="block font-tech text-[10px] tracking-widest text-slate-400 uppercase">TIBA TIBA TOURNAMENT S3</span>
+                    <span class="block text-[11px] font-medium text-slate-500 uppercase tracking-wider">Tiba Tiba Tournament S3 — Internal Database</span>
                 </div>
             </div>
-            <a href="index.html" class="px-4 py-2 rounded-lg bg-obsidian-card border border-obsidian-border text-xs font-tech text-slate-300 hover:text-white transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-arrow-left"></i> KEMBALI KE WEB UTAMA
+            <a href="index.html" class="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-arrow-left text-slate-500"></i> KEMBALI KE WEB UTAMA
             </a>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-                <span class="font-tech text-xs tracking-widest text-emerald-accent uppercase font-semibold">DATABASE REGISTRASI</span>
-                <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">DAFTAR TIM & PESERTA MASUK</h1>
+                <h1 class="font-bold text-xl sm:text-2xl text-slate-900">Daftar Pendaftar Masuk</h1>
+                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time.</p>
             </div>
-            <button onclick="clearRegistrations()" class="px-4 py-2 rounded-xl bg-crimson/10 border border-crimson/30 text-crimson hover:bg-crimson hover:text-white font-tech text-xs uppercase transition-all flex items-center gap-2">
-                <i class="fa-solid fa-trash-can"></i> RESET SEMUA DATA
+            <button onclick="clearRegistrations()" class="px-4 py-2 rounded-lg bg-white border border-red-300 text-red-600 hover:bg-red-50 font-semibold text-xs transition-all flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-trash-can"></i> Reset Semua Data
             </button>
         </div>
 
-        <!-- Table Container -->
-        <div class="bg-obsidian-card border border-obsidian-border rounded-2xl shadow-glass-card overflow-hidden">
+        <!-- Table Container Bersih Ala Admin Dashboard -->
+        <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-obsidian border-b border-obsidian-border font-tech text-xs text-slate-400 tracking-wider uppercase">
-                            <th class="py-4 px-6">No</th>
-                            <th class="py-4 px-6">Nama Lengkap</th>
-                            <th class="py-4 px-6">Username / ID ML</th>
-                            <th class="py-4 px-6">Role Player</th>
-                            <th class="py-4 px-6">Pembayaran</th>
-                            <th class="py-4 px-6">Waktu Daftar</th>
-                            <th class="py-4 px-6 text-center">Aksi</th>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-xs text-slate-600 font-semibold tracking-wider uppercase">
+                            <th class="py-3.5 px-6">No</th>
+                            <th class="py-3.5 px-6">Nama Lengkap</th>
+                            <th class="py-3.5 px-6">Username / ID ML</th>
+                            <th class="py-3.5 px-6">Role Player</th>
+                            <th class="py-3.5 px-6">Pembayaran</th>
+                            <th class="py-3.5 px-6">Waktu Daftar</th>
+                            <th class="py-3.5 px-6 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="registrationTableBody" class="divide-y divide-obsidian-border font-body text-xs sm:text-sm text-slate-300">
+                    <tbody id="registrationTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm text-slate-700">
                         <!-- Data masuk otomatis -->
                     </tbody>
                 </table>
             </div>
             <!-- Empty State -->
             <div id="emptyState" class="hidden text-center py-16 px-4">
-                <div class="w-16 h-16 rounded-full bg-slate-800 text-slate-500 flex items-center justify-center text-2xl mx-auto mb-4">
+                <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xl mx-auto mb-3 border border-slate-200">
                     <i class="fa-solid fa-folder-open"></i>
                 </div>
-                <h3 class="font-display font-bold text-lg text-white">BELUM ADA DATA PENDAFTAR</h3>
-                <p class="text-slate-400 text-xs mt-1">Data peserta yang mengisi formulir di website utama akan muncul secara otomatis di sini.</p>
+                <h3 class="font-bold text-base text-slate-800">Belum Ada Data Pendaftar</h3>
+                <p class="text-slate-500 text-xs mt-1">Data peserta yang mengirimkan formulir di halaman utama akan muncul otomatis di sini.</p>
             </div>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-obsidian border-t border-obsidian-border py-6 text-center text-xs text-slate-500 font-tech">
-        <p>ADMIN CONTROL PANEL &copy; 2026. TIBA TIBA TOURNAMENT.</p>
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Catatan Panitia &bull; Tiba Tiba Tournament Administration System.</p>
     </footer>
 
     <!-- SCRIPT CONNECTOR -->
@@ -160,19 +112,19 @@
 
             registrations.forEach((reg, index) => {
                 const row = document.createElement('tr');
-                row.className = "hover:bg-slate-900/40 transition-colors";
+                row.className = "hover:bg-slate-50 transition-colors";
                 row.innerHTML = `
-                    <td class="py-4 px-6 font-tech text-slate-400">${index + 1}</td>
-                    <td class="py-4 px-6 font-bold text-white">${reg.nama}</td>
-                    <td class="py-4 px-6 font-tech text-sky-400">${reg.idMl}</td>
-                    <td class="py-4 px-6">${reg.role}</td>
-                    <td class="py-4 px-6">
-                        <span class="px-2.5 py-1 rounded-md bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent font-tech text-[10px]">${reg.payment}</span>
+                    <td class="py-3.5 px-6 text-slate-400 font-medium">${index + 1}</td>
+                    <td class="py-3.5 px-6 font-semibold text-slate-900">${reg.nama}</td>
+                    <td class="py-3.5 px-6 font-mono text-blue-600 text-xs">${reg.idMl}</td>
+                    <td class="py-3.5 px-6"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium">${reg.role}</span></td>
+                    <td class="py-3.5 px-6">
+                        <span class="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold text-[11px]">${reg.payment}</span>
                     </td>
-                    <td class="py-4 px-6 text-slate-400 text-xs">${reg.timestamp}</td>
-                    <td class="py-4 px-6 text-center">
-                        <button onclick="deleteRegistration(${index})" class="p-2 rounded-lg bg-obsidian text-slate-400 hover:text-crimson hover:bg-crimson/10 transition-colors" title="Hapus Data">
-                            <i class="fa-solid fa-trash"></i>
+                    <td class="py-3.5 px-6 text-slate-500 text-xs">${reg.timestamp}</td>
+                    <td class="py-3.5 px-6 text-center">
+                        <button onclick="deleteRegistration(${index})" class="p-1.5 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Hapus Data">
+                            <i class="fa-solid fa-trash text-xs"></i>
                         </button>
                     </td>
                 `;
@@ -194,17 +146,12 @@
             }
         }
 
-        // Muat data saat halaman pertama kali dibuka
         window.addEventListener('DOMContentLoaded', loadRegistrations);
-
-        // Sinkronisasi otomatis real-time antar tab jika ada pendaftar baru
         window.addEventListener('storage', (event) => {
             if (event.key === 'tournamentRegistrations') {
                 loadRegistrations();
             }
         });
-
-        // Backup pengecekan otomatis setiap 2 detik supaya langsung tampil tanpa refresh
         setInterval(loadRegistrations, 2000);
     </script>
 </body>
