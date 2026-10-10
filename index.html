@@ -965,11 +965,13 @@
         }
 
         // Registration Submit
-       function handleFormSubmit(event) {
+      function handleFormSubmit(event) {
     event.preventDefault();
     
-    // Ambil nilai input dari form
-    const inputs = event.target.querySelectorAll('input, select');
+    // Mengambil data langsung berdasarkan urutan elemen atau form yang aktif
+    const form = event.target;
+    const inputs = form.querySelectorAll('input, select');
+    
     const nama = inputs[0].value;
     const idMl = inputs[1].value;
     const role = inputs[2].value;
@@ -987,7 +989,8 @@
     document.getElementById('messageText').innerText = "Data pendaftaran kamu telah berhasil disimpan di sistem turnamen.";
     openModal('messageModal');
     
-    event.target.reset();
+    form.reset();
+}
 }
 
         // Toggle Floating Chat Window
