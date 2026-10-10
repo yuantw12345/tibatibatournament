@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth overflow-x-hidden">
+<html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TIBA TIBA TOURNAMENT — Neon Arena</title>
     <!-- Favicon Custom Logo -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -39,6 +40,7 @@
             }
         }
     </script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,31 +49,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* FIX TOTAL OVERFLOW & SCROLLBAR HP */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        /* INI KUNCI MUTLAK UNTUK MEMATIKAN SCROLLING KE SAMPING */
         html, body {
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 100vw !important;
             overflow-x: hidden !important;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: relative;
+            margin: 0 !important;
+            padding: 0 !important;
+            touch-action: pan-y; /* Hanya izinkan scroll atas-bawah */
             background-color: #090b18 !important;
             color: #f8faff;
-            background-image: 
-                radial-gradient(ellipse at 8% 5%, rgba(255,60,172,.19), transparent 34%),
-                radial-gradient(ellipse at 92% 16%, rgba(37,231,255,.15), transparent 32%),
-                radial-gradient(ellipse at 50% 95%, rgba(120,77,255,.18), transparent 40%) !important;
-            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Paksa semua teks membungkus tanpa mekar ke kanan */
-        h1, h2, h3, h4, p, span, div, strong {
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+        }
+
+        /* Paksa teks dan modal agar otomatis terputus jika melebihi lebar HP */
+        h1, h2, h3, h4, p, span, div, a, button {
             overflow-wrap: anywhere !important;
             word-break: break-word !important;
-            hyphens: auto;
+        }
+
+        /* Ukuran Font Judul Otomatis Sesuai Layar HP */
+        .responsive-title {
+            font-size: clamp(1.1rem, 5.5vw, 3.5rem) !important;
+            line-height: 1.25 !important;
         }
 
         .font-display { font-family: 'Syne', sans-serif; }
@@ -90,12 +96,13 @@
             border-bottom: 1px solid rgba(115,137,255,.22) !important;
         }
 
+        /* Matikan Scrollbar Horizontal Jika Browser Mencoba Membuatnya */
         ::-webkit-scrollbar { width: 4px; height: 0px; }
         ::-webkit-scrollbar-track { background: #090b18; }
         ::-webkit-scrollbar-thumb { background: #784dff; border-radius: 4px; }
     </style>
 </head>
-<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white w-full overflow-x-hidden">
+<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white">
 
     <!-- HEADER -->
     <header class="sticky top-0 z-40 glass-nav w-full">
@@ -144,17 +151,17 @@
         </div>
     </header>
 
-    <main class="flex-grow w-full max-w-full overflow-x-hidden">
+    <main class="flex-grow w-full">
         <!-- Hero Section -->
         <section id="hero-banner" class="max-w-6xl mx-auto px-4 pt-4 sm:pt-10 pb-6 w-full flex flex-col items-center justify-center text-center">
-            <div class="text-center max-w-3xl mx-auto mb-5 w-full px-1 flex flex-col items-center">
-                <div class="inline-flex items-center justify-center gap-1 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[9px] sm:text-xs font-tech font-semibold tracking-wider uppercase mb-3 max-w-full">
+            <div class="text-center max-w-3xl mx-auto mb-5 w-full flex flex-col items-center px-1">
+                <div class="inline-flex items-center justify-center gap-1 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[9px] sm:text-xs font-tech font-semibold tracking-wider uppercase mb-3">
                     <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse shrink-0"></span>
                     <span>REGISTRASI REGULER SEGERA DITUTUP</span>
                 </div>
                 
-                <!-- JUDUL RATA TENGAH PRESISI -->
-                <h1 class="font-display font-black text-2xl sm:text-4xl md:text-6xl tracking-tight text-white mb-3 leading-snug uppercase w-full text-center">
+                <!-- JUDUL DENGAN FONT CLAMP RESPONSIF -->
+                <h1 class="font-display font-black responsive-title tracking-tight text-white mb-2 uppercase w-full text-center">
                     DOMINASI ARENA <br>
                     <span class="bg-gradient-to-r from-crimson via-purple-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
                 </h1>
@@ -166,7 +173,7 @@
 
             <!-- Carousel Container -->
             <div class="relative w-full rounded-xl sm:rounded-2xl overflow-hidden border border-obsidian-lightBorder bg-obsidian-card">
-                <div class="relative w-full h-[180px] sm:h-[320px] md:h-[420px] overflow-hidden">
+                <div class="relative w-full h-[170px] sm:h-[320px] md:h-[420px] overflow-hidden">
                     <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 h-full w-full">
                         <div class="min-w-full h-full relative shrink-0">
                             <img src="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg" alt="Esports Banner 1" class="w-full h-full object-cover">
@@ -300,11 +307,11 @@
         </div>
     </div>
 
-    <!-- RULES MODAL (PRESISI DI TENGAH LAYAR HP) -->
+    <!-- RULES MODAL -->
     <div id="rulesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-3 overflow-y-auto">
-        <div class="relative w-[92vw] sm:w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-2xl my-auto max-h-[85vh] overflow-y-auto">
+        <div class="relative w-[90vw] sm:w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-2xl my-auto max-h-[85vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-3 right-3 text-slate-400 p-1 z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-extrabold text-sm sm:text-lg text-white mb-2.5 border-b border-obsidian-border pb-2 pr-6">
+            <h3 class="font-display font-extrabold text-xs sm:text-lg text-white mb-2.5 border-b border-obsidian-border pb-2 pr-6">
                 REGULASI & PERATURAN TURNAMEN
             </h3>
             <div class="space-y-2.5 text-slate-300 text-xs">
@@ -334,7 +341,7 @@
 
     <!-- REGISTRATION MODAL -->
     <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-3 overflow-y-auto">
-        <div class="relative w-[92vw] sm:w-full max-w-sm bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-2xl my-auto">
+        <div class="relative w-[90vw] sm:w-full max-w-sm bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-2xl my-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-3 right-3 text-slate-400 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-extrabold text-base text-white mb-2.5 border-b border-obsidian-border pb-1.5">FORMULIR PENDAFTARAN</h3>
 
