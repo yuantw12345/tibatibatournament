@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIBA TIBA TOURNAMENT — Neon Arena</title>
-    <!-- Favicon Custom Logo -->
+    <title>TIBA TIBA TOURNAMENT - Official Esports Arena</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -62,936 +62,199 @@
                 radial-gradient(circle at 85% 85%, rgba(0, 230, 153, 0.04) 0%, transparent 40%);
             background-attachment: fixed;
         }
-
         .font-display { font-family: 'Syne', sans-serif; }
         .font-tech { font-family: 'Space Grotesk', sans-serif; }
-
-        /* Modern Grid Effect */
-        .bg-tech-grid {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-        }
-
-        /* Glassmorphism */
-        .glass-panel {
-            background: rgba(15, 19, 29, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
         .glass-nav {
             background: rgba(8, 10, 15, 0.85);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-
-        /* Springy Modal Animation */
-        @keyframes modalSpring {
-            0% {
-                opacity: 0;
-                transform: scale(0.88) translateY(24px);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.02) translateY(-4px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .animate-modal-spring {
-            animation: modalSpring 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #080a0f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e2638;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2a364f;
-        }
-
-    /* COLORFUL NEON ARENA THEME */
-    :root {
-        --obsidian: #090b18;
-        --card: rgba(17, 22, 45, .86);
-        --pink: #ff3cac;
-        --violet: #784dff;
-        --cyan: #25e7ff;
-        --lime: #b7ff4a;
-        --gold: #ffd166;
-    }
-    html { scroll-padding-top: 90px; }
-    body {
-        background-color: #090b18 !important;
-        color: #f8faff;
-        background-image:
-          radial-gradient(ellipse at 8% 5%, rgba(255,60,172,.19), transparent 34%),
-          radial-gradient(ellipse at 92% 16%, rgba(37,231,255,.15), transparent 32%),
-          radial-gradient(ellipse at 50% 95%, rgba(120,77,255,.18), transparent 40%) !important;
-        background-attachment: fixed;
-    }
-    .bg-tech-grid {
-        background-size: 36px 36px;
-        background-image:
-          linear-gradient(to right, rgba(119,143,255,.055) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(119,143,255,.055) 1px, transparent 1px);
-    }
-    .glass-nav {
-        background: rgba(8, 10, 25, .82) !important;
-        backdrop-filter: blur(22px);
-        border-bottom: 1px solid rgba(115,137,255,.22) !important;
-        box-shadow: 0 8px 35px rgba(0,0,0,.2);
-    }
-    .glass-panel {
-        background: rgba(12,16,36,.68) !important;
-        backdrop-filter: blur(18px);
-        border: 1px solid rgba(255,255,255,.16) !important;
-    }
-    header a .relative {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-    }
-    h1, h2, h3, h4 { text-wrap: balance; }
-    #hero-banner > div:first-child > div:first-child {
-        color: #ff8bd2 !important;
-        background: linear-gradient(100deg,rgba(255,60,172,.15),rgba(120,77,255,.15),rgba(37,231,255,.1)) !important;
-        border-color: rgba(255,115,211,.42) !important;
-        box-shadow: 0 0 28px rgba(255,60,172,.12);
-    }
-    #hero-banner h1 { text-shadow: 0 0 35px rgba(120,77,255,.22); }
-    #hero-banner h1 span {
-        background-image: linear-gradient(100deg,#ff5fba 0%,#a78bfa 40%,#4deaff 72%,#c7ff72 100%) !important;
-    }
-    #hero-banner .rounded-2xl.overflow-hidden {
-        border: 1px solid rgba(160,143,255,.55) !important;
-        box-shadow: 0 25px 80px rgba(0,0,0,.42), 0 0 38px rgba(120,77,255,.18);
-    }
-    #hero-banner img { transition: transform 7s ease; }
-    #hero-banner:hover img { transform: scale(1.045); }
-    #main-menu {
-        position: relative;
-    }
-    #main-menu > div:first-child {
-        border-image: linear-gradient(90deg,#ff3cac,#784dff,#25e7ff,#b7ff4a) 1;
-    }
-    #main-menu > div:first-child span { color: #ff78ca !important; }
-    #main-menu > div:first-child h2 { letter-spacing: -.035em; }
-    #main-menu .grid > div {
-        overflow: hidden;
-        isolation: isolate;
-        background: linear-gradient(145deg,rgba(23,28,58,.95),rgba(12,15,33,.96)) !important;
-        border-color: rgba(151,160,255,.2) !important;
-        box-shadow: 0 18px 45px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055);
-    }
-    #main-menu .grid > div::before {
-        content: "";
-        position: absolute;
-        inset: 0 0 auto;
-        height: 3px;
-        background: linear-gradient(90deg,#ff3cac,#784dff,#25e7ff,#b7ff4a);
-        opacity: .9;
-        z-index: -1;
-    }
-    #main-menu .grid > div::after {
-        content: "";
-        position: absolute;
-        width: 170px;
-        height: 170px;
-        right: -90px;
-        top: -90px;
-        border-radius: 50%;
-        background: radial-gradient(circle,rgba(120,77,255,.18),transparent 68%);
-        pointer-events: none;
-    }
-    #main-menu .grid > div:hover {
-        transform: translateY(-7px);
-        border-color: rgba(178,160,255,.65) !important;
-        box-shadow: 0 24px 55px rgba(0,0,0,.35), 0 0 28px rgba(120,77,255,.13);
-    }
-    #main-menu .grid > div:nth-child(1) .w-12 {
-        color: #ff79c8 !important;
-        background: rgba(255,60,172,.14) !important;
-        border-color: rgba(255,60,172,.4) !important;
-    }
-    #main-menu .grid > div:nth-child(2) .w-12 {
-        color: #c1a7ff !important;
-        background: rgba(120,77,255,.17) !important;
-        border-color: rgba(120,77,255,.45) !important;
-    }
-    #main-menu .grid > div:nth-child(3) .w-12 {
-        color: #53edff !important;
-        background: rgba(37,231,255,.12) !important;
-        border-color: rgba(37,231,255,.4) !important;
-    }
-    #dynamic-section > div:not(.hidden) {
-        background: linear-gradient(145deg,rgba(20,25,52,.96),rgba(10,13,29,.97)) !important;
-        border-color: rgba(154,140,255,.42) !important;
-        box-shadow: 0 25px 70px rgba(0,0,0,.28);
-    }
-    #content-roster .grid > div {
-        background: linear-gradient(110deg,rgba(37,231,255,.35),rgba(120,77,255,.25),rgba(255,60,172,.2)) !important;
-    }
-    #content-roster .grid > div > div {
-        background: #10152d !important;
-    }
-    #rulesModal > div, #registerModal > div, #messageModal > div {
-        background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
-        border-color: rgba(156,139,255,.48) !important;
-        box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
-    }
-    #rulesModal .bg-obsidian\/80, #registerModal input, #registerModal select {
-        background-color: rgba(7,10,25,.8) !important;
-        border-color: rgba(142,153,220,.22);
-    }
-    #rulesModal .bg-obsidian-card { background-color: rgba(20,25,52,.8) !important; }
-    #rulesModal h4 { text-shadow: 0 0 20px currentColor; }
-    #registerModal input:focus, #registerModal select:focus {
-        border-color: #a78bfa !important;
-        box-shadow: 0 0 0 3px rgba(120,77,255,.16);
-    }
-    button { transition: filter .2s ease, transform .2s ease, box-shadow .2s ease; }
-    button:hover { filter: brightness(1.12); }
-    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-        outline: 2px solid #25e7ff;
-        outline-offset: 3px;
-    }
-    footer {
-        background: rgba(7,9,22,.9) !important;
-        border-image: linear-gradient(90deg,#ff3cac,#784dff,#25e7ff) 1;
-    }
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #090b18; }
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(#ff3cac,#784dff,#25e7ff);
-        border-radius: 20px;
-        border: 2px solid #090b18;
-    }
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: .01ms !important;
-            animation-iteration-count: 1 !important;
-            scroll-behavior: auto !important;
-            transition-duration: .01ms !important;
-        }
-    }
     </style>
 </head>
-<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white relative">
+<body class="min-h-screen flex flex-col justify-between selection:bg-crimson selection:text-white">
 
-    <header class="sticky top-0 z-40 glass-nav transition-all duration-300">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo & Name -->
-            <a href="#hero-banner" class="flex items-center space-x-3.5 group">
-                <div class="relative w-16 h-16 flex items-center justify-center">
-                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-16 h-16 object-contain transition-transform group-hover:scale-110 duration-300">
-                    <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-emerald-accent rounded-full animate-ping"></span>
-                    <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-emerald-accent rounded-full"></span>
+            <div class="flex items-center space-x-3.5">
+                <div class="w-12 h-12 flex items-center justify-center bg-crimson/10 border border-crimson/30 rounded-xl text-crimson">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-8 h-8 object-contain">
                 </div>
                 <div>
-                    <span class="block font-display font-extrabold text-xl tracking-wider text-white group-hover:text-crimson transition-colors">
-                        TIBA TIBA <span class="text-crimson font-light">TOURNAMENT</span>
+                    <span class="block font-display font-extrabold text-lg tracking-wider text-white">
+                        TIBA TIBA <span class="text-crimson">TOURNAMENT</span>
                     </span>
                     <span class="block font-tech text-[10px] tracking-widest text-slate-400 uppercase">OFFICIAL ESPORTS ARENA</span>
                 </div>
-            </a>
-
-            <!-- Desktop Nav Menu -->
-            <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold">
-                <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-crimson hover:after:w-full after:transition-all">Beranda</a>
-                <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-crimson hover:after:w-full after:transition-all">Menu Utama</a>
-                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2 py-1">
-                    <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> RULES
-                </button>
-                <button onclick="openModal('registerModal')" class="relative inline-flex items-center justify-center px-6 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase transition-all duration-300 bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:shadow-lg hover:scale-[1.03] active:scale-[0.98]">
-                    <span class="flex items-center gap-2">
-                        <span>DAFTAR SEKARANG</span>
-                        <i class="fa-solid fa-arrow-right-long text-xs"></i>
-                    </span>
-                </button>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase text-slate-300">
+                <a href="#" class="hover:text-crimson transition-colors">Beranda</a>
+                <a href="#menu-utama" class="hover:text-crimson transition-colors">Menu Utama</a>
+                <a href="#rules" class="hover:text-crimson transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book text-emerald-accent"></i> Rules</a>
             </nav>
-
-            <!-- Mobile Hamburger Button -->
-            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white focus:outline-none">
-                <i class="fa-solid fa-bars text-lg"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Nav Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card border-b border-obsidian-border px-6 py-5 space-y-4 font-tech text-xs tracking-wider uppercase animate-fade-in">
-            <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-white py-1">Beranda</a>
-            <a href="#main-menu" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-white py-1">Menu Utama</a>
-            <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
-                <i class="fa-solid fa-file-shield"></i> RULES / PERATURAN
-            </button>
-            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg shadow-crimson-glow text-center">
-                DAFTAR SEKARANG
-            </button>
+            <div>
+                <button onclick="openModal('registerModal')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-crimson to-crimson-dark text-white font-tech text-xs tracking-wider uppercase font-bold shadow-crimson-glow hover:opacity-95 transition-all">
+                    Daftar Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="flex-grow">
-        <!-- Hero Section -->
-        <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-8">
-            <div class="text-center max-w-3xl mx-auto mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-xs font-tech font-semibold tracking-widest uppercase mb-4 shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span>
-                    REGISTRASI REGULER SEGERA DITUTUP
+    <!-- HERO SECTION -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center relative">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-crimson/10 border border-crimson/30 text-crimson font-tech text-xs tracking-wider uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> REGISTRASI REGULER SEGERA DITUTUP
+        </div>
+        <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-white uppercase tracking-tight leading-none mb-6">
+            DOMINASI <span class="text-transparent bg-clip-text bg-gradient-to-r from-crimson via-purple-500 to-emerald-accent">ARENA</span><br>
+            TIBA TIBA TOURNAMENT
+        </h1>
+        <p class="max-w-2xl mx-auto text-slate-400 text-sm sm:text-base font-body mb-8">
+            Persiapkan roster terbaikmu, susun strategi terhebat, dan rebut gelar juara Mobile Legends paling bergengsi musim ini. Total Prize Pool Rp 7.000.000!
+        </p>
+    </section>
+
+    <!-- MENU UTAMA SECTION -->
+    <section id="menu-utama" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="text-center mb-10">
+            <span class="font-tech text-xs tracking-widest text-emerald-accent uppercase font-semibold">NAVIGASI ARENA</span>
+            <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">PILIH MENU TURNAMEN</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div onclick="openModal('registerModal')" class="bg-obsidian-card border border-obsidian-border p-6 rounded-2xl hover:border-crimson/50 transition-all cursor-pointer group shadow-glass-card">
+                <div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-user-plus"></i>
                 </div>
-                <h1 class="font-display font-black text-4xl sm:text-6xl tracking-tight text-white mb-4 leading-tight">
-                    DOMINASI ARENA <br><span class="bg-gradient-to-r from-crimson via-red-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
-                </h1>
-                <p class="text-slate-400 text-sm sm:text-base font-normal max-w-2xl mx-auto">
-                    Persiapkan roster terbaikmu, susun strategi terhebat, dan rebut gelar juara Mobile Legends paling bergengsi musim ini. Total Prize Pool Rp 7.000.000!
-                </p>
+                <h3 class="font-display font-bold text-lg text-white mb-2">Formulir Pendaftaran</h3>
+                <p class="text-slate-400 text-xs">Daftarkan tim atau dirimu sekarang juga untuk ikut bertanding.</p>
             </div>
-
-            <!-- Carousel Container -->
-            <div class="relative w-full rounded-2xl overflow-hidden border border-obsidian-lightBorder shadow-glass-card bg-obsidian-card group">
-                <div class="relative w-full h-[250px] sm:h-[400px] md:h-[500px] overflow-hidden">
-                    <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 cubic-bezier(0.25, 1, 0.5, 1) h-full w-full">
-                        <div class="min-w-full h-full relative">
-                            <img src="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg" alt="Esports Banner 1" class="w-full h-full object-cover object-center">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80 pointer-events-none"></div>
-                        </div>
-                        <div class="min-w-full h-full relative">
-                            <img src="https://i.postimg.cc/W1xPkyVW/Gemini-Generated-Image-twlhf1twlhf1twlh.jpg" alt="Esports Banner 2" class="w-full h-full object-cover object-center">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80 pointer-events-none"></div>
-                        </div>
-                        <div class="min-w-full h-full relative">
-                            <img src="https://i.postimg.cc/d0SZrw1G/Gemini-Generated-Image-h3pnh7h3pnh7h3pn.jpg" alt="Esports Banner 3" class="w-full h-full object-cover object-center">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80 pointer-events-none"></div>
-                        </div>
-                    </div>
+            <a href="panitia.html" class="bg-obsidian-card border border-obsidian-border p-6 rounded-2xl hover:border-emerald-accent/50 transition-all cursor-pointer group shadow-glass-card block">
+                <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-gauge-high"></i>
                 </div>
-
-                <!-- Carousel Nav Controls -->
-                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-xl glass-panel border border-white/10 text-white flex items-center justify-center hover:bg-crimson hover:border-crimson transition-all duration-200 opacity-80 sm:opacity-0 group-hover:opacity-100 z-10">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-xl glass-panel border border-white/10 text-white flex items-center justify-center hover:bg-crimson hover:border-crimson transition-all duration-200 opacity-80 sm:opacity-0 group-hover:opacity-100 z-10">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
-
-                <!-- Carousel Dots Indicator -->
-                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2.5 z-10">
-                    <button onclick="currentSlide(0)" class="carousel-dot w-8 h-1.5 rounded-full bg-crimson transition-all duration-300"></button>
-                    <button onclick="currentSlide(1)" class="carousel-dot w-2 h-1.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
-                    <button onclick="currentSlide(2)" class="carousel-dot w-2 h-1.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
+                <h3 class="font-display font-bold text-lg text-white mb-2">Panel Admin / Panitia</h3>
+                <p class="text-slate-400 text-xs">Akses khusus panitia untuk melihat daftar peserta yang masuk.</p>
+            </a>
+            <div id="rules" class="bg-obsidian-card border border-obsidian-border p-6 rounded-2xl hover:border-sky-500/50 transition-all cursor-pointer group shadow-glass-card">
+                <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-book-open"></i>
                 </div>
-            </div>
-        </section>
-
-        <section id="main-menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-obsidian-border pb-6">
-                <div>
-                    <span class="font-tech text-xs tracking-widest text-crimson uppercase font-semibold">NAVIGATION MATRIX</span>
-                    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">MENU UTAMA TOURNAMENT</h2>
-                </div>
-                <p class="text-slate-400 text-xs sm:text-sm max-w-md">Akses pusat informasi pendaftaran, riwayat pemenang musim, dan daftar pemain resmi di bawah ini.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Card 1: Registration -->
-                <div onclick="openModal('registerModal')" class="group relative bg-obsidian-card hover:bg-slate-900/60 border border-obsidian-border hover:border-crimson/80 p-7 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1.5 shadow-glass-card hover:shadow-crimson-glow">
-                    <div class="w-12 h-12 rounded-xl bg-crimson/10 border border-crimson/30 text-crimson flex items-center justify-center text-xl mb-6 group-hover:scale-110 group-hover:bg-crimson group-hover:text-white transition-all duration-300">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest uppercase block mb-1">FORM // 01</span>
-                    <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-crimson transition-colors">ISI FORMULIR PENDAFTARAN</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-6">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
-                    <div class="flex items-center text-crimson font-tech font-bold text-xs tracking-wider">
-                        <span>LENGKAPI FORMULIR</span>
-                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1.5 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Card 2: Champions Archive -->
-                <div onclick="switchTab('champions')" class="group relative bg-obsidian-card hover:bg-slate-900/60 border border-obsidian-border hover:border-emerald-accent/80 p-7 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1.5 shadow-glass-card hover:shadow-emerald-glow">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-xl mb-6 group-hover:scale-110 group-hover:bg-emerald-accent group-hover:text-black transition-all duration-300">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest uppercase block mb-1">ARCHIVE // 02</span>
-                    <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-emerald-accent transition-colors">CATATAN JUARA</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-6">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
-                    <div class="flex items-center text-emerald-accent font-tech font-bold text-xs tracking-wider">
-                        <span>LIHAT CATATAN JUARA</span>
-                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1.5 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Card 3: Roster Tetap -->
-                <div onclick="switchTab('roster')" class="group relative bg-obsidian-card hover:bg-slate-900/60 border border-obsidian-border hover:border-sky-400/80 p-7 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1.5 shadow-glass-card hover:shadow-lg">
-                    <div class="w-12 h-12 rounded-xl bg-sky-400/10 border border-sky-400/30 text-sky-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 group-hover:bg-sky-400 group-hover:text-black transition-all duration-300">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest uppercase block mb-1">ROSTER // 03</span>
-                    <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-sky-400 transition-colors">ROSTER TETAP</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-6">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
-                    <div class="flex items-center text-sky-400 font-tech font-bold text-xs tracking-wider">
-                        <span>CEK ROSTER VERIFIKASI</span>
-                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1.5 transition-transform"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            <!-- Catatan Juara Content -->
-            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 sm:p-8 hidden animate-fade-in shadow-glass-card">
-                <div class="flex items-center justify-between mb-6 border-b border-obsidian-border pb-4">
-                    <div>
-                        <span class="font-tech text-xs tracking-widest text-emerald-accent uppercase font-semibold">HALL OF FAME</span>
-                        <h3 class="font-display font-bold text-2xl text-white">CATATAN JUARA</h3>
-                    </div>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-obsidian border border-obsidian-border transition-colors">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
-                <div class="text-center py-16 px-4 bg-obsidian/60 border border-dashed border-obsidian-lightBorder rounded-xl">
-                    <div class="w-16 h-16 rounded-full bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-2xl mx-auto mb-4 animate-bounce">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <h4 class="font-display font-bold text-xl text-white tracking-wide">SEASON INI BELUM DITENTUKAN</h4>
-                    <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-sm mx-auto">Pertandingan sedang disiapkan. Jadilah tim pertama yang mengukir sejarah kemenangan di season ini!</p>
-                </div>
-            </div>
-
-            <!-- Roster Content -->
-            <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 sm:p-8 hidden animate-fade-in shadow-glass-card">
-                <div class="flex items-center justify-between mb-6 border-b border-obsidian-border pb-4">
-                    <div>
-                        <span class="font-tech text-xs tracking-widest text-sky-400 uppercase font-semibold">VERIFIED PLAYER ROSTER</span>
-                        <h3 class="font-display font-bold text-2xl text-white">DAFTAR ROSTER TETAP</h3>
-                    </div>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-obsidian border border-obsidian-border transition-colors">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ANANG</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ECON</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">HENGKY</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ANAM</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">MAMAY</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ASEP</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">RIZKY</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">DANI</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">IRSYA</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">BANG BJ</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">EL</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">AGUNG</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">PIMEN</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ROY</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">DIKA</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">FIKRY</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">YANSUO</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">YUAN</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">AGIL</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">SIMPING</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">ANGGA</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">JITO</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">NANONG</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">RAYCHA</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                    <div class="p-[1px] rounded-xl bg-gradient-to-r from-obsidian-border to-obsidian-lightBorder hover:from-sky-400/50 hover:to-sky-400/20 transition-all">
-                        <div class="bg-obsidian px-3.5 py-3 rounded-[11px] flex items-center justify-between">
-                            <span class="font-tech font-bold text-xs text-white tracking-wider">BANG ARI</span>
-                            <span class="px-2 py-0.5 rounded bg-emerald-accent/10 border border-emerald-accent/30 text-[10px] text-emerald-accent font-tech">VERIFIED</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- FLOATING WHATSAPP BUTTON (Pojok Kanan Bawah) -->
-    <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20bd5a] shadow-[0_4px_20px_rgba(37,211,102,0.5)] transition-all duration-300 hover:scale-110 active:scale-95 group"
-       title="Hubungi Admin via WhatsApp">
-        <img src="https://i.postimg.cc/66k5z6k5/pngwing-com.png" alt="WhatsApp Admin" class="w-9 h-9 sm:w-10 sm:h-10 object-contain">
-        <span class="absolute right-full mr-3 px-3 py-1.5 rounded-xl bg-obsidian-card border border-emerald-accent/30 text-white font-tech text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
-            Hubungi Admin WA
-        </span>
-    </a>
-
-    <!-- FLOATING LIVE ARENA CHAT WIDGET (Pojok Kiri Bawah - Cbox Online Resmi) -->
-    <div class="fixed bottom-6 left-6 z-50">
-        <!-- Floating Toggle Button -->
-        <button id="chatToggleBtn" onclick="toggleFloatingChat()" class="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-400 hover:to-violet-500 shadow-[0_4px_25px_rgba(37,231,255,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 text-white relative group">
-            <i class="fa-solid fa-comments text-xl sm:text-2xl"></i>
-            <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-accent rounded-full animate-ping"></span>
-            <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-accent rounded-full border-2 border-obsidian"></span>
-            <span class="absolute left-full ml-3 px-3 py-1.5 rounded-xl bg-obsidian-card border border-cyan-400/30 text-white font-tech text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
-                Buka Arena Chat
-            </span>
-        </button>
-
-        <!-- Floating Chat Window -->
-        <div id="floatingChatWindow" class="hidden absolute bottom-20 left-0 w-[320px] sm:w-[380px] h-[450px] bg-obsidian-card border border-cyan-400/40 rounded-2xl shadow-2xl overflow-hidden animate-modal-spring flex flex-col">
-            <!-- Header Chat -->
-            <div class="bg-obsidian px-4 py-3 border-b border-obsidian-border flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-accent animate-pulse"></span>
-                    <h3 class="font-display font-bold text-sm text-white tracking-wider">ONLINE ARENA CHAT</h3>
-                </div>
-                <button onclick="toggleFloatingChat()" class="text-slate-400 hover:text-white p-1.5 rounded-lg bg-obsidian-card hover:bg-obsidian border border-obsidian-border transition-colors">
-                    <i class="fa-solid fa-xmark text-xs"></i>
-                </button>
-            </div>
-
-            <!-- Frame Cbox Chat Real-time Resmi milik Farhan -->
-            <div class="flex-grow w-full h-full bg-obsidian">
-                <iframe src="https://www5.cbox.ws/box/?boxid=967762&boxtag=IwMvJa" width="100%" height="100%" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+                <h3 class="font-display font-bold text-lg text-white mb-2">Rules & Regulasi</h3>
+                <p class="text-slate-400 text-xs">Baca peraturan pertandingan, sistem ban/pick, dan jadwal tanding.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- RULES MODAL -->
-    <div id="rulesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/80 backdrop-blur-md hidden p-4 overflow-y-auto animate-fade-in">
-        <div class="relative w-full max-w-3xl bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-6 sm:p-8 shadow-glass-card my-8 animate-modal-spring max-h-[85vh] overflow-y-auto">
-            <button onclick="closeModal('rulesModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-9 h-9 rounded-lg bg-obsidian flex items-center justify-center border border-obsidian-border transition-colors">
+    <!-- FOOTER -->
+    <footer class="bg-obsidian border-t border-obsidian-border py-8 text-center text-xs text-slate-500 font-tech mt-20">
+        <p>&copy; 2026 TIBA TIBA TOURNAMENT. All rights reserved.</p>
+    </footer>
+
+    <!-- MODAL PENDAFTARAN -->
+    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
+        <div class="bg-obsidian-card border border-obsidian-border rounded-2xl max-w-md w-full p-6 relative shadow-glass-card">
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="mb-6 border-b border-obsidian-border pb-4">
-                <span class="font-tech text-xs tracking-widest text-emerald-accent uppercase font-semibold">TOURNAMENT RULEBOOK</span>
-                <h3 class="font-display font-extrabold text-2xl text-white mt-1">REGULASI & PERATURAN TIBATIBA_TURNAMEN</h3>
-            </div>
-
-            <div class="space-y-5 text-slate-300 text-sm leading-relaxed font-body">
-                <!-- 1. Format Turnamen -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-emerald-accent text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-sitemap text-sm"></i> 1. Format Turnamen & Bracket
-                    </h4>
-                    <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-xs sm:text-sm mb-3">
-                        <li><strong class="text-white">Sistem Turnamen:</strong> Double Elimination (Upper Bracket & Lower Bracket).</li>
-                        <li><strong class="text-white">Jumlah Tim:</strong> 7 Tim.</li>
-                    </ul>
-                    <div class="border-t border-obsidian-border pt-3 mt-3">
-                        <p class="font-tech font-semibold text-xs text-white uppercase mb-1.5">Format Game:</p>
-                        <ul class="list-disc list-inside space-y-1 text-slate-300 text-xs sm:text-sm">
-                            <li><strong class="text-white">Babak Penyisihan hingga Final Bracket:</strong> Best of 3 (BO3) – Tim pertama yang meraih 2 kemenangan lolos ke babak berikutnya.</li>
-                            <li><strong class="text-white">Grand Final:</strong> Best of 5 (BO5) – Tim pertama yang meraih 3 kemenangan keluar sebagai juara.</li>
-                            <li><strong class="text-white">Sistem Seed (7 Tim):</strong> Karena jumlah tim ganjil, akan ada 1 tim yang mendapatkan Bye (langsung lolos ke ronde berikutnya di Upper Bracket berdasarkan hasil drawing acak), sementara 6 tim lainnya bertanding di ronde pertama.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 2. Aturan Pertandingan -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-sky-400 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-gamepad text-sm"></i> 2. Aturan Pertandingan (In-Game Rules)
-                    </h4>
-                    <p class="text-xs sm:text-sm text-slate-300"><strong class="text-white">Mode Game:</strong> Custom - Draft Pick (5 Ban Hero per tim, total 10 Ban).</p>
-                </div>
-
-                <!-- 3. Jadwal & Keterlambatan -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-amber-400 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-clock text-sm"></i> 3. Jadwal & Keterlambatan (Tolerance Time)
-                    </h4>
-                    <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-300 mb-3">
-                        <li><strong class="text-white">Waktu Pemanggilan:</strong> Tim harus siap di lobby 10 menit sebelum jadwal pertandingan dimulai.</li>
-                        <li><strong class="text-white">Toleransi Keterlambatan:</strong> Maksimal 15 menit dari waktu yang ditentukan.</li>
-                    </ul>
-                    <div class="border-t border-obsidian-border pt-3 mt-3">
-                        <p class="font-tech font-semibold text-xs text-crimson uppercase mb-1.5">Sanksi Keterlambatan:</p>
-                        <ul class="list-disc list-inside space-y-1 text-slate-300 text-xs sm:text-sm">
-                            <li><strong class="text-white">Keterlambatan >15 menit:</strong> Tim dianggap kalah di Game 1 (Skor 0-1).</li>
-                            <li><strong class="text-white">Keterlambatan >25 menit:</strong> Tim dianggap kalah dalam 1 Match penuh (Gugur/Diskualifikasi dari match tersebut).</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 4. TIDAK ADA JEDA / PAUSE -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-crimson/40">
-                    <h4 class="font-tech font-bold text-crimson text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-ban text-sm"></i> 4. TIDAK ADA JEDA / PAUSE
-                    </h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
-                            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base shrink-0"></i>
-                            <span>Lag parah / Gangguan koneksi (Ping merah)</span>
-                        </div>
-                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
-                            <i class="fa-solid fa-mobile-screen-button text-crimson text-base shrink-0"></i>
-                            <span>Ponsel crash / aplikasi keluar sendiri (force close)</span>
-                        </div>
-                        <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border flex items-center gap-2 text-xs text-slate-300">
-                            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base shrink-0"></i>
-                            <span>Masalah perangkat keras (layar tidak merespon, dll)</span>
-                        </div>
-                    </div>
-                    <!-- Indikator Sinyal/WiFi -->
-                    <div class="flex items-center justify-center gap-3 py-2 px-3 bg-crimson/10 border border-crimson/30 rounded-lg text-crimson font-tech text-xs tracking-wider mb-2">
-                        <i class="fa-solid fa-wifi text-sm animate-pulse"></i>
-                        <i class="fa-solid fa-signal text-sm animate-pulse"></i>
-                        <span>#TANGGUNGJAWAB SETIAP PLAYER/TIM</span>
-                    </div>
-                </div>
-
-                <!-- 5. KEPUTUSAN PANITIA -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-emerald-accent text-base mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-gavel text-sm"></i> 5. KEPUTUSAN PANITIA MUTLAK
-                    </h4>
-                    <p class="text-xs text-slate-400">Seluruh keputusan panitia bersifat mutlak dan tidak dapat diganggu gugat.</p>
-                </div>
-
-                <!-- 6. Payment Pendaftaran -->
-                <div class="bg-obsidian/80 p-5 rounded-xl border border-obsidian-border">
-                    <h4 class="font-tech font-bold text-amber-400 text-base mb-1.5 flex items-center gap-2">
-                        <i class="fa-solid fa-wallet text-sm"></i> 6. PAYMENT PENDAFTARAN
-                    </h4>
-                    <p class="text-xs sm:text-sm text-slate-300">Payment pendaftaran <strong class="text-white">200k / 4k rupe / player</strong>, dan dibayarkan paling lambat setelah <strong class="text-emerald-accent">TOURNAMENT S3 SELESAI</strong>.</p>
-                </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-obsidian-border text-right">
-                <button onclick="closeModal('rulesModal')" class="px-6 py-2.5 bg-emerald-accent hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase rounded-lg transition-all shadow-emerald-glow">
-                    SAYA MEMAHAMI RULES
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- REGISTRATION MODAL -->
-    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/80 backdrop-blur-md hidden p-4 overflow-y-auto animate-fade-in">
-        <div class="relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-6 sm:p-8 shadow-glass-card my-8 animate-modal-spring">
-            <button onclick="closeModal('registerModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-9 h-9 rounded-lg bg-obsidian flex items-center justify-center border border-obsidian-border transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="mb-6">
-                <span class="font-tech text-xs tracking-widest text-crimson uppercase font-semibold">FORMULIR PENDAFTARAN</span>
-                <h3 class="font-display font-extrabold text-2xl text-white mt-1">DAFTAR PESERTA</h3>
-                <p class="text-slate-400 text-xs mt-1">Lengkapi data pribadi dan player ID Mobile Legends kamu di bawah ini.</p>
-            </div>
-
-            <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+            <h3 class="font-display font-bold text-xl text-white mb-4">FORMULIR PENDAFTARAN</h3>
+            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block font-tech text-xs text-slate-300 uppercase tracking-wider mb-1.5">NAMA LENGKAP</label>
-                    <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border focus:border-crimson rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-colors">
+                    <label class="block font-tech text-xs text-slate-300 uppercase mb-1">Nama Lengkap / Nama Tim</label>
+                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-sm text-white focus:border-crimson focus:outline-none">
                 </div>
-
                 <div>
-                    <label class="block font-tech text-xs text-slate-300 uppercase tracking-wider mb-1.5">USERNAME / ID MOBILE LEGEND</label>
-                    <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border focus:border-crimson rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-colors">
+                    <label class="block font-tech text-xs text-slate-300 uppercase mb-1">Username / ID Mobile Legends</label>
+                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-sm text-white focus:border-crimson focus:outline-none" placeholder="Contoh: Farhan #1234 (12345)">
                 </div>
-
                 <div>
-                    <label class="block font-tech text-xs text-slate-300 uppercase tracking-wider mb-1.5">ROLE PLAYER</label>
-                    <input type="text" required placeholder="Contoh: Jungler / Gold Laner / Roamer" class="w-full bg-obsidian border border-obsidian-border focus:border-crimson rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-colors">
-                </div>
-
-                <div>
-                    <label class="block font-tech text-xs text-slate-300 uppercase tracking-wider mb-1.5">METODE PEMBAYARAN</label>
-                    <select required class="w-full bg-obsidian border border-obsidian-border focus:border-crimson rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-colors cursor-pointer">
-                        <option value="" disabled selected class="text-slate-500">-- Pilih Opsi Pembayaran --</option>
-                        <option value="GAJIAN">GAJIAN</option>
-                        <option value="UM">UM</option>
+                    <label class="block font-tech text-xs text-slate-300 uppercase mb-1">Role Player Utama</label>
+                    <select class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-sm text-white focus:border-crimson focus:outline-none">
+                        <option>Jungler</option>
+                        <option>Gold Laner</option>
+                        <option>Exp Laner</option>
+                        <option>Mid Laner</option>
+                        <option>Roamer</option>
                     </select>
                 </div>
-
-                <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeModal('registerModal')" class="px-5 py-2.5 rounded-xl bg-obsidian border border-obsidian-border text-slate-300 hover:text-white font-tech text-xs uppercase">
-                        BATAL
-                    </button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-crimson to-crimson-dark text-white font-tech font-bold text-xs uppercase shadow-crimson-glow hover:scale-[1.02] transition-all">
-                        SUBMIT DATA
-                    </button>
+                <div>
+                    <label class="block font-tech text-xs text-slate-300 uppercase mb-1">Metode Pembayaran</label>
+                    <select class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-sm text-white focus:border-crimson focus:outline-none">
+                        <option>QRIS / Transfer Bank</option>
+                        <option>DANA / OVO / GoPay</option>
+                    </select>
                 </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-crimson text-white font-tech text-xs uppercase tracking-wider font-bold shadow-crimson-glow hover:bg-crimson-dark transition-all mt-2">
+                    Kirim Pendaftaran
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- MESSAGE MODAL -->
-    <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/80 backdrop-blur-md hidden p-4 animate-fade-in">
-        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-glass-card animate-modal-spring">
-            <div class="w-14 h-14 rounded-full bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-2xl mx-auto mb-4">
-                <i class="fa-solid fa-circle-check"></i>
+    <!-- MODAL PESAN SUKSES -->
+    <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
+        <div class="bg-obsidian-card border border-obsidian-border rounded-2xl max-w-sm w-full p-6 text-center shadow-glass-card">
+            <div class="w-14 h-14 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-2xl mx-auto mb-4 border border-emerald-accent/30">
+                <i class="fa-solid fa-check"></i>
             </div>
-            <h3 id="messageTitle" class="font-display font-bold text-xl text-white mb-2">PENDAFTARAN BERHASIL</h3>
-            <p id="messageText" class="text-slate-400 text-xs leading-relaxed mb-6">Data peserta kamu telah terkirim ke sistem registrasi turnamen.</p>
-            <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-tech font-bold text-xs uppercase rounded-xl hover:bg-emerald-400 transition-colors">
-                OK, MENGERTI
+            <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">REGISTRASI TERKIRIM!</h3>
+            <p id="messageText" class="text-slate-400 text-xs mb-6">Data pendaftaran kamu telah berhasil disimpan di sistem turnamen.</p>
+            <button onclick="closeModal('messageModal')" class="w-full py-2.5 rounded-xl bg-obsidian border border-obsidian-border text-white font-tech text-xs uppercase hover:bg-slate-800 transition-all">
+                Tutup
             </button>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-obsidian border-t border-obsidian-border py-8 text-center text-xs text-slate-500 font-tech">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="tracking-wider">TIBA TIBA TOURNAMENT &copy; 2026. ALL RIGHTS RESERVED.</p>
-            <p class="text-[10px] text-slate-600">ULTRA-SLEEK HIGH-TECH GAMING ARENA PORTAL</p>
+    <!-- FLOATING CHAT WIDGET CBOX -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleFloatingChat()" class="w-14 h-14 rounded-full bg-emerald-accent text-obsidian flex items-center justify-center text-2xl shadow-emerald-glow hover:scale-110 transition-transform">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+        <div id="floatingChatWindow" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 h-[480px] bg-obsidian-card border border-obsidian-border rounded-2xl shadow-glass-card overflow-hidden flex flex-col">
+            <div class="bg-obsidian px-4 py-3 border-b border-obsidian-border flex items-center justify-between">
+                <span class="font-display font-bold text-xs tracking-wider text-white">PUBLIC CHAT ARENA</span>
+                <button onclick="toggleFloatingChat()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="flex-grow w-full h-full bg-[#080a0f]">
+                <iframe src="https://www5.cbox.box/chat/?boxid=955217&boxtag=z14WkP" width="100%" height="100%" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- JAVASCRIPT CONTROLLERS -->
+    <!-- JAVASCRIPT UTAMA -->
     <script>
-        // Auto Open Rules Modal
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                openModal('rulesModal');
-            }, 300);
-        });
-
-        // Mobile Nav Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-        }
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-        // Banner Carousel logic
-        let currentIndex = 0;
-        const slidesContainer = document.getElementById('carouselSlides');
-        const totalSlides = 3;
-        const dots = document.querySelectorAll('.carousel-dot');
-
-        function updateCarousel() {
-            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                if (index === currentIndex) {
-                    dot.classList.remove('bg-white/30', 'w-2');
-                    dot.classList.add('bg-crimson', 'w-8');
-                } else {
-                    dot.classList.remove('bg-crimson', 'w-8');
-                    dot.classList.add('bg-white/30', 'w-2');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-
-        function currentSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        let slideInterval = setInterval(nextSlide, 4500);
-        const heroBanner = document.getElementById('hero-banner');
-        heroBanner.addEventListener('mouseenter', () => clearInterval(slideInterval));
-        heroBanner.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 4500));
-
-        // Modal Helpers
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
-            document.body.style.overflow = 'auto';
         }
 
-        // Tab Switching
-        function switchTab(tabName) {
-            const championsContent = document.getElementById('content-champions');
-            const rosterContent = document.getElementById('content-roster');
+        // Registration Submit & Admin Storage
+        function handleFormSubmit(event) {
+            event.preventDefault();
             
-            championsContent.classList.add('hidden');
-            rosterContent.classList.add('hidden');
+            const form = event.target;
+            const inputs = form.querySelectorAll('input, select');
+            
+            const nama = inputs[0].value;
+            const idMl = inputs[1].value;
+            const role = inputs[2].value;
+            const payment = inputs[3].value;
+            const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
-            if (tabName === 'champions') {
-                championsContent.classList.remove('hidden');
-                championsContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else if (tabName === 'roster') {
-                rosterContent.classList.remove('hidden');
-                rosterContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+            let registrations = JSON.parse(localStorage.getItem('tournamentRegistrations')) || [];
+            registrations.push({ nama, idMl, role, payment, timestamp });
+            localStorage.setItem('tournamentRegistrations', JSON.stringify(registrations));
+
+            closeModal('registerModal');
+            
+            document.getElementById('messageTitle').innerText = "REGISTRASI TERKIRIM!";
+            document.getElementById('messageText').innerText = "Data pendaftaran kamu telah berhasil disimpan di sistem turnamen.";
+            openModal('messageModal');
+            
+            form.reset();
         }
-
-        function closeTab() {
-            document.getElementById('content-champions').classList.add('hidden');
-            document.getElementById('content-roster').classList.add('hidden');
-            document.getElementById('main-menu').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Registration Submit
-      function handleFormSubmit(event) {
-    event.preventDefault();
-    
-    // Mengambil data langsung berdasarkan urutan elemen atau form yang aktif
-    const form = event.target;
-    const inputs = form.querySelectorAll('input, select');
-    
-    const nama = inputs[0].value;
-    const idMl = inputs[1].value;
-    const role = inputs[2].value;
-    const payment = inputs[3].value;
-    const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
-
-    // Simpan ke memori browser (LocalStorage)
-    let registrations = JSON.parse(localStorage.getItem('tournamentRegistrations')) || [];
-    registrations.push({ nama, idMl, role, payment, timestamp });
-    localStorage.setItem('tournamentRegistrations', JSON.stringify(registrations));
-
-    closeModal('registerModal');
-    
-    document.getElementById('messageTitle').innerText = "REGISTRASI TERKIRIM!";
-    document.getElementById('messageText').innerText = "Data pendaftaran kamu telah berhasil disimpan di sistem turnamen.";
-    openModal('messageModal');
-    
-    form.reset();
-}
-}
 
         // Toggle Floating Chat Window
         function toggleFloatingChat() {
