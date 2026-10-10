@@ -99,10 +99,10 @@
 </head>
 <body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white w-full">
 
-    <!-- HEADER FULL WIDTH (Selalu Menempel di Ujung Kiri & Kanan) -->
+    <!-- HEADER FULL WIDTH -->
     <header class="sticky top-0 z-40 glass-nav w-full px-4 sm:px-8 lg:px-12">
         <div class="w-full h-16 sm:h-20 flex items-center justify-between">
-            <!-- Brand Logo & Name (Selalu Menempel Kiri) -->
+            <!-- Brand Logo & Name -->
             <a href="#hero-banner" class="flex items-center space-x-2.5 sm:space-x-3.5 group shrink-0">
                 <div class="relative w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
                     <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
@@ -115,7 +115,7 @@
                 </div>
             </a>
 
-            <!-- Desktop Nav Menu (Selalu Menempel Kanan) -->
+            <!-- Desktop Nav Menu -->
             <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold shrink-0">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors">Menu Utama</a>
@@ -369,10 +369,10 @@
     <!-- MESSAGE MODAL -->
     <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
         <div class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-5 text-center max-w-xs w-[85vw]">
-            <h3 id="messageTitle" class="font-display font-bold text-base text-white mb-1">BERHASIL</h3>
-            <p id="messageText" class="text-slate-400 text-xs mb-4">Data pendaftaran telah disimpan.</p>
+            <h3 id="messageTitle" class="font-display font-bold text-base text-white mb-1">REGISTRASI TERKIRIM!</h3>
+            <p id="messageText" class="text-slate-400 text-xs mb-4">Data pendaftaran kamu telah berhasil disimpan di server turnamen.</p>
             <button onclick="closeModal('messageModal')" class="w-full py-2 bg-emerald-accent text-black font-tech font-bold text-xs rounded-xl">
-                OK
+                OK, MENGERTI
             </button>
         </div>
     </div>
@@ -382,7 +382,7 @@
         <p>&copy; 2026 TIBA TIBA TOURNAMENT. ALL RIGHTS RESERVED.</p>
     </footer>
 
-    <!-- JAVASCRIPT CONTROLLERS -->
+    <!-- JAVASCRIPT CONTROLLERS & SHEETDB CONNECTOR -->
     <script>
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -430,50 +430,47 @@
         }
 
         function handleFormSubmit(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const inputs = form.querySelectorAll('input, select');
-    
-    const nama = inputs[0].value;
-    const idMl = inputs[1].value;
-    const role = inputs[2].value;
-    const payment = inputs[3].value;
-    const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+            event.preventDefault();
+            
+            const form = event.target;
+            const inputs = form.querySelectorAll('input, select');
+            
+            const nama = inputs[0].value;
+            const idMl = inputs[1].value;
+            const role = inputs[2].value;
+            const payment = inputs[3].value;
+            const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
-    // Kirim data ke Google Sheet via SheetDB API
-    // GANTI LINK DI BAWAH INI DENGAN LINK API SHEETDB MILIKMU SENDIRI
-    const sheetDB_API = 'https://sheetdb.io/api/v1/brvr900rex3vo';
+            // Link SheetDB API
+            const sheetDB_API = 'https://sheetdb.io/api/v1/brvr900rcx3vd';
 
-    fetch(sheetDB_API, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            data: {
-                nama: nama,
-                idMl: idMl,
-                role: role,
-                payment: payment,
-                timestamp: timestamp
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        closeModal('registerModal');
-        document.getElementById('messageTitle').innerText = "REGISTRASI TERKIRIM!";
-        document.getElementById('messageText').innerText = "Data pendaftaran kamu telah berhasil disimpan di database pusat turnamen.";
-        openModal('messageModal');
-        form.reset();
-    })
-    .catch(error => {
-        alert("Gagal mengirim data. Silakan coba lagi.");
-        console.error('Error:', error);
-    });
-}
+            fetch(sheetDB_API, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: {
+                        nama: nama,
+                        idMl: idMl,
+                        role: role,
+                        payment: payment,
+                        timestamp: timestamp
+                    }
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeModal('registerModal');
+                openModal('messageModal');
+                form.reset();
+            })
+            .catch(error => {
+                alert("Gagal mengirim data. Silakan periksa koneksi internet.");
+                console.error('Error:', error);
+            });
+        }
 
         function toggleFloatingChat() {
             document.getElementById('floatingChatWindow').classList.toggle('hidden');
