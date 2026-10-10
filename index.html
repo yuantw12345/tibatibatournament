@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth w-full overflow-x-hidden">
+<html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,7 +17,6 @@
                         obsidian: {
                             DEFAULT: '#080a0f',
                             card: '#0f131d',
-                            glass: 'rgba(15, 19, 29, 0.75)',
                             border: '#1e2638',
                             lightBorder: '#2a364f'
                         },
@@ -48,19 +47,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Kunci total pergeseran layar ke kanan pada HP */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        html, body {
-            width: 100% !important;
-            max-width: 100% !important;
+        /* KUNCI TOTAL SUPAYA LAYAR TIDAK BISA DIGESER KE SAMPING */
+        html {
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden !important;
+        }
+        body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden !important;
+            position: relative;
             margin: 0;
             padding: 0;
-        }
-
-        body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #090b18 !important;
             color: #f8faff;
@@ -71,14 +70,19 @@
             background-attachment: fixed;
         }
 
+        /* Mencegah Teks Melebar Keluar Layar */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        h1, h2, h3, h4, p, span {
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
         .font-display { font-family: 'Syne', sans-serif; }
         .font-tech { font-family: 'Space Grotesk', sans-serif; }
-
-        /* Mencegah Teks Mekar */
-        h1, h2, h3, h4, p, span, div {
-            overflow-wrap: break-word !important;
-            word-break: break-word !important;
-        }
 
         .bg-tech-grid {
             background-size: 36px 36px;
@@ -88,7 +92,7 @@
         }
 
         .glass-nav {
-            background: rgba(8, 10, 25, .92) !important;
+            background: rgba(8, 10, 25, 0.95) !important;
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(115,137,255,.22) !important;
         }
@@ -98,74 +102,75 @@
         ::-webkit-scrollbar-thumb { background: #784dff; border-radius: 4px; }
     </style>
 </head>
-<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white w-full overflow-x-hidden">
+<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white">
 
     <!-- HEADER -->
-    <header class="sticky top-0 z-40 glass-nav w-full">
+    <header class="sticky top-0 z-40 glass-nav w-full max-w-full overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 h-16 sm:h-20 flex items-center justify-between w-full">
             <!-- Brand Logo & Name -->
-            <a href="#hero-banner" class="flex items-center space-x-2 sm:space-x-3.5 group min-w-0">
-                <div class="relative w-9 h-9 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+            <a href="#hero-banner" class="flex items-center space-x-2 sm:space-x-3 group min-w-0">
+                <div class="relative w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
                     <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="leading-tight min-w-0">
-                    <span class="block font-display font-extrabold text-xs sm:text-xl tracking-wider text-white truncate">
+                    <span class="block font-display font-extrabold text-xs sm:text-lg tracking-wider text-white truncate">
                         TIBA TIBA <span class="text-crimson font-light">TOURNAMENT</span>
                     </span>
-                    <span class="block font-tech text-[8px] sm:text-[10px] tracking-widest text-slate-400 uppercase truncate">OFFICIAL ESPORTS ARENA</span>
+                    <span class="block font-tech text-[7px] sm:text-[9px] tracking-widest text-slate-400 uppercase truncate">OFFICIAL ESPORTS ARENA</span>
                 </div>
             </a>
 
             <!-- Desktop Nav Menu -->
-            <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold">
+            <nav class="hidden md:flex items-center space-x-6 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors">Menu Utama</a>
-                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2">
+                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5">
                     <i class="fa-solid fa-file-shield text-emerald-accent"></i> RULES
                 </button>
-                <button onclick="openModal('registerModal')" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow">
+                <button onclick="openModal('registerModal')" class="px-4 py-2 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg">
                     DAFTAR SEKARANG
                 </button>
             </nav>
 
             <!-- Mobile Hamburger Button -->
-            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white shrink-0 ml-2">
-                <i class="fa-solid fa-bars text-base"></i>
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white shrink-0">
+                <i class="fa-solid fa-bars text-sm"></i>
             </button>
         </div>
 
         <!-- Mobile Nav Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card border-b border-obsidian-border px-5 py-4 space-y-3 font-tech text-xs tracking-wider uppercase w-full">
+        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card border-b border-obsidian-border px-4 py-3 space-y-2 font-tech text-xs tracking-wider uppercase w-full">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
             <a href="#main-menu" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Menu Utama</a>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-file-shield"></i> RULES / PERATURAN
             </button>
-            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-2.5 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center">
+            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-2 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center">
                 DAFTAR SEKARANG
             </button>
         </div>
     </header>
 
-    <main class="flex-grow w-full max-w-full overflow-x-hidden">
+    <main class="flex-grow w-full max-w-full overflow-hidden">
         <!-- Hero Section -->
-        <section id="hero-banner" class="max-w-6xl mx-auto px-4 pt-6 sm:pt-12 pb-6 w-full">
-            <div class="text-center max-w-3xl mx-auto mb-6 w-full">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-wider uppercase mb-3 max-w-full">
-                    <span class="w-2 h-2 rounded-full bg-crimson animate-pulse shrink-0"></span>
+        <section id="hero-banner" class="max-w-6xl mx-auto px-4 pt-4 sm:pt-10 pb-6 w-full">
+            <div class="text-center max-w-3xl mx-auto mb-5 w-full px-1">
+                <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[9px] sm:text-xs font-tech font-semibold tracking-wider uppercase mb-2.5 max-w-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse shrink-0"></span>
                     <span class="truncate">REGISTRASI REGULER SEGERA DITUTUP</span>
                 </div>
-                <h1 class="font-display font-black text-xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight uppercase w-full break-words">
+                <!-- DUA LINE JUDUL UKURAN PAS DI HP -->
+                <h1 class="font-display font-black text-xl sm:text-4xl md:text-6xl tracking-tight text-white mb-2 leading-tight uppercase w-full">
                     DOMINASI ARENA <br><span class="bg-gradient-to-r from-crimson via-purple-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
                 </h1>
-                <p class="text-slate-400 text-xs sm:text-base font-normal max-w-2xl mx-auto px-1 leading-relaxed break-words">
+                <p class="text-slate-400 text-xs sm:text-base font-normal max-w-xl mx-auto leading-relaxed">
                     Persiapkan roster terbaikmu, susun strategi terhebat, dan rebut gelar juara Mobile Legends paling bergengsi musim ini. Total Prize Pool Rp 7.000.000!
                 </p>
             </div>
 
             <!-- Carousel Container -->
-            <div class="relative w-full rounded-xl sm:rounded-2xl overflow-hidden border border-obsidian-lightBorder bg-obsidian-card group">
-                <div class="relative w-full h-[180px] sm:h-[350px] md:h-[450px] overflow-hidden">
+            <div class="relative w-full rounded-xl sm:rounded-2xl overflow-hidden border border-obsidian-lightBorder bg-obsidian-card">
+                <div class="relative w-full h-[170px] sm:h-[320px] md:h-[420px] overflow-hidden">
                     <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 h-full w-full">
                         <div class="min-w-full h-full relative shrink-0">
                             <img src="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg" alt="Esports Banner 1" class="w-full h-full object-cover">
@@ -180,16 +185,16 @@
                 </div>
 
                 <!-- Carousel Controls -->
-                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-black/50 text-white flex items-center justify-center z-10">
+                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-10 sm:h-10 rounded-lg bg-black/60 text-white flex items-center justify-center z-10">
                     <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
-                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-black/50 text-white flex items-center justify-center z-10">
+                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-10 sm:h-10 rounded-lg bg-black/60 text-white flex items-center justify-center z-10">
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
 
                 <!-- Carousel Dots -->
-                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
-                    <button onclick="currentSlide(0)" class="carousel-dot w-6 h-1 rounded-full bg-crimson"></button>
+                <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex space-x-1.5 z-10">
+                    <button onclick="currentSlide(0)" class="carousel-dot w-5 h-1 rounded-full bg-crimson"></button>
                     <button onclick="currentSlide(1)" class="carousel-dot w-2 h-1 rounded-full bg-white/30"></button>
                     <button onclick="currentSlide(2)" class="carousel-dot w-2 h-1 rounded-full bg-white/30"></button>
                 </div>
@@ -197,100 +202,99 @@
         </section>
 
         <!-- MENU UTAMA SECTION -->
-        <section id="main-menu" class="max-w-7xl mx-auto px-4 py-8 w-full">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-2 border-b border-obsidian-border pb-4 w-full">
+        <section id="main-menu" class="max-w-7xl mx-auto px-4 py-6 w-full">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 gap-1 border-b border-obsidian-border pb-3 w-full">
                 <div>
-                    <span class="font-tech text-xs tracking-widest text-crimson uppercase font-semibold">NAVIGATION MATRIX</span>
-                    <h2 class="font-display font-extrabold text-xl sm:text-3xl text-white mt-1">MENU UTAMA TOURNAMENT</h2>
+                    <span class="font-tech text-[10px] tracking-widest text-crimson uppercase font-semibold">NAVIGATION MATRIX</span>
+                    <h2 class="font-display font-extrabold text-lg sm:text-2xl text-white mt-0.5">MENU UTAMA TOURNAMENT</h2>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-6 w-full">
                 <!-- Card 1 -->
-                <div onclick="openModal('registerModal')" class="bg-obsidian-card border border-obsidian-border hover:border-crimson/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all w-full">
-                    <div class="w-10 h-10 rounded-lg bg-crimson/10 border border-crimson/30 text-crimson flex items-center justify-center text-lg mb-4">
+                <div onclick="openModal('registerModal')" class="bg-obsidian-card border border-obsidian-border hover:border-crimson/80 p-4 sm:p-6 rounded-xl cursor-pointer transition-all w-full">
+                    <div class="w-9 h-9 rounded-lg bg-crimson/10 border border-crimson/30 text-crimson flex items-center justify-center text-base mb-3">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest block mb-1">FORM // 01</span>
-                    <h3 class="font-display font-bold text-lg text-white mb-1">ISI FORMULIR PENDAFTARAN</h3>
-                    <p class="text-slate-400 text-xs mb-4">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
+                    <span class="font-tech text-[9px] text-slate-500 tracking-widest block mb-0.5">FORM // 01</span>
+                    <h3 class="font-display font-bold text-base text-white mb-1">ISI FORMULIR PENDAFTARAN</h3>
+                    <p class="text-slate-400 text-xs mb-3">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div onclick="switchTab('champions')" class="bg-obsidian-card border border-obsidian-border hover:border-emerald-accent/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all w-full">
-                    <div class="w-10 h-10 rounded-lg bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-lg mb-4">
+                <div onclick="switchTab('champions')" class="bg-obsidian-card border border-obsidian-border hover:border-emerald-accent/80 p-4 sm:p-6 rounded-xl cursor-pointer transition-all w-full">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent flex items-center justify-center text-base mb-3">
                         <i class="fa-solid fa-trophy"></i>
                     </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest block mb-1">ARCHIVE // 02</span>
-                    <h3 class="font-display font-bold text-lg text-white mb-1">CATATAN JUARA</h3>
-                    <p class="text-slate-400 text-xs mb-4">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
+                    <span class="font-tech text-[9px] text-slate-500 tracking-widest block mb-0.5">ARCHIVE // 02</span>
+                    <h3 class="font-display font-bold text-base text-white mb-1">CATATAN JUARA</h3>
+                    <p class="text-slate-400 text-xs mb-3">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div onclick="switchTab('roster')" class="bg-obsidian-card border border-obsidian-border hover:border-sky-400/80 p-5 sm:p-7 rounded-xl sm:rounded-2xl cursor-pointer transition-all w-full">
-                    <div class="w-10 h-10 rounded-lg bg-sky-400/10 border border-sky-400/30 text-sky-400 flex items-center justify-center text-lg mb-4">
+                <div onclick="switchTab('roster')" class="bg-obsidian-card border border-obsidian-border hover:border-sky-400/80 p-4 sm:p-6 rounded-xl cursor-pointer transition-all w-full">
+                    <div class="w-9 h-9 rounded-lg bg-sky-400/10 border border-sky-400/30 text-sky-400 flex items-center justify-center text-base mb-3">
                         <i class="fa-solid fa-users"></i>
                     </div>
-                    <span class="font-tech text-[10px] text-slate-500 tracking-widest block mb-1">ROSTER // 03</span>
-                    <h3 class="font-display font-bold text-lg text-white mb-1">ROSTER TETAP</h3>
-                    <p class="text-slate-400 text-xs mb-4">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
+                    <span class="font-tech text-[9px] text-slate-500 tracking-widest block mb-0.5">ROSTER // 03</span>
+                    <h3 class="font-display font-bold text-base text-white mb-1">ROSTER TETAP</h3>
+                    <p class="text-slate-400 text-xs mb-3">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
                 </div>
             </div>
         </section>
 
         <!-- DYNAMIC SECTION -->
-        <section id="dynamic-section" class="max-w-7xl mx-auto px-4 pb-12 w-full">
+        <section id="dynamic-section" class="max-w-7xl mx-auto px-4 pb-10 w-full">
             <!-- Catatan Juara -->
-            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-xl p-5 sm:p-8 hidden w-full">
-                <div class="flex items-center justify-between mb-4 border-b border-obsidian-border pb-3">
-                    <h3 class="font-display font-bold text-xl text-white">CATATAN JUARA</h3>
+            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-xl p-4 sm:p-6 hidden w-full">
+                <div class="flex items-center justify-between mb-3 border-b border-obsidian-border pb-2">
+                    <h3 class="font-display font-bold text-lg text-white">CATATAN JUARA</h3>
                     <button onclick="closeTab()" class="text-slate-400 p-1"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div class="text-center py-10 px-4">
-                    <h4 class="font-display font-bold text-lg text-white">SEASON INI BELUM DITENTUKAN</h4>
+                <div class="text-center py-8 px-2">
+                    <h4 class="font-display font-bold text-base text-white">SEASON INI BELUM DITENTUKAN</h4>
                 </div>
             </div>
 
             <!-- Roster Content -->
-            <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-xl p-5 sm:p-8 hidden w-full">
-                <div class="flex items-center justify-between mb-4 border-b border-obsidian-border pb-3">
-                    <h3 class="font-display font-bold text-xl text-white">DAFTAR ROSTER TETAP</h3>
+            <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-xl p-4 sm:p-6 hidden w-full">
+                <div class="flex items-center justify-between mb-3 border-b border-obsidian-border pb-2">
+                    <h3 class="font-display font-bold text-lg text-white">DAFTAR ROSTER TETAP</h3>
                     <button onclick="closeTab()" class="text-slate-400 p-1"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full">
-                    <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
-                        <span>ANANG</span><span class="text-emerald-accent text-[10px]">VERIFIED</span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
+                    <div class="bg-obsidian p-2 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
+                        <span>ANANG</span><span class="text-emerald-accent text-[9px]">VERIFIED</span>
                     </div>
-                    <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
-                        <span>ECON</span><span class="text-emerald-accent text-[10px]">VERIFIED</span>
+                    <div class="bg-obsidian p-2 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
+                        <span>ECON</span><span class="text-emerald-accent text-[9px]">VERIFIED</span>
                     </div>
-                    <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
-                        <span>HENGKY</span><span class="text-emerald-accent text-[10px]">VERIFIED</span>
+                    <div class="bg-obsidian p-2 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
+                        <span>HENGKY</span><span class="text-emerald-accent text-[9px]">VERIFIED</span>
                     </div>
-                    <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
-                        <span>ANAM</span><span class="text-emerald-accent text-[10px]">VERIFIED</span>
+                    <div class="bg-obsidian p-2 rounded-lg border border-obsidian-border flex justify-between text-xs font-bold text-white">
+                        <span>ANAM</span><span class="text-emerald-accent text-[9px]">VERIFIED</span>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FLOATING WHATSAPP BUTTON -->
+    <!-- FLOATING BUTTONS (Saling Menyusun di Kiri/Kanan) -->
     <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." 
        target="_blank" 
        rel="noopener noreferrer" 
-       class="fixed bottom-16 right-3 sm:bottom-6 sm:right-6 z-40 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-lg">
-        <img src="https://i.postimg.cc/66k5z6k5/pngwing-com.png" alt="WA" class="w-6 h-6 sm:w-8 sm:h-8 object-contain">
+       class="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#25D366] text-white shadow-lg">
+        <img src="https://i.postimg.cc/66k5z6k5/pngwing-com.png" alt="WA" class="w-6 h-6 object-contain">
     </a>
 
-    <!-- FLOATING LIVE ARENA CHAT WIDGET -->
-    <div class="fixed bottom-3 left-3 sm:bottom-6 sm:left-6 z-40">
-        <button id="chatToggleBtn" onclick="toggleFloatingChat()" class="flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-lg">
-            <i class="fa-solid fa-comments text-sm sm:text-xl"></i>
+    <div class="fixed bottom-4 left-3 sm:bottom-6 sm:left-6 z-40">
+        <button id="chatToggleBtn" onclick="toggleFloatingChat()" class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-lg">
+            <i class="fa-solid fa-comments text-sm sm:text-lg"></i>
         </button>
 
-        <div id="floatingChatWindow" class="hidden absolute bottom-12 left-0 w-[270px] sm:w-[360px] h-[380px] bg-obsidian-card border border-cyan-400/40 rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-obsidian px-3 py-2 border-b border-obsidian-border flex items-center justify-between">
+        <div id="floatingChatWindow" class="hidden absolute bottom-12 left-0 w-[260px] sm:w-[340px] h-[360px] bg-obsidian-card border border-cyan-400/40 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-obsidian px-3 py-1.5 border-b border-obsidian-border flex items-center justify-between">
                 <span class="font-display font-bold text-xs text-white">PUBLIC CHAT</span>
                 <button onclick="toggleFloatingChat()" class="text-slate-400"><i class="fa-solid fa-xmark text-xs"></i></button>
             </div>
@@ -300,33 +304,33 @@
         </div>
     </div>
 
-    <!-- RULES MODAL (Pas Layar HP) -->
+    <!-- RULES MODAL -->
     <div id="rulesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-3 overflow-y-auto w-full">
-        <div class="relative w-full max-w-xl bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 sm:p-6 shadow-glass-card my-auto max-h-[85vh] overflow-y-auto">
+        <div class="relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-glass-card my-auto max-h-[85vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-3 right-3 text-slate-400 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-extrabold text-lg sm:text-xl text-white mb-3 border-b border-obsidian-border pb-2 break-words">
+            <h3 class="font-display font-extrabold text-base sm:text-lg text-white mb-2.5 border-b border-obsidian-border pb-1.5">
                 REGULASI & PERATURAN TURNAMEN
             </h3>
-            <div class="space-y-3 text-slate-300 text-xs sm:text-sm break-words">
-                <div class="bg-obsidian/80 p-3 rounded-lg border border-obsidian-border">
-                    <p class="font-bold text-emerald-accent mb-1">1. Format Turnamen & Bracket</p>
-                    <p>• Sistem Turnamen: Double Elimination (7 Tim).</p>
-                    <p>• Game: BO3 (Penyisihan/Bracket), BO5 (Grand Final).</p>
+            <div class="space-y-2.5 text-slate-300 text-xs">
+                <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border">
+                    <p class="font-bold text-emerald-accent mb-0.5">1. Format Turnamen & Bracket</p>
+                    <p>• Sistem: Double Elimination (7 Tim).</p>
+                    <p>• Match: BO3 (Penyisihan/Final Bracket), BO5 (Grand Final).</p>
                 </div>
-                <div class="bg-obsidian/80 p-3 rounded-lg border border-obsidian-border">
-                    <p class="font-bold text-sky-400 mb-1">2. Aturan Pertandingan</p>
-                    <p>• Mode Custom Draft Pick (5 Ban hero per tim).</p>
+                <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border">
+                    <p class="font-bold text-sky-400 mb-0.5">2. Aturan Pertandingan</p>
+                    <p>• Custom Draft Pick (5 Ban Hero per tim).</p>
                 </div>
-                <div class="bg-obsidian/80 p-3 rounded-lg border border-obsidian-border">
-                    <p class="font-bold text-amber-400 mb-1">3. Toleransi Waktu</p>
+                <div class="bg-obsidian p-2.5 rounded-lg border border-obsidian-border">
+                    <p class="font-bold text-amber-400 mb-0.5">3. Toleransi Waktu</p>
                     <p>• Maksimal keterlambatan 15 menit dari jadwal.</p>
                 </div>
-                <div class="bg-obsidian/80 p-3 rounded-lg border border-crimson/40">
-                    <p class="font-bold text-crimson mb-1">4. TIDAK ADA JEDA / PAUSE</p>
-                    <p>• Masalah jaringan/sinyal/HP crash adalah tanggung jawab masing-masing player.</p>
+                <div class="bg-obsidian p-2.5 rounded-lg border border-crimson/40">
+                    <p class="font-bold text-crimson mb-0.5">4. TIDAK ADA JEDA / PAUSE</p>
+                    <p>• Kendala jaringan/sinyal/HP crash sepenuhnya tanggung jawab player/tim.</p>
                 </div>
             </div>
-            <button onclick="closeModal('rulesModal')" class="w-full mt-4 py-2.5 bg-emerald-accent text-black font-tech font-bold text-xs uppercase rounded-lg">
+            <button onclick="closeModal('rulesModal')" class="w-full mt-3 py-2 bg-emerald-accent text-black font-tech font-bold text-xs uppercase rounded-lg">
                 SAYA MEMAHAMI RULES
             </button>
         </div>
@@ -334,31 +338,31 @@
 
     <!-- REGISTRATION MODAL -->
     <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-3 overflow-y-auto w-full">
-        <div class="relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-5 shadow-glass-card my-auto">
+        <div class="relative w-full max-w-sm bg-obsidian-card border border-obsidian-lightBorder rounded-xl p-4 shadow-glass-card my-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-3 right-3 text-slate-400 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-extrabold text-lg text-white mb-3 border-b border-obsidian-border pb-2">FORMULIR PENDAFTARAN</h3>
+            <h3 class="font-display font-extrabold text-base text-white mb-2.5 border-b border-obsidian-border pb-1.5">FORMULIR PENDAFTARAN</h3>
 
-            <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+            <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-2.5">
                 <div>
-                    <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Nama Lengkap</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs">
+                    <label class="block font-tech text-[9px] text-slate-300 uppercase mb-0.5">Nama Lengkap</label>
+                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-2.5 py-1.5 text-white text-xs">
                 </div>
                 <div>
-                    <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Username / ID ML</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs">
+                    <label class="block font-tech text-[9px] text-slate-300 uppercase mb-0.5">Username / ID ML</label>
+                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-2.5 py-1.5 text-white text-xs">
                 </div>
                 <div>
-                    <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Role Player</label>
-                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs">
+                    <label class="block font-tech text-[9px] text-slate-300 uppercase mb-0.5">Role Player</label>
+                    <input type="text" required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-2.5 py-1.5 text-white text-xs">
                 </div>
                 <div>
-                    <label class="block font-tech text-[10px] text-slate-300 uppercase mb-1">Metode Pembayaran</label>
-                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs">
+                    <label class="block font-tech text-[9px] text-slate-300 uppercase mb-0.5">Metode Pembayaran</label>
+                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-lg px-2.5 py-1.5 text-white text-xs">
                         <option value="GAJIAN">GAJIAN</option>
                         <option value="UM">UM</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-lg bg-crimson text-white font-tech font-bold text-xs uppercase mt-2">
+                <button type="submit" class="w-full py-2 rounded-lg bg-crimson text-white font-tech font-bold text-xs uppercase mt-2">
                     SUBMIT DATA
                 </button>
             </form>
@@ -367,17 +371,17 @@
 
     <!-- MESSAGE MODAL -->
     <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4">
-        <div class="bg-obsidian-card border border-emerald-accent/30 rounded-xl p-5 text-center max-w-xs w-full">
-            <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
-            <p id="messageText" class="text-slate-400 text-xs mb-4">Data pendaftaran telah disimpan.</p>
-            <button onclick="closeModal('messageModal')" class="w-full py-2 bg-emerald-accent text-black font-tech font-bold text-xs rounded-lg">
+        <div class="bg-obsidian-card border border-emerald-accent/30 rounded-xl p-4 text-center max-w-xs w-full">
+            <h3 id="messageTitle" class="font-display font-bold text-base text-white mb-1">BERHASIL</h3>
+            <p id="messageText" class="text-slate-400 text-xs mb-3">Data pendaftaran telah disimpan.</p>
+            <button onclick="closeModal('messageModal')" class="w-full py-1.5 bg-emerald-accent text-black font-tech font-bold text-xs rounded-lg">
                 OK
             </button>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-obsidian border-t border-obsidian-border py-6 text-center text-[10px] text-slate-500 font-tech w-full">
+    <footer class="bg-obsidian border-t border-obsidian-border py-4 text-center text-[9px] text-slate-500 font-tech w-full">
         <p>&copy; 2026 TIBA TIBA TOURNAMENT. ALL RIGHTS RESERVED.</p>
     </footer>
 
@@ -400,9 +404,9 @@
             dots.forEach((dot, index) => {
                 if (index === currentIndex) {
                     dot.classList.remove('bg-white/30', 'w-2');
-                    dot.classList.add('bg-crimson', 'w-6');
+                    dot.classList.add('bg-crimson', 'w-5');
                 } else {
-                    dot.classList.remove('bg-crimson', 'w-6');
+                    dot.classList.remove('bg-crimson', 'w-5');
                     dot.classList.add('bg-white/30', 'w-2');
                 }
             });
