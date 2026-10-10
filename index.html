@@ -419,7 +419,6 @@
             const payment = document.getElementById('inputPayment').value;
             const timestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
-            const payload = { nama, idMl, role, payment, timestamp };
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxcXY4gVLLHsUl4aZJZYRXQvPOESC2NSX3yGSypyauaPIv2onfRAhGlb5z2R2BuHjNy/exec';
 
             const submitBtn = document.getElementById('submitBtn');
@@ -428,11 +427,18 @@
             submitBtn.disabled = true;
 
             try {
+                const formData = new URLSearchParams();
+                formData.append('nama', nama);
+                formData.append('idMl', idMl);
+                formData.append('role', role);
+                formData.append('payment', payment);
+                formData.append('timestamp', timestamp);
+
                 await fetch(scriptURL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
                 });
 
                 closeModal('registerModal');
