@@ -92,7 +92,7 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h1 class="font-bold text-xl sm:text-2xl text-slate-900">Daftar Pendaftar Masuk</h1>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time dari database pusat.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time dari Google Sheet.</p>
                 </div>
                 <button onclick="clearRegistrations()" class="px-4 py-2 rounded-lg bg-white border border-red-300 text-red-600 hover:bg-red-50 font-semibold text-xs transition-all flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-trash-can"></i> Reset Semua Data
@@ -146,7 +146,7 @@
             { user: 'panitia5', pass: 'tibatibaturnamen' }
         ];
 
-        // GANTI LINK DI BAWAH INI DENGAN LINK API SHEETDB MILIKMU SENDIRI
+        // Link SheetDB API yang benar
         const sheetDB_API = 'https://sheetdb.io/api/v1/brvr900rex3vo';
 
         function handleLogin(event) {
@@ -274,7 +274,7 @@
 
         window.addEventListener('DOMContentLoaded', checkAuth);
 
-        // Auto-refresh data setiap 3 detik supaya panitia melihat data baru dari perangkat lain secara real-time
+        // Auto-refresh data setiap 3 detik supaya panitia melihat data baru secara real-time
         setInterval(() => {
             if (localStorage.getItem('panitiaLoggedIn') === 'true') {
                 loadRegistrations();
