@@ -98,7 +98,6 @@
 </head>
 <body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white w-full">
 
-    <!-- HEADER FULL WIDTH -->
     <header class="sticky top-0 z-40 glass-nav w-full px-4 sm:px-8 lg:px-12">
         <div class="w-full h-16 sm:h-20 flex items-center justify-between">
             <a href="#hero-banner" class="flex items-center space-x-2.5 sm:space-x-3.5 group shrink-0">
@@ -430,7 +429,7 @@
             submitBtn.innerText = "MENGIRIM DATA...";
             submitBtn.disabled = true;
 
-            // Format pengiriman SheetDB Standar Objek Tunggal
+            // FORMAT SHEETDB DENGAN PEMBUNGKUS data: [ { ... } ]
             fetch(sheetDB_API, {
                 method: 'POST',
                 headers: {
@@ -438,21 +437,32 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    nama: nama,
-                    idMl: idMl,
-                    role: role,
-                    payment: payment,
-                    timestamp: timestamp
+                    data: [
+                        {
+                            nama: nama,
+                            idMl: idMl,
+                            role: role,
+                            payment: payment,
+                            timestamp: timestamp
+                        }
+                    ]
                 })
             })
             .then(async response => {
-                const resData = await response.json();
+                const resText = await response.text();
+                let resData;
+                try {
+                    resData = JSON.parse(resText);
+                } catch(e) {
+                    resData = { message: resText };
+                }
+
                 if (response.ok) {
                     closeModal('registerModal');
                     openModal('messageModal');
                     form.reset();
                 } else {
-                    alert("Gagal menyimpan data ke SheetDB: " + JSON.stringify(resData));
+                    alert("Gagal dari SheetDB: " + JSON.stringify(resData));
                 }
             })
             .catch(error => {
