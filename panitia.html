@@ -25,7 +25,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- LOGIN CONTAINER (Tampil jika belum login) -->
+    <!-- LOGIN CONTAINER -->
     <div id="loginSection" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-8 shadow-xl">
             <div class="text-center mb-6">
@@ -60,9 +60,8 @@
         </div>
     </div>
 
-    <!-- DASHBOARD PANEL (Tersembunyi sampai berhasil login) -->
+    <!-- DASHBOARD PANEL -->
     <div id="dashboardSection" class="hidden min-h-screen flex flex-col justify-between">
-        <!-- HEADER ADMIN -->
         <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -87,19 +86,14 @@
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h1 class="font-bold text-xl sm:text-2xl text-slate-900">Daftar Pendaftar Masuk</h1>
                     <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola dan pantau data tim peserta turnamen secara real-time dari Google Sheet.</p>
                 </div>
-                <button onclick="clearRegistrations()" class="px-4 py-2 rounded-lg bg-white border border-red-300 text-red-600 hover:bg-red-50 font-semibold text-xs transition-all flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-trash-can"></i> Reset Semua Data
-                </button>
             </div>
 
-            <!-- Table Container -->
             <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -111,15 +105,12 @@
                                 <th class="py-3.5 px-6">Role Player</th>
                                 <th class="py-3.5 px-6">Pembayaran</th>
                                 <th class="py-3.5 px-6">Waktu Daftar</th>
-                                <th class="py-3.5 px-6 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="registrationTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm text-slate-700">
-                            <!-- Data masuk otomatis dari Google Sheet -->
                         </tbody>
                     </table>
                 </div>
-                <!-- Empty State -->
                 <div id="emptyState" class="hidden text-center py-16 px-4">
                     <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xl mx-auto mb-3 border border-slate-200">
                         <i class="fa-solid fa-folder-open"></i>
@@ -130,13 +121,11 @@
             </div>
         </main>
 
-        <!-- FOOTER -->
         <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
             <p>&copy; 2026 Catatan Panitia &bull; Tiba Tiba Tournament Administration System.</p>
         </footer>
     </div>
 
-    <!-- SCRIPT LOGIN & SHEETDB CONNECTOR -->
     <script>
         const validPanitia = [
             { user: 'panitia1', pass: 'tibatibaturnamen' },
@@ -146,8 +135,7 @@
             { user: 'panitia5', pass: 'tibatibaturnamen' }
         ];
 
-        // Link SheetDB API yang benar
-        const sheetDB_API = 'https://sheetdb.io/api/v1/brvr900rex3vo';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxg1FhWZvwA3SdH5nPvsvHntI1_w4462CJWAgd30ONSSzm5J3bjn0TB_a1piHQ-2PSI/exec';
 
         function handleLogin(event) {
             event.preventDefault();
@@ -194,7 +182,7 @@
             const tableBody = document.getElementById('registrationTableBody');
             const emptyState = document.getElementById('emptyState');
             
-            fetch(sheetDB_API)
+            fetch(scriptURL)
                 .then(response => response.json())
                 .then(registrations => {
                     tableBody.innerHTML = '';
@@ -218,11 +206,6 @@
                                 <span class="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold text-[11px]">${reg.payment || '-'}</span>
                             </td>
                             <td class="py-3.5 px-6 text-slate-500 text-xs">${reg.timestamp || '-'}</td>
-                            <td class="py-3.5 px-6 text-center">
-                                <button onclick="deleteRegistration('${reg.idMl}')" class="p-1.5 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Hapus Data">
-                                    <i class="fa-solid fa-trash text-xs"></i>
-                                </button>
-                            </td>
                         `;
                         tableBody.appendChild(row);
                     });
@@ -232,49 +215,8 @@
                 });
         }
 
-        function deleteRegistration(idMl) {
-            if (confirm("Apakah kamu yakin ingin menghapus data pendaftar ini?")) {
-                fetch(`${sheetDB_API}/idMl/${idMl}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    loadRegistrations();
-                })
-                .catch(error => {
-                    alert("Gagal menghapus data.");
-                    console.error('Error:', error);
-                });
-            }
-        }
-
-        function clearRegistrations() {
-            if (confirm("Apakah kamu yakin ingin menghapus SELURUH data pendaftar di database?")) {
-                fetch(`${sheetDB_API}/all`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    loadRegistrations();
-                })
-                .catch(error => {
-                    alert("Gagal mereset data.");
-                    console.error('Error:', error);
-                });
-            }
-        }
-
         window.addEventListener('DOMContentLoaded', checkAuth);
 
-        // Auto-refresh data setiap 3 detik supaya panitia melihat data baru secara real-time
         setInterval(() => {
             if (localStorage.getItem('panitiaLoggedIn') === 'true') {
                 loadRegistrations();
