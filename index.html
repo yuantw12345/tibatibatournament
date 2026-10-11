@@ -261,7 +261,7 @@
             </div>
         </section>
 
-        <!-- SEKSI LIVE STREAMING & CHAT BERDAMPINGAN -->
+        <!-- SEKSI LIVE STREAMING & LIVE CHAT (BERDAMPINGAN) -->
         <section id="live-stream" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="bg-obsidian-card border border-crimson/40 rounded-2xl p-4 sm:p-6 shadow-crimson-glow">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
@@ -289,22 +289,23 @@
                         <p class="text-[11px] text-slate-400 font-tech mt-2 px-1"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Saksikan keseruan pertandingan secara langsung. Dilarang spam atau berkata kasar di kolom chat!</p>
                     </div>
 
+                    <!-- KONTEN LIVE CHAT ARENA (DIPISAH DENGAN CHAT GLOBAL) -->
                     <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[320px] lg:h-auto">
                         <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border">
-                            <span class="font-tech text-xs text-sky-400 font-bold flex items-center gap-1.5">
-                                <i class="fa-solid fa-comments"></i> LIVE CHAT STREAM
+                            <span class="font-tech text-xs text-crimson font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-headset"></i> LIVE STREAM CHAT
                             </span>
-                            <span class="w-2 h-2 rounded-full bg-emerald-accent animate-ping"></span>
+                            <span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
                         </div>
 
                         <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
-                            <div class="text-center text-slate-500 py-10">Memuat chat real-time...</div>
+                            <div class="text-center text-slate-500 py-10">Memuat live chat...</div>
                         </div>
 
                         <div id="liveChatInputArea">
                             <form id="liveChatForm" onsubmit="handleSendLiveChat(event)" class="hidden flex gap-2">
-                                <input type="text" id="liveChatMessageInput" required placeholder="Ketik komentar..." autocomplete="off" class="flex-grow bg-obsidian-card border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-sky-400">
-                                <button type="submit" class="px-3 py-2 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs rounded-lg cursor-pointer transition-all">
+                                <input type="text" id="liveChatMessageInput" required placeholder="Ketik komentar live..." autocomplete="off" class="flex-grow bg-obsidian-card border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-crimson">
+                                <button type="submit" class="px-3 py-2 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-lg cursor-pointer transition-all shadow-crimson-glow">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </form>
@@ -412,6 +413,7 @@
         </a>
     </div>
 
+    <!-- MODAL CHAT GLOBAL ARENA (TERPISAH) -->
     <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 shadow-2xl flex flex-col h-[520px]">
             <button onclick="closeChatModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -438,6 +440,7 @@
         </div>
     </div>
 
+    <!-- MODAL LOGIN -->
     <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -463,6 +466,7 @@
         </div>
     </div>
 
+    <!-- MODAL REGISTER AKUN -->
     <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -488,6 +492,7 @@
         </div>
     </div>
 
+    <!-- MODAL PENDAFTARAN TURNAMEN -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -530,6 +535,7 @@
         </div>
     </div>
 
+    <!-- MODAL JUARA -->
     <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-2xl bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -570,6 +576,7 @@
         </div>
     </div>
 
+    <!-- MODAL ALERT PESAN -->
     <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-accent/30">
@@ -581,6 +588,7 @@
         </div>
     </div>
 
+    <!-- MODAL KONFIRMASI -->
     <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
@@ -595,7 +603,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & PENGAMAN SINGLE SESSION -->
+    <!-- SCRIPT FIREBASE LOGIC UTAMA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc, onSnapshot, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -617,6 +625,7 @@
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
             initRealtimeChats();
+            initRealtimeLiveChats();
             startSessionWatcher();
         });
 
@@ -648,7 +657,7 @@
             }
         }
 
-        // PENGAWAS SESI PERANGKAT (SINGLE DEVICE SESSION WATCHER)
+        // PENGAWAS SESI WATCHER & BANNED STATUS
         function startSessionWatcher() {
             setInterval(async () => {
                 const loggedUser = localStorage.getItem('activeMemberUser');
@@ -659,32 +668,40 @@
                     const userRef = doc(db, "users", loggedUser);
                     const userSnap = await getDoc(userRef);
                     if (userSnap.exists()) {
-                        const serverToken = userSnap.data().sessionToken;
-                        // Jika token di HP lain berbeda dengan token di HP ini, paksa logout!
+                        const userData = userSnap.data();
+                        
+                        // JIKA DI-BANNED PANITIA
+                        if (userData.isBanned === true) {
+                            localStorage.removeItem('activeMemberUser');
+                            localStorage.removeItem('sessionToken');
+                            checkAuthStatus();
+                            showCustomAlert("AKUN DIBLOKIR", "Sesi diakhiri. Akun Anda telah di-banned oleh panitia.", true);
+                            return;
+                        }
+
+                        // JIKA LOGIN DI HP LAIN
+                        const serverToken = userData.sessionToken;
                         if (serverToken && serverToken !== localToken) {
                             localStorage.removeItem('activeMemberUser');
                             localStorage.removeItem('sessionToken');
                             checkAuthStatus();
-                            showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain. Sesi di perangkat ini diakhiri.", true);
+                            showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain.", true);
                         }
                     }
                 } catch (err) {
                     console.error("Gagal memeriksa sesi:", err);
                 }
-            }, 6000); // Mengecek setiap 6 detik secara otomatis
+            }, 6000);
         }
 
+        // 1. CHAT GLOBAL REAL-TIME (KOLEKSI "chats")
         function initRealtimeChats() {
             const q = query(collection(db, "chats"), orderBy("time", "asc"));
 
             onSnapshot(q, (snapshot) => {
                 const chatBox = document.getElementById('chatBox');
-                const liveChatBox = document.getElementById('liveChatBox');
-                
                 if (snapshot.empty) {
-                    const emptyHtml = '<div class="text-center text-slate-500 py-6">Belum ada komentar. Jadilah yang pertama berkomentar!</div>';
-                    if(chatBox) chatBox.innerHTML = emptyHtml;
-                    if(liveChatBox) liveChatBox.innerHTML = emptyHtml;
+                    if(chatBox) chatBox.innerHTML = '<div class="text-center text-slate-500 py-6">Belum ada obrolan global. Yuk mulai mengobrol!</div>';
                     return;
                 }
 
@@ -694,13 +711,7 @@
                 snapshot.forEach((docSnap) => {
                     const c = docSnap.data();
                     const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
-                    
-                    let formattedTime = '';
-                    if (c.time && c.time.toDate) {
-                        formattedTime = c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    } else {
-                        formattedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    }
+                    let formattedTime = (c.time && c.time.toDate) ? c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 
                     if (isMe) {
                         html += `
@@ -724,39 +735,89 @@
                 });
 
                 if(chatBox) { chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight; }
-                if(liveChatBox) { liveChatBox.innerHTML = html; liveChatBox.scrollTop = liveChatBox.scrollHeight; }
-            }, (error) => {
-                console.error("Gagal mendengarkan data chat real-time:", error);
             });
         }
 
+        // 2. LIVE STREAM CHAT REAL-TIME (KOLEKSI "live_chats")
+        function initRealtimeLiveChats() {
+            const q = query(collection(db, "live_chats"), orderBy("time", "asc"));
+
+            onSnapshot(q, (snapshot) => {
+                const liveChatBox = document.getElementById('liveChatBox');
+                if (snapshot.empty) {
+                    if(liveChatBox) liveChatBox.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada komentar live.</div>';
+                    return;
+                }
+
+                const loggedUser = localStorage.getItem('activeMemberUser');
+                let html = '';
+
+                snapshot.forEach((docSnap) => {
+                    const c = docSnap.data();
+                    const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
+                    let formattedTime = (c.time && c.time.toDate) ? c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+                    if (isMe) {
+                        html += `
+                            <div class="flex flex-col items-end">
+                                <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                <div class="bg-crimson text-white px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                                    ${escapeHtml(c.message)}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="flex flex-col items-start">
+                                <span class="text-[9px] text-sky-400 mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
+                                    ${escapeHtml(c.message)}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                if(liveChatBox) { liveChatBox.innerHTML = html; liveChatBox.scrollTop = liveChatBox.scrollHeight; }
+            });
+        }
+
+        // KIRIM PESAN CHAT GLOBAL
         window.handleSendChat = async function(e) {
             e.preventDefault();
-            await processSendMessage(document.getElementById('chatMessageInput'));
-        }
-
-        window.handleSendLiveChat = async function(e) {
-            e.preventDefault();
-            await processSendMessage(document.getElementById('liveChatMessageInput'));
-        }
-
-        async function processSendMessage(inputElement) {
             const loggedUser = localStorage.getItem('activeMemberUser');
-            if(!loggedUser) return;
-            const message = inputElement.value.trim();
-            if(!message) return;
+            const input = document.getElementById('chatMessageInput');
+            if(!loggedUser || !input.value.trim()) return;
 
-            inputElement.value = '';
+            const msg = input.value.trim();
+            input.value = '';
 
             try {
                 await addDoc(collection(db, "chats"), {
                     username: loggedUser,
-                    message: message,
+                    message: msg,
                     time: serverTimestamp()
                 });
-            } catch (err) {
-                console.error("Gagal mengirim chat ke Firestore:", err);
-            }
+            } catch (err) { console.error(err); }
+        }
+
+        // KIRIM PESAN LIVE STREAM CHAT
+        window.handleSendLiveChat = async function(e) {
+            e.preventDefault();
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            const input = document.getElementById('liveChatMessageInput');
+            if(!loggedUser || !input.value.trim()) return;
+
+            const msg = input.value.trim();
+            input.value = '';
+
+            try {
+                await addDoc(collection(db, "live_chats"), {
+                    username: loggedUser,
+                    message: msg,
+                    time: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
         }
 
         function escapeHtml(text) {
@@ -767,11 +828,7 @@
             document.getElementById('messageTitle').innerText = title;
             document.getElementById('messageText').innerText = text;
             const icon = document.getElementById('messageIcon');
-            if (isError) {
-                icon.className = "fa-solid fa-triangle-exclamation text-crimson";
-            } else {
-                icon.className = "fa-solid fa-circle-check text-emerald-accent";
-            }
+            icon.className = isError ? "fa-solid fa-triangle-exclamation text-crimson" : "fa-solid fa-circle-check text-emerald-accent";
             openModal('messageModal');
         }
 
@@ -780,11 +837,7 @@
             const yesBtn = document.getElementById('confirmYesBtn');
             const newYesBtn = yesBtn.cloneNode(true);
             yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
-            
-            newYesBtn.addEventListener('click', () => {
-                closeModal('confirmModal');
-                onYesCallback();
-            });
+            newYesBtn.addEventListener('click', () => { closeModal('confirmModal'); onYesCallback(); });
             openModal('confirmModal');
         }
 
@@ -799,9 +852,7 @@
             if(tab === 'champions') document.getElementById('content-champions').classList.remove('hidden');
             document.getElementById('dynamic-section').scrollIntoView({ behavior: 'smooth' });
         }
-        window.closeTab = function() {
-            document.getElementById('content-champions').classList.add('hidden');
-        }
+        window.closeTab = function() { document.getElementById('content-champions').classList.add('hidden'); }
 
         window.checkAuthStatus = function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
@@ -871,9 +922,7 @@
                 } else {
                     openModal('registerModal');
                 }
-            } catch (err) {
-                openModal('registerModal');
-            }
+            } catch (err) { openModal('registerModal'); }
         }
 
         window.handleRegisterAccount = async function(event) {
@@ -900,6 +949,7 @@
                     username: username,
                     password: password,
                     sessionToken: sessionToken,
+                    isBanned: false,
                     createdAt: serverTimestamp()
                 });
 
@@ -937,15 +987,19 @@
                 }
 
                 const userData = userSnap.data();
+
+                // DITOLAK JIKA DI-BANNED
+                if (userData.isBanned === true) {
+                    showCustomAlert("AKUN DIBLOKIR", "Akun Anda telah di-banned oleh panitia karena melanggar aturan!", true);
+                    return;
+                }
+
                 if (userData.password !== password) {
                     showCustomAlert("LOGIN GAGAL", "Password salah!", true);
                     return;
                 }
 
-                // Buat token unik baru untuk perangkat ini
                 const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
-
-                // Perbarui token di database Firestore (mengganti sesi HP lama)
                 await updateDoc(userRef, { sessionToken: sessionToken });
 
                 localStorage.setItem('activeMemberUser', username);
