@@ -91,7 +91,6 @@
             box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
-        /* EFEK NEON YANG HALUS DAN ELEGAN */
         .neon-glow-red {
             text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3);
         }
@@ -167,7 +166,7 @@
             <nav class="hidden md:flex items-center space-x-5 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <a href="#live-stream" class="text-slate-300 hover:text-crimson transition-colors flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> Live
+                    <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> Live & Chat
                 </a>
                 <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
@@ -205,7 +204,7 @@
 
         <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
-            <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">● Live Stream</a>
+            <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">● Live & Chat Arena</a>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
             </button>
@@ -261,8 +260,8 @@
             </div>
         </section>
 
-        <!-- SEKSI LIVE STREAMING ARENA -->
-        <section id="live-stream" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- SEKSI LIVE STREAMING & CHAT BERDAMPINGAN -->
+        <section id="live-stream" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="bg-obsidian-card border border-crimson/40 rounded-2xl p-4 sm:p-6 shadow-crimson-glow">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
                     <div class="flex items-center gap-3">
@@ -270,16 +269,52 @@
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-3 w-3 bg-crimson"></span>
                         </span>
-                        <h2 class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-wide">LIVE STREAMING TOURNAMENT</h2>
+                        <h2 class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-wide">LIVE STREAMING & CHAT ARENA</h2>
                     </div>
                     <span class="px-3 py-1 bg-crimson/20 border border-crimson/50 text-crimson font-tech font-bold text-xs rounded-lg uppercase">
                         LIVE BROADCAST
                     </span>
                 </div>
                 
-                <!-- PEMUTAR LIVE YOUTUBE -->
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-obsidian-lightBorder shadow-2xl bg-black">
-                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/jT2N21pGOCI?si=TC4yLjpWzrSw4S3a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <!-- GRID: KIRI VIDEO LIVE, KANAN CHAT INTERAKTIF -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    <!-- PEMUTAR LIVE YOUTUBE (KIRI - 8 KOLOM) -->
+                    <div class="lg:col-span-8 flex flex-col justify-center">
+                        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-obsidian-lightBorder shadow-2xl bg-black">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/jT2N21pGOCI?si=TC4yLjpWzrSw4S3a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-tech mt-2 px-1"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Saksikan keseruan pertandingan secara langsung. Dilarang spam atau berkata kasar di kolom chat!</p>
+                    </div>
+
+                    <!-- KOLOM CHAT LIVE (KANAN - 4 KOLOM) -->
+                    <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[320px] lg:h-auto">
+                        <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border">
+                            <span class="font-tech text-xs text-sky-400 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-comments"></i> LIVE CHAT STREAM
+                            </span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-accent animate-ping"></span>
+                        </div>
+
+                        <!-- KOTAK PESAN CHAT LIVE -->
+                        <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
+                            <div class="text-center text-slate-500 py-10">Memuat chat...</div>
+                        </div>
+
+                        <!-- INPUT CHAT LIVE -->
+                        <div id="liveChatInputArea">
+                            <form id="liveChatForm" onsubmit="handleSendLiveChat(event)" class="hidden flex gap-2">
+                                <input type="text" id="liveChatMessageInput" required placeholder="Ketik komentar..." autocomplete="off" class="flex-grow bg-obsidian-card border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-sky-400">
+                                <button type="submit" class="px-3 py-2 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs rounded-lg cursor-pointer transition-all">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </form>
+
+                            <div id="liveChatGuestNotice" class="bg-obsidian-card border border-amber-500/30 p-2.5 rounded-lg text-center">
+                                <p class="text-[10px] text-amber-400 mb-1.5 font-tech"><i class="fa-solid fa-lock mr-1"></i> Login untuk ikut komentar live!</p>
+                                <button onclick="openModal('loginModal')" class="px-3 py-1 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-[11px] rounded cursor-pointer">Login / Buat Akun</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -365,7 +400,7 @@
         </section>
     </main>
 
-    <!-- FLOATING CHAT GLOBAL BUTTON (DI KIRI BAWAH) -->
+    <!-- FLOATING CHAT GLOBAL MODAL (TETAP ADA) -->
     <button onclick="openChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
         <i class="fa-solid fa-comments text-base"></i>
         <span>CHAT GLOBAL</span>
@@ -408,7 +443,6 @@
 
             <!-- AREA INPUT CHAT -->
             <div id="chatInputArea">
-                <!-- FORM PESAN (UNTUK USER LOGGED IN) -->
                 <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
                     <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-sky-400">
                     <button type="submit" id="chatSendBtn" class="px-4 py-2.5 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all">
@@ -416,7 +450,6 @@
                     </button>
                 </form>
 
-                <!-- PEMBERITAHUAN (JIKA BELUM LOGIN) -->
                 <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-3 rounded-xl text-center">
                     <p class="text-[11px] text-amber-400 mb-2 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
                     <button onclick="closeChatModal(); openModal('loginModal')" class="px-4 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs rounded-lg cursor-pointer">Login / Buat Akun</button>
@@ -595,6 +628,10 @@
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
+            fetchChats(); // Muat chat langsung di section live stream
+            if(!chatInterval) {
+                chatInterval = setInterval(fetchChats, 4000); // Polling otomatis
+            }
         });
 
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
@@ -604,34 +641,37 @@
         // FUNGSI CHAT GLOBAL MODAL
         function openChatModal() {
             openModal('chatModal');
-            const loggedUser = localStorage.getItem('activeMemberUser');
-            if (loggedUser) {
-                document.getElementById('chatForm').classList.remove('hidden');
-                document.getElementById('chatGuestNotice').classList.add('hidden');
-            } else {
-                document.getElementById('chatForm').classList.add('hidden');
-                document.getElementById('chatGuestNotice').classList.remove('hidden');
-            }
-            
+            updateChatAccessUI();
             fetchChats();
-            if(!chatInterval) {
-                chatInterval = setInterval(fetchChats, 4000);
-            }
         }
 
         function closeChatModal() {
             closeModal('chatModal');
-            if(chatInterval) {
-                clearInterval(chatInterval);
-                chatInterval = null;
+        }
+
+        function updateChatAccessUI() {
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            // Update Modal Chat UI
+            if (loggedUser) {
+                document.getElementById('chatForm').classList.remove('hidden');
+                document.getElementById('chatGuestNotice').classList.add('hidden');
+                document.getElementById('liveChatForm').classList.remove('hidden');
+                document.getElementById('liveChatGuestNotice').classList.add('hidden');
+            } else {
+                document.getElementById('chatForm').classList.add('hidden');
+                document.getElementById('chatGuestNotice').classList.remove('hidden');
+                document.getElementById('liveChatForm').classList.add('hidden');
+                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
             }
         }
 
-        // FUNGSI MENGAMBIL PESAN CHAT DARI KOLOM X, Y, Z GOOGLE SHEETS
+        // FUNGSI MENGAMBIL PESAN CHAT DARI GOOGLE SHEETS
         async function fetchChats() {
             if (isSendingChat) return;
 
             const chatBox = document.getElementById('chatBox');
+            const liveChatBox = document.getElementById('liveChatBox');
+
             try {
                 const res = await fetch(`${DATABASE_SCRIPT_URL}?action=getChats`);
                 const data = await res.json();
@@ -640,7 +680,9 @@
 
                 if (data.status === 'success' && data.chats) {
                     if (data.chats.length === 0) {
-                        chatBox.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada percakapan. Jadilah yang pertama berkirim pesan!</div>';
+                        const emptyHtml = '<div class="text-center text-slate-500 py-6">Belum ada komentar. Jadilah yang pertama berkomentar!</div>';
+                        if(chatBox) chatBox.innerHTML = emptyHtml;
+                        if(liveChatBox) liveChatBox.innerHTML = emptyHtml;
                         return;
                     }
 
@@ -654,8 +696,8 @@
                         if (isMe) {
                             html += `
                                 <div class="flex flex-col items-end">
-                                    <span class="text-[10px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
-                                    <div class="bg-sky-500 text-black px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                                    <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                    <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
                                         ${escapeHtml(c.message)}
                                     </div>
                                 </div>
@@ -663,8 +705,8 @@
                         } else {
                             html += `
                                 <div class="flex flex-col items-start">
-                                    <span class="text-[10px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
-                                    <div class="bg-obsidian border border-obsidian-border text-slate-200 px-3 py-2 rounded-2xl rounded-tl-none max-w-[85%] break-words shadow-md">
+                                    <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                    <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
                                         ${escapeHtml(c.message)}
                                     </div>
                                 </div>
@@ -672,45 +714,67 @@
                         }
                     });
 
-                    chatBox.innerHTML = html;
-                    chatBox.scrollTop = chatBox.scrollHeight;
+                    if(chatBox) {
+                        chatBox.innerHTML = html;
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                    }
+                    if(liveChatBox) {
+                        liveChatBox.innerHTML = html;
+                        liveChatBox.scrollTop = liveChatBox.scrollHeight;
+                    }
                 }
             } catch (err) {
                 console.error("Gagal mengambil chat:", err);
             }
         }
 
-        // FUNGSI MENGIRIM PESAN CHAT
+        // FUNGSI MENGIRIM PESAN CHAT DARI MODAL
         async function handleSendChat(e) {
             e.preventDefault();
+            await processSendMessage(document.getElementById('chatMessageInput'));
+        }
+
+        // FUNGSI MENGIRIM PESAN CHAT DARI SECTION LIVE
+        async function handleSendLiveChat(e) {
+            e.preventDefault();
+            await processSendMessage(document.getElementById('liveChatMessageInput'));
+        }
+
+        async function processSendMessage(inputElement) {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if(!loggedUser) return;
 
-            const input = document.getElementById('chatMessageInput');
-            const message = input.value.trim();
+            const message = inputElement.value.trim();
             if(!message) return;
 
             isSendingChat = true;
-            input.value = '';
+            inputElement.value = '';
 
             const chatBox = document.getElementById('chatBox');
-            if(chatBox.innerHTML.includes('Belum ada percakapan')) {
-                chatBox.innerHTML = '';
-            }
+            const liveChatBox = document.getElementById('liveChatBox');
 
             const now = new Date();
             const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             const instantHtml = `
                 <div class="flex flex-col items-end">
-                    <span class="text-[10px] text-slate-400 mb-0.5">@${loggedUser} • ${formattedTime}</span>
-                    <div class="bg-sky-500 text-black px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                    <span class="text-[9px] text-slate-400 mb-0.5">@${loggedUser} • ${formattedTime}</span>
+                    <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
                         ${escapeHtml(message)}
                     </div>
                 </div>
             `;
-            chatBox.insertAdjacentHTML('beforeend', instantHtml);
-            chatBox.scrollTop = chatBox.scrollHeight;
+
+            if(chatBox) {
+                if(chatBox.innerHTML.includes('Belum ada')) chatBox.innerHTML = '';
+                chatBox.insertAdjacentHTML('beforeend', instantHtml);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+            if(liveChatBox) {
+                if(liveChatBox.innerHTML.includes('Belum ada')) liveChatBox.innerHTML = '';
+                liveChatBox.insertAdjacentHTML('beforeend', instantHtml);
+                liveChatBox.scrollTop = liveChatBox.scrollHeight;
+            }
 
             try {
                 await fetch(DATABASE_SCRIPT_URL, {
@@ -731,7 +795,6 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        // FUNGSI CUSTOM ALERT
         function showCustomAlert(title, text, isError = false) {
             document.getElementById('messageTitle').innerText = title;
             document.getElementById('messageText').innerText = text;
@@ -744,7 +807,6 @@
             openModal('messageModal');
         }
 
-        // FUNGSI CUSTOM CONFIRM
         function showCustomConfirm(text, onYesCallback) {
             document.getElementById('confirmText').innerText = text;
             const yesBtn = document.getElementById('confirmYesBtn');
@@ -773,7 +835,6 @@
             document.getElementById('content-champions').classList.add('hidden');
         }
 
-        // CEK STATUS LOGIN
         function checkAuthStatus() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             const authGuestMenu = document.getElementById('authGuestMenu');
@@ -820,6 +881,7 @@
 
                 lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span>';
             }
+            updateChatAccessUI();
         }
 
         function handleCardAuthClick() {
