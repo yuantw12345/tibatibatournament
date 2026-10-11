@@ -33,7 +33,7 @@
                     <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Password</label>
                     <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500">
                 </div>
-                <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg">
+                <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg cursor-pointer">
                     MASUK PANEL
                 </button>
             </form>
@@ -52,19 +52,19 @@
                 </h1>
                 <div class="flex items-center gap-2 mt-2">
                     <span id="welcomeUser" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
-                    <span class="text-[10px] text-emerald-400/80 animate-pulse bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10"><i class="fa-solid fa-circle text-[6px] mr-1"></i> Auto-Refresh Aktif</span>
+                    <span class="text-[10px] text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20"><i class="fa-solid fa-bolt mr-1"></i> Mode Responsif Aktif</span>
                 </div>
             </div>
             
             <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
                 <!-- Tombol Refresh Manual -->
-                <button onclick="manualRefresh()" id="refreshBtn" class="flex-1 md:flex-none px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black text-xs rounded-lg transition-all border border-emerald-500/25 text-center font-bold">
+                <button onclick="manualRefresh()" id="refreshBtn" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black text-xs rounded-xl transition-all border border-emerald-500/25 text-center font-bold cursor-pointer shadow-md">
                     <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
                 </button>
-                <button onclick="logout()" class="flex-1 md:flex-none px-3 py-2 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white text-xs rounded-lg transition-all border border-red-500/25 text-center">
+                <button onclick="logout()" class="flex-1 md:flex-none px-4 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white text-xs rounded-xl transition-all border border-red-500/25 text-center cursor-pointer shadow-md">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
                 </button>
-                <a href="index.html" class="w-full md:w-auto px-3 py-2 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300 text-center">Beranda</a>
+                <a href="index.html" class="w-full md:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-xl text-slate-300 text-center shadow-md">Beranda</a>
             </div>
         </div>
 
@@ -99,8 +99,6 @@
         const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
         const validPassword = 'tibatibaturnamen';
 
-        let autoRefreshInterval = null;
-
         window.addEventListener('DOMContentLoaded', () => {
             const loggedUser = localStorage.getItem('panitiaUser');
             if (loggedUser && validUsers.includes(loggedUser)) {
@@ -126,18 +124,10 @@
             document.getElementById('panelContent').classList.remove('hidden');
             document.getElementById('welcomeUser').innerText = username.toUpperCase();
             loadData();
-
-            // Jalankan auto-refresh setiap 10 detik sekali secara otomatis di latar belakang
-            if (!autoRefreshInterval) {
-                autoRefreshInterval = setInterval(() => {
-                    loadData();
-                }, 10000);
-            }
         }
 
         function logout() {
             localStorage.removeItem('panitiaUser');
-            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
             location.reload();
         }
 
@@ -158,7 +148,6 @@
                     const tbody = document.getElementById('dataTable');
                     tbody.innerHTML = '';
 
-                    // Mendukung format respon berupa array langsung [] maupun objek { status: "success", data: [] }
                     const data = Array.isArray(responseObj) ? responseObj : (responseObj.data || []);
 
                     if (!data || data.length === 0) {
@@ -171,7 +160,6 @@
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
                         
-                        // Membentuk ulang nomor WhatsApp agar selalu berawalan 0 atau disesuaikan
                         let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
                         rawWa = rawWa.replace(/[^0-9]/g, '');
                         
@@ -182,7 +170,7 @@
                         }
 
                         const waNumber = rawWa;
-                        const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + waNumber.slice(1) : waNumber}` : '#';
+                        const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + rawWa.slice(1) : waNumber}` : '#';
                         const usernameDb = row.usernameDb || row.username || '';
 
                         tr.innerHTML = `
@@ -195,7 +183,7 @@
                             <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
                             <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
                             <td class="p-3 text-center">
-                                <button onclick="deleteData(this, ${row.rowIndex}, '${usernameDb}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20">
+                                <button onclick="deleteData(this, ${row.rowIndex}, '${usernameDb}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20 cursor-pointer">
                                     <i class="fa-solid fa-trash"></i> Hapus
                                 </button>
                             </td>
