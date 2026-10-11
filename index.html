@@ -91,19 +91,25 @@
             box-shadow: 0 8px 35px rgba(0,0,0,.2);
         }
 
-        @keyframes modalSpring {
-            0% { opacity: 0; transform: scale(0.88) translateY(24px); }
-            60% { opacity: 1; transform: scale(1.02) translateY(-4px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+        /* Smooth Modal Animation Styles */
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
-
-        .animate-modal-spring { animation: modalSpring 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        .modal-container {
+            transform: scale(0.85) translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #080a0f; }
@@ -284,8 +290,8 @@
     </a>
 
     <!-- RULES MODAL -->
-    <div id="rulesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md hidden p-4">
-        <div class="relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-4 pr-6">REGULASI & PERATURAN TURNAMEN</h3>
             <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
@@ -303,8 +309,8 @@
     </div>
 
     <!-- REGISTRATION MODAL -->
-    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md hidden p-4">
-        <div class="relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-4">DAFTAR PESERTA</h3>
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
@@ -317,8 +323,16 @@
                     <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Role Player</label>
-                    <input type="text" required placeholder="Contoh: Jungler / Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                    <input type="tel" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                </div>
+                <!-- Pilihan 2 Role Kanan & Kiri -->
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role (Utama & Cadangan)</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" required placeholder="Role 1 (Cth: Jungler)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                        <input type="text" required placeholder="Role 2 (Cth: Gold Laner)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    </div>
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Metode Pembayaran</label>
@@ -336,8 +350,8 @@
     </div>
 
     <!-- MESSAGE MODAL -->
-    <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md hidden p-4">
-        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
+    <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
             <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
             <p id="messageText" class="text-slate-400 text-xs mb-5">Data berhasil dikirim.</p>
             <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl">OK</button>
@@ -373,14 +387,14 @@
         function openModal(id) { 
             const el = document.getElementById(id);
             if(el) {
-                el.classList.remove('hidden'); 
+                el.classList.add('active'); 
                 document.body.style.overflow = 'hidden'; 
             }
         }
         function closeModal(id) { 
             const el = document.getElementById(id);
             if(el) {
-                el.classList.add('hidden'); 
+                el.classList.remove('active'); 
                 document.body.style.overflow = 'auto'; 
             }
         }
@@ -401,22 +415,26 @@
             event.preventDefault();
             const inputs = event.target.querySelectorAll('input, select');
             
-            // Ambil data form
+            // Menggabungkan 2 role menjadi satu format rapi (contoh: "Jungler & Gold Laner")
+            const combinedRole = `${inputs[2].value} & ${inputs[3].value}`;
+
+            // Ambil data form termasuk nomor WhatsApp dan role gabungan
             const formData = {
                 nama: inputs[0].value,
                 idMl: inputs[1].value,
-                role: inputs[2].value,
-                payment: inputs[3].value
+                whatsapp: inputs[2].value, // Menyimpan nomor WA
+                role: combinedRole,
+                payment: inputs[4].value
             };
 
-            // 1. Langsung berikan respon sukses secara instan (tanpa tunggu server)
+            // 1. Respon sukses instan tanpa delay
             closeModal('registerModal');
             document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
             document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
             openModal('messageModal');
             event.target.reset();
 
-            // 2. Kirim data ke Google Sheet di latar belakang (background process) tanpa delay
+            // 2. Kirim ke Google Sheet di background
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
