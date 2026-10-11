@@ -55,6 +55,9 @@
             <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2">
                 <i class="fa-solid fa-comments"></i> CHAT GLOBAL (<span id="countChats">0</span>)
             </button>
+            <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-headset"></i> LIVE STREAM CHAT (<span id="countLiveChats">0</span>)
+            </button>
         </div>
 
         <!-- TAB 1: DATA PENDAFTAR TURNAMEN -->
@@ -88,11 +91,11 @@
             </div>
         </div>
 
-        <!-- TAB 2: DATA AKUN MEMBER -->
+        <!-- TAB 2: DATA AKUN MEMBER & BANNED STATUS -->
         <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
-                    <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Password Member
+                    <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Banned Status
                 </h2>
                 <span class="text-xs font-tech text-slate-400">Database "users"</span>
             </div>
@@ -104,12 +107,13 @@
                             <th class="p-3">No</th>
                             <th class="p-3">Waktu Buat Akun</th>
                             <th class="p-3">Username Member</th>
-                            <th class="p-3">Password Member</th>
-                            <th class="p-3 text-center">Aksi Hapus Akun</th>
+                            <th class="p-3">Password</th>
+                            <th class="p-3">Status Akun</th>
+                            <th class="p-3 text-center">Aksi Moderasi</th>
                         </tr>
                     </thead>
                     <tbody id="usersTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data akun member...</td></tr>
+                        <tr><td colspan="6" class="text-center py-8 text-slate-500">Memuat data akun member...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -124,8 +128,8 @@
                     </h2>
                     <span class="text-xs font-tech text-slate-400">Database "chats"</span>
                 </div>
-                <button onclick="deleteAllChats()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2">
-                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
+                <button onclick="deleteAllChats('chats')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT GLOBAL
                 </button>
             </div>
 
@@ -146,12 +150,44 @@
                 </table>
             </div>
         </div>
+
+        <!-- TAB 4: MODERASI LIVE STREAM CHAT (TERPISAH) -->
+        <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-obsidian-border">
+                <div>
+                    <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-crimson"></i> Moderasi Pesan Live Stream Chat
+                    </h2>
+                    <span class="text-xs font-tech text-slate-400">Database "live_chats"</span>
+                </div>
+                <button onclick="deleteAllChats('live_chats')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA LIVE CHAT
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-3">No</th>
+                            <th class="p-3">Waktu Kirim</th>
+                            <th class="p-3">Pengirim</th>
+                            <th class="p-3">Isi Komentar Live</th>
+                            <th class="p-3 text-center">Aksi Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liveChatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data live chat...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- SCRIPT FIREBASE & PANEL ADMIN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -170,26 +206,29 @@
             loadTournamentApplicants();
             loadMemberUsers();
             loadGlobalChats();
+            loadLiveChats();
         });
 
-        // NAVIGASI TAP MENU PANEL
         window.switchAdminTab = function(tab) {
             const btnT = document.getElementById('tabBtnTournaments');
             const btnU = document.getElementById('tabBtnUsers');
             const btnC = document.getElementById('tabBtnChats');
+            const btnLC = document.getElementById('tabBtnLiveChats');
             
             const secT = document.getElementById('sectionTournaments');
             const secU = document.getElementById('sectionUsers');
             const secC = document.getElementById('sectionChats');
+            const secLC = document.getElementById('sectionLiveChats');
 
-            // Reset class gaya tombol
             btnT.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
             btnU.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
             btnC.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+            btnLC.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
 
             secT.classList.add('hidden');
             secU.classList.add('hidden');
             secC.classList.add('hidden');
+            secLC.classList.add('hidden');
 
             if (tab === 'tournaments') {
                 btnT.className = "px-5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center gap-2";
@@ -200,10 +239,13 @@
             } else if (tab === 'chats') {
                 btnC.className = "px-5 py-3 rounded-xl bg-sky-500 text-black shadow-lg transition-all cursor-pointer flex items-center gap-2";
                 secC.classList.remove('hidden');
+            } else if (tab === 'liveChats') {
+                btnLC.className = "px-5 py-3 rounded-xl bg-crimson text-white shadow-lg transition-all cursor-pointer flex items-center gap-2";
+                secLC.classList.remove('hidden');
             }
         }
 
-        // 1. LOAD DATA PENDAFTAR TURNAMEN
+        // 1. PENDAFTAR TURNAMEN
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -219,10 +261,7 @@
                 let i = 1;
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    let timeStr = '-';
-                    if (data.waktuDaftar && data.waktuDaftar.toDate) {
-                        timeStr = data.waktuDaftar.toDate().toLocaleString();
-                    }
+                    let timeStr = (data.waktuDaftar && data.waktuDaftar.toDate) ? data.waktuDaftar.toDate().toLocaleString() : '-';
 
                     html += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
@@ -246,7 +285,7 @@
             });
         }
 
-        // 2. LOAD DATA AKUN MEMBER
+        // 2. AKUN MEMBER & BANNED STATUS
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -254,7 +293,7 @@
                 document.getElementById('countUsers').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada akun member yang terdaftar.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">Belum ada akun member yang terdaftar.</td></tr>`;
                     return;
                 }
 
@@ -262,10 +301,20 @@
                 let i = 1;
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    let timeStr = '-';
-                    if (data.createdAt && data.createdAt.toDate) {
-                        timeStr = data.createdAt.toDate().toLocaleString();
-                    }
+                    let timeStr = (data.createdAt && data.createdAt.toDate) ? data.createdAt.toDate().toLocaleString() : '-';
+
+                    const isBanned = data.isBanned === true;
+                    const statusBadge = isBanned 
+                        ? `<span class="px-2.5 py-1 bg-red-500/20 text-red-400 border border-red-500/40 rounded font-bold"><i class="fa-solid fa-ban mr-1"></i> BANNED</span>`
+                        : `<span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded font-bold"><i class="fa-solid fa-circle-check mr-1"></i> AKTIF</span>`;
+
+                    const banBtn = isBanned
+                        ? `<button onclick="toggleBanUser('${docSnap.id}', '${data.username}', false)" class="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black border border-emerald-500/30 rounded-lg transition-all cursor-pointer font-bold mr-1">
+                            <i class="fa-solid fa-unlock mr-1"></i> Buka Banned
+                           </button>`
+                        : `<button onclick="toggleBanUser('${docSnap.id}', '${data.username}', true)" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-black border border-amber-500/30 rounded-lg transition-all cursor-pointer font-bold mr-1">
+                            <i class="fa-solid fa-ban mr-1"></i> Banned Akun
+                           </button>`;
 
                     html += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
@@ -273,9 +322,11 @@
                             <td class="p-3 text-slate-400">${timeStr}</td>
                             <td class="p-3 font-bold text-emerald-accent text-sm">@${data.username}</td>
                             <td class="p-3 font-mono text-amber-300 bg-obsidian px-2 py-1 rounded inline-block">${data.password}</td>
-                            <td class="p-3 text-center">
+                            <td class="p-3">${statusBadge}</td>
+                            <td class="p-3 text-center flex items-center justify-center">
+                                ${banBtn}
                                 <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Akun Member">
-                                    <i class="fa-solid fa-user-xmark mr-1"></i> Hapus Akun
+                                    <i class="fa-solid fa-user-xmark"></i>
                                 </button>
                             </td>
                         </tr>
@@ -285,7 +336,7 @@
             });
         }
 
-        // 3. LOAD DATA CHAT GLOBAL
+        // 3. CHAT GLOBAL
         function loadGlobalChats() {
             const q = query(collection(db, "chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -301,10 +352,7 @@
                 let i = 1;
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    let timeStr = '-';
-                    if (data.time && data.time.toDate) {
-                        timeStr = data.time.toDate().toLocaleString();
-                    }
+                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
 
                     html += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
@@ -313,7 +361,43 @@
                             <td class="p-3 font-bold text-sky-400">@${data.username}</td>
                             <td class="p-3 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
                             <td class="p-3 text-center">
-                                <button onclick="deleteSingleChat('${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Chat Ini">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            });
+        }
+
+        // 4. LIVE STREAM CHAT (TERPISAH)
+        function loadLiveChats() {
+            const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('liveChatsTableBody');
+                document.getElementById('countLiveChats').innerText = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada komentar di Live Chat.</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                let i = 1;
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
+
+                    html += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-3">${i++}</td>
+                            <td class="p-3 text-slate-400">${timeStr}</td>
+                            <td class="p-3 font-bold text-crimson">@${data.username}</td>
+                            <td class="p-3 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -328,50 +412,51 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        // Aksi Hapus Data Pendaftar
+        window.toggleBanUser = async function(docId, username, shouldBan) {
+            const actionText = shouldBan ? "MEMBLOKIR (BANNED)" : "MEMBUKA BLOKIR (UNBANNED)";
+            if (confirm(`Apakah Anda yakin ingin ${actionText} akun @${username}?`)) {
+                try {
+                    const userRef = doc(db, "users", docId);
+                    await updateDoc(userRef, {
+                        isBanned: shouldBan,
+                        sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2)
+                    });
+                    alert(`Status akun @${username} berhasil diperbarui!`);
+                } catch (err) {
+                    alert("Gagal memperbarui status akun.");
+                }
+            }
+        }
+
         window.deleteTournamentData = async function(docId, username) {
             if (confirm(`Hapus data pendaftaran untuk akun @${username}?`)) {
-                try {
-                    await deleteDoc(doc(db, "pendaftar", docId));
-                } catch (err) {
-                    alert("Gagal menghapus data.");
-                }
+                try { await deleteDoc(doc(db, "pendaftar", docId)); } catch (err) { alert("Gagal menghapus data."); }
             }
         }
 
-        // Aksi Hapus Akun Member
         window.deleteMemberAccount = async function(docId, username) {
             if (confirm(`Hapus permanen akun @${username}?`)) {
-                try {
-                    await deleteDoc(doc(db, "users", docId));
-                } catch (err) {
-                    alert("Gagal menghapus akun.");
-                }
+                try { await deleteDoc(doc(db, "users", docId)); } catch (err) { alert("Gagal menghapus akun."); }
             }
         }
 
-        // Aksi Hapus Single Chat
-        window.deleteSingleChat = async function(docId) {
-            if (confirm(`Hapus pesan chat ini?`)) {
-                try {
-                    await deleteDoc(doc(db, "chats", docId));
-                } catch (err) {
-                    alert("Gagal menghapus chat.");
-                }
+        window.deleteSingleChatMessage = async function(collectionName, docId) {
+            if (confirm(`Hapus pesan ini?`)) {
+                try { await deleteDoc(doc(db, collectionName, docId)); } catch (err) { alert("Gagal menghapus pesan."); }
             }
         }
 
-        // Aksi Hapus SEMUA Chat Global
-        window.deleteAllChats = async function() {
-            if (confirm("PERHATIAN: Apakah Anda yakin ingin MENGHAPUS SEMUA PESAN di Chat Global?")) {
+        window.deleteAllChats = async function(collectionName) {
+            const targetName = collectionName === 'chats' ? "CHAT GLOBAL" : "LIVE STREAM CHAT";
+            if (confirm(`PERHATIAN: Apakah Anda yakin ingin MENGHAPUS SEMUA PESAN di ${targetName}?`)) {
                 try {
-                    const querySnapshot = await getDocs(collection(db, "chats"));
-                    const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, "chats", docSnap.id)));
+                    const querySnapshot = await getDocs(collection(db, collectionName));
+                    const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, collectionName, docSnap.id)));
                     await Promise.all(deletePromises);
-                    alert("Seluruh obrolan Chat Global berhasil dibersihkan!");
+                    alert(`Seluruh obrolan ${targetName} berhasil dibersihkan!`);
                 } catch (err) {
                     console.error(err);
-                    alert("Gagal membersihkan seluruh chat.");
+                    alert("Gagal membersihkan pesan.");
                 }
             }
         }
