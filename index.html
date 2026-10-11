@@ -344,10 +344,20 @@
         <span>CHAT GLOBAL</span>
     </button>
 
-    <!-- FLOATING WHATSAPP (DI KANAN BAWAH) -->
-    <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="fixed bottom-5 right-5 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-all">
-        <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
-    </a>
+    <!-- FLOATING WHATSAPP 2 PANITIA (DI KANAN BAWAH) -->
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 items-end">
+        <!-- PANITIA 2 (+6281398115475) -->
+        <a href="https://wa.me/6281398115475?text=Halo%20Panitia%202%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold">
+            <span class="text-[11px]">Panitia 2</span>
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+        </a>
+
+        <!-- PANITIA 1 (+6287763331294) -->
+        <a href="https://wa.me/6287763331294?text=Halo%20Panitia%201%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold">
+            <span class="text-[11px]">Panitia 1</span>
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+        </a>
+    </div>
 
     <!-- MODAL: CHAT GLOBAL ARENA -->
     <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
@@ -553,7 +563,7 @@
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
         let chatInterval = null;
-        let isSendingChat = false; // Penanda agar polling tidak menimpa pesan baru yang sedang dikirim
+        let isSendingChat = false;
 
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
@@ -578,7 +588,7 @@
             
             fetchChats();
             if(!chatInterval) {
-                chatInterval = setInterval(fetchChats, 4000); // Polling chat setiap 4 detik
+                chatInterval = setInterval(fetchChats, 4000);
             }
         }
 
@@ -592,7 +602,6 @@
 
         // FUNGSI MENGAMBIL PESAN CHAT DARI KOLOM X, Y, Z GOOGLE SHEETS
         async function fetchChats() {
-            // Jika sedang ada proses pengiriman pesan, abaikan sementara refresh agar pesan tidak ketimpa
             if (isSendingChat) return;
 
             const chatBox = document.getElementById('chatBox');
@@ -600,7 +609,6 @@
                 const res = await fetch(`${DATABASE_SCRIPT_URL}?action=getChats`);
                 const data = await res.json();
                 
-                // Cek lagi kalau tiba-tiba user mengirim pesan saat fecthing
                 if (isSendingChat) return;
 
                 if (data.status === 'success' && data.chats) {
@@ -645,7 +653,7 @@
             }
         }
 
-        // FUNGSI MENGIRIM PESAN CHAT (INSTAN, RESPONSIVE & ANTI-KETIMPA)
+        // FUNGSI MENGIRIM PESAN CHAT
         async function handleSendChat(e) {
             e.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
@@ -655,20 +663,14 @@
             const message = input.value.trim();
             if(!message) return;
 
-            // Kunci status pengiriman agar fetchChats() menunda perubahannya
             isSendingChat = true;
-
-            // Clear input seketika
             input.value = '';
 
             const chatBox = document.getElementById('chatBox');
-            
-            // Hapus teks "Belum ada percakapan" jika ada
             if(chatBox.innerHTML.includes('Belum ada percakapan')) {
                 chatBox.innerHTML = '';
             }
 
-            // Render pesan instan ke UI
             const now = new Date();
             const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -684,7 +686,6 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
-                // Kirim data ke Google Sheets
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -693,7 +694,6 @@
             } catch (err) {
                 console.error("Gagal mengirim ke server:", err);
             } finally {
-                // Beri jeda 3 detik agar Google Sheets selesai menulis, baru izinkan fetch otomatis kembali
                 setTimeout(() => {
                     isSendingChat = false;
                 }, 3000);
@@ -704,7 +704,7 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        // FUNGSI CUSTOM ALERT (MENGGANTIKAN alert())
+        // FUNGSI CUSTOM ALERT
         function showCustomAlert(title, text, isError = false) {
             document.getElementById('messageTitle').innerText = title;
             document.getElementById('messageText').innerText = text;
@@ -717,7 +717,7 @@
             openModal('messageModal');
         }
 
-        // FUNGSI CUSTOM CONFIRM (MENGGANTIKAN confirm())
+        // FUNGSI CUSTOM CONFIRM
         function showCustomConfirm(text, onYesCallback) {
             document.getElementById('confirmText').innerText = text;
             const yesBtn = document.getElementById('confirmYesBtn');
@@ -746,7 +746,7 @@
             document.getElementById('content-champions').classList.add('hidden');
         }
 
-        // CEK STATUS LOGIN SAAT HALAMAN DIBUKA
+        // CEK STATUS LOGIN
         function checkAuthStatus() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             const authGuestMenu = document.getElementById('authGuestMenu');
@@ -763,7 +763,6 @@
             const lockStatusText = document.getElementById('lockStatusText');
 
             if (loggedUser) {
-                // KONDISI: SUDAH LOGIN
                 authGuestMenu.classList.add('hidden');
                 authMemberMenu.classList.remove('hidden');
                 mobileAuthGuest.classList.add('hidden');
@@ -773,17 +772,14 @@
                 document.getElementById('mobileUserBadge').innerText = 'Akun: @' + loggedUser;
                 document.getElementById('activeAccountDisplay').innerText = '@' + loggedUser;
 
-                // Ubah kartu 1 jadi info akun
                 cardIcon.className = "fa-solid fa-circle-check";
                 cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
                 cardTitle.innerText = "STATUS: TERLOGIN";
                 cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">@${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
                 cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai @${loggedUser}`);
 
-                // Buka kunci kartu 2 (Daftar Turnamen)
                 lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
             } else {
-                // KONDISI: BELUM LOGIN
                 authGuestMenu.classList.remove('hidden');
                 authMemberMenu.classList.add('hidden');
                 mobileAuthGuest.classList.remove('hidden');
@@ -799,7 +795,6 @@
             }
         }
 
-        // KLIK KARTU 1 DI MENU UTAMA
         function handleCardAuthClick() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
@@ -807,7 +802,6 @@
             }
         }
 
-        // KLIK KARTU 2 (DAFTAR TURNAMEN)
         function handleTournamentCardClick() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
@@ -818,7 +812,6 @@
             }
         }
 
-        // FUNGSI BUAT AKUN WEB
         async function handleRegisterAccount(event) {
             event.preventDefault();
             const username = document.getElementById('regUser').value.trim();
@@ -854,7 +847,6 @@
             }
         }
 
-        // FUNGSI LOGIN AKUN
         async function handleLogin(event) {
             event.preventDefault();
             const username = document.getElementById('loginUser').value.trim();
@@ -890,7 +882,6 @@
             }
         }
 
-        // FUNGSI LOGOUT
         function handleLogout() {
             showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", () => {
                 localStorage.removeItem('activeMemberUser');
@@ -899,7 +890,6 @@
             });
         }
 
-        // FUNGSI SUBMIT PENDAFTARAN TURNAMEN
         async function handleFormSubmit(event) {
             event.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
@@ -924,7 +914,6 @@
                     usernameDb: loggedUser
                 };
 
-                // 1. Kirim data ke sheet turnamen
                 await fetch(TOURNAMENT_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -932,7 +921,6 @@
                     body: JSON.stringify(formData)
                 });
 
-                // 2. Kunci akun di database agar tidak bisa daftar ganda
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
