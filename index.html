@@ -91,6 +91,45 @@
             box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
+        /* EFEK NEON MENYALA DAN KELIP KELIP HASIL KUSTOMISASI */
+        .neon-glow-red {
+            animation: neonPulseRed 1.8s infinite alternate;
+        }
+
+        .neon-glow-white {
+            animation: neonPulseWhite 2.2s infinite alternate;
+        }
+
+        @keyframes neonPulseRed {
+            0% {
+                text-shadow: 0 0 5px #ff1e56, 0 0 10px #ff1e56, 0 0 20px #ff1e56, 0 0 30px #c40d3d;
+                opacity: 1;
+            }
+            50% {
+                text-shadow: 0 0 2px #ff1e56, 0 0 5px #ff1e56;
+                opacity: 0.75;
+            }
+            100% {
+                text-shadow: 0 0 10px #ff1e56, 0 0 25px #ff1e56, 0 0 40px #ff1e56, 0 0 60px #ff1e56;
+                opacity: 1;
+            }
+        }
+
+        @keyframes neonPulseWhite {
+            0% {
+                text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #00e699;
+                opacity: 0.85;
+            }
+            50% {
+                text-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff;
+                opacity: 1;
+            }
+            100% {
+                text-shadow: 0 0 8px #ffffff, 0 0 18px #ffffff, 0 0 30px #00e699;
+                opacity: 0.9;
+            }
+        }
+
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
@@ -148,8 +187,9 @@
                     <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
                 </div>
                 <div>
-                    <span class="block font-display font-extrabold text-sm sm:text-base tracking-wider text-white group-hover:text-crimson transition-colors leading-tight">
-                        TIBA TIBA <span class="text-crimson font-light">TOURNAMENT</span>
+                    <!-- TEKS LOGO HEADER DENGAN EFEK NEON MENYALA & KELIP-KELIP -->
+                    <span class="block font-display font-extrabold text-sm sm:text-base tracking-wider text-white leading-tight">
+                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red font-semibold">TOURNAMENT</span>
                     </span>
                     <span class="block font-tech text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">OFFICIAL ESPORTS ARENA</span>
                 </div>
@@ -220,8 +260,10 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
                     REGISTRASI REGULER SEGERA DITUTUP
                 </div>
+                <!-- JUDUL HERO JUGA BERKEDIP KELIP DENGAN NEON GLOW KEREEN -->
                 <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight px-2">
-                    DOMINASI ARENA <br class="hidden sm:block"><span class="bg-gradient-to-r from-crimson via-red-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
+                    DOMINASI ARENA <br class="hidden sm:block">
+                    <span class="neon-glow-red text-crimson font-extrabold">TIBA TIBA TOURNAMENT</span>
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto px-2">
                     Login atau buat akun website Anda terlebih dahulu untuk membuka akses formulir pendaftaran turnamen berhadiah Rp 7.000.000!
@@ -517,7 +559,6 @@
         function showCustomConfirm(text, onYesCallback) {
             document.getElementById('confirmText').innerText = text;
             const yesBtn = document.getElementById('confirmYesBtn');
-            // Bersihkan event listener lama lalu pasang yang baru
             const newYesBtn = yesBtn.cloneNode(true);
             yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
             
@@ -531,7 +572,7 @@
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
         function nextSlide() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
-        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex - 1 + 3) % 3}`; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
         setInterval(nextSlide, 4500);
 
         function switchTab(tab) {
@@ -687,7 +728,7 @@
             }
         }
 
-        // FUNGSI LOGOUT (MENGGUNAKAN CUSTOM CONFIRM)
+        // FUNGSI LOGOUT
         function handleLogout() {
             showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", () => {
                 localStorage.removeItem('activeMemberUser');
