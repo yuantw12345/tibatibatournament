@@ -482,8 +482,9 @@
     </div>
 
     <script>
+        // URL SCRIPT YANG SUDAH DIPASANG DENGAN BENAR
         const TOURNAMENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
-        const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjJzLx_qjMgaAQ0aCglBTMruvJomLICF5MI4KKlDJoOKFAN8T4QoLIf1reioXPkrpD/exec';
+        const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztJQhBG6OrQkp_r9RgfazqAKqlclEcifOYvZmMrtjsJpFWRC_jRcbpMI2nhLpkM4md/exec';
 
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300); 
@@ -546,15 +547,17 @@
             submitBtn.disabled = true;
 
             try {
-                // 1. Validasi ke Spreadsheet Database Akun
+                // 1. Validasi ke Spreadsheet Database Akun menggunakan URLSearchParams
+                const checkParams = new URLSearchParams();
+                checkParams.append('action', 'checkLogin');
+                checkParams.append('username', usernameInput);
+                checkParams.append('password', passwordInput);
+
                 const checkResponse = await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify({
-                        action: 'checkLogin',
-                        username: usernameInput,
-                        password: passwordInput
-                    })
+                    body: checkParams
                 });
+                
                 const checkResult = await checkResponse.json();
 
                 if (checkResult.status !== 'success') {
@@ -573,7 +576,7 @@
                     whatsapp: inputs[5].value,
                     role2: inputs[6].value,
                     payment: inputs[7].value,
-                    usernameDb: usernameInput // Mengirim username untuk disimpan di kolom H database turnamen
+                    usernameDb: usernameInput
                 };
 
                 submitBtn.innerText = "MENGIRIM DATA...";
@@ -587,12 +590,13 @@
                 });
 
                 // 4. Kunci akun di Spreadsheet Database agar tidak bisa daftar 2x
+                const lockParams = new URLSearchParams();
+                lockParams.append('action', 'lockAccount');
+                lockParams.append('username', usernameInput);
+
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify({
-                        action: 'lockAccount',
-                        username: usernameInput
-                    })
+                    body: lockParams
                 });
 
                 closeModal('registerModal');
