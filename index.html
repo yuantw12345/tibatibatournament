@@ -91,7 +91,7 @@
             box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
-        /* EFEK NEON YANG LEBIH HALUS DAN NATURAL (TIDAK LEBAY) */
+        /* EFEK NEON YANG HALUS DAN ELEGAN */
         .neon-glow-red {
             text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3);
         }
@@ -136,7 +136,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div, #chatModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -157,7 +157,6 @@
                     <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
                 </div>
                 <div>
-                    <!-- TEKS LOGO HEADER DENGAN NEON HALUS -->
                     <span class="block font-display font-extrabold text-sm sm:text-base tracking-wider text-white leading-tight">
                         <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red font-semibold">TOURNAMENT</span>
                     </span>
@@ -169,6 +168,9 @@
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
+                </button>
+                <button onclick="openChatModal()" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-comments text-sky-400 text-sm"></i> Chat Global
                 </button>
                 
                 <!-- MENU SAAT BELUM LOGIN -->
@@ -203,6 +205,9 @@
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
             </button>
+            <button onclick="openChatModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
+                <i class="fa-solid fa-comments"></i> Chat Global Arena
+            </button>
             <div id="mobileAuthGuest" class="space-y-2 pt-2 border-t border-obsidian-border">
                 <button onclick="openModal('loginModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-center font-bold">
                     <i class="fa-solid fa-right-to-bracket mr-1"></i> Login Akun
@@ -230,7 +235,6 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
                     REGISTRASI REGULER SEGERA DITUTUP
                 </div>
-                <!-- JUDUL HERO DENGAN NEON HALUS -->
                 <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight px-2">
                     DOMINASI ARENA <br class="hidden sm:block">
                     <span class="neon-glow-red text-crimson font-extrabold">TIBA TIBA TOURNAMENT</span>
@@ -334,10 +338,55 @@
         </section>
     </main>
 
-    <!-- FLOATING WHATSAPP -->
+    <!-- FLOATING CHAT GLOBAL BUTTON (DI KIRI BAWAH) -->
+    <button onclick="openChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
+        <i class="fa-solid fa-comments text-base"></i>
+        <span>CHAT GLOBAL</span>
+    </button>
+
+    <!-- FLOATING WHATSAPP (DI KANAN BAWAH) -->
     <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="fixed bottom-5 right-5 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-all">
         <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
     </a>
+
+    <!-- MODAL: CHAT GLOBAL ARENA -->
+    <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 shadow-2xl flex flex-col h-[520px]">
+            <button onclick="closeChatModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-3">
+                <div class="w-9 h-9 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <div>
+                    <h3 class="font-display font-bold text-base text-white leading-tight">CHAT GLOBAL ARENA</h3>
+                    <p class="text-[10px] text-slate-400 font-tech">Komunitas & Diskusi Player</p>
+                </div>
+            </div>
+
+            <!-- AREA PESAN CHAT -->
+            <div id="chatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
+                <div class="text-center text-slate-500 py-8">Memuat pesan chat...</div>
+            </div>
+
+            <!-- AREA INPUT CHAT -->
+            <div id="chatInputArea">
+                <!-- FORM PESAN (UNTUK USER LOGGED IN) -->
+                <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
+                    <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-sky-400">
+                    <button type="submit" id="chatSendBtn" class="px-4 py-2.5 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+                <!-- PEMBERITAHUAN (JIKA BELUM LOGIN) -->
+                <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-3 rounded-xl text-center">
+                    <p class="text-[11px] text-amber-400 mb-2 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
+                    <button onclick="closeChatModal(); openModal('loginModal')" class="px-4 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs rounded-lg cursor-pointer">Login / Buat Akun</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL: LOGIN AKUN WEBSITE -->
     <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
@@ -490,7 +539,7 @@
             <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <h3 id="confirmText" class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
+            <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
             <p id="confirmText" class="text-slate-300 text-xs mb-5">Apakah Anda yakin?</p>
             <div class="flex gap-2">
                 <button id="confirmYesBtn" class="flex-1 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-xl cursor-pointer transition-all">YA</button>
@@ -503,6 +552,8 @@
         const TOURNAMENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
+        let chatInterval = null;
+
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
@@ -511,6 +562,114 @@
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+        // FUNGSI CHAT GLOBAL MODAL
+        function openChatModal() {
+            openModal('chatModal');
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if (loggedUser) {
+                document.getElementById('chatForm').classList.remove('hidden');
+                document.getElementById('chatGuestNotice').classList.add('hidden');
+            } else {
+                document.getElementById('chatForm').classList.add('hidden');
+                document.getElementById('chatGuestNotice').classList.remove('hidden');
+            }
+            
+            fetchChats();
+            if(!chatInterval) {
+                chatInterval = setInterval(fetchChats, 4000); // Polling chat setiap 4 detik
+            }
+        }
+
+        function closeChatModal() {
+            closeModal('chatModal');
+            if(chatInterval) {
+                clearInterval(chatInterval);
+                chatInterval = null;
+            }
+        }
+
+        // FUNGSI MENGAMBIL PESAN CHAT DARI KOLOM X, Y, Z GOOGLE SHEETS
+        async function fetchChats() {
+            const chatBox = document.getElementById('chatBox');
+            try {
+                const res = await fetch(`${DATABASE_SCRIPT_URL}?action=getChats`);
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.chats) {
+                    if (data.chats.length === 0) {
+                        chatBox.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada percakapan. Jadilah yang pertama berkirim pesan!</div>';
+                        return;
+                    }
+
+                    const loggedUser = localStorage.getItem('activeMemberUser');
+                    let html = '';
+                    
+                    data.chats.forEach(c => {
+                        const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
+                        const formattedTime = new Date(c.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        if (isMe) {
+                            html += `
+                                <div class="flex flex-col items-end">
+                                    <span class="text-[10px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                    <div class="bg-sky-500 text-black px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                                        ${escapeHtml(c.message)}
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            html += `
+                                <div class="flex flex-col items-start">
+                                    <span class="text-[10px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                    <div class="bg-obsidian border border-obsidian-border text-slate-200 px-3 py-2 rounded-2xl rounded-tl-none max-w-[85%] break-words shadow-md">
+                                        ${escapeHtml(c.message)}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+
+                    chatBox.innerHTML = html;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            } catch (err) {
+                console.error("Gagal mengambil chat:", err);
+            }
+        }
+
+        // FUNGSI MENGIRIM PESAN CHAT KE KOLOM X, Y, Z
+        async function handleSendChat(e) {
+            e.preventDefault();
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if(!loggedUser) return;
+
+            const input = document.getElementById('chatMessageInput');
+            const message = input.value.trim();
+            const btn = document.getElementById('chatSendBtn');
+
+            if(!message) return;
+
+            input.value = '';
+            btn.disabled = true;
+
+            try {
+                await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'sendChat', username: loggedUser, message: message })
+                });
+                await fetchChats();
+            } catch (err) {
+                console.error("Gagal mengirim chat:", err);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
 
         // FUNGSI CUSTOM ALERT (MENGGANTIKAN alert())
         function showCustomAlert(title, text, isError = false) {
