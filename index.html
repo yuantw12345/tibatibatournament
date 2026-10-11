@@ -189,7 +189,7 @@
 
                 <div id="authMemberMenu" class="hidden items-center space-x-3">
                     <span id="loggedInUserBadge" class="px-3 py-1.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-xs font-bold"></span>
-                    <button onclick="openModal('registerModal')" id="navRegisterBtn" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer">
+                    <button onclick="handleTournamentCardClick()" id="navRegisterBtn" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer">
                         Daftar Turnamen
                     </button>
                     <button onclick="handleLogout()" class="px-3 py-2 text-xs font-bold text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-all cursor-pointer">
@@ -222,7 +222,7 @@
             </div>
             <div id="mobileAuthMember" class="hidden space-y-2 pt-2 border-t border-obsidian-border">
                 <div id="mobileUserBadge" class="text-emerald-accent font-bold py-1"></div>
-                <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
+                <button onclick="handleTournamentCardClick(); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
                     Daftar Turnamen
                 </button>
                 <button onclick="handleLogout()" class="w-full py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-center font-bold">
@@ -598,7 +598,7 @@
     <!-- SCRIPT FIREBASE & APLIKASI UTAMA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -862,12 +862,25 @@
             if (!loggedUser) openModal('loginModal');
         }
 
-        window.handleTournamentCardClick = function() {
+        // FUNGSI CEK SEBELUM DAFTAR TURNAMEN (AGAR MENGHINDARI PENDAFTARAN GANDA)
+        window.handleTournamentCardClick = async function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
                 showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!", true);
                 openModal('loginModal');
-            } else {
+                return;
+            }
+
+            try {
+                const q = query(collection(db, "pendaftar"), where("usernameDb", "==", loggedUser));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    showCustomAlert("SUDAH MENDAFTAR", `Akun @${loggedUser} sudah pernah terdaftar di turnamen ini!`, true);
+                } else {
+                    openModal('registerModal');
+                }
+            } catch (err) {
                 openModal('registerModal');
             }
         }
@@ -907,6 +920,7 @@
             }
         }
 
+        // FUNGSI LOGIN AKUN (MENGIZINKAN LOGIN MESKIPUN AKUN SUDAH TERKUNCI/PERNAH DAFTAR)
         window.handleLogin = async function(event) {
             event.preventDefault();
             const username = document.getElementById('loginUser').value.trim();
@@ -924,11 +938,11 @@
                 });
                 const result = await response.json();
 
-                if (result.status === 'success') {
+                if (result.status === 'success' || (result.message && result.message.includes('sudah pernah digunakan'))) {
                     localStorage.setItem('activeMemberUser', username);
                     closeModal('loginModal');
                     checkAuthStatus();
-                    showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}! Tombol pendaftaran turnamen kini telah terbuka.`);
+                    showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}!`);
                     event.target.reset();
                 } else {
                     showCustomAlert("LOGIN GAGAL", result.message || 'Username atau Password salah!', true);
