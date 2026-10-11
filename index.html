@@ -166,6 +166,9 @@
 
             <nav class="hidden md:flex items-center space-x-5 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
+                <a href="#live-stream" class="text-slate-300 hover:text-crimson transition-colors flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> Live
+                </a>
                 <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
                 </button>
@@ -202,6 +205,7 @@
 
         <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
+            <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">● Live Stream</a>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
             </button>
@@ -254,6 +258,29 @@
                 </div>
                 <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-xl glass-panel text-white flex items-center justify-center hover:bg-crimson z-10 shadow-lg cursor-pointer"><i class="fa-solid fa-chevron-left text-xs sm:text-sm"></i></button>
                 <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-xl glass-panel text-white flex items-center justify-center hover:bg-crimson z-10 shadow-lg cursor-pointer"><i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i></button>
+            </div>
+        </section>
+
+        <!-- SEKSI LIVE STREAMING ARENA -->
+        <section id="live-stream" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="bg-obsidian-card border border-crimson/40 rounded-2xl p-4 sm:p-6 shadow-crimson-glow">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-3 w-3 relative">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-crimson"></span>
+                        </span>
+                        <h2 class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-wide">LIVE STREAMING TOURNAMENT</h2>
+                    </div>
+                    <span class="px-3 py-1 bg-crimson/20 border border-crimson/50 text-crimson font-tech font-bold text-xs rounded-lg uppercase">
+                        LIVE BROADCAST
+                    </span>
+                </div>
+                
+                <!-- PEMUTAR LIVE YOUTUBE -->
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-obsidian-lightBorder shadow-2xl bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/jT2N21pGOCI?si=TC4yLjpWzrSw4S3a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
             </div>
         </section>
 
