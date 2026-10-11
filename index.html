@@ -595,10 +595,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & APLIKASI UTAMA (MURNI FIRESTORE REAL-TIME) -->
+    <!-- SCRIPT FIREBASE & PENGAMAN SINGLE SESSION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc, onSnapshot, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -617,6 +617,7 @@
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
             initRealtimeChats();
+            startSessionWatcher();
         });
 
         window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
@@ -647,7 +648,32 @@
             }
         }
 
-        // FUNGSI MENDENGARKAN CHAT SECARA REAL-TIME DARI FIRESTORE (Koleksi "chats")
+        // PENGAWAS SESI PERANGKAT (SINGLE DEVICE SESSION WATCHER)
+        function startSessionWatcher() {
+            setInterval(async () => {
+                const loggedUser = localStorage.getItem('activeMemberUser');
+                const localToken = localStorage.getItem('sessionToken');
+                if (!loggedUser || !localToken) return;
+
+                try {
+                    const userRef = doc(db, "users", loggedUser);
+                    const userSnap = await getDoc(userRef);
+                    if (userSnap.exists()) {
+                        const serverToken = userSnap.data().sessionToken;
+                        // Jika token di HP lain berbeda dengan token di HP ini, paksa logout!
+                        if (serverToken && serverToken !== localToken) {
+                            localStorage.removeItem('activeMemberUser');
+                            localStorage.removeItem('sessionToken');
+                            checkAuthStatus();
+                            showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain. Sesi di perangkat ini diakhiri.", true);
+                        }
+                    }
+                } catch (err) {
+                    console.error("Gagal memeriksa sesi:", err);
+                }
+            }, 6000); // Mengecek setiap 6 detik secara otomatis
+        }
+
         function initRealtimeChats() {
             const q = query(collection(db, "chats"), orderBy("time", "asc"));
 
@@ -723,7 +749,6 @@
             inputElement.value = '';
 
             try {
-                // Kirim pesan langsung ke koleksi "chats" di Firestore
                 await addDoc(collection(db, "chats"), {
                     username: loggedUser,
                     message: message,
@@ -731,7 +756,6 @@
                 });
             } catch (err) {
                 console.error("Gagal mengirim chat ke Firestore:", err);
-                alert("Gagal mengirim pesan.");
             }
         }
 
@@ -870,20 +894,24 @@
                     return;
                 }
 
+                const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+
                 await setDoc(userRef, {
                     username: username,
                     password: password,
+                    sessionToken: sessionToken,
                     createdAt: serverTimestamp()
                 });
 
                 closeModal('registerAccountModal');
                 localStorage.setItem('activeMemberUser', username);
+                localStorage.setItem('sessionToken', sessionToken);
                 checkAuthStatus();
-                showCustomAlert("BERHASIL", "Akun berhasil dibuat dan otomatis masuk ke sistem!");
+                showCustomAlert("BERHASIL", "Akun berhasil dibuat dan masuk ke perangkat ini!");
                 event.target.reset();
             } catch (error) {
                 console.error(error);
-                showCustomAlert("KESALAHAN", "Gagal mendaftarkan akun ke database.", true);
+                showCustomAlert("KESALAHAN", "Gagal mendaftarkan akun.", true);
             } finally {
                 btn.innerText = "DAFTARKAN AKUN";
                 btn.disabled = false;
@@ -904,7 +932,7 @@
                 const userSnap = await getDoc(userRef);
 
                 if (!userSnap.exists()) {
-                    showCustomAlert("LOGIN GAGAL", "Username tidak ditemukan! Silakan buat akun terlebih dahulu.", true);
+                    showCustomAlert("LOGIN GAGAL", "Username tidak ditemukan!", true);
                     return;
                 }
 
@@ -914,7 +942,15 @@
                     return;
                 }
 
+                // Buat token unik baru untuk perangkat ini
+                const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+
+                // Perbarui token di database Firestore (mengganti sesi HP lama)
+                await updateDoc(userRef, { sessionToken: sessionToken });
+
                 localStorage.setItem('activeMemberUser', username);
+                localStorage.setItem('sessionToken', sessionToken);
+
                 closeModal('loginModal');
                 checkAuthStatus();
                 showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}!`);
@@ -928,9 +964,17 @@
             }
         }
 
-        window.handleLogout = function() {
-            showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", () => {
+        window.handleLogout = async function() {
+            showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", async () => {
+                const loggedUser = localStorage.getItem('activeMemberUser');
+                if (loggedUser) {
+                    try {
+                        const userRef = doc(db, "users", loggedUser);
+                        await updateDoc(userRef, { sessionToken: "" });
+                    } catch(e) {}
+                }
                 localStorage.removeItem('activeMemberUser');
+                localStorage.removeItem('sessionToken');
                 checkAuthStatus();
                 showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
             });
