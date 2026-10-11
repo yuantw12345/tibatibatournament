@@ -167,13 +167,17 @@
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
                         
-                        // Perbaikan nomor WhatsApp: Jika tidak diawali 0 atau 62, tambahkan 0 di depannya
+                        // Membentuk ulang nomor WhatsApp agar selalu berawalan 0 atau disesuaikan
                         let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
+                        rawWa = rawWa.replace(/[^0-9]/g, '');
+                        
                         if (rawWa && !rawWa.startsWith('0') && !rawWa.startsWith('62')) {
                             rawWa = '0' + rawWa;
+                        } else if (rawWa.startsWith('62')) {
+                            rawWa = '0' + rawWa.slice(2);
                         }
-                        
-                        const waNumber = rawWa.replace(/[^0-9]/g, '');
+
+                        const waNumber = rawWa;
                         const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + waNumber.slice(1) : waNumber}` : '#';
 
                         tr.innerHTML = `
