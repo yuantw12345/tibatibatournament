@@ -298,7 +298,7 @@
                         </div>
 
                         <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
-                            <div class="text-center text-slate-500 py-10">Memuat chat...</div>
+                            <div class="text-center text-slate-500 py-10">Memuat chat real-time...</div>
                         </div>
 
                         <div id="liveChatInputArea">
@@ -419,11 +419,11 @@
                 <div class="w-9 h-9 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30"><i class="fa-solid fa-comments"></i></div>
                 <div>
                     <h3 class="font-display font-bold text-base text-white leading-tight">CHAT GLOBAL ARENA</h3>
-                    <p class="text-[10px] text-slate-400 font-tech">Komunitas & Diskusi Player</p>
+                    <p class="text-[10px] text-slate-400 font-tech">Komunitas & Diskusi Player (Real-time)</p>
                 </div>
             </div>
             <div id="chatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
-                <div class="text-center text-slate-500 py-8">Memuat pesan chat...</div>
+                <div class="text-center text-slate-500 py-8">Memuat chat real-time...</div>
             </div>
             <div id="chatInputArea">
                 <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
@@ -595,10 +595,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & APLIKASI UTAMA -->
+    <!-- SCRIPT FIREBASE & APLIKASI UTAMA (MURNI FIRESTORE REAL-TIME) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -612,18 +612,11 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
-
-        let chatInterval = null;
-        let isSendingChat = false;
 
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
-            fetchChats();
-            if(!chatInterval) {
-                chatInterval = setInterval(fetchChats, 4000);
-            }
+            initRealtimeChats();
         });
 
         window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
@@ -633,7 +626,6 @@
         window.openChatModal = function() {
             openModal('chatModal');
             updateChatAccessUI();
-            fetchChats();
         }
 
         window.closeChatModal = function() {
@@ -651,63 +643,65 @@
                 document.getElementById('chatForm').classList.add('hidden');
                 document.getElementById('chatGuestNotice').classList.remove('hidden');
                 document.getElementById('liveChatForm').classList.add('hidden');
-                document.getElementById('liveChatGuestNotice').classList.add('hidden');
+                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
             }
         }
 
-        async function fetchChats() {
-            if (isSendingChat) return;
-            const chatBox = document.getElementById('chatBox');
-            const liveChatBox = document.getElementById('liveChatBox');
+        // FUNGSI MENDENGARKAN CHAT SECARA REAL-TIME DARI FIRESTORE (Koleksi "chats")
+        function initRealtimeChats() {
+            const q = query(collection(db, "chats"), orderBy("time", "asc"));
 
-            try {
-                const res = await fetch(`${DATABASE_SCRIPT_URL}?action=getChats`);
-                const data = await res.json();
+            onSnapshot(q, (snapshot) => {
+                const chatBox = document.getElementById('chatBox');
+                const liveChatBox = document.getElementById('liveChatBox');
                 
-                if (isSendingChat) return;
+                if (snapshot.empty) {
+                    const emptyHtml = '<div class="text-center text-slate-500 py-6">Belum ada komentar. Jadilah yang pertama berkomentar!</div>';
+                    if(chatBox) chatBox.innerHTML = emptyHtml;
+                    if(liveChatBox) liveChatBox.innerHTML = emptyHtml;
+                    return;
+                }
 
-                if (data.status === 'success' && data.chats) {
-                    if (data.chats.length === 0) {
-                        const emptyHtml = '<div class="text-center text-slate-500 py-6">Belum ada komentar. Jadilah yang pertama berkomentar!</div>';
-                        if(chatBox) chatBox.innerHTML = emptyHtml;
-                        if(liveChatBox) liveChatBox.innerHTML = emptyHtml;
-                        return;
+                const loggedUser = localStorage.getItem('activeMemberUser');
+                let html = '';
+
+                snapshot.forEach((docSnap) => {
+                    const c = docSnap.data();
+                    const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
+                    
+                    let formattedTime = '';
+                    if (c.time && c.time.toDate) {
+                        formattedTime = c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    } else {
+                        formattedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     }
 
-                    const loggedUser = localStorage.getItem('activeMemberUser');
-                    let html = '';
-                    
-                    data.chats.forEach(c => {
-                        const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
-                        const formattedTime = new Date(c.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-                        if (isMe) {
-                            html += `
-                                <div class="flex flex-col items-end">
-                                    <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
-                                    <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
-                                        ${escapeHtml(c.message)}
-                                    </div>
+                    if (isMe) {
+                        html += `
+                            <div class="flex flex-col items-end">
+                                <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                                    ${escapeHtml(c.message)}
                                 </div>
-                            `;
-                        } else {
-                            html += `
-                                <div class="flex flex-col items-start">
-                                    <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
-                                    <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
-                                        ${escapeHtml(c.message)}
-                                    </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="flex flex-col items-start">
+                                <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
+                                    ${escapeHtml(c.message)}
                                 </div>
-                            `;
-                        }
-                    });
+                            </div>
+                        `;
+                    }
+                });
 
-                    if(chatBox) { chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight; }
-                    if(liveChatBox) { liveChatBox.innerHTML = html; liveChatBox.scrollTop = liveChatBox.scrollHeight; }
-                }
-            } catch (err) {
-                console.error("Gagal mengambil chat:", err);
-            }
+                if(chatBox) { chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight; }
+                if(liveChatBox) { liveChatBox.innerHTML = html; liveChatBox.scrollTop = liveChatBox.scrollHeight; }
+            }, (error) => {
+                console.error("Gagal mendengarkan data chat real-time:", error);
+            });
         }
 
         window.handleSendChat = async function(e) {
@@ -726,44 +720,18 @@
             const message = inputElement.value.trim();
             if(!message) return;
 
-            isSendingChat = true;
             inputElement.value = '';
 
-            const chatBox = document.getElementById('chatBox');
-            const liveChatBox = document.getElementById('liveChatBox');
-            const now = new Date();
-            const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            const instantHtml = `
-                <div class="flex flex-col items-end">
-                    <span class="text-[9px] text-slate-400 mb-0.5">@${loggedUser} • ${formattedTime}</span>
-                    <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
-                        ${escapeHtml(message)}
-                    </div>
-                </div>
-            `;
-
-            if(chatBox) {
-                if(chatBox.innerHTML.includes('Belum ada')) chatBox.innerHTML = '';
-                chatBox.insertAdjacentHTML('beforeend', instantHtml);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-            if(liveChatBox) {
-                if(liveChatBox.innerHTML.includes('Belum ada')) liveChatBox.innerHTML = '';
-                liveChatBox.insertAdjacentHTML('beforeend', instantHtml);
-                liveChatBox.scrollTop = liveChatBox.scrollHeight;
-            }
-
             try {
-                await fetch(DATABASE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'sendChat', username: loggedUser, message: message })
+                // Kirim pesan langsung ke koleksi "chats" di Firestore
+                await addDoc(collection(db, "chats"), {
+                    username: loggedUser,
+                    message: message,
+                    time: serverTimestamp()
                 });
             } catch (err) {
-                console.error("Gagal mengirim ke server:", err);
-            } finally {
-                setTimeout(() => { isSendingChat = false; }, 3000);
+                console.error("Gagal mengirim chat ke Firestore:", err);
+                alert("Gagal mengirim pesan.");
             }
         }
 
@@ -862,7 +830,6 @@
             if (!loggedUser) openModal('loginModal');
         }
 
-        // CEK APAKAH SUDAH MENDAFTAR SEBELUM MEMBUKA FORM TURNAMEN
         window.handleTournamentCardClick = async function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
@@ -885,7 +852,6 @@
             }
         }
 
-        // FUNGSI BUAT AKUN BARU LANGSUNG KE FIRESTORE (Koleksi "users")
         window.handleRegisterAccount = async function(event) {
             event.preventDefault();
             const username = document.getElementById('regUser').value.trim().toLowerCase();
@@ -904,7 +870,6 @@
                     return;
                 }
 
-                // Simpan akun baru ke Firestore
                 await setDoc(userRef, {
                     username: username,
                     password: password,
@@ -925,7 +890,6 @@
             }
         }
 
-        // FUNGSI LOGIN AKUN LANGSUNG DARI FIRESTORE (Koleksi "users")
         window.handleLogin = async function(event) {
             event.preventDefault();
             const username = document.getElementById('loginUser').value.trim().toLowerCase();
@@ -972,7 +936,6 @@
             });
         }
 
-        // FUNGSI SUBMIT PENDAFTARAN TURNAMEN KE FIRESTORE
         window.handleFormSubmit = async function(event) {
             event.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
