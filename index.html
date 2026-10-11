@@ -553,6 +553,7 @@
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
         let chatInterval = null;
+        let isSendingChat = false; // Penanda agar polling tidak menimpa pesan baru yang sedang dikirim
 
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
@@ -591,11 +592,17 @@
 
         // FUNGSI MENGAMBIL PESAN CHAT DARI KOLOM X, Y, Z GOOGLE SHEETS
         async function fetchChats() {
+            // Jika sedang ada proses pengiriman pesan, abaikan sementara refresh agar pesan tidak ketimpa
+            if (isSendingChat) return;
+
             const chatBox = document.getElementById('chatBox');
             try {
                 const res = await fetch(`${DATABASE_SCRIPT_URL}?action=getChats`);
                 const data = await res.json();
                 
+                // Cek lagi kalau tiba-tiba user mengirim pesan saat fecthing
+                if (isSendingChat) return;
+
                 if (data.status === 'success' && data.chats) {
                     if (data.chats.length === 0) {
                         chatBox.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada percakapan. Jadilah yang pertama berkirim pesan!</div>';
@@ -638,8 +645,8 @@
             }
         }
 
-        // FUNGSI MENGIRIM PESAN CHAT (RESPONSIF / INSTANT UPDATE / OPTIMISTIC UI)
-        function handleSendChat(e) {
+        // FUNGSI MENGIRIM PESAN CHAT (INSTAN, RESPONSIVE & ANTI-KETIMPA)
+        async function handleSendChat(e) {
             e.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
             if(!loggedUser) return;
@@ -648,7 +655,10 @@
             const message = input.value.trim();
             if(!message) return;
 
-            // Kosongkan input seketika
+            // Kunci status pengiriman agar fetchChats() menunda perubahannya
+            isSendingChat = true;
+
+            // Clear input seketika
             input.value = '';
 
             const chatBox = document.getElementById('chatBox');
@@ -658,7 +668,7 @@
                 chatBox.innerHTML = '';
             }
 
-            // Tampilkan pesan di layar SEKETIKA tanpa menunggu server (Responsive / Instant)
+            // Render pesan instan ke UI
             const now = new Date();
             const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -673,14 +683,21 @@
             chatBox.insertAdjacentHTML('beforeend', instantHtml);
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Kirim ke database Google Sheets di background (tanpa blocking UI)
-            fetch(DATABASE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: 'sendChat', username: loggedUser, message: message })
-            }).catch(err => {
+            try {
+                // Kirim data ke Google Sheets
+                await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'sendChat', username: loggedUser, message: message })
+                });
+            } catch (err) {
                 console.error("Gagal mengirim ke server:", err);
-            });
+            } finally {
+                // Beri jeda 3 detik agar Google Sheets selesai menulis, baru izinkan fetch otomatis kembali
+                setTimeout(() => {
+                    isSendingChat = false;
+                }, 3000);
+            }
         }
 
         function escapeHtml(text) {
