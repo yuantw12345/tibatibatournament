@@ -261,7 +261,7 @@
             </div>
         </section>
 
-        <!-- SEKSI LIVE STREAMING & LIVE CHAT (BERDAMPINGAN) -->
+        <!-- SEKSI LIVE STREAMING & LIVE CHAT (UKURAN CHAT DIKUNCI & TIDAK MEMANJANG lagi) -->
         <section id="live-stream" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="bg-obsidian-card border border-crimson/40 rounded-2xl p-4 sm:p-6 shadow-crimson-glow">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
@@ -277,7 +277,8 @@
                     </span>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+                    <!-- VIDEO PLAYER -->
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-obsidian-lightBorder shadow-2xl bg-black flex items-center justify-center">
                             <div class="text-center p-6 text-slate-500 font-tech text-xs">
@@ -289,23 +290,25 @@
                         <p class="text-[11px] text-slate-400 font-tech mt-2 px-1"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Saksikan keseruan pertandingan secara langsung. Dilarang spam atau berkata kasar di kolom chat!</p>
                     </div>
 
-                    <!-- KONTEN LIVE CHAT ARENA (DIPISAH DENGAN CHAT GLOBAL) -->
-                    <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[320px] lg:h-auto">
-                        <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border">
+                    <!-- KONTEN LIVE CHAT (TINGGI DIKUNCI h-[380px] sm:h-[420px] lg:h-[450px]) -->
+                    <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[380px] sm:h-[420px] lg:h-[450px] overflow-hidden">
+                        <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border shrink-0">
                             <span class="font-tech text-xs text-crimson font-bold flex items-center gap-1.5">
                                 <i class="fa-solid fa-headset"></i> LIVE STREAM CHAT
                             </span>
                             <span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
                         </div>
 
-                        <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
+                        <!-- AREA CHAT SCROLLABLE -->
+                        <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech min-h-0">
                             <div class="text-center text-slate-500 py-10">Memuat live chat...</div>
                         </div>
 
-                        <div id="liveChatInputArea">
+                        <!-- FORM INPUT CHAT LIVE STREAM -->
+                        <div id="liveChatInputArea" class="shrink-0 pt-1">
                             <form id="liveChatForm" onsubmit="handleSendLiveChat(event)" class="hidden flex gap-2">
                                 <input type="text" id="liveChatMessageInput" required placeholder="Ketik komentar live..." autocomplete="off" class="flex-grow bg-obsidian-card border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-crimson">
-                                <button type="submit" class="px-3 py-2 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-lg cursor-pointer transition-all shadow-crimson-glow">
+                                <button type="submit" class="px-3 py-2 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-lg cursor-pointer transition-all shadow-crimson-glow shrink-0">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </form>
