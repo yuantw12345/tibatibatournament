@@ -45,22 +45,25 @@
         </div>
 
         <!-- TOMBOL NAVIGASI MENU TAB -->
-        <div class="flex gap-3 mb-6 font-tech text-xs font-bold">
+        <div class="flex flex-wrap gap-3 mb-6 font-tech text-xs font-bold">
             <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center gap-2">
-                <i class="fa-solid fa-trophy"></i> DATA PENDAFTAR TURNAMEN (<span id="countTournaments">0</span>)
+                <i class="fa-solid fa-trophy"></i> PENDAFTAR TURNAMEN (<span id="countTournaments">0</span>)
             </button>
             <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2">
-                <i class="fa-solid fa-users-gear"></i> DATA AKUN MEMBER / PASSWORD (<span id="countUsers">0</span>)
+                <i class="fa-solid fa-users-gear"></i> AKUN MEMBER & PASSWORD (<span id="countUsers">0</span>)
+            </button>
+            <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-comments"></i> CHAT GLOBAL (<span id="countChats">0</span>)
             </button>
         </div>
 
-        <!-- KONTEN TAB 1: DATA PENDAFTAR TURNAMEN -->
+        <!-- TAB 1: DATA PENDAFTAR TURNAMEN -->
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
                 </h2>
-                <span class="text-xs font-tech text-slate-400">Real-time Cloud Firestore</span>
+                <span class="text-xs font-tech text-slate-400">Database "pendaftar"</span>
             </div>
 
             <div class="overflow-x-auto">
@@ -85,13 +88,13 @@
             </div>
         </div>
 
-        <!-- KONTEN TAB 2: DATA AKUN MEMBER (USERNAME & PASSWORD) -->
+        <!-- TAB 2: DATA AKUN MEMBER -->
         <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
                     <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Password Member
                 </h2>
-                <span class="text-xs font-tech text-slate-400">Database Koleksi "users"</span>
+                <span class="text-xs font-tech text-slate-400">Database "users"</span>
             </div>
 
             <div class="overflow-x-auto">
@@ -111,12 +114,44 @@
                 </table>
             </div>
         </div>
+
+        <!-- TAB 3: MODERASI CHAT GLOBAL -->
+        <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-obsidian-border">
+                <div>
+                    <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Pesan Chat Global
+                    </h2>
+                    <span class="text-xs font-tech text-slate-400">Database "chats"</span>
+                </div>
+                <button onclick="deleteAllChats()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-3">No</th>
+                            <th class="p-3">Waktu Kirim</th>
+                            <th class="p-3">Pengirim</th>
+                            <th class="p-3">Isi Pesan Chat</th>
+                            <th class="p-3 text-center">Aksi Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data chat global...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- SCRIPT FIREBASE & PANEL ADMIN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -134,29 +169,41 @@
         window.addEventListener('DOMContentLoaded', () => {
             loadTournamentApplicants();
             loadMemberUsers();
+            loadGlobalChats();
         });
 
-        // NAVIGASI ANTAR TAB
+        // NAVIGASI TAP MENU PANEL
         window.switchAdminTab = function(tab) {
             const btnT = document.getElementById('tabBtnTournaments');
             const btnU = document.getElementById('tabBtnUsers');
+            const btnC = document.getElementById('tabBtnChats');
+            
             const secT = document.getElementById('sectionTournaments');
             const secU = document.getElementById('sectionUsers');
+            const secC = document.getElementById('sectionChats');
+
+            // Reset class gaya tombol
+            btnT.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+            btnU.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+            btnC.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+
+            secT.classList.add('hidden');
+            secU.classList.add('hidden');
+            secC.classList.add('hidden');
 
             if (tab === 'tournaments') {
                 btnT.className = "px-5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center gap-2";
-                btnU.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
                 secT.classList.remove('hidden');
-                secU.classList.add('hidden');
-            } else {
+            } else if (tab === 'users') {
                 btnU.className = "px-5 py-3 rounded-xl bg-crimson text-white shadow-lg transition-all cursor-pointer flex items-center gap-2";
-                btnT.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
                 secU.classList.remove('hidden');
-                secT.classList.add('hidden');
+            } else if (tab === 'chats') {
+                btnC.className = "px-5 py-3 rounded-xl bg-sky-500 text-black shadow-lg transition-all cursor-pointer flex items-center gap-2";
+                secC.classList.remove('hidden');
             }
         }
 
-        // AMBIL DATA PENDAFTAR TURNAMEN SECARA REAL-TIME
+        // 1. LOAD DATA PENDAFTAR TURNAMEN
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -199,7 +246,7 @@
             });
         }
 
-        // AMBIL DATA AKUN MEMBER (USERNAME & PASSWORD) SECARA REAL-TIME
+        // 2. LOAD DATA AKUN MEMBER
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -238,28 +285,93 @@
             });
         }
 
-        // FUNGSI HAPUS DATA PENDAFTAR TURNAMEN
+        // 3. LOAD DATA CHAT GLOBAL
+        function loadGlobalChats() {
+            const q = query(collection(db, "chats"), orderBy("time", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('chatsTableBody');
+                document.getElementById('countChats').innerText = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada obrolan di Chat Global.</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                let i = 1;
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = '-';
+                    if (data.time && data.time.toDate) {
+                        timeStr = data.time.toDate().toLocaleString();
+                    }
+
+                    html += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-3">${i++}</td>
+                            <td class="p-3 text-slate-400">${timeStr}</td>
+                            <td class="p-3 font-bold text-sky-400">@${data.username}</td>
+                            <td class="p-3 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteSingleChat('${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Chat Ini">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Aksi Hapus Data Pendaftar
         window.deleteTournamentData = async function(docId, username) {
-            if (confirm(`Yakin ingin menghapus data pendaftaran untuk akun @${username}?`)) {
+            if (confirm(`Hapus data pendaftaran untuk akun @${username}?`)) {
                 try {
                     await deleteDoc(doc(db, "pendaftar", docId));
-                    alert("Data pendaftaran berhasil dihapus.");
                 } catch (err) {
-                    console.error("Gagal menghapus:", err);
                     alert("Gagal menghapus data.");
                 }
             }
         }
 
-        // FUNGSI HAPUS AKUN MEMBER (USERNAME & PASSWORD)
+        // Aksi Hapus Akun Member
         window.deleteMemberAccount = async function(docId, username) {
-            if (confirm(`PERHATIAN: Menghapus akun @${username} akan menghapus data login mereka secara permanen dari database. Lanjutkan?`)) {
+            if (confirm(`Hapus permanen akun @${username}?`)) {
                 try {
                     await deleteDoc(doc(db, "users", docId));
-                    alert(`Akun @${username} berhasil dihapus dari database!`);
                 } catch (err) {
-                    console.error("Gagal menghapus akun:", err);
-                    alert("Gagal menghapus akun member.");
+                    alert("Gagal menghapus akun.");
+                }
+            }
+        }
+
+        // Aksi Hapus Single Chat
+        window.deleteSingleChat = async function(docId) {
+            if (confirm(`Hapus pesan chat ini?`)) {
+                try {
+                    await deleteDoc(doc(db, "chats", docId));
+                } catch (err) {
+                    alert("Gagal menghapus chat.");
+                }
+            }
+        }
+
+        // Aksi Hapus SEMUA Chat Global
+        window.deleteAllChats = async function() {
+            if (confirm("PERHATIAN: Apakah Anda yakin ingin MENGHAPUS SEMUA PESAN di Chat Global?")) {
+                try {
+                    const querySnapshot = await getDocs(collection(db, "chats"));
+                    const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, "chats", docSnap.id)));
+                    await Promise.all(deletePromises);
+                    alert("Seluruh obrolan Chat Global berhasil dibersihkan!");
+                } catch (err) {
+                    console.error(err);
+                    alert("Gagal membersihkan seluruh chat.");
                 }
             }
         }
