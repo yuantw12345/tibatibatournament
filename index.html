@@ -102,7 +102,6 @@
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2);
         }
 
-        /* ANIMASI MODAL YANG SMOOTH, AESTHETIC, DAN ELEGAN */
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
@@ -179,7 +178,6 @@
                     <i class="fa-solid fa-comments text-sky-400 text-sm"></i> Chat Global
                 </button>
                 
-                <!-- MENU SAAT BELUM LOGIN -->
                 <div id="authGuestMenu" class="flex items-center space-x-3">
                     <button onclick="openModal('loginModal')" class="px-4 py-2 text-xs font-bold text-emerald-accent border border-emerald-accent/40 rounded-lg hover:bg-emerald-accent/10 transition-all cursor-pointer">
                         <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
@@ -189,7 +187,6 @@
                     </button>
                 </div>
 
-                <!-- MENU SAAT SUDAH LOGIN -->
                 <div id="authMemberMenu" class="hidden items-center space-x-3">
                     <span id="loggedInUserBadge" class="px-3 py-1.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-xs font-bold"></span>
                     <button onclick="openModal('registerModal')" id="navRegisterBtn" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer">
@@ -280,29 +277,18 @@
                     </span>
                 </div>
                 
-                <!-- GRID: KIRI VIDEO LIVE, KANAN CHAT INTERAKTIF -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                    
-                    <!-- BINGKAI PEMUTAR LIVE YOUTUBE (KIRI - 8 KOLOM) -->
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-obsidian-lightBorder shadow-2xl bg-black flex items-center justify-center">
-                            
-                            <!-- ========================================================================================= -->
-                            <!--  [PENANDA KHUSUS: NANTI ISI VIDEO DI SINI] -->
-                            <!--  Jika ingin memasukkan video YouTube lagi, ganti div di bawah ini dengan kode iframe. -->
-                            <!-- ========================================================================================= -->
                             <div class="text-center p-6 text-slate-500 font-tech text-xs">
                                 <i class="fa-solid fa-video-slash text-3xl mb-2 text-slate-600 block"></i>
                                 <span class="text-slate-400 font-bold block mb-1">LIVE STREAMING BELUM DIMULAI</span>
                                 Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
                             </div>
-                            <!-- ========================================================================================= -->
-
                         </div>
                         <p class="text-[11px] text-slate-400 font-tech mt-2 px-1"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Saksikan keseruan pertandingan secara langsung. Dilarang spam atau berkata kasar di kolom chat!</p>
                     </div>
 
-                    <!-- KOLOM CHAT LIVE (KANAN - 4 KOLOM) -->
                     <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[320px] lg:h-auto">
                         <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border">
                             <span class="font-tech text-xs text-sky-400 font-bold flex items-center gap-1.5">
@@ -311,12 +297,10 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-accent animate-ping"></span>
                         </div>
 
-                        <!-- KOTAK PESAN CHAT LIVE -->
                         <div id="liveChatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
                             <div class="text-center text-slate-500 py-10">Memuat chat...</div>
                         </div>
 
-                        <!-- INPUT CHAT LIVE -->
                         <div id="liveChatInputArea">
                             <form id="liveChatForm" onsubmit="handleSendLiveChat(event)" class="hidden flex gap-2">
                                 <input type="text" id="liveChatMessageInput" required placeholder="Ketik komentar..." autocomplete="off" class="flex-grow bg-obsidian-card border border-obsidian-border rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-sky-400">
@@ -344,21 +328,18 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-                <!-- KARTU 1: DINAMIS (LOGIN / DAFTAR AKUN) -->
                 <div id="cardAuthAction" onclick="handleCardAuthClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div id="cardIconBox" class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-right-to-bracket" id="cardIcon"></i></div>
                     <h3 id="cardTitle" class="font-display font-bold text-lg sm:text-xl text-white mb-2">1. LOGIN / BUAT AKUN</h3>
                     <p id="cardDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.</p>
                 </div>
 
-                <!-- KARTU 2: DAFTAR TURNAMEN (TERKUNCI JIKA BELUM LOGIN) -->
                 <div id="cardTournament" onclick="handleTournamentCardClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">2. DAFTAR TURNAMEN</h3>
                     <p id="cardTournamentDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Formulir pendaftaran tim bertanding. <span id="lockStatusText" class="text-amber-400 font-semibold block mt-1"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span></p>
                 </div>
 
-                <!-- KARTU 3: CATATAN JUARA -->
                 <div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">3. CATATAN JUARA</h3>
@@ -368,7 +349,6 @@
         </section>
 
         <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            <!-- CATATAN JUARA SECTION -->
             <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
                     <div class="flex items-center gap-3">
@@ -416,56 +396,40 @@
         </section>
     </main>
 
-    <!-- FLOATING CHAT GLOBAL MODAL (TETAP ADA) -->
     <button onclick="openChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
         <i class="fa-solid fa-comments text-base"></i>
         <span>CHAT GLOBAL</span>
     </button>
 
-    <!-- FLOATING WHATSAPP 2 PANITIA (DI KANAN BAWAH) -->
     <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 items-end">
-        <!-- PANITIA 2 (+6281398115475) -->
         <a href="https://wa.me/6281398115475?text=Halo%20Panitia%202%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold">
             <span class="text-[11px]">Panitia 2</span>
             <i class="fa-brands fa-whatsapp text-lg"></i>
         </a>
-
-        <!-- PANITIA 1 (+6287763331294) -->
         <a href="https://wa.me/6287763331294?text=Halo%20Panitia%201%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold">
             <span class="text-[11px]">Panitia 1</span>
             <i class="fa-brands fa-whatsapp text-lg"></i>
         </a>
     </div>
 
-    <!-- MODAL: CHAT GLOBAL ARENA -->
     <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 shadow-2xl flex flex-col h-[520px]">
             <button onclick="closeChatModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-            
             <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-3">
-                <div class="w-9 h-9 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30">
-                    <i class="fa-solid fa-comments"></i>
-                </div>
+                <div class="w-9 h-9 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30"><i class="fa-solid fa-comments"></i></div>
                 <div>
                     <h3 class="font-display font-bold text-base text-white leading-tight">CHAT GLOBAL ARENA</h3>
                     <p class="text-[10px] text-slate-400 font-tech">Komunitas & Diskusi Player</p>
                 </div>
             </div>
-
-            <!-- AREA PESAN CHAT -->
             <div id="chatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
                 <div class="text-center text-slate-500 py-8">Memuat pesan chat...</div>
             </div>
-
-            <!-- AREA INPUT CHAT -->
             <div id="chatInputArea">
                 <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
                     <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-sky-400">
-                    <button type="submit" id="chatSendBtn" class="px-4 py-2.5 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
+                    <button type="submit" id="chatSendBtn" class="px-4 py-2.5 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all"><i class="fa-solid fa-paper-plane"></i></button>
                 </form>
-
                 <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-3 rounded-xl text-center">
                     <p class="text-[11px] text-amber-400 mb-2 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
                     <button onclick="closeChatModal(); openModal('loginModal')" class="px-4 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs rounded-lg cursor-pointer">Login / Buat Akun</button>
@@ -474,7 +438,6 @@
         </div>
     </div>
 
-    <!-- MODAL: LOGIN AKUN WEBSITE -->
     <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -500,7 +463,6 @@
         </div>
     </div>
 
-    <!-- MODAL: BUAT AKUN WEB (REGISTRASI MEMBER) -->
     <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -526,7 +488,6 @@
         </div>
     </div>
 
-    <!-- MODAL: FORM PENDAFTARAN TURNAMEN -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -569,17 +530,13 @@
         </div>
     </div>
 
-    <!-- PENGUMUMAN JUARA (MUNCUL PERTAMA KALI) -->
     <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-2xl bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-            
             <div class="flex items-center gap-2.5 mb-4">
                 <i class="fa-solid fa-trophy text-emerald-accent text-2xl"></i>
                 <h3 class="font-display font-bold text-lg sm:text-2xl text-white pr-6">SELAMAT KEPADA PARA JUARA!</h3>
             </div>
-
-            <!-- FOTO JUARA -->
             <div class="relative rounded-xl overflow-hidden border border-emerald-accent/40 shadow-lg mb-5">
                 <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[260px] sm:h-[380px] object-cover object-center">
                 <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
@@ -589,15 +546,12 @@
                     </span>
                 </div>
             </div>
-
-            <!-- UCAPAN SELAMAT & ROSTER -->
             <div class="space-y-4 text-xs sm:text-sm text-slate-300 font-tech">
                 <div class="bg-obsidian/80 p-4 sm:p-5 rounded-xl border border-obsidian-border text-center">
                     <p class="text-emerald-accent font-bold mb-1.5 text-base">SELAMAT ATAS KEMENANGAN KALIAN!</p>
                     <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
                         Terima kasih atas perjuangan luar biasa di arena. Dan <strong>kita akan kembali lagi di season berikutnya!</strong> Persiapkan tim kalian untuk pertempuran seru selanjutnya.
                     </p>
-                    
                     <span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-2.5">ROSTER TIM PEMENANG:</span>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs sm:text-sm">
                         <div class="bg-obsidian-card p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 mr-1"></i> ANAM</div>
@@ -608,7 +562,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="mt-5 text-right">
                 <button onclick="closeModal('rulesModal')" class="w-full py-3.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-emerald-glow cursor-pointer transition-all">
                     LANJUT KE WEBSITE <i class="fa-solid fa-arrow-right ml-1"></i>
@@ -617,7 +570,6 @@
         </div>
     </div>
 
-    <!-- MESSAGE MODAL (CUSTOM ALERT) -->
     <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-accent/30">
@@ -629,13 +581,12 @@
         </div>
     </div>
 
-    <!-- CONFIRM MODAL (CUSTOM CONFIRM) -->
     <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <h3 id="confirmText" class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
+            <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
             <p id="confirmText" class="text-slate-300 text-xs mb-5">Apakah Anda yakin?</p>
             <div class="flex gap-2">
                 <button id="confirmYesBtn" class="flex-1 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-xl cursor-pointer transition-all">YA</button>
@@ -644,8 +595,23 @@
         </div>
     </div>
 
-    <script>
-        const TOURNAMENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
+    <!-- SCRIPT FIREBASE & APLIKASI UTAMA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
+            authDomain: "tibatibaturnament.firebaseapp.com",
+            projectId: "tibatibaturnament",
+            storageBucket: "tibatibaturnament.firebasestorage.app",
+            messagingSenderId: "626781978918",
+            appId: "1:626781978918:web:9c4caf6a1d6a2ad03541e7",
+            measurementId: "G-Q64PK4M8P4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
         let chatInterval = null;
@@ -654,30 +620,28 @@
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
-            fetchChats(); // Muat chat langsung di section live stream
+            fetchChats();
             if(!chatInterval) {
-                chatInterval = setInterval(fetchChats, 4000); // Polling otomatis
+                chatInterval = setInterval(fetchChats, 4000);
             }
         });
 
-        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+        window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        window.openModal = function(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
 
-        // FUNGSI CHAT GLOBAL MODAL
-        function openChatModal() {
+        window.openChatModal = function() {
             openModal('chatModal');
             updateChatAccessUI();
             fetchChats();
         }
 
-        function closeChatModal() {
+        window.closeChatModal = function() {
             closeModal('chatModal');
         }
 
-        function updateChatAccessUI() {
+        window.updateChatAccessUI = function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
-            // Update Modal Chat UI
             if (loggedUser) {
                 document.getElementById('chatForm').classList.remove('hidden');
                 document.getElementById('chatGuestNotice').classList.add('hidden');
@@ -691,10 +655,8 @@
             }
         }
 
-        // FUNGSI MENGAMBIL PESAN CHAT DARI GOOGLE SHEETS
         async function fetchChats() {
             if (isSendingChat) return;
-
             const chatBox = document.getElementById('chatBox');
             const liveChatBox = document.getElementById('liveChatBox');
 
@@ -740,28 +702,20 @@
                         }
                     });
 
-                    if(chatBox) {
-                        chatBox.innerHTML = html;
-                        chatBox.scrollTop = chatBox.scrollHeight;
-                    }
-                    if(liveChatBox) {
-                        liveChatBox.innerHTML = html;
-                        liveChatBox.scrollTop = liveChatBox.scrollHeight;
-                    }
+                    if(chatBox) { chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight; }
+                    if(liveChatBox) { liveChatBox.innerHTML = html; liveChatBox.scrollTop = liveChatBox.scrollHeight; }
                 }
             } catch (err) {
                 console.error("Gagal mengambil chat:", err);
             }
         }
 
-        // FUNGSI MENGIRIM PESAN CHAT DARI MODAL
-        async function handleSendChat(e) {
+        window.handleSendChat = async function(e) {
             e.preventDefault();
             await processSendMessage(document.getElementById('chatMessageInput'));
         }
 
-        // FUNGSI MENGIRIM PESAN CHAT DARI SECTION LIVE
-        async function handleSendLiveChat(e) {
+        window.handleSendLiveChat = async function(e) {
             e.preventDefault();
             await processSendMessage(document.getElementById('liveChatMessageInput'));
         }
@@ -769,7 +723,6 @@
         async function processSendMessage(inputElement) {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if(!loggedUser) return;
-
             const message = inputElement.value.trim();
             if(!message) return;
 
@@ -778,7 +731,6 @@
 
             const chatBox = document.getElementById('chatBox');
             const liveChatBox = document.getElementById('liveChatBox');
-
             const now = new Date();
             const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -811,9 +763,7 @@
             } catch (err) {
                 console.error("Gagal mengirim ke server:", err);
             } finally {
-                setTimeout(() => {
-                    isSendingChat = false;
-                }, 3000);
+                setTimeout(() => { isSendingChat = false; }, 3000);
             }
         }
 
@@ -821,7 +771,7 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        function showCustomAlert(title, text, isError = false) {
+        window.showCustomAlert = function(title, text, isError = false) {
             document.getElementById('messageTitle').innerText = title;
             document.getElementById('messageText').innerText = text;
             const icon = document.getElementById('messageIcon');
@@ -833,7 +783,7 @@
             openModal('messageModal');
         }
 
-        function showCustomConfirm(text, onYesCallback) {
+        window.showCustomConfirm = function(text, onYesCallback) {
             document.getElementById('confirmText').innerText = text;
             const yesBtn = document.getElementById('confirmYesBtn');
             const newYesBtn = yesBtn.cloneNode(true);
@@ -848,20 +798,20 @@
 
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
-        function nextSlide() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
-        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+        window.nextSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+        window.prevSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
         setInterval(nextSlide, 4500);
 
-        function switchTab(tab) {
+        window.switchTab = function(tab) {
             document.getElementById('content-champions').classList.add('hidden');
             if(tab === 'champions') document.getElementById('content-champions').classList.remove('hidden');
             document.getElementById('dynamic-section').scrollIntoView({ behavior: 'smooth' });
         }
-        function closeTab() {
+        window.closeTab = function() {
             document.getElementById('content-champions').classList.add('hidden');
         }
 
-        function checkAuthStatus() {
+        window.checkAuthStatus = function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             const authGuestMenu = document.getElementById('authGuestMenu');
             const authMemberMenu = document.getElementById('authMemberMenu');
@@ -873,7 +823,6 @@
             const cardIconBox = document.getElementById('cardIconBox');
             const cardTitle = document.getElementById('cardTitle');
             const cardDesc = document.getElementById('cardDesc');
-            
             const lockStatusText = document.getElementById('lockStatusText');
 
             if (loggedUser) {
@@ -891,7 +840,6 @@
                 cardTitle.innerText = "STATUS: TERLOGIN";
                 cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">@${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
                 cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai @${loggedUser}`);
-
                 lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
             } else {
                 authGuestMenu.classList.remove('hidden');
@@ -904,20 +852,17 @@
                 cardTitle.innerText = "1. LOGIN / BUAT AKUN";
                 cardDesc.innerText = "Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.";
                 cardAuthAction.onclick = () => openModal('loginModal');
-
                 lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span>';
             }
             updateChatAccessUI();
         }
 
-        function handleCardAuthClick() {
+        window.handleCardAuthClick = function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
-            if (!loggedUser) {
-                openModal('loginModal');
-            }
+            if (!loggedUser) openModal('loginModal');
         }
 
-        function handleTournamentCardClick() {
+        window.handleTournamentCardClick = function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
                 showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!", true);
@@ -927,7 +872,7 @@
             }
         }
 
-        async function handleRegisterAccount(event) {
+        window.handleRegisterAccount = async function(event) {
             event.preventDefault();
             const username = document.getElementById('regUser').value.trim();
             const password = document.getElementById('regPass').value.trim();
@@ -962,7 +907,7 @@
             }
         }
 
-        async function handleLogin(event) {
+        window.handleLogin = async function(event) {
             event.preventDefault();
             const username = document.getElementById('loginUser').value.trim();
             const password = document.getElementById('loginPass').value.trim();
@@ -997,7 +942,7 @@
             }
         }
 
-        function handleLogout() {
+        window.handleLogout = function() {
             showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", () => {
                 localStorage.removeItem('activeMemberUser');
                 checkAuthStatus();
@@ -1005,7 +950,8 @@
             });
         }
 
-        async function handleFormSubmit(event) {
+        // FUNGSI SUBMIT LANGSUNG KE FIRESTORE DATABASE
+        window.handleFormSubmit = async function(event) {
             event.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
@@ -1019,23 +965,19 @@
             submitBtn.disabled = true;
 
             try {
-                const formData = {
+                // Simpan data langsung ke database Firestore koleksi "pendaftar"
+                await addDoc(collection(db, "pendaftar"), {
                     nama: document.getElementById('tNama').value.trim(),
                     idMl: document.getElementById('tIdMl').value.trim(),
                     role1: document.getElementById('tRole1').value.trim(),
                     whatsapp: document.getElementById('tWhatsapp').value.trim(),
                     role2: document.getElementById('tRole2').value.trim(),
                     payment: document.getElementById('tPayment').value,
-                    usernameDb: loggedUser
-                };
-
-                await fetch(TOURNAMENT_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
+                    usernameDb: loggedUser,
+                    waktuDaftar: serverTimestamp()
                 });
 
+                // Kunci akun setelah mendaftar
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1043,12 +985,12 @@
                 });
 
                 closeModal('registerModal');
-                showCustomAlert("REGISTRASI BERHASIL", "Data pendaftaran turnamen berhasil dikirim dan akun Anda telah terkunci.");
+                showCustomAlert("REGISTRASI BERHASIL", "Data pendaftaran turnamen berhasil dikirim ke database Firestore!");
                 event.target.reset();
 
             } catch (error) {
-                console.error(error);
-                showCustomAlert("KESALAHAN", "Terjadi kesalahan koneksi saat mengirim data.", true);
+                console.error("Gagal kirim ke database: ", error);
+                showCustomAlert("KESALAHAN", "Terjadi kesalahan koneksi saat menyimpan data ke database.", true);
             } finally {
                 submitBtn.innerText = "SUBMIT DATA";
                 submitBtn.disabled = false;
