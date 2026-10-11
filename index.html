@@ -293,15 +293,91 @@
     <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-4 pr-6">REGULASI & PERATURAN TURNAMEN</h3>
-            <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
-                <p><strong>1. Format Turnamen:</strong> Double Elimination (BO3, Grand Final BO5).</p>
-                <p><strong>2. Mode Game:</strong> Custom - Draft Pick (5 Ban Hero).</p>
-                <p><strong>3. Toleransi Keterlambatan:</strong> Maksimal 15 menit dari jadwal.</p>
-                <p><strong>4. TIDAK ADA JEDA / PAUSE:</strong> Segala kendala sinyal/perangkat ditanggung masing-masing player.</p>
-                <p><strong>5. Keputusan Panitia:</strong> Bersifat mutlak dan tidak dapat diganggu gugat.</p>
-                <p><strong>6. Payment Pendaftaran:</strong> 200k / 4k rupe / player, dibayarkan paling lambat setelah Tournament S3 selesai.</p>
+            
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
+                <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
             </div>
+
+            <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
+                <!-- GROUP STAGE -->
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2">
+                        <i class="fa-solid fa-layer-group"></i> Group Stage
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> 5 tim dalam 1 grup.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Sistem pertandingan <strong>BO 2</strong>.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
+                    </ul>
+                </div>
+
+                <!-- SISTEM POIN -->
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2">
+                        <i class="fa-solid fa-star"></i> Sistem Poin
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-emerald-accent/20 text-emerald-accent font-bold text-[10px]">MENANG 2–0</span> = 3 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">SERI 1–1</span> = 1 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
+                    </ul>
+                </div>
+
+                <!-- SEMIFINAL & GRAND FINAL -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold uppercase mb-2">
+                            <i class="fa-solid fa-sitemap"></i> Semifinal
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-1">4 tim dengan klasemen teratas lolos:</p>
+                        <div class="font-bold text-white mb-1">• 1st vs 3rd<br>• 2nd vs 4th</div>
+                        <span class="text-[10px] text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Format BO 3</span>
+                    </div>
+
+                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                        <div class="flex items-center gap-2 text-yellow-400 font-bold uppercase mb-2">
+                            <i class="fa-solid fa-crown"></i> Grand Final
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-1">Pemenang semifinal bertemu.</p>
+                        <span class="text-[10px] text-yellow-300 bg-yellow-500/10 px-2 py-0.5 rounded inline-block mt-2">Format BO 5</span>
+                    </div>
+                </div>
+
+                <!-- KETENTUAN -->
+                <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
+                    <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2">
+                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting
+                    </div>
+                    <ul class="space-y-2 text-slate-200">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-ban text-crimson mt-0.5"></i>
+                            <span><strong>NO PAUSE</strong> selama pertandingan berlangsung.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-wifi text-amber-400 mt-0.5"></i>
+                            <span>Kendala <strong>sinyal, koneksi, atau perangkat</strong> menjadi tanggung jawab masing-masing player/tim.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-scale-balanced text-sky-400 mt-0.5"></i>
+                            <span>Jika poin sama, penentuan peringkat mengikuti <strong>tiebreaker yang ditetapkan panitia</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-gavel text-purple-400 mt-0.5"></i>
+                            <span><strong>Keputusan panitia mutlak dan final.</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-handshake text-emerald-accent mt-0.5"></i>
+                            <span>Wajib menjunjung tinggi <strong>sportivitas</strong> selama pertandingan.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center pt-2 text-emerald-accent font-bold tracking-wider text-xs">
+                    🔥 GOOD LUCK & HAVE FUN! 🔥
+                </div>
+            </div>
+
             <div class="mt-6 text-right">
                 <button onclick="closeModal('rulesModal')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg">SAYA MEMAHAMI RULES</button>
             </div>
@@ -415,13 +491,6 @@
             event.preventDefault();
             const inputs = event.target.querySelectorAll('input, select');
             
-            // Mengambil input berurutan persis seperti tampilan form:
-            // inputs[0] = Nama Lengkap -> masuk Kolom A (nama)
-            // inputs[1] = ID Mobile Legend -> masuk Kolom B (idMl)
-            // inputs[2] = Role Utama -> masuk Kolom C (role)
-            // inputs[3] = Nomor WA -> masuk Kolom D (NOMOR WHATSAP)
-            // inputs[4] = Role Cadangan -> masuk Kolom E (ROLE)
-            // inputs[5] = Metode Pembayaran -> masuk Kolom F (PEMBAYARAN)
             const formData = {
                 nama: inputs[0].value,
                 idMl: inputs[1].value,
@@ -431,14 +500,12 @@
                 payment: inputs[5].value
             };
 
-            // Respon sukses instan tanpa tunggu server
             closeModal('registerModal');
             document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
             document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
             openModal('messageModal');
             event.target.reset();
 
-            // Kirim ke Google Apps Script
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
