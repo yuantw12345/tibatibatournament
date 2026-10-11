@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PANEL PANITIA — TIBA TIBA TOURNAMENT</title>
     
+    <!-- Favicon Custom Logo -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,19 +29,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080a0f; color: #f8faff; }
+        .neon-glow-red { text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3); }
+        .neon-glow-white { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2); }
     </style>
 </head>
 <body class="min-h-screen p-4 sm:p-8">
 
     <div class="max-w-7xl mx-auto">
-        <!-- HEADER PANEL -->
+        <!-- HEADER PANEL DENGAN LOGO PNG -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-obsidian-card border border-obsidian-border p-6 rounded-2xl mb-8 shadow-xl">
-            <div>
-                <span class="text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
-                <h1 class="font-display font-black text-2xl sm:text-3xl text-white mt-1">PANEL KONTROL PANITIA</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
+                    <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-accent rounded-full animate-ping"></span>
+                    <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-accent rounded-full"></span>
+                </div>
+                <div>
+                    <span class="text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
+                    <h1 class="font-display font-black text-xl sm:text-2xl text-white mt-0.5 leading-tight">
+                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL PANITIA
+                    </h1>
+                </div>
             </div>
             <div class="flex items-center gap-3">
-                <a href="index.html" class="px-4 py-2 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 rounded-xl font-tech text-xs font-bold transition-all">
+                <a href="index.html" class="px-4 py-2.5 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-xl font-tech text-xs font-bold transition-all shadow-md">
                     <i class="fa-solid fa-arrow-left mr-1.5"></i> Ke Website Utama
                 </a>
             </div>
