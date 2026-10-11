@@ -105,7 +105,7 @@
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         .modal-overlay.active {
             opacity: 1;
@@ -114,7 +114,7 @@
         .modal-container {
             transform: scale(0.92) translateY(12px);
             opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
         .modal-overlay.active .modal-container {
             transform: scale(1) translateY(0);
@@ -261,7 +261,7 @@
             </div>
         </section>
 
-        <!-- SEKSI LIVE STREAMING & LIVE CHAT (UKURAN CHAT DIKUNCI & TIDAK MEMANJANG lagi) -->
+        <!-- SEKSI LIVE STREAMING & LIVE CHAT -->
         <section id="live-stream" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="bg-obsidian-card border border-crimson/40 rounded-2xl p-4 sm:p-6 shadow-crimson-glow">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
@@ -290,7 +290,7 @@
                         <p class="text-[11px] text-slate-400 font-tech mt-2 px-1"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Saksikan keseruan pertandingan secara langsung. Dilarang spam atau berkata kasar di kolom chat!</p>
                     </div>
 
-                    <!-- KONTEN LIVE CHAT (TINGGI DIKUNCI h-[380px] sm:h-[420px] lg:h-[450px]) -->
+                    <!-- KONTEN LIVE CHAT -->
                     <div class="lg:col-span-4 bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col h-[380px] sm:h-[420px] lg:h-[450px] overflow-hidden">
                         <div class="flex items-center justify-between pb-2 mb-2 border-b border-obsidian-border shrink-0">
                             <span class="font-tech text-xs text-crimson font-bold flex items-center gap-1.5">
@@ -416,8 +416,8 @@
         </a>
     </div>
 
-    <!-- MODAL CHAT GLOBAL ARENA (TERPISAH) -->
-    <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <!-- MODAL CHAT GLOBAL ARENA (TANPA EFLEK BLUR DI LATAR BELAKANG) -->
+    <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 shadow-2xl flex flex-col h-[520px]">
             <button onclick="closeChatModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-3">
@@ -444,7 +444,7 @@
     </div>
 
     <!-- MODAL LOGIN -->
-    <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center mb-4">
@@ -470,7 +470,7 @@
     </div>
 
     <!-- MODAL REGISTER AKUN -->
-    <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center mb-4">
@@ -496,7 +496,7 @@
     </div>
 
     <!-- MODAL PENDAFTARAN TURNAMEN -->
-    <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-bold text-lg text-white mb-2">FORMULIR PENDAFTARAN TURNAMEN</h3>
@@ -539,7 +539,7 @@
     </div>
 
     <!-- MODAL JUARA -->
-    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-2xl bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="flex items-center gap-2.5 mb-4">
@@ -580,7 +580,7 @@
     </div>
 
     <!-- MODAL ALERT PESAN -->
-    <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-accent/30">
                 <i class="fa-solid fa-circle-check" id="messageIcon"></i>
@@ -592,7 +592,7 @@
     </div>
 
     <!-- MODAL KONFIRMASI -->
-    <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+    <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
             <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -697,7 +697,7 @@
             }, 6000);
         }
 
-        // 1. CHAT GLOBAL REAL-TIME (KOLEKSI "chats")
+        // 1. CHAT GLOBAL REAL-TIME
         function initRealtimeChats() {
             const q = query(collection(db, "chats"), orderBy("time", "asc"));
 
@@ -741,7 +741,7 @@
             });
         }
 
-        // 2. LIVE STREAM CHAT REAL-TIME (KOLEKSI "live_chats")
+        // 2. LIVE STREAM CHAT REAL-TIME
         function initRealtimeLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "asc"));
 
@@ -964,7 +964,7 @@
                 event.target.reset();
             } catch (error) {
                 console.error(error);
-                showCustomAlert("KESALAHAN", "Gagal mendaftarkan akun.", true);
+                showCustomAlert("KESALAHAN", "Gagal mendaftar akun.", true);
             } finally {
                 btn.innerText = "DAFTARKAN AKUN";
                 btn.disabled = false;
@@ -991,7 +991,6 @@
 
                 const userData = userSnap.data();
 
-                // DITOLAK JIKA DI-BANNED
                 if (userData.isBanned === true) {
                     showCustomAlert("AKUN DIBLOKIR", "Akun Anda telah di-banned oleh panitia karena melanggar aturan!", true);
                     return;
