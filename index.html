@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIBA TIBA TOURNAMENT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TIBA TIBA TOURNAMENT — Neon Arena</title>
+    <!-- Favicon Custom Logo -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,607 +14,548 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            dark: '#080a0f',
-                            card: '#121621',
-                            cardHover: '#1a2030',
-                            red: '#ff2a4b',
-                            blue: '#00d2ff',
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            slate: '#94a3b8'
+                        obsidian: {
+                            DEFAULT: '#080a0f',
+                            card: '#0f131d',
+                            glass: 'rgba(15, 19, 29, 0.75)',
+                            border: '#1e2638',
+                            lightBorder: '#2a364f'
+                        },
+                        crimson: {
+                            DEFAULT: '#ff1e56',
+                            glow: 'rgba(255, 30, 86, 0.25)',
+                            dark: '#c40d3d'
+                        },
+                        emerald: {
+                            accent: '#00e699',
+                            glow: 'rgba(0, 230, 153, 0.25)'
                         }
                     },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                        tech: ['Space Grotesk', 'sans-serif']
+                    },
                     boxShadow: {
-                        'modern-red': '0 10px 25px -5px rgba(255, 42, 75, 0.3)',
-                        'modern-blue': '0 10px 25px -5px rgba(0, 210, 255, 0.3)',
-                        'modern-amber': '0 10px 25px -5px rgba(245, 158, 11, 0.3)',
-                        'subtle': '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)'
+                        'crimson-glow': '0 0 25px rgba(255, 30, 86, 0.25)',
+                        'emerald-glow': '0 0 25px rgba(0, 230, 153, 0.25)',
+                        'glass-card': '0 20px 50px rgba(0, 0, 0, 0.5)'
                     }
                 }
             }
         }
     </script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        html { scroll-padding-top: 90px; overflow-x: hidden; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #080a0f !important;
-            color: #f8fafc !important;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-        .font-heading {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #090b18 !important;
+            color: #f8faff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse at 8% 5%, rgba(255,60,172,.19), transparent 34%),
+                radial-gradient(ellipse at 92% 16%, rgba(37,231,255,.15), transparent 32%),
+                radial-gradient(ellipse at 50% 95%, rgba(120,77,255,.18), transparent 40%) !important;
+            background-attachment: fixed;
         }
-        .bg-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
+
+        .font-display { font-family: 'Syne', sans-serif; }
+        .font-tech { font-family: 'Space Grotesk', sans-serif; }
+
+        .bg-tech-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
-        .banner-img-container {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
-            max-height: 500px;
+
+        .glass-panel {
+            background: rgba(15, 19, 29, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(8, 10, 25, .85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(115,137,255,.22) !important;
+            box-shadow: 0 8px 35px rgba(0,0,0,.2);
+        }
+
+        /* Smooth Modal Animation Styles */
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            transform: scale(0.85) translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #080a0f; }
+        ::-webkit-scrollbar-thumb { background: #1e2638; border-radius: 4px; }
+
+        h1, h2, h3, h4 { text-wrap: balance; }
+        
+        #main-menu .grid > div {
             overflow: hidden;
-            background-color: #000000;
+            isolation: isolate;
+            background: linear-gradient(145deg,rgba(23,28,58,.95),rgba(12,15,33,.96)) !important;
+            border-color: rgba(151,160,255,.2) !important;
+            box-shadow: 0 18px 45px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055);
         }
-        .hd-banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        #main-menu .grid > div:hover {
+            transform: translateY(-4px);
+            border-color: rgba(178,160,255,.65) !important;
         }
-
-        /* ANIMASI POP-UP KUSTOM */
-        @keyframes modalScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.92) translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+        #rulesModal > div, #registerModal > div, #messageModal > div {
+            background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
+            border-color: rgba(156,139,255,.48) !important;
+            box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
         }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .animate-modal {
-            animation: modalScale 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animate-backdrop {
-            animation: fadeIn 0.2s ease-out forwards;
+        footer {
+            background: rgba(7,9,22,.9) !important;
         }
     </style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen relative bg-grid flex flex-col justify-between antialiased">
+<body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white relative">
 
-    <!-- HEADER / TOOLBAR ATAS STICKY DENGAN PEMBATAS RAPI -->
-    <header class="sticky top-0 z-50 bg-[#080a0f]/95 backdrop-blur-md border-b-2 border-brand-red/50 shadow-lg transition-all duration-200">
+    <header class="sticky top-0 z-40 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo Tiba Tiba Tournament" class="w-12 h-12 object-contain">
-                <div>
-                    <span class="block font-heading font-extrabold text-lg sm:text-xl tracking-tight text-white">
-                        TIBA TIBA <span class="text-brand-red">TOURNAMENT</span>
-                    </span>
-                    <span class="block text-[10px] font-mono text-slate-400 tracking-wider">OFFICIAL ESPORTS ARENA</span>
+            <a href="#hero-banner" class="flex items-center space-x-3 group">
+                <div class="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain transition-transform group-hover:scale-110 duration-300">
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full animate-ping"></span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
                 </div>
-            </div>
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                <div>
+                    <span class="block font-display font-extrabold text-sm sm:text-base tracking-wider text-white group-hover:text-crimson transition-colors leading-tight">
+                        TIBA TIBA <span class="text-crimson font-light">TOURNAMENT</span>
+                    </span>
+                    <span class="block font-tech text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">OFFICIAL ESPORTS ARENA</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
                 <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors">Menu Utama</a>
-                <button onclick="openModal('rulesModal')" class="text-brand-amber hover:text-amber-400 transition-colors font-bold flex items-center gap-2 bg-brand-amber/10 px-3 py-1.5 rounded-lg border border-brand-amber/20">
-                    <i class="fa-solid fa-scroll text-sm"></i> RULES
+                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> RULES
                 </button>
-                <button onclick="openModal('registerModal')" class="px-5 py-2.5 bg-brand-red hover:bg-red-600 text-white font-bold rounded-xl shadow-modern-red transition-all duration-200 hover:scale-105 active:scale-95">
+                <button onclick="openModal('registerModal')" class="px-6 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
                     DAFTAR SEKARANG
                 </button>
             </nav>
-            <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-slate-300 text-2xl focus:outline-none p-2 bg-slate-900 border border-slate-800 rounded-lg">
-                <i class="fa-solid fa-bars"></i>
+
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white">
+                <i class="fa-solid fa-bars text-base"></i>
             </button>
         </div>
-        <!-- Mobile Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-slate-800 px-4 pt-3 pb-5 space-y-3 font-medium animate-backdrop">
-            <a href="#hero-banner" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-white">Beranda</a>
-            <a href="#main-menu" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-white">Menu Utama</a>
-            <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left py-2.5 text-brand-amber font-semibold flex items-center gap-2">
-                <i class="fa-solid fa-scroll"></i> RULES / PERATURAN
+
+        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-obsidian-border px-6 py-5 space-y-4 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
+            <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
+            <a href="#main-menu" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Menu Utama</a>
+            <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
+                <i class="fa-solid fa-file-shield"></i> RULES / PERATURAN
             </button>
-            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-brand-red text-center font-bold text-white rounded-xl shadow-modern-red">
+            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
                 DAFTAR SEKARANG
             </button>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="flex-grow">
-        <!-- HERO BANNER -->
-        <section id="hero-banner" class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-            <div class="text-center mb-8">
-                <span class="px-3.5 py-1 rounded-full bg-brand-red/10 border border-brand-red/30 text-brand-red text-xs font-semibold tracking-wide inline-block mb-3">
+        <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-6">
+            <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
                     REGISTRASI REGULER SEGERA DITUTUP
-                </span>
-                <h1 class="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white mb-3 uppercase">
-                    DOMINASI ARENA <span class="text-brand-red">TIBA TIBA TOURNAMENT</span>
+                </div>
+                <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight px-2">
+                    DOMINASI ARENA <br class="hidden sm:block"><span class="bg-gradient-to-r from-crimson via-red-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
                 </h1>
-                <p class="max-w-2xl mx-auto text-slate-400 text-base sm:text-lg">
+                <p class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto px-2">
                     Persiapkan roster terbaikmu, susun strategi terhebat, dan rebut gelar juara Mobile Legends paling bergengsi musim ini. Total Prize Pool Rp 7.000.000!
                 </p>
             </div>
 
-            <div class="relative w-full rounded-2xl overflow-hidden border border-slate-800 shadow-subtle bg-black mx-auto banner-img-container">
-                <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 ease-in-out h-full">
-                    <div class="min-w-full h-full relative flex items-center justify-center bg-black">
-                        <img src="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg" alt="Banner 1" class="hd-banner-img">
-                    </div>
-                    <div class="min-w-full h-full relative flex items-center justify-center bg-black">
-                        <img src="https://i.postimg.cc/W1xPkyVW/Gemini-Generated-Image-twlhf1twlhf1twlh.jpg" alt="Banner 2" class="hd-banner-img">
-                    </div>
-                    <div class="min-w-full h-full relative flex items-center justify-center bg-black">
-                        <img src="https://i.postimg.cc/d0SZrw1G/Gemini-Generated-Image-h3pnh7h3pnh7h3pn.jpg" alt="Banner 3" class="hd-banner-img">
+            <div class="relative w-full rounded-2xl overflow-hidden border border-obsidian-lightBorder shadow-glass-card bg-obsidian-card group">
+                <div class="relative w-full h-[220px] sm:h-[380px] md:h-[480px] overflow-hidden">
+                    <div id="carouselSlides" class="absolute inset-0 flex transition-transform duration-700 h-full w-full">
+                        <div class="min-w-full h-full relative"><img src="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full h-full relative"><img src="https://i.postimg.cc/W1xPkyVW/Gemini-Generated-Image-twlhf1twlhf1twlh.jpg" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full h-full relative"><img src="https://i.postimg.cc/d0SZrw1G/Gemini-Generated-Image-h3pnh7h3pnh7h3pn.jpg" class="w-full h-full object-cover"></div>
                     </div>
                 </div>
+                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-xl glass-panel text-white flex items-center justify-center hover:bg-crimson z-10 shadow-lg"><i class="fa-solid fa-chevron-left text-xs sm:text-sm"></i></button>
+                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-xl glass-panel text-white flex items-center justify-center hover:bg-crimson z-10 shadow-lg"><i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i></button>
+            </div>
+        </section>
 
-                <!-- Carousel Controls -->
-                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-slate-900/80 border border-slate-700 text-slate-200 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-slate-900/80 border border-slate-700 text-slate-200 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
+        <section id="main-menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4 border-b border-obsidian-border pb-4 sm:pb-6">
+                <div>
+                    <span class="font-tech text-[10px] sm:text-xs tracking-widest text-crimson uppercase font-semibold">NAVIGATION MATRIX</span>
+                    <h2 class="font-display font-extrabold text-xl sm:text-3xl text-white mt-1">MENU UTAMA TOURNAMENT</h2>
+                </div>
+            </div>
 
-                <!-- Dots Indicator -->
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
-                    <button onclick="currentSlide(0)" class="carousel-dot w-2.5 h-2.5 rounded-full bg-brand-red transition-all"></button>
-                    <button onclick="currentSlide(1)" class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/40 transition-all"></button>
-                    <button onclick="currentSlide(2)" class="carousel-dot w-2.5 h-2.5 rounded-full bg-white/40 transition-all"></button>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <div onclick="openModal('registerModal')" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">ISI FORMULIR PENDAFTARAN</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
+                </div>
+                <div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">CATATAN JUARA</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
+                </div>
+                <div onclick="switchTab('roster')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-users"></i></div>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">ROSTER TETAP</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
                 </div>
             </div>
         </section>
 
-        <!-- MAIN MENU CARDS -->
-        <section id="main-menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center mb-10">
-                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
-                    DATABASE TOURNAMENT
-                </h2>
-                <p class="text-slate-400 text-sm sm:text-base">Pilih menu di bawah ini untuk mengakses formulir, melihat hall of fame juara, atau daftar roster resmi.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                <!-- Card 1 -->
-                <div onclick="openModal('registerModal')" class="group relative bg-brand-card hover:bg-brand-cardHover border border-slate-800 hover:border-brand-red/50 p-8 rounded-2xl shadow-subtle cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-modern-red">
-                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/20 flex items-center justify-center text-brand-red text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-file-pen"></i>
-                    </div>
-                    <span class="text-xs font-mono text-brand-red uppercase font-semibold block mb-1">MENU // 01</span>
-                    <h3 class="font-heading font-bold text-xl text-white mb-2">ISI FORMULIR PENDAFTARAN</h3>
-                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Daftarkan diri & tim kamu sekarang juga. Isi data peserta secara lengkap dan akurat.</p>
-                    <div class="flex items-center text-brand-red font-semibold text-sm">
-                        <span>BUKA FORMULIR</span> <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div onclick="switchTab('champions')" class="group relative bg-brand-card hover:bg-brand-cardHover border border-slate-800 hover:border-brand-blue/50 p-8 rounded-2xl shadow-subtle cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-modern-blue">
-                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <span class="text-xs font-mono text-brand-blue uppercase font-semibold block mb-1">MENU // 02</span>
-                    <h3 class="font-heading font-bold text-xl text-white mb-2">CATATAN JUARA</h3>
-                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Lihat arsip sejarah para juara bertahan dari Season 1 hingga Season sebelumnya.</p>
-                    <div class="flex items-center text-brand-blue font-semibold text-sm">
-                        <span>LIHAT ARSIP</span> <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div onclick="switchTab('roster')" class="group relative bg-brand-card hover:bg-brand-cardHover border border-slate-800 hover:border-brand-amber/50 p-8 rounded-2xl shadow-subtle cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-modern-amber">
-                    <div class="w-12 h-12 rounded-xl bg-brand-amber/10 border border-brand-amber/20 flex items-center justify-center text-brand-amber text-xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <span class="text-xs font-mono text-brand-amber uppercase font-semibold block mb-1">MENU // 03</span>
-                    <h3 class="font-heading font-bold text-xl text-white mb-2">ROASTER SEASON INI</h3>
-                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
-                    <div class="flex items-center text-brand-amber font-semibold text-sm">
-                        <span>CEK ROSTER VERIFIKASI</span> <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- DYNAMIC TABS CONTENT -->
         <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            <!-- Champions Content -->
-            <div id="content-champions" class="bg-brand-card border border-slate-800 rounded-2xl p-6 sm:p-8 hidden animate-modal">
-                <div class="flex items-center justify-between mb-6 flex-wrap gap-4 border-b border-slate-800 pb-4">
-                    <div>
-                        <span class="text-xs font-mono text-brand-blue uppercase font-semibold">HALL OF FAME</span>
-                        <h3 class="font-heading font-bold text-2xl text-white">CATATAN JUARA</h3>
+            <!-- CATATAN JUARA SECTION -->
+            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-trophy text-emerald-accent text-2xl"></i>
+                        <h3 class="font-display font-bold text-lg sm:text-2xl text-white">CATATAN JUARA</h3>
                     </div>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-1"><i class="fa-solid fa-xmark"></i> Tutup</button>
+                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
-                <div class="text-center py-12 border border-dashed border-slate-800 rounded-xl bg-slate-900/40">
-                    <i class="fa-solid fa-trophy text-4xl text-brand-amber/40 mb-3"></i>
-                    <h4 class="font-heading font-bold text-lg text-white">SEASON INI BELUM DITENTUKAN</h4>
-                    <p class="text-slate-400 text-sm mt-1">Jadilah tim pertama yang mencatatkan namanya di Hall of Fame!</p>
+
+                <!-- DOKUMENTASI JUARA -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-obsidian/80 border border-obsidian-lightBorder rounded-xl p-4 sm:p-6">
+                    <div class="md:col-span-7 relative group overflow-hidden rounded-xl border border-emerald-accent/40 shadow-lg">
+                        <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[280px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                            <span class="px-3 py-1 bg-emerald-accent text-black font-tech font-bold text-xs rounded-lg uppercase tracking-wider shadow-md">
+                                <i class="fa-solid fa-crown mr-1"></i> CHAMPIONS SEASON 4
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-5 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent text-xs font-tech font-semibold uppercase">
+                            <i class="fa-solid fa-star text-amber-400"></i> ROSTER WINNER
+                        </div>
+                        <h4 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-wide">
+                            TIM JUARA TIBA TIBA TOURNAMENT
+                        </h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed font-body">
+                            Selamat kepada para pemain terbaik yang berhasil mendominasi panggung turnamen dan mengamankan gelar juara!
+                        </p>
+
+                        <!-- DAFTAR NAMA JUARA -->
+                        <div class="pt-2">
+                            <span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-3">SQUAD ROSTER:</span>
+                            <div class="grid grid-cols-2 gap-2 font-tech text-xs">
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANAM
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> MAMAY
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANANG
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ECON
+                                </div>
+                                <div class="col-span-2 flex items-center justify-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> HENGKY
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Roster Content -->
-            <div id="content-roster" class="bg-brand-card border border-slate-800 rounded-2xl p-6 sm:p-8 hidden animate-modal">
-                <div class="flex items-center justify-between mb-6 flex-wrap gap-4 border-b border-slate-800 pb-4">
-                    <div>
-                        <span class="text-xs font-mono text-brand-amber uppercase font-semibold">VERIFIED PLAYERS</span>
-                        <h3 class="font-heading font-bold text-2xl text-white">ROASTER SEASON INI</h3>
-                    </div>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-1"><i class="fa-solid fa-xmark"></i> Tutup</button>
+            <!-- ROSTER TETAP SECTION -->
+            <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in">
+                <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white">DAFTAR ROSTER TETAP</h3>
+                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <!-- SELURUH NAMA PESERTA ROSTER -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ANANG</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ECON</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">HENGKY</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ANAM</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">MAMAY</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ASEP</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">RIZKY</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">DANI</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">IRSYA</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">BANG BJ</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">EL</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">AGUNG</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">PIMEN</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ROY</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">DIKA</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">FIKRY</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">YANSUO</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">YUAN</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">AGIL</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">SIMPING</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">ANGGA</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">JITO</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">NANONG</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">RAYCHA</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
-                    <div class="bg-brand-dark p-3.5 rounded-xl border border-slate-800 flex items-center justify-between hover:border-brand-amber/50 transition-colors">
-                        <span class="font-semibold text-white text-sm">BANG ARI</span>
-                        <span class="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-medium rounded-full border border-emerald-500/20">PESERTA</span>
-                    </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 max-h-[60vh] overflow-y-auto p-1">
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANANG</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ECON</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">HENGKY</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANAM</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">MAMAY</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ASEP</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">RIZKY</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">DANI</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">IRSYA</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">BANG BJ</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">EL</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">AGUNG</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">PIMEN</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ROY</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">DIKA</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">FIKRY</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">YANSUO</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">YUAN</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">AGIL</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">SIMPING</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANGGA</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">JITO</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">NANONG</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">RAYCHA</div>
+                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">BANG ARI</div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- RULES MODAL (AUTO POP-UP SAAT MASUK SITE) -->
-    <div id="rulesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4 overflow-y-auto animate-backdrop">
-        <div class="relative w-full max-w-3xl bg-brand-card border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-subtle my-8 animate-modal max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="mb-6 border-b border-slate-800 pb-4">
-                <span class="text-xs font-mono text-brand-amber font-semibold uppercase">TOURNAMENT GUIDE & RULES</span>
-                <h3 class="font-heading font-bold text-2xl text-white mt-1">REGULASI & PERATURAN TIBATIBA_TURNAMEN</h3>
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="fixed bottom-5 right-5 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-all">
+        <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
+    </a>
+
+    <!-- RULES MODAL -->
+    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
+                <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
             </div>
-
-            <div class="space-y-6 text-slate-200 text-sm sm:text-base leading-relaxed">
-                <!-- Point 1 -->
-                <div class="bg-brand-dark p-5 rounded-xl border border-slate-800">
-                    <h4 class="font-heading font-bold text-brand-blue text-base mb-2">1. Format Turnamen & Bracket</h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-300 text-sm">
-                        <li><strong class="text-white">Sistem Turnamen:</strong> Double Elimination (Upper Bracket & Lower Bracket).</li>
-                        <li><strong class="text-white">Jumlah Tim:</strong> 7 Tim.</li>
+            <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
+                <!-- GROUP STAGE -->
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2">
+                        <i class="fa-solid fa-layer-group"></i> Group Stage
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> 5 tim dalam 1 grup.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Sistem pertandingan <strong>BO 2</strong>.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
                     </ul>
-                    <div class="mt-3 bg-slate-900/80 p-3.5 rounded-lg border border-slate-800">
-                        <p class="font-semibold text-white text-xs mb-1.5 uppercase font-heading">Format Game:</p>
-                        <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                            <li><strong class="text-brand-amber">Babak Penyisihan hingga Final Bracket:</strong> Best of 3 (BO3) – Tim pertama yang meraih 2 kemenangan lolos ke babak berikutnya.</li>
-                            <li><strong class="text-brand-red">Grand Final:</strong> Best of 5 (BO5) – Tim pertama yang meraih 3 kemenangan keluar sebagai juara.</li>
-                            <li><strong class="text-slate-200">Sistem Seed (7 Tim):</strong> Karena jumlah tim ganjil, akan ada 1 tim yang mendapatkan <em>Bye</em> (langsung lolos ke ronde berikutnya di Upper Bracket berdasarkan hasil drawing acak), sementara 6 tim lainnya bertanding di ronde pertama.</li>
-                        </ul>
+                </div>
+                <!-- SISTEM POIN -->
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2">
+                        <i class="fa-solid fa-star"></i> Sistem Poin
                     </div>
-                </div>
-
-                <!-- Point 2 -->
-                <div class="bg-brand-dark p-5 rounded-xl border border-slate-800">
-                    <h4 class="font-heading font-bold text-brand-red text-base mb-2">2. Aturan Pertandingan (In-Game Rules)</h4>
-                    <p class="text-sm text-slate-300"><strong class="text-white">Mode Game:</strong> Custom - Draft Pick (5 Ban Hero per tim, total 10 Ban).</p>
-                </div>
-
-                <!-- Point 3 -->
-                <div class="bg-brand-dark p-5 rounded-xl border border-slate-800">
-                    <h4 class="font-heading font-bold text-brand-amber text-base mb-2">3. Jadwal & Keterlambatan (Tolerance Time)</h4>
-                    <ul class="list-disc list-inside space-y-1 text-sm text-slate-300 mb-3">
-                        <li><strong class="text-white">Waktu Pemanggilan:</strong> Tim harus siap di lobby 10 menit sebelum jadwal pertandingan dimulai.</li>
-                        <li><strong class="text-white">Toleransi Keterlambatan:</strong> Maksimal 15 menit dari waktu yang ditentukan.</li>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-emerald-accent/20 text-emerald-accent font-bold text-[10px]">MENANG 2–0</span> = 3 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">SERI 1–1</span> = 1 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
                     </ul>
-                    <div class="bg-red-950/30 p-3.5 border border-red-500/20 rounded-lg text-xs space-y-1">
-                        <p class="font-bold text-red-400 font-heading">SANKSI KETERLAMBATAN:</p>
-                        <p class="text-slate-300">• <strong>Keterlambatan >15 menit:</strong> Tim dianggap kalah di Game 1 (Skor 0-1).</p>
-                        <p class="text-slate-300">• <strong>Keterlambatan >25 menit:</strong> Tim dianggap kalah dalam 1 Match penuh (Gugur/Diskualifikasi dari match tersebut).</p>
+                </div>
+                <!-- SEMIFINAL & GRAND FINAL -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold uppercase mb-2">
+                            <i class="fa-solid fa-sitemap"></i> Semifinal
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-1">4 tim dengan klasemen teratas lolos:</p>
+                        <div class="font-bold text-white mb-1">• 1st vs 3rd<br>• 2nd vs 4th</div>
+                        <span class="text-[10px] text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Format BO 3</span>
+                    </div>
+                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                        <div class="flex items-center gap-2 text-yellow-400 font-bold uppercase mb-2">
+                            <i class="fa-solid fa-crown"></i> Grand Final
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-1">Pemenang semifinal bertemu.</p>
+                        <span class="text-[10px] text-yellow-300 bg-yellow-500/10 px-2 py-0.5 rounded inline-block mt-2">Format BO 5</span>
                     </div>
                 </div>
-
-                <!-- Point 4 -->
-                <div class="bg-brand-dark p-5 rounded-xl border border-red-500/30">
-                    <h4 class="font-heading font-bold text-red-400 text-base mb-2">4. TIDAK ADA JEDA / PAUSE</h4>
-                    <p class="text-xs text-slate-400 mb-2">Sistem tidak memperbolehkan pause untuk alasan apapun berikut:</p>
-                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li>Lag parah / Gangguan koneksi (Ping merah).</li>
-                        <li>Ponsel crash / aplikasi keluar sendiri (force close).</li>
-                        <li>Masalah perangkat keras (layar tidak merespon, dll).</li>
+                <!-- KETENTUAN -->
+                <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
+                    <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2">
+                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting
+                    </div>
+                    <ul class="space-y-2 text-slate-200">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-ban text-crimson mt-0.5"></i>
+                            <span><strong>NO PAUSE</strong> selama pertandingan berlangsung.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-wifi text-amber-400 mt-0.5"></i>
+                            <span>Kendala <strong>sinyal, koneksi, atau perangkat</strong> menjadi tanggung jawab masing-masing player/tim.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-scale-balanced text-sky-400 mt-0.5"></i>
+                            <span>Jika poin sama, penentuan peringkat mengikuti <strong>tiebreaker yang ditetapkan panitia</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-gavel text-purple-400 mt-0.5"></i>
+                            <span><strong>Keputusan panitia mutlak dan final.</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-handshake text-emerald-accent mt-0.5"></i>
+                            <span>Wajib menjunjung tinggi <strong>sportivitas</strong> selama pertandingan.</span>
+                        </li>
                     </ul>
-                    <p class="mt-3 font-semibold text-red-400 text-xs tracking-wider">#TANGGUNGJAWAB SETIAP PLAYER/TIM.</p>
                 </div>
-
-                <!-- Point 5 & 6 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-brand-dark p-5 rounded-xl border border-slate-800">
-                        <h4 class="font-heading font-bold text-brand-blue text-sm mb-1">5. KEPUTUSAN PANITIA</h4>
-                        <p class="text-xs text-slate-300 font-semibold uppercase">Keputusan panitia bersifat Mutlak & tidak dapat diganggu gugat.</p>
-                    </div>
-                    <div class="bg-brand-dark p-5 rounded-xl border border-slate-800">
-                        <h4 class="font-heading font-bold text-emerald-400 text-sm mb-1">6. PAYMENT PENDAFTARAN</h4>
-                        <p class="text-xs text-slate-300">Payment pendaftaran <strong class="text-white">200k / 4k rupe / player</strong>, dan dibayarkan paling lambat setelah <strong class="text-brand-amber">TOURNAMENT SELESAI</strong>.</p>
-                    </div>
+                <div class="text-center pt-2 text-emerald-accent font-bold tracking-wider text-xs">
+                    🔥 GOOD LUCK & HAVE FUN! 🔥
                 </div>
             </div>
-
-            <div class="mt-8 pt-4 border-t border-slate-800 text-right">
-                <button onclick="closeModal('rulesModal')" class="px-6 py-2.5 bg-brand-amber text-black font-bold text-xs rounded-xl hover:bg-amber-400 transition-all">
-                    SAYA MENGERTI
-                </button>
+            <div class="mt-6 text-right">
+                <button onclick="closeModal('rulesModal')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg">SAYA MEMAHAMI RULES</button>
             </div>
         </div>
     </div>
 
     <!-- REGISTRATION MODAL -->
-    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4 overflow-y-auto animate-backdrop">
-        <div class="relative w-full max-w-xl bg-brand-card border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-subtle my-8 animate-modal">
-            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="mb-6">
-                <span class="text-xs font-mono text-brand-red font-semibold uppercase">REGISTRATION FORM</span>
-                <h3 class="font-heading font-bold text-2xl text-white">PENDAFTARAN</h3>
-                <p class="text-xs text-slate-400 mt-1">Isi formulir pendaftaran di bawah ini secara lengkap.</p>
-            </div>
-
-            <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-4 font-medium">
+    <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-4">DAFTAR PESERTA</h3>
+            <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">NAMA LENGKAP</label>
-                    <input type="text" required placeholder="Masukkan Nama Lengkap" class="w-full bg-brand-dark border border-slate-800 focus:border-brand-red px-4 py-3 rounded-xl text-white text-sm focus:outline-none transition-colors">
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                    <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">USERNAME / ID MOBILE LEGEND</label>
-                    <input type="text" required placeholder="Contoh: Nickname (12345678/2001)" class="w-full bg-brand-dark border border-slate-800 focus:border-brand-red px-4 py-3 rounded-xl text-white text-sm focus:outline-none transition-colors">
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username / ID Mobile Legend</label>
+                    <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">ROLE</label>
-                    <input type="text" required placeholder="Contoh: Jungler / Gold Laner / Roamer / dll" class="w-full bg-brand-dark border border-slate-800 focus:border-brand-red px-4 py-3 rounded-xl text-white text-sm focus:outline-none transition-colors">
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Utama (Role 1)</label>
+                    <input type="text" required placeholder="Contoh: Jungler" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">PEMBAYARAN</label>
-                    <select required class="w-full bg-brand-dark border border-slate-800 focus:border-brand-red px-4 py-3 rounded-xl text-white text-sm focus:outline-none cursor-pointer transition-colors">
-                        <option value="" disabled selected>-- PILIH METODE PEMBAYARAN --</option>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                    <input type="tel" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Cadangan (Role 2)</label>
+                    <input type="text" required placeholder="Contoh: Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Metode Pembayaran</label>
+                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
+                        <option value="" disabled selected>-- Pilih Opsi Pembayaran --</option>
                         <option value="GAJIAN">GAJIAN</option>
                         <option value="UM">UM</option>
                     </select>
                 </div>
-
-                <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeModal('registerModal')" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 rounded-xl transition-colors">
-                        BATAL
-                    </button>
-                    <button type="submit" class="px-6 py-2.5 bg-brand-red hover:bg-red-600 font-bold text-xs text-white rounded-xl shadow-modern-red transition-all">
-                        KIRIM PENDAFTARAN
-                    </button>
+                <div class="pt-2 text-right">
+                    <button id="submitBtn" type="submit" class="w-full py-3 bg-crimson text-white font-bold text-xs rounded-xl shadow-crimson-glow uppercase tracking-wider">SUBMIT DATA</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MESSAGE MODAL -->
-    <div id="messageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden p-4 animate-backdrop">
-        <div class="relative w-full max-w-md bg-brand-card border border-slate-800 rounded-2xl p-6 text-center shadow-subtle animate-modal">
-            <div id="messageIcon" class="text-4xl text-emerald-400 mb-3">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h3 id="messageTitle" class="font-heading font-bold text-xl text-white mb-2">BERHASIL!</h3>
-            <p id="messageText" class="text-slate-300 text-sm mb-6">Pendaftaran anda telah berhasil dicatat oleh sistem.</p>
-            <button onclick="closeModal('messageModal')" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm rounded-xl transition-colors">
-                MENGERTI
-            </button>
+    <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
+            <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
+            <p id="messageText" class="text-slate-400 text-xs mb-5">Data berhasil dikirim.</p>
+            <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl">OK</button>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-brand-dark border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="font-medium text-slate-400">TIBA TIBA TOURNAMENT &copy; 2026. ALL RIGHTS RESERVED.</p>
-        </div>
-    </footer>
-
-    <!-- SCRIPT -->
     <script>
-        // OTOMATIS BUKA POPUP RULES SAAT WEBSITE SELESAI DIMUAT
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                openModal('rulesModal');
-            }, 300);
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
+
+        window.addEventListener('DOMContentLoaded', () => { 
+            setTimeout(() => openModal('rulesModal'), 300); 
         });
 
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
         function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
         }
-
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
-        const totalSlides = 3;
-        const dots = document.querySelectorAll('.carousel-dot');
-
-        function updateCarousel() {
-            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                if (index === currentIndex) {
-                    dot.classList.remove('bg-white/40');
-                    dot.classList.add('bg-brand-red');
-                } else {
-                    dot.classList.remove('bg-brand-red');
-                    dot.classList.add('bg-white/40');
-                }
-            });
+        function nextSlide() { 
+            if(!slidesContainer) return;
+            currentIndex = (currentIndex + 1) % 3; 
+            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
         }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateCarousel();
+        function prevSlide() { 
+            if(!slidesContainer) return;
+            currentIndex = (currentIndex - 1 + 3) % 3; 
+            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
         }
+        setInterval(nextSlide, 4500);
 
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateCarousel();
+        function openModal(id) { 
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.add('active'); 
+                document.body.style.overflow = 'hidden'; 
+            }
         }
-
-        function currentSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        let slideInterval = setInterval(nextSlide, 4000);
-
-        const bannerSection = document.getElementById('hero-banner');
-        bannerSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
-        bannerSection.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 4000));
-
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-
-        function switchTab(tabName) {
-            const championsContent = document.getElementById('content-champions');
-            const rosterContent = document.getElementById('content-roster');
-            
-            championsContent.classList.add('hidden');
-            rosterContent.classList.add('hidden');
-
-            if (tabName === 'champions') {
-                championsContent.classList.remove('hidden');
-                championsContent.scrollIntoView({ behavior: 'smooth' });
-            } else if (tabName === 'roster') {
-                rosterContent.classList.remove('hidden');
-                rosterContent.scrollIntoView({ behavior: 'smooth' });
+        function closeModal(id) { 
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.remove('active'); 
+                document.body.style.overflow = 'auto'; 
             }
         }
 
+        function switchTab(tab) {
+            document.getElementById('content-champions').classList.add('hidden');
+            document.getElementById('content-roster').classList.add('hidden');
+            if(tab === 'champions') document.getElementById('content-champions').classList.remove('hidden');
+            if(tab === 'roster') document.getElementById('content-roster').classList.remove('hidden');
+            document.getElementById('dynamic-section').scrollIntoView({ behavior: 'smooth' });
+        }
         function closeTab() {
             document.getElementById('content-champions').classList.add('hidden');
             document.getElementById('content-roster').classList.add('hidden');
-            document.getElementById('main-menu').scrollIntoView({ behavior: 'smooth' });
         }
 
         function handleFormSubmit(event) {
             event.preventDefault();
+            const inputs = event.target.querySelectorAll('input, select');
+            const formData = {
+                nama: inputs[0].value,
+                idMl: inputs[1].value,
+                role1: inputs[2].value,
+                whatsapp: inputs[3].value,
+                role2: inputs[4].value,
+                payment: inputs[5].value
+            };
+
             closeModal('registerModal');
-            
-            document.getElementById('messageTitle').innerText = "PENDAFTARAN BERHASIL!";
-            document.getElementById('messageText').innerText = "Data pendaftaran anda berhasil dikirim ke server turnamen.";
+            document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
+            document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
             openModal('messageModal');
-            
             event.target.reset();
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }).catch(error => {
+                console.error('Background sync error:', error);
+            });
         }
     </script>
 </body>
