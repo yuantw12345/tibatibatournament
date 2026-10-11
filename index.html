@@ -127,7 +127,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -460,12 +460,30 @@
         </div>
     </div>
 
-    <!-- MESSAGE MODAL -->
+    <!-- MESSAGE MODAL (CUSTOM ALERT) -->
     <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-accent/30">
+                <i class="fa-solid fa-circle-check" id="messageIcon"></i>
+            </div>
             <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
             <p id="messageText" class="text-slate-400 text-xs mb-5">Pesan sistem.</p>
-            <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl cursor-pointer">OK</button>
+            <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs rounded-xl cursor-pointer transition-all">OK</button>
+        </div>
+    </div>
+
+    <!-- CONFIRM MODAL (CUSTOM CONFIRM) -->
+    <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
+            <p id="confirmText" class="text-slate-300 text-xs mb-5">Apakah Anda yakin?</p>
+            <div class="flex gap-2">
+                <button id="confirmYesBtn" class="flex-1 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-xl cursor-pointer transition-all">YA</button>
+                <button onclick="closeModal('confirmModal')" class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl cursor-pointer transition-all">BATAL</button>
+            </div>
         </div>
     </div>
 
@@ -481,6 +499,34 @@
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+        // FUNGSI CUSTOM ALERT (MENGGANTIKAN alert())
+        function showCustomAlert(title, text, isError = false) {
+            document.getElementById('messageTitle').innerText = title;
+            document.getElementById('messageText').innerText = text;
+            const icon = document.getElementById('messageIcon');
+            if (isError) {
+                icon.className = "fa-solid fa-triangle-exclamation text-crimson";
+            } else {
+                icon.className = "fa-solid fa-circle-check text-emerald-accent";
+            }
+            openModal('messageModal');
+        }
+
+        // FUNGSI CUSTOM CONFIRM (MENGGANTIKAN confirm())
+        function showCustomConfirm(text, onYesCallback) {
+            document.getElementById('confirmText').innerText = text;
+            const yesBtn = document.getElementById('confirmYesBtn');
+            // Bersihkan event listener lama lalu pasang yang baru
+            const newYesBtn = yesBtn.cloneNode(true);
+            yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
+            
+            newYesBtn.addEventListener('click', () => {
+                closeModal('confirmModal');
+                onYesCallback();
+            });
+            openModal('confirmModal');
+        }
 
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
@@ -529,7 +575,7 @@
                 cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
                 cardTitle.innerText = "STATUS: TERLOGIN";
                 cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">@${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
-                cardAuthAction.onclick = () => alert(`Anda sudah login sebagai @${loggedUser}`);
+                cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai @${loggedUser}`);
 
                 // Buka kunci kartu 2 (Daftar Turnamen)
                 lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
@@ -562,7 +608,7 @@
         function handleTournamentCardClick() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
-                alert('Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!');
+                showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!", true);
                 openModal('loginModal');
             } else {
                 openModal('registerModal');
@@ -589,20 +635,16 @@
 
                 if (result.status === 'success') {
                     closeModal('registerAccountModal');
-                    // Otomatis langsung login setelah berhasil buat akun
                     localStorage.setItem('activeMemberUser', username);
                     checkAuthStatus();
-
-                    document.getElementById('messageTitle').innerText = "AKUN BERHASIL DIBUAT & LOGIN!";
-                    document.getElementById('messageText').innerText = "Akun Anda berhasil terdaftar dan otomatis masuk. Silakan lanjutkan pendaftaran turnamen.";
-                    openModal('messageModal');
+                    showCustomAlert("BERHASIL", "Akun berhasil dibuat dan otomatis masuk. Silakan lanjutkan pendaftaran turnamen.");
                     event.target.reset();
                 } else {
-                    alert(result.message || 'Gagal membuat akun.');
+                    showCustomAlert("GAGAL", result.message || 'Gagal membuat akun.', true);
                 }
             } catch (error) {
                 console.error(error);
-                alert('Terjadi kesalahan koneksi.');
+                showCustomAlert("KESALAHAN KONEKSI", "Terjadi kesalahan saat menghubungi server.", true);
             } finally {
                 btn.innerText = "DAFTARKAN AKUN";
                 btn.disabled = false;
@@ -631,30 +673,27 @@
                     localStorage.setItem('activeMemberUser', username);
                     closeModal('loginModal');
                     checkAuthStatus();
-
-                    document.getElementById('messageTitle').innerText = "LOGIN BERHASIL!";
-                    document.getElementById('messageText').innerText = `Selamat datang kembali, @${username}! Tombol pendaftaran turnamen kini telah terbuka.`;
-                    openModal('messageModal');
+                    showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}! Tombol pendaftaran turnamen kini telah terbuka.`);
                     event.target.reset();
                 } else {
-                    alert(result.message || 'Username atau Password salah!');
+                    showCustomAlert("LOGIN GAGAL", result.message || 'Username atau Password salah!', true);
                 }
             } catch (error) {
                 console.error(error);
-                alert('Terjadi kesalahan koneksi.');
+                showCustomAlert("KESALAHAN KONEKSI", "Terjadi kesalahan saat menghubungi server.", true);
             } finally {
                 btn.innerText = "MASUK AKUN";
                 btn.disabled = false;
             }
         }
 
-        // FUNGSI LOGOUT
+        // FUNGSI LOGOUT (MENGGUNAKAN CUSTOM CONFIRM)
         function handleLogout() {
-            if (confirm("Apakah Anda yakin ingin keluar dari akun ini?")) {
+            showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", () => {
                 localStorage.removeItem('activeMemberUser');
                 checkAuthStatus();
-                alert('Anda telah keluar dari akun.');
-            }
+                showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
+            });
         }
 
         // FUNGSI SUBMIT PENDAFTARAN TURNAMEN
@@ -662,7 +701,7 @@
             event.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
-                alert('Sesi login kedaluwarsa. Silakan login kembali.');
+                showCustomAlert("SESI HABIS", "Sesi login kedaluwarsa. Silakan login kembali.", true);
                 openModal('loginModal');
                 return;
             }
@@ -698,14 +737,12 @@
                 });
 
                 closeModal('registerModal');
-                document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
-                document.getElementById('messageText').innerText = "Data pendaftaran turnamen berhasil dikirim dan akun Anda telah terkunci.";
-                openModal('messageModal');
+                showCustomAlert("REGISTRASI BERHASIL", "Data pendaftaran turnamen berhasil dikirim dan akun Anda telah terkunci.");
                 event.target.reset();
 
             } catch (error) {
                 console.error(error);
-                alert('Terjadi kesalahan koneksi.');
+                showCustomAlert("KESALAHAN", "Terjadi kesalahan koneksi saat mengirim data.", true);
             } finally {
                 submitBtn.innerText = "SUBMIT DATA";
                 submitBtn.disabled = false;
