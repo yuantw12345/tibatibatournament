@@ -400,32 +400,30 @@
         function handleFormSubmit(event) {
             event.preventDefault();
             const inputs = event.target.querySelectorAll('input, select');
-            const submitBtn = document.getElementById('submitBtn');
             
-            submitBtn.disabled = true;
-            submitBtn.innerText = "MENGIRIM...";
+            // Ambil data form
+            const formData = {
+                nama: inputs[0].value,
+                idMl: inputs[1].value,
+                role: inputs[2].value,
+                payment: inputs[3].value
+            };
 
+            // 1. Langsung berikan respon sukses secara instan (tanpa tunggu server)
+            closeModal('registerModal');
+            document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
+            document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
+            openModal('messageModal');
+            event.target.reset();
+
+            // 2. Kirim data ke Google Sheet di latar belakang (background process) tanpa delay
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nama: inputs[0].value,
-                    idMl: inputs[1].value,
-                    role: inputs[2].value,
-                    payment: inputs[3].value
-                })
-            }).then(() => {
-                closeModal('registerModal');
-                document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
-                document.getElementById('messageText').innerText = "Data pendaftaran kamu tersimpan di Google Sheet.";
-                openModal('messageModal');
-                event.target.reset();
-            }).catch(() => {
-                alert('Gagal mengirim data.');
-            }).finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "SUBMIT DATA";
+                body: JSON.stringify(formData)
+            }).catch(error => {
+                console.error('Background sync error:', error);
             });
         }
     </script>
