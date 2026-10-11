@@ -244,7 +244,7 @@
                     <span class="neon-glow-red text-crimson font-extrabold">TIBA TIBA TOURNAMENT</span>
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto px-2">
-                    Login atau buat akun website Anda terlebih dahulu untuk membuka akses formulir pendaftaran turnamen berhadiah Rp 7.000.000!
+                    Login atau buat akun website Anda terlebih dahulu untuk membuka akses pendaftaran turnamen berhadiah Rp 7.000.000!
                 </p>
             </div>
 
@@ -598,7 +598,7 @@
     <!-- SCRIPT FIREBASE & APLIKASI UTAMA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -651,7 +651,7 @@
                 document.getElementById('chatForm').classList.add('hidden');
                 document.getElementById('chatGuestNotice').classList.remove('hidden');
                 document.getElementById('liveChatForm').classList.add('hidden');
-                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
+                document.getElementById('liveChatGuestNotice').classList.add('hidden');
             }
         }
 
@@ -862,7 +862,7 @@
             if (!loggedUser) openModal('loginModal');
         }
 
-        // FUNGSI CEK SEBELUM DAFTAR TURNAMEN (AGAR MENGHINDARI PENDAFTARAN GANDA)
+        // CEK APAKAH SUDAH MENDAFTAR SEBELUM MEMBUKA FORM TURNAMEN
         window.handleTournamentCardClick = async function() {
             const loggedUser = localStorage.getItem('activeMemberUser');
             if (!loggedUser) {
@@ -885,9 +885,10 @@
             }
         }
 
+        // FUNGSI BUAT AKUN BARU LANGSUNG KE FIRESTORE (Koleksi "users")
         window.handleRegisterAccount = async function(event) {
             event.preventDefault();
-            const username = document.getElementById('regUser').value.trim();
+            const username = document.getElementById('regUser').value.trim().toLowerCase();
             const password = document.getElementById('regPass').value.trim();
             const btn = document.getElementById('regBtn');
 
@@ -895,35 +896,39 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch(DATABASE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'registerAccount', username, password })
-                });
-                const result = await response.json();
+                const userRef = doc(db, "users", username);
+                const userSnap = await getDoc(userRef);
 
-                if (result.status === 'success') {
-                    closeModal('registerAccountModal');
-                    localStorage.setItem('activeMemberUser', username);
-                    checkAuthStatus();
-                    showCustomAlert("BERHASIL", "Akun berhasil dibuat dan otomatis masuk. Silakan lanjutkan pendaftaran turnamen.");
-                    event.target.reset();
-                } else {
-                    showCustomAlert("GAGAL", result.message || 'Gagal membuat akun.', true);
+                if (userSnap.exists()) {
+                    showCustomAlert("GAGAL", "Username sudah terpakai! Silakan gunakan username lain.", true);
+                    return;
                 }
+
+                // Simpan akun baru ke Firestore
+                await setDoc(userRef, {
+                    username: username,
+                    password: password,
+                    createdAt: serverTimestamp()
+                });
+
+                closeModal('registerAccountModal');
+                localStorage.setItem('activeMemberUser', username);
+                checkAuthStatus();
+                showCustomAlert("BERHASIL", "Akun berhasil dibuat dan otomatis masuk ke sistem!");
+                event.target.reset();
             } catch (error) {
                 console.error(error);
-                showCustomAlert("KESALAHAN KONEKSI", "Terjadi kesalahan saat menghubungi server.", true);
+                showCustomAlert("KESALAHAN", "Gagal mendaftarkan akun ke database.", true);
             } finally {
                 btn.innerText = "DAFTARKAN AKUN";
                 btn.disabled = false;
             }
         }
 
-        // FUNGSI LOGIN AKUN (MENGIZINKAN LOGIN MESKIPUN AKUN SUDAH TERKUNCI/PERNAH DAFTAR)
+        // FUNGSI LOGIN AKUN LANGSUNG DARI FIRESTORE (Koleksi "users")
         window.handleLogin = async function(event) {
             event.preventDefault();
-            const username = document.getElementById('loginUser').value.trim();
+            const username = document.getElementById('loginUser').value.trim().toLowerCase();
             const password = document.getElementById('loginPass').value.trim();
             const btn = document.getElementById('loginBtn');
 
@@ -931,25 +936,28 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch(DATABASE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'checkLogin', username, password })
-                });
-                const result = await response.json();
+                const userRef = doc(db, "users", username);
+                const userSnap = await getDoc(userRef);
 
-                if (result.status === 'success' || (result.message && result.message.includes('sudah pernah digunakan'))) {
-                    localStorage.setItem('activeMemberUser', username);
-                    closeModal('loginModal');
-                    checkAuthStatus();
-                    showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}!`);
-                    event.target.reset();
-                } else {
-                    showCustomAlert("LOGIN GAGAL", result.message || 'Username atau Password salah!', true);
+                if (!userSnap.exists()) {
+                    showCustomAlert("LOGIN GAGAL", "Username tidak ditemukan! Silakan buat akun terlebih dahulu.", true);
+                    return;
                 }
+
+                const userData = userSnap.data();
+                if (userData.password !== password) {
+                    showCustomAlert("LOGIN GAGAL", "Password salah!", true);
+                    return;
+                }
+
+                localStorage.setItem('activeMemberUser', username);
+                closeModal('loginModal');
+                checkAuthStatus();
+                showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}!`);
+                event.target.reset();
             } catch (error) {
                 console.error(error);
-                showCustomAlert("KESALAHAN KONEKSI", "Terjadi kesalahan saat menghubungi server.", true);
+                showCustomAlert("KESALAHAN", "Gagal melakukan proses login.", true);
             } finally {
                 btn.innerText = "MASUK AKUN";
                 btn.disabled = false;
@@ -964,7 +972,7 @@
             });
         }
 
-        // FUNGSI SUBMIT LANGSUNG KE FIRESTORE DATABASE
+        // FUNGSI SUBMIT PENDAFTARAN TURNAMEN KE FIRESTORE
         window.handleFormSubmit = async function(event) {
             event.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
@@ -979,7 +987,6 @@
             submitBtn.disabled = true;
 
             try {
-                // Simpan data langsung ke database Firestore koleksi "pendaftar"
                 await addDoc(collection(db, "pendaftar"), {
                     nama: document.getElementById('tNama').value.trim(),
                     idMl: document.getElementById('tIdMl').value.trim(),
@@ -991,20 +998,13 @@
                     waktuDaftar: serverTimestamp()
                 });
 
-                // Kunci akun setelah mendaftar
-                await fetch(DATABASE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'lockAccount', username: loggedUser })
-                });
-
                 closeModal('registerModal');
                 showCustomAlert("REGISTRASI BERHASIL", "Data pendaftaran turnamen berhasil dikirim ke database Firestore!");
                 event.target.reset();
 
             } catch (error) {
                 console.error("Gagal kirim ke database: ", error);
-                showCustomAlert("KESALAHAN", "Terjadi kesalahan koneksi saat menyimpan data ke database.", true);
+                showCustomAlert("KESALAHAN", "Terjadi kesalahan saat menyimpan data ke database.", true);
             } finally {
                 submitBtn.innerText = "SUBMIT DATA";
                 submitBtn.disabled = false;
