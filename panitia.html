@@ -33,9 +33,40 @@
         .neon-glow-white { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2); }
     </style>
 </head>
-<body class="min-h-screen p-4 sm:p-8">
+<body class="min-h-screen p-4 sm:p-8 relative">
 
-    <div class="max-w-7xl mx-auto">
+    <!-- MODAL LOGIN KHUSUS PANITIA (LOCKED DASHBOARD) -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-4">
+        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-2xl p-6 sm:p-8 shadow-2xl text-center">
+            <div class="relative w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo Panitia" class="w-full h-full object-contain">
+            </div>
+            <h2 class="font-display font-black text-xl text-white mb-1">LOGIN PANITIA</h2>
+            <p class="text-xs text-slate-400 font-tech mb-6">Masukkan kredensial khusus panitia untuk mengakses kontrol panel.</p>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Panitia</label>
+                    <input type="text" id="adminUser" required placeholder="panitia1 / panitia2 / ..." class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password</label>
+                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg cursor-pointer">
+                    <i class="fa-solid fa-lock-open mr-1.5"></i> MASUK KONTROL PANEL
+                </button>
+            </form>
+            <div class="mt-4 pt-3 border-t border-obsidian-border">
+                <a href="index.html" class="text-xs text-slate-400 hover:text-white font-tech transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Website Utama
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AREA KONTROL PANEL UTAMA (DISEMBUNYIKAN SEBELUM LOGIN) -->
+    <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
         <!-- HEADER PANEL DENGAN LOGO PNG -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-obsidian-card border border-obsidian-border p-6 rounded-2xl mb-8 shadow-xl">
             <div class="flex items-center space-x-4">
@@ -45,7 +76,10 @@
                     <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-accent rounded-full"></span>
                 </div>
                 <div>
-                    <span class="text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
+                        <span id="activeAdminBadge" class="px-2 py-0.5 bg-emerald-accent/20 text-emerald-accent border border-emerald-accent/30 rounded text-[10px] font-bold"></span>
+                    </div>
                     <h1 class="font-display font-black text-xl sm:text-2xl text-white mt-0.5 leading-tight">
                         <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL PANITIA
                     </h1>
@@ -53,8 +87,11 @@
             </div>
             <div class="flex items-center gap-3">
                 <a href="index.html" class="px-4 py-2.5 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-xl font-tech text-xs font-bold transition-all shadow-md">
-                    <i class="fa-solid fa-arrow-left mr-1.5"></i> Ke Website Utama
+                    <i class="fa-solid fa-arrow-left mr-1.5"></i> Website Utama
                 </a>
+                <button onclick="handleAdminLogout()" class="px-4 py-2.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 text-red-400 hover:text-white rounded-xl font-tech text-xs font-bold transition-all shadow-md cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket mr-1.5"></i> LOGOUT PANITIA
+                </button>
             </div>
         </div>
 
@@ -92,7 +129,7 @@
                             <th class="p-3">Username Db</th>
                             <th class="p-3">Nama Lengkap</th>
                             <th class="p-3">ID Mobile Legend</th>
-                            <th class="p-3">Role Utama</th>
+                            <th class="p-3">Role (Utama / Cadangan)</th>
                             <th class="p-3">WhatsApp</th>
                             <th class="p-3">Pembayaran</th>
                             <th class="p-3 text-center">Aksi</th>
@@ -165,7 +202,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: MODERASI LIVE STREAM CHAT (TERPISAH) -->
+        <!-- TAB 4: MODERASI LIVE STREAM CHAT -->
         <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-obsidian-border">
                 <div>
@@ -198,7 +235,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & PANEL ADMIN -->
+    <!-- SCRIPT FIREBASE & LOGIKA LOGIN PANITIA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -216,12 +253,51 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // DAFTAR AKUN KHUSUS PANITIA
+        const VALID_PANITIA = ["panitia1", "panitia2", "panitia3", "panitia4", "panitia5"];
+        const PANITIA_PASSWORD = "tibatibaturnamen";
+
         window.addEventListener('DOMContentLoaded', () => {
-            loadTournamentApplicants();
-            loadMemberUsers();
-            loadGlobalChats();
-            loadLiveChats();
+            checkAdminAuth();
         });
+
+        function checkAdminAuth() {
+            const activePanitia = localStorage.getItem('activePanitiaSession');
+            if (activePanitia && VALID_PANITIA.includes(activePanitia)) {
+                document.getElementById('adminLoginModal').classList.add('hidden');
+                document.getElementById('adminMainContent').classList.remove('hidden');
+                document.getElementById('activeAdminBadge').innerText = '@' + activePanitia;
+                
+                // Load data realtime
+                loadTournamentApplicants();
+                loadMemberUsers();
+                loadGlobalChats();
+                loadLiveChats();
+            } else {
+                document.getElementById('adminLoginModal').classList.remove('hidden');
+                document.getElementById('adminMainContent').classList.add('hidden');
+            }
+        }
+
+        window.handleAdminLogin = function(e) {
+            e.preventDefault();
+            const user = document.getElementById('adminUser').value.trim().toLowerCase();
+            const pass = document.getElementById('adminPass').value.trim();
+
+            if (VALID_PANITIA.includes(user) && pass === PANITIA_PASSWORD) {
+                localStorage.setItem('activePanitiaSession', user);
+                checkAdminAuth();
+            } else {
+                alert("Login Panitia Gagal! Username atau password salah.");
+            }
+        }
+
+        window.handleAdminLogout = function() {
+            if (confirm("Apakah Anda yakin ingin keluar dari Panel Panitia?")) {
+                localStorage.removeItem('activePanitiaSession');
+                checkAdminAuth();
+            }
+        }
 
         window.switchAdminTab = function(tab) {
             const btnT = document.getElementById('tabBtnTournaments');
@@ -259,7 +335,7 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN
+        // 1. PENDAFTAR TURNAMEN DENGAN PENGGABUNGAN ROLE
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -277,6 +353,11 @@
                     const data = docSnap.data();
                     let timeStr = (data.waktuDaftar && data.waktuDaftar.toDate) ? data.waktuDaftar.toDate().toLocaleString() : '-';
 
+                    let combinedRole = data.role1 || '-';
+                    if (data.role2 && data.role2.trim() !== '') {
+                        combinedRole += ` / ${data.role2}`;
+                    }
+
                     html += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-3">${i++}</td>
@@ -284,7 +365,7 @@
                             <td class="p-3 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
                             <td class="p-3 font-bold text-white">${data.nama || '-'}</td>
                             <td class="p-3">${data.idMl || '-'}</td>
-                            <td class="p-3">${data.role1 || '-'}</td>
+                            <td class="p-3 font-semibold text-sky-300">${combinedRole}</td>
                             <td class="p-3"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
                             <td class="p-3"><span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
                             <td class="p-3 text-center">
@@ -386,7 +467,7 @@
             });
         }
 
-        // 4. LIVE STREAM CHAT (TERPISAH)
+        // 4. LIVE STREAM CHAT
         function loadLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
