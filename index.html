@@ -109,19 +109,20 @@
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2);
         }
 
+        /* ANIMASI MODAL YANG LEBIH SMOOTH, AESTHETIC, DAN ELEGAN */
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
         .modal-container {
-            transform: scale(0.85) translateY(20px);
+            transform: scale(0.92) translateY(12px);
             opacity: 0;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal-overlay.active .modal-container {
             transform: scale(1) translateY(0);
