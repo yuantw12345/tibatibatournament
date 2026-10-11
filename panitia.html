@@ -167,8 +167,13 @@
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
                         
-                        // Menyiapkan tautan klik langsung WhatsApp
-                        const waNumber = row.whatsapp ? String(row.whatsapp).replace(/[^0-9]/g, '') : '';
+                        // Perbaikan nomor WhatsApp: Jika tidak diawali 0 atau 62, tambahkan 0 di depannya
+                        let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
+                        if (rawWa && !rawWa.startsWith('0') && !rawWa.startsWith('62')) {
+                            rawWa = '0' + rawWa;
+                        }
+                        
+                        const waNumber = rawWa.replace(/[^0-9]/g, '');
                         const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + waNumber.slice(1) : waNumber}` : '#';
 
                         tr.innerHTML = `
@@ -176,7 +181,7 @@
                             <td class="p-3 text-cyan-400 font-mono">${row.idMl || '-'}</td>
                             <td class="p-3 text-amber-400 font-semibold">${row.role1 || '-'}</td>
                             <td class="p-3">
-                                ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${row.whatsapp}</a>` : '-'}
+                                ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${rawWa}</a>` : '-'}
                             </td>
                             <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
                             <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
