@@ -57,7 +57,6 @@
             </div>
             
             <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
-                <!-- Tombol Refresh Manual -->
                 <button onclick="manualRefresh()" id="refreshBtn" class="flex-1 md:flex-none px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black text-xs rounded-lg transition-all border border-emerald-500/25 text-center font-bold">
                     <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
                 </button>
@@ -94,7 +93,6 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
 
-        // Daftar username panitia yang diizinkan
         const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
         const validPassword = 'tibatibaturnamen';
 
@@ -126,7 +124,6 @@
             document.getElementById('welcomeUser').innerText = username.toUpperCase();
             loadData();
 
-            // Jalankan auto-refresh setiap 10 detik sekali secara otomatis di latar belakang
             if (!autoRefreshInterval) {
                 autoRefreshInterval = setInterval(() => {
                     loadData();
@@ -167,7 +164,6 @@
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
                         
-                        // Membentuk ulang nomor WhatsApp agar selalu berawalan 0 atau disesuaikan
                         let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
                         rawWa = rawWa.replace(/[^0-9]/g, '');
                         
@@ -207,7 +203,7 @@
         }
 
         function deleteData(buttonElement, rowIndex) {
-            if (confirm("Apakah kamu yakin ingin menghapus data peserta ini dari Google Sheet?")) {
+            if (confirm("Apakah kamu yakin ingin menghapus data peserta ini dari Google Sheet? Akun peserta juga akan otomatis terbuka kembali (unlock).")) {
                 const row = buttonElement.closest('tr');
                 row.remove();
 
