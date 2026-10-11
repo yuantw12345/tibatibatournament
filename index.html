@@ -54,12 +54,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        html { scroll-padding-top: 90px; overflow-x: hidden; }
+        html { scroll-padding-top: 95px; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #090b18 !important;
             color: #f8faff;
-            overflow-x: hidden;
             background-image: 
                 radial-gradient(ellipse at 8% 5%, rgba(255,60,172,.19), transparent 34%),
                 radial-gradient(ellipse at 92% 16%, rgba(37,231,255,.15), transparent 32%),
@@ -84,13 +83,13 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* HEADER STICKY & PEMBATAS JELAS */
+        /* HEADER FIXED & PEMBATAS TEGAS */
         .glass-nav {
             background: rgba(8, 10, 25, 0.95) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid #00e699 !important; /* Pembuat Pembatas Tegas Neon */
-            box-shadow: 0 4px 25px rgba(0, 230, 153, 0.25), 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+            border-bottom: 2px solid #00e699 !important; /* Pembatas Neon Hijau */
+            box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
         /* Smooth Modal Animation Styles */
@@ -142,8 +141,8 @@
 </head>
 <body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white relative">
 
-    <!-- HEADER TOOLBAR (STICKY FIXED DI ATAS DENGAN PEMBATAS NEON) -->
-    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <!-- HEADER TOOLBAR (FIXED DI POSISI PALING ATAS SETIAP SAAT) -->
+    <header class="fixed top-0 left-0 right-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#hero-banner" class="flex items-center space-x-3 group">
                 <div class="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
@@ -187,8 +186,9 @@
         </div>
     </header>
 
-    <main class="flex-grow">
-        <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-6">
+    <!-- PT-24 DIGUNAKAN AGAR KONTEN TIDAK TERTUTUP HEADER FIXED -->
+    <main class="flex-grow pt-24 sm:pt-24">
+        <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-6">
             <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3">
                     <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
