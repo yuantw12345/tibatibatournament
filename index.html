@@ -91,43 +91,13 @@
             box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
-        /* EFEK NEON MENYALA DAN KELIP KELIP HASIL KUSTOMISASI */
+        /* EFEK NEON YANG LEBIH HALUS DAN NATURAL (TIDAK LEBAY) */
         .neon-glow-red {
-            animation: neonPulseRed 1.8s infinite alternate;
+            text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3);
         }
 
         .neon-glow-white {
-            animation: neonPulseWhite 2.2s infinite alternate;
-        }
-
-        @keyframes neonPulseRed {
-            0% {
-                text-shadow: 0 0 5px #ff1e56, 0 0 10px #ff1e56, 0 0 20px #ff1e56, 0 0 30px #c40d3d;
-                opacity: 1;
-            }
-            50% {
-                text-shadow: 0 0 2px #ff1e56, 0 0 5px #ff1e56;
-                opacity: 0.75;
-            }
-            100% {
-                text-shadow: 0 0 10px #ff1e56, 0 0 25px #ff1e56, 0 0 40px #ff1e56, 0 0 60px #ff1e56;
-                opacity: 1;
-            }
-        }
-
-        @keyframes neonPulseWhite {
-            0% {
-                text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #00e699;
-                opacity: 0.85;
-            }
-            50% {
-                text-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff;
-                opacity: 1;
-            }
-            100% {
-                text-shadow: 0 0 8px #ffffff, 0 0 18px #ffffff, 0 0 30px #00e699;
-                opacity: 0.9;
-            }
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2);
         }
 
         .modal-overlay {
@@ -187,7 +157,7 @@
                     <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
                 </div>
                 <div>
-                    <!-- TEKS LOGO HEADER DENGAN EFEK NEON MENYALA & KELIP-KELIP -->
+                    <!-- TEKS LOGO HEADER DENGAN NEON HALUS -->
                     <span class="block font-display font-extrabold text-sm sm:text-base tracking-wider text-white leading-tight">
                         <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red font-semibold">TOURNAMENT</span>
                     </span>
@@ -260,7 +230,7 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
                     REGISTRASI REGULER SEGERA DITUTUP
                 </div>
-                <!-- JUDUL HERO JUGA BERKEDIP KELIP DENGAN NEON GLOW KEREEN -->
+                <!-- JUDUL HERO DENGAN NEON HALUS -->
                 <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight px-2">
                     DOMINASI ARENA <br class="hidden sm:block">
                     <span class="neon-glow-red text-crimson font-extrabold">TIBA TIBA TOURNAMENT</span>
@@ -520,7 +490,7 @@
             <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
+            <h3 id="confirmText" class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
             <p id="confirmText" class="text-slate-300 text-xs mb-5">Apakah Anda yakin?</p>
             <div class="flex gap-2">
                 <button id="confirmYesBtn" class="flex-1 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-xl cursor-pointer transition-all">YA</button>
@@ -572,7 +542,7 @@
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
         function nextSlide() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
-        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex - 1 + 3) % 3}`; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
         setInterval(nextSlide, 4500);
 
         function switchTab(tab) {
