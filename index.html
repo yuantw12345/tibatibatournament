@@ -482,7 +482,6 @@
     </div>
 
     <script>
-        // URL SCRIPT YANG SUDAH DIPASANG DENGAN BENAR
         const TOURNAMENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztJQhBG6OrQkp_r9RgfazqAKqlclEcifOYvZmMrtjsJpFWRC_jRcbpMI2nhLpkM4md/exec';
 
@@ -547,15 +546,15 @@
             submitBtn.disabled = true;
 
             try {
-                // 1. Validasi ke Spreadsheet Database Akun menggunakan URLSearchParams
-                const checkParams = new URLSearchParams();
-                checkParams.append('action', 'checkLogin');
-                checkParams.append('username', usernameInput);
-                checkParams.append('password', passwordInput);
-
+                // 1. Validasi ke Spreadsheet Database Akun (JSON murni)
                 const checkResponse = await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
-                    body: checkParams
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'checkLogin',
+                        username: usernameInput,
+                        password: passwordInput
+                    })
                 });
                 
                 const checkResult = await checkResponse.json();
@@ -590,13 +589,13 @@
                 });
 
                 // 4. Kunci akun di Spreadsheet Database agar tidak bisa daftar 2x
-                const lockParams = new URLSearchParams();
-                lockParams.append('action', 'lockAccount');
-                lockParams.append('username', usernameInput);
-
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
-                    body: lockParams
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'lockAccount',
+                        username: usernameInput
+                    })
                 });
 
                 closeModal('registerModal');
