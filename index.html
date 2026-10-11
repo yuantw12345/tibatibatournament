@@ -102,23 +102,17 @@
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2);
         }
 
+        /* ANIMASI FLOATING CHAT KIRI BAWAH */
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
         }
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
-        }
-        .modal-container {
-            transform: scale(0.92) translateY(12px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        .modal-overlay.active .modal-container {
-            transform: scale(1) translateY(0);
-            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -138,7 +132,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div, #chatModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -400,7 +394,8 @@
         </section>
     </main>
 
-    <button onclick="openChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
+    <!-- TOMBOL FLOATING CHAT GLOBAL DI KIRI BAWAH -->
+    <button onclick="toggleChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
         <i class="fa-solid fa-comments text-base"></i>
         <span>CHAT GLOBAL</span>
     </button>
@@ -416,29 +411,27 @@
         </a>
     </div>
 
-    <!-- MODAL CHAT GLOBAL ARENA (TANPA EFLEK BLUR DI LATAR BELAKANG) -->
-    <div id="chatModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-        <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 shadow-2xl flex flex-col h-[520px]">
-            <button onclick="closeChatModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-3">
-                <div class="w-9 h-9 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30"><i class="fa-solid fa-comments"></i></div>
-                <div>
-                    <h3 class="font-display font-bold text-base text-white leading-tight">CHAT GLOBAL ARENA</h3>
-                    <p class="text-[10px] text-slate-400 font-tech">Komunitas & Diskusi Player (Real-time)</p>
-                </div>
+    <!-- WIDGET CHAT GLOBAL POP-UP (MUNCUL DI KIRI BAWAH, HALAMAN TETAP BISA DI-SCROLL) -->
+    <div id="chatModal" class="modal-overlay fixed bottom-20 left-5 z-50 w-[92%] sm:w-[380px] h-[460px] bg-obsidian-card border border-sky-400/40 rounded-2xl p-4 shadow-2xl flex flex-col">
+        <button onclick="closeChatModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1.5 cursor-pointer z-10"><i class="fa-solid fa-xmark text-base"></i></button>
+        <div class="flex items-center gap-2.5 pb-2.5 border-b border-obsidian-border mb-2.5 shrink-0">
+            <div class="w-8 h-8 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-sm border border-sky-400/30"><i class="fa-solid fa-comments"></i></div>
+            <div>
+                <h3 class="font-display font-bold text-sm text-white leading-tight">CHAT GLOBAL ARENA</h3>
+                <p class="text-[9px] text-slate-400 font-tech">Komunitas & Diskusi Player (Real-time)</p>
             </div>
-            <div id="chatBox" class="flex-grow overflow-y-auto space-y-2.5 pr-1 mb-3 text-xs font-tech">
-                <div class="text-center text-slate-500 py-8">Memuat chat real-time...</div>
-            </div>
-            <div id="chatInputArea">
-                <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
-                    <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-sky-400">
-                    <button type="submit" id="chatSendBtn" class="px-4 py-2.5 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all"><i class="fa-solid fa-paper-plane"></i></button>
-                </form>
-                <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-3 rounded-xl text-center">
-                    <p class="text-[11px] text-amber-400 mb-2 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
-                    <button onclick="closeChatModal(); openModal('loginModal')" class="px-4 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs rounded-lg cursor-pointer">Login / Buat Akun</button>
-                </div>
+        </div>
+        <div id="chatBox" class="flex-grow overflow-y-auto space-y-2 pr-1 mb-2.5 text-xs font-tech min-h-0">
+            <div class="text-center text-slate-500 py-6">Memuat chat real-time...</div>
+        </div>
+        <div id="chatInputArea" class="shrink-0 pt-1">
+            <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
+                <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-sky-400">
+                <button type="submit" id="chatSendBtn" class="px-3 py-2 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+            <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-2.5 rounded-xl text-center">
+                <p class="text-[10px] text-amber-400 mb-1.5 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
+                <button onclick="closeChatModal(); openModal('loginModal')" class="px-3 py-1 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-[11px] rounded-lg cursor-pointer">Login / Buat Akun</button>
             </div>
         </div>
     </div>
@@ -633,16 +626,27 @@
         });
 
         window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        window.openModal = function(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        window.openModal = function(id) { document.getElementById(id).classList.add('active'); if(id !== 'chatModal') document.body.style.overflow = 'hidden'; }
         window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
 
+        // TOGGLE CHAT DI KIRI BAWAH (HALAMAN UTAMA TETAP BISA DI-SCROLL)
         window.openChatModal = function() {
-            openModal('chatModal');
+            const chatModal = document.getElementById('chatModal');
+            chatModal.classList.add('active');
             updateChatAccessUI();
         }
 
         window.closeChatModal = function() {
-            closeModal('chatModal');
+            document.getElementById('chatModal').classList.remove('active');
+        }
+
+        window.toggleChatModal = function() {
+            const chatModal = document.getElementById('chatModal');
+            if (chatModal.classList.contains('active')) {
+                closeChatModal();
+            } else {
+                openChatModal();
+            }
         }
 
         window.updateChatAccessUI = function() {
@@ -673,7 +677,6 @@
                     if (userSnap.exists()) {
                         const userData = userSnap.data();
                         
-                        // JIKA DI-BANNED PANITIA
                         if (userData.isBanned === true) {
                             localStorage.removeItem('activeMemberUser');
                             localStorage.removeItem('sessionToken');
@@ -682,7 +685,6 @@
                             return;
                         }
 
-                        // JIKA LOGIN DI HP LAIN
                         const serverToken = userData.sessionToken;
                         if (serverToken && serverToken !== localToken) {
                             localStorage.removeItem('activeMemberUser');
