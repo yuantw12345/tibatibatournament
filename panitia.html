@@ -50,9 +50,9 @@
                             <th class="p-4">No</th>
                             <th class="p-4">Nama Lengkap</th>
                             <th class="p-4">ID ML</th>
-                            <th class="p-4">Role 1</th>
+                            <th class="p-4">Role Utama</th>
                             <th class="p-4">WhatsApp</th>
-                            <th class="p-4">Role 2</th>
+                            <th class="p-4">Role Cadangan</th>
                             <th class="p-4">Pembayaran</th>
                             <th class="p-4">Username Akun</th>
                             <th class="p-4 text-center">Aksi</th>
@@ -86,19 +86,23 @@
 
                 if (result.status === 'success' && result.data.length > 0) {
                     tbody.innerHTML = '';
+                    // Mulai dari baris ke-2 (index 1 di spreadsheet, karena index 0 adalah header)
                     result.data.forEach((row, index) => {
+                        // Lewati baris header jika terbaca ganda
+                        if (index === 0 && (row[0] === 'nama' || row[0] === 'Nama')) return;
+
                         tbody.innerHTML += `
                             <tr class="hover:bg-obsidian/50 transition-colors">
-                                <td class="p-4 font-bold text-white">${index + 1}</td>
-                                <td class="p-4 font-semibold text-white">${row.nama || '-'}</td>
-                                <td class="p-4">${row.idMl || '-'}</td>
-                                <td class="p-4"><span class="px-2 py-1 bg-emerald-accent/10 text-emerald-accent rounded font-tech">${row.role1 || '-'}</span></td>
-                                <td class="p-4"><a href="https://wa.me/${row.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${row.whatsapp || '-'}</a></td>
-                                <td class="p-4">${row.role2 || '-'}</td>
-                                <td class="p-4"><span class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded font-tech">${row.payment || '-'}</span></td>
-                                <td class="p-4 text-slate-400 font-tech">${row.usernameDb || '-'}</td>
+                                <td class="p-4 font-bold text-white">${index}</td>
+                                <td class="p-4 font-semibold text-white">${row[0] || '-'}</td>
+                                <td class="p-4">${row[1] || '-'}</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-emerald-accent/10 text-emerald-accent rounded font-tech">${row[2] || '-'}</span></td>
+                                <td class="p-4"><a href="https://wa.me/${row[3]}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${row[3] || '-'}</a></td>
+                                <td class="p-4">${row[4] || '-'}</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded font-tech">${row[5] || '-'}</span></td>
+                                <td class="p-4 text-slate-400 font-tech">${row[7] || '-'}</td>
                                 <td class="p-4 text-center">
-                                    <button onclick="deleteParticipant(${index + 2}, '${row.usernameDb}')" class="px-3 py-1.5 bg-crimson/20 text-crimson hover:bg-crimson hover:text-white rounded-lg font-bold transition-all">
+                                    <button onclick="deleteParticipant(${index + 1}, '${row[7]}')" class="px-3 py-1.5 bg-crimson/20 text-crimson hover:bg-crimson hover:text-white rounded-lg font-bold transition-all">
                                         <i class="fa-solid fa-trash mr-1"></i> Hapus
                                     </button>
                                 </td>
@@ -130,7 +134,7 @@
                 });
 
                 // 2. Buka Kunci (Unlock) Akun di Spreadsheet Database
-                if (usernameDb) {
+                if (usernameDb && usernameDb !== 'undefined') {
                     await fetch(DATABASE_SCRIPT_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
