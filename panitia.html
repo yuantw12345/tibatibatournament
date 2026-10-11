@@ -3,94 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Panitia — Tiba Tiba Tournament</title>
-    <!-- Favicon Custom Logo -->
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
+    <title>PANEL PANITIA — TIBA TIBA TOURNAMENT</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: { DEFAULT: '#080a0f', card: '#0f131d', border: '#1e2638' },
+                        crimson: { DEFAULT: '#ff1e56', dark: '#c40d3d' },
+                        emerald: { accent: '#00e699' }
+                    },
+                    fontFamily: { tech: ['Space Grotesk', 'sans-serif'], display: ['Syne', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #080a0f; color: #f1f5f9; font-family: sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080a0f; color: #f8faff; }
     </style>
 </head>
-<body class="p-4 sm:p-6 overflow-x-hidden">
+<body class="min-h-screen p-4 sm:p-8">
 
-    <!-- MODAL LOGIN PANITIA -->
-    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#080a0f]/95 backdrop-blur-md p-4">
-        <div class="relative w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-            <div class="text-center mb-6">
-                <div class="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mx-auto mb-3 border border-emerald-500/30">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h2 class="text-xl font-bold text-white">LOGIN PANEL PANITIA</h2>
-                <p class="text-xs text-slate-400 mt-1">Gunakan akun panitia (panitia1 - panitia5) untuk masuk.</p>
-            </div>
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Username</label>
-                    <input type="text" id="username" required placeholder="Contoh: panitia1" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Password</label>
-                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500">
-                </div>
-                <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg cursor-pointer">
-                    MASUK PANEL
-                </button>
-            </form>
-            <div class="mt-4 text-center">
-                <a href="index.html" class="text-xs text-slate-500 hover:text-slate-300">← Kembali ke Beranda Utama</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- HALAMAN UTAMA PANEL PANITIA -->
-    <div id="panelContent" class="max-w-7xl mx-auto hidden">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div class="max-w-7xl mx-auto">
+        <!-- HEADER PANEL -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-obsidian-card border border-obsidian-border p-6 rounded-2xl mb-8 shadow-xl">
             <div>
-                <h1 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2 flex-wrap">
-                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> PANEL PANITIA - DATA PENDAFTARAN
-                </h1>
-                <div class="flex items-center gap-2 mt-2">
-                    <span id="welcomeUser" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
-                    <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20"><i class="fa-solid fa-bolt mr-1"></i> Real-time Firestore Aktif</span>
-                </div>
+                <span class="text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
+                <h1 class="font-display font-black text-2xl sm:text-3xl text-white mt-1">PANEL KONTROL PANITIA</h1>
             </div>
-            
-            <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
-                <button onclick="logout()" class="flex-1 md:flex-none px-4 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white text-xs rounded-xl transition-all border border-red-500/25 text-center cursor-pointer shadow-md">
-                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
-                </button>
-                <a href="index.html" class="w-full md:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-xl text-slate-300 text-center shadow-md">Beranda</a>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="px-4 py-2 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 rounded-xl font-tech text-xs font-bold transition-all">
+                    <i class="fa-solid fa-arrow-left mr-1.5"></i> Ke Website Utama
+                </a>
             </div>
         </div>
 
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-6 shadow-xl">
-            <div class="text-xs text-slate-400 mb-2 italic sm:hidden"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat data lengkap</div>
-            <div class="overflow-x-auto w-full">
-                <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
-                    <thead>
-                        <tr class="border-b border-slate-800 text-slate-400 uppercase font-bold text-[11px]">
+        <!-- TOMBOL NAVIGASI MENU TAB -->
+        <div class="flex gap-3 mb-6 font-tech text-xs font-bold">
+            <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-trophy"></i> DATA PENDAFTAR TURNAMEN (<span id="countTournaments">0</span>)
+            </button>
+            <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-users-gear"></i> DATA AKUN MEMBER / PASSWORD (<span id="countUsers">0</span>)
+            </button>
+        </div>
+
+        <!-- KONTEN TAB 1: DATA PENDAFTAR TURNAMEN -->
+        <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
+                </h2>
+                <span class="text-xs font-tech text-slate-400">Real-time Cloud Firestore</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-3">No</th>
+                            <th class="p-3">Waktu Daftar</th>
+                            <th class="p-3">Username Db</th>
                             <th class="p-3">Nama Lengkap</th>
-                            <th class="p-3">ID Mobile Legends</th>
+                            <th class="p-3">ID Mobile Legend</th>
                             <th class="p-3">Role Utama</th>
-                            <th class="p-3">Nomor WhatsApp</th>
-                            <th class="p-3">Role Cadangan</th>
+                            <th class="p-3">WhatsApp</th>
                             <th class="p-3">Pembayaran</th>
                             <th class="p-3 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="dataTable">
-                        <tr><td colspan="7" class="p-6 text-center text-slate-500">Menghubungkan ke database Firestore...</td></tr>
+                    <tbody id="tournamentTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="9" class="text-center py-8 text-slate-500">Memuat data pendaftar...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- KONTEN TAB 2: DATA AKUN MEMBER (USERNAME & PASSWORD) -->
+        <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-6 shadow-2xl hidden">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                    <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Password Member
+                </h2>
+                <span class="text-xs font-tech text-slate-400">Database Koleksi "users"</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-3">No</th>
+                            <th class="p-3">Waktu Buat Akun</th>
+                            <th class="p-3">Username Member</th>
+                            <th class="p-3">Password Member</th>
+                            <th class="p-3 text-center">Aksi Hapus Akun</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data akun member...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & PANEL PANITIA -->
+    <!-- SCRIPT FIREBASE & PANEL ADMIN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -104,116 +130,136 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
-
-        const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
-        const validPassword = 'tibatibaturnamen';
 
         window.addEventListener('DOMContentLoaded', () => {
-            const loggedUser = localStorage.getItem('panitiaUser');
-            if (loggedUser && validUsers.includes(loggedUser)) {
-                showPanel(loggedUser);
-            }
+            loadTournamentApplicants();
+            loadMemberUsers();
         });
 
-        window.handleLogin = function(event) {
-            event.preventDefault();
-            const user = document.getElementById('username').value.trim().toLowerCase();
-            const pass = document.getElementById('password').value;
+        // NAVIGASI ANTAR TAB
+        window.switchAdminTab = function(tab) {
+            const btnT = document.getElementById('tabBtnTournaments');
+            const btnU = document.getElementById('tabBtnUsers');
+            const secT = document.getElementById('sectionTournaments');
+            const secU = document.getElementById('sectionUsers');
 
-            if (validUsers.includes(user) && pass === validPassword) {
-                localStorage.setItem('panitiaUser', user);
-                showPanel(user);
+            if (tab === 'tournaments') {
+                btnT.className = "px-5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center gap-2";
+                btnU.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+                secT.classList.remove('hidden');
+                secU.classList.add('hidden');
             } else {
-                alert('Username atau Password salah! Gunakan panitia1 s.d. panitia5.');
+                btnU.className = "px-5 py-3 rounded-xl bg-crimson text-white shadow-lg transition-all cursor-pointer flex items-center gap-2";
+                btnT.className = "px-5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2";
+                secU.classList.remove('hidden');
+                secT.classList.add('hidden');
             }
         }
 
-        window.showPanel = function(username) {
-            document.getElementById('loginModal').classList.add('hidden');
-            document.getElementById('panelContent').classList.remove('hidden');
-            document.getElementById('welcomeUser').innerText = username.toUpperCase();
-            initRealtimeData();
-        }
-
-        window.logout = function() {
-            localStorage.removeItem('panitiaUser');
-            location.reload();
-        }
-
-        // FUNGSI MENDENGARKAN DATA SECARA REAL-TIME DARI FIRESTORE
-        function initRealtimeData() {
+        // AMBIL DATA PENDAFTAR TURNAMEN SECARA REAL-TIME
+        function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
-
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('dataTable');
-                tbody.innerHTML = '';
+                const tbody = document.getElementById('tournamentTableBody');
+                document.getElementById('countTournaments').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">Belum ada data pendaftaran yang masuk.</td></tr>';
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
                     return;
                 }
 
-                snapshot.forEach((documentSnapshot) => {
-                    const row = documentSnapshot.data();
-                    const docId = documentSnapshot.id;
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
-                    
-                    let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
-                    rawWa = rawWa.replace(/[^0-9]/g, '');
-                    
-                    if (rawWa && !rawWa.startsWith('0') && !rawWa.startsWith('62')) {
-                        rawWa = '0' + rawWa;
-                    } else if (rawWa.startsWith('62')) {
-                        rawWa = '0' + rawWa.slice(2);
+                let html = '';
+                let i = 1;
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = '-';
+                    if (data.waktuDaftar && data.waktuDaftar.toDate) {
+                        timeStr = data.waktuDaftar.toDate().toLocaleString();
                     }
 
-                    const waNumber = rawWa;
-                    const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + rawWa.slice(1) : waNumber}` : '#';
-                    const usernameDb = row.usernameDb || '';
-
-                    tr.innerHTML = `
-                        <td class="p-3 font-bold text-white">${row.nama || '-'}</td>
-                        <td class="p-3 text-cyan-400 font-mono">${row.idMl || '-'}</td>
-                        <td class="p-3 text-amber-400 font-semibold">${row.role1 || '-'}</td>
-                        <td class="p-3">
-                            ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${rawWa}</a>` : '-'}
-                        </td>
-                        <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
-                        <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
-                        <td class="p-3 text-center">
-                            <button onclick="deleteFirestoreData('${docId}', '${usernameDb}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20 cursor-pointer">
-                                <i class="fa-solid fa-trash"></i> Hapus
-                            </button>
-                        </td>
+                    html += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-3">${i++}</td>
+                            <td class="p-3 text-slate-400">${timeStr}</td>
+                            <td class="p-3 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
+                            <td class="p-3 font-bold text-white">${data.nama || '-'}</td>
+                            <td class="p-3">${data.idMl || '-'}</td>
+                            <td class="p-3">${data.role1 || '-'}</td>
+                            <td class="p-3"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
+                            <td class="p-3"><span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Data Pendaftar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
                     `;
-                    tbody.appendChild(tr);
                 });
-            }, (error) => {
-                console.error("Gagal mendengarkan data Firestore:", error);
-                document.getElementById('dataTable').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-400">Gagal memuat data dari database.</td></tr>';
+                tbody.innerHTML = html;
             });
         }
 
-        // FUNGSI HAPUS DATA DI FIRESTORE DAN BUKA KUNCI AKUN PESERTA
-        window.deleteFirestoreData = async function(docId, usernameDb) {
-            if (confirm("Apakah kamu yakin ingin menghapus data pendaftar ini dari database?")) {
-                try {
-                    // 1. Hapus dokumen dari Firestore
-                    await deleteDoc(doc(db, "pendaftar", docId));
+        // AMBIL DATA AKUN MEMBER (USERNAME & PASSWORD) SECARA REAL-TIME
+        function loadMemberUsers() {
+            const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('usersTableBody');
+                document.getElementById('countUsers').innerText = snapshot.size;
 
-                    // 2. Buka kembali kunci akun peserta di Database agar bisa mendaftar ulang jika perlu
-                    if (usernameDb) {
-                        await fetch(DATABASE_SCRIPT_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                            body: JSON.stringify({ action: 'unlockAccount', username: usernameDb })
-                        });
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada akun member yang terdaftar.</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                let i = 1;
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = '-';
+                    if (data.createdAt && data.createdAt.toDate) {
+                        timeStr = data.createdAt.toDate().toLocaleString();
                     }
-                } catch (error) {
-                    console.error("Gagal menghapus data: ", error);
-                    alert("Terjadi kesalahan saat menghapus data.");
+
+                    html += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-3">${i++}</td>
+                            <td class="p-3 text-slate-400">${timeStr}</td>
+                            <td class="p-3 font-bold text-emerald-accent text-sm">@${data.username}</td>
+                            <td class="p-3 font-mono text-amber-300 bg-obsidian px-2 py-1 rounded inline-block">${data.password}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Akun Member">
+                                    <i class="fa-solid fa-user-xmark mr-1"></i> Hapus Akun
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            });
+        }
+
+        // FUNGSI HAPUS DATA PENDAFTAR TURNAMEN
+        window.deleteTournamentData = async function(docId, username) {
+            if (confirm(`Yakin ingin menghapus data pendaftaran untuk akun @${username}?`)) {
+                try {
+                    await deleteDoc(doc(db, "pendaftar", docId));
+                    alert("Data pendaftaran berhasil dihapus.");
+                } catch (err) {
+                    console.error("Gagal menghapus:", err);
+                    alert("Gagal menghapus data.");
+                }
+            }
+        }
+
+        // FUNGSI HAPUS AKUN MEMBER (USERNAME & PASSWORD)
+        window.deleteMemberAccount = async function(docId, username) {
+            if (confirm(`PERHATIAN: Menghapus akun @${username} akan menghapus data login mereka secara permanen dari database. Lanjutkan?`)) {
+                try {
+                    await deleteDoc(doc(db, "users", docId));
+                    alert(`Akun @${username} berhasil dihapus dari database!`);
+                } catch (err) {
+                    console.error("Gagal menghapus akun:", err);
+                    alert("Gagal menghapus akun member.");
                 }
             }
         }
