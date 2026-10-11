@@ -316,27 +316,27 @@
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nama Lengkap</label>
-                    <input type="text" id="regNama" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username / ID Mobile Legend</label>
-                    <input type="text" id="regIdMl" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Utama (Role 1)</label>
+                    <input type="text" required placeholder="Contoh: Jungler" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp Aktif</label>
-                    <input type="tel" id="regWa" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="tel" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
-                <!-- Pilihan 2 Role Kanan & Kiri -->
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role (Utama & Cadangan)</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="regRole1" required placeholder="Role Utama (Cth: Jungler)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-3 text-white text-xs focus:outline-none focus:border-crimson">
-                        <input type="text" id="regRole2" required placeholder="Role Cadangan (Cth: Gold Laner)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-3 text-white text-xs focus:outline-none focus:border-crimson">
-                    </div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Cadangan (Role 2)</label>
+                    <input type="text" required placeholder="Contoh: Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Metode Pembayaran</label>
-                    <select id="regPayment" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
+                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
                         <option value="" disabled selected>-- Pilih Opsi Pembayaran --</option>
                         <option value="GAJIAN">GAJIAN</option>
                         <option value="UM">UM</option>
@@ -413,25 +413,32 @@
 
         function handleFormSubmit(event) {
             event.preventDefault();
+            const inputs = event.target.querySelectorAll('input, select');
             
-            // Mengambil data berdasarkan ID agar urutan ke kolom Sheet dijamin akurat 100%
+            // Mengambil input berurutan persis seperti tampilan form:
+            // inputs[0] = Nama Lengkap -> masuk Kolom A (nama)
+            // inputs[1] = ID Mobile Legend -> masuk Kolom B (idMl)
+            // inputs[2] = Role Utama -> masuk Kolom C (role)
+            // inputs[3] = Nomor WA -> masuk Kolom D (NOMOR WHATSAP)
+            // inputs[4] = Role Cadangan -> masuk Kolom E (ROLE)
+            // inputs[5] = Metode Pembayaran -> masuk Kolom F (PEMBAYARAN)
             const formData = {
-                nama: document.getElementById('regNama').value,
-                idMl: document.getElementById('regIdMl').value,
-                whatsapp: document.getElementById('regWa').value,
-                role1: document.getElementById('regRole1').value,
-                role2: document.getElementById('regRole2').value,
-                payment: document.getElementById('regPayment').value
+                nama: inputs[0].value,
+                idMl: inputs[1].value,
+                role1: inputs[2].value,
+                whatsapp: inputs[3].value,
+                role2: inputs[4].value,
+                payment: inputs[5].value
             };
 
-            // 1. Respon sukses instan tanpa delay
+            // Respon sukses instan tanpa tunggu server
             closeModal('registerModal');
             document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
             document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
             openModal('messageModal');
             event.target.reset();
 
-            // 2. Kirim ke Google Sheet di background
+            // Kirim ke Google Apps Script
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
