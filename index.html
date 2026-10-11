@@ -83,16 +83,14 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* HEADER FIXED & PEMBATAS TEGAS */
         .glass-nav {
             background: rgba(8, 10, 25, 0.95) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid #00e699 !important; /* Pembatas Neon Hijau */
+            border-bottom: 2px solid #00e699 !important;
             box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
         }
 
-        /* Smooth Modal Animation Styles */
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
@@ -141,7 +139,6 @@
 </head>
 <body class="min-h-screen bg-tech-grid flex flex-col justify-between selection:bg-crimson selection:text-white relative">
 
-    <!-- HEADER TOOLBAR (FIXED DI POSISI PALING ATAS SETIAP SAAT) -->
     <header class="fixed top-0 left-0 right-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#hero-banner" class="flex items-center space-x-3 group">
@@ -186,7 +183,6 @@
         </div>
     </header>
 
-    <!-- PT-24 DIGUNAKAN AGAR KONTEN TIDAK TERTUTUP HEADER FIXED -->
     <main class="flex-grow pt-24 sm:pt-24">
         <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-6">
             <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
@@ -243,7 +239,6 @@
         </section>
 
         <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            <!-- CATATAN JUARA SECTION -->
             <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
                     <div class="flex items-center gap-3">
@@ -253,7 +248,6 @@
                     <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
 
-                <!-- DOKUMENTASI JUARA -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-obsidian/80 border border-obsidian-lightBorder rounded-xl p-4 sm:p-6">
                     <div class="md:col-span-7 relative group overflow-hidden rounded-xl border border-emerald-accent/40 shadow-lg">
                         <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[280px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500">
@@ -276,7 +270,6 @@
                             Selamat kepada para pemain terbaik yang berhasil mendominasi panggung turnamen dan mengamankan gelar juara!
                         </p>
 
-                        <!-- DAFTAR NAMA JUARA -->
                         <div class="pt-2">
                             <span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-3">SQUAD ROSTER:</span>
                             <div class="grid grid-cols-2 gap-2 font-tech text-xs">
@@ -301,7 +294,6 @@
                 </div>
             </div>
 
-            <!-- ROSTER TETAP SECTION -->
             <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in">
                 <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white">DAFTAR ROSTER TETAP</h3>
@@ -338,7 +330,6 @@
         </section>
     </main>
 
-    <!-- FLOATING WHATSAPP -->
     <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="fixed bottom-5 right-5 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-all">
         <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
     </a>
@@ -352,7 +343,6 @@
                 <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
             </div>
             <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
-                <!-- GROUP STAGE -->
                 <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
                     <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2">
                         <i class="fa-solid fa-layer-group"></i> Group Stage
@@ -363,7 +353,6 @@
                         <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
                     </ul>
                 </div>
-                <!-- SISTEM POIN -->
                 <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
                     <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2">
                         <i class="fa-solid fa-star"></i> Sistem Poin
@@ -374,7 +363,6 @@
                         <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
                     </ul>
                 </div>
-                <!-- SEMIFINAL & GRAND FINAL -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
                         <div class="flex items-center gap-2 text-purple-400 font-bold uppercase mb-2">
@@ -392,7 +380,6 @@
                         <span class="text-[10px] text-yellow-300 bg-yellow-500/10 px-2 py-0.5 rounded inline-block mt-2">Format BO 5</span>
                     </div>
                 </div>
-                <!-- KETENTUAN -->
                 <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
                     <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2">
                         <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting
@@ -430,12 +417,26 @@
         </div>
     </div>
 
-    <!-- REGISTRATION MODAL -->
+    <!-- REGISTRATION MODAL DENGAN LOGIN AKUN -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-4">DAFTAR PESERTA</h3>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">DAFTAR PESERTA</h3>
+            <p class="text-[11px] text-slate-400 mb-4">Masukkan Username & Password akun peserta Anda untuk verifikasi (1 akun = 1x daftar).</p>
+            
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                <div class="bg-obsidian/50 p-3 rounded-xl border border-emerald-accent/30 space-y-3 mb-2">
+                    <span class="block text-[10px] font-tech text-emerald-accent uppercase font-bold"><i class="fa-solid fa-lock mr-1"></i> Autentikasi Akun Peserta</span>
+                    <div>
+                        <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Akun</label>
+                        <input type="text" id="dbUsername" required placeholder="Masukkan Username Akun" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password Akun</label>
+                        <input type="password" id="dbPassword" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nama Lengkap</label>
                     <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
@@ -465,7 +466,7 @@
                     </select>
                 </div>
                 <div class="pt-2 text-right">
-                    <button id="submitBtn" type="submit" class="w-full py-3 bg-crimson text-white font-bold text-xs rounded-xl shadow-crimson-glow uppercase tracking-wider">SUBMIT DATA</button>
+                    <button id="submitBtn" type="submit" class="w-full py-3 bg-crimson text-white font-bold text-xs rounded-xl shadow-crimson-glow uppercase tracking-wider transition-all">SUBMIT DATA</button>
                 </div>
             </form>
         </div>
@@ -481,7 +482,8 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
+        const TOURNAMENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
+        const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjJzLx_qjMgaAQ0aCglBTMruvJomLICF5MI4KKlDJoOKFAN8T4QoLIf1reioXPkrpD/exec';
 
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300); 
@@ -533,32 +535,79 @@
             document.getElementById('content-roster').classList.add('hidden');
         }
 
-        function handleFormSubmit(event) {
+        async function handleFormSubmit(event) {
             event.preventDefault();
-            const inputs = event.target.querySelectorAll('input, select');
-            const formData = {
-                nama: inputs[0].value,
-                idMl: inputs[1].value,
-                role1: inputs[2].value,
-                whatsapp: inputs[3].value,
-                role2: inputs[4].value,
-                payment: inputs[5].value
-            };
+            
+            const usernameInput = document.getElementById('dbUsername').value.trim();
+            const passwordInput = document.getElementById('dbPassword').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
 
-            closeModal('registerModal');
-            document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
-            document.getElementById('messageText').innerText = "Data pendaftaran kamu berhasil dikirim.";
-            openModal('messageModal');
-            event.target.reset();
+            submitBtn.innerText = "MENGECEK AKUN...";
+            submitBtn.disabled = true;
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            }).catch(error => {
-                console.error('Background sync error:', error);
-            });
+            try {
+                // 1. Validasi ke Spreadsheet Database Akun
+                const checkResponse = await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'checkLogin',
+                        username: usernameInput,
+                        password: passwordInput
+                    })
+                });
+                const checkResult = await checkResponse.json();
+
+                if (checkResult.status !== 'success') {
+                    alert(checkResult.message || 'Akun tidak valid atau sudah digunakan!');
+                    submitBtn.innerText = "SUBMIT DATA";
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // 2. Ambil data input form pendaftaran turnamen
+                const inputs = event.target.querySelectorAll('input, select');
+                const formData = {
+                    nama: inputs[2].value,
+                    idMl: inputs[3].value,
+                    role1: inputs[4].value,
+                    whatsapp: inputs[5].value,
+                    role2: inputs[6].value,
+                    payment: inputs[7].value,
+                    usernameDb: usernameInput // Mengirim username untuk disimpan di kolom H database turnamen
+                };
+
+                submitBtn.innerText = "MENGIRIM DATA...";
+
+                // 3. Kirim data ke Spreadsheet Turnamen Utama
+                await fetch(TOURNAMENT_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                // 4. Kunci akun di Spreadsheet Database agar tidak bisa daftar 2x
+                await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'lockAccount',
+                        username: usernameInput
+                    })
+                });
+
+                closeModal('registerModal');
+                document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
+                document.getElementById('messageText').innerText = "Data pendaftaran berhasil dikirim dan akun Anda telah terkunci.";
+                openModal('messageModal');
+                event.target.reset();
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+            } finally {
+                submitBtn.innerText = "SUBMIT DATA";
+                submitBtn.disabled = false;
+            }
         }
     </script>
 </body>
