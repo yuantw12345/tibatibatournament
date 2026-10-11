@@ -52,15 +52,11 @@
                 </h1>
                 <div class="flex items-center gap-2 mt-2">
                     <span id="welcomeUser" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
-                    <span class="text-[10px] text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20"><i class="fa-solid fa-bolt mr-1"></i> Mode Responsif Aktif</span>
+                    <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20"><i class="fa-solid fa-bolt mr-1"></i> Real-time Firestore Aktif</span>
                 </div>
             </div>
             
             <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
-                <!-- Tombol Refresh Manual -->
-                <button onclick="manualRefresh()" id="refreshBtn" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black text-xs rounded-xl transition-all border border-emerald-500/25 text-center font-bold cursor-pointer shadow-md">
-                    <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
-                </button>
                 <button onclick="logout()" class="flex-1 md:flex-none px-4 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white text-xs rounded-xl transition-all border border-red-500/25 text-center cursor-pointer shadow-md">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
                 </button>
@@ -84,18 +80,32 @@
                         </tr>
                     </thead>
                     <tbody id="dataTable">
-                        <tr><td colspan="7" class="p-6 text-center text-slate-500">Memuat data dari Google Sheet...</td></tr>
+                        <tr><td colspan="7" class="p-6 text-center text-slate-500">Menghubungkan ke database Firestore...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9U3eiLTuUdpkIo0HOqTe4_kHbnBqbUDn-x4TvQBLaR2mOKI6qxzY642Sn19nLFazM/exec';
+    <!-- SCRIPT FIREBASE & PANEL PANITIA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
+            authDomain: "tibatibaturnament.firebaseapp.com",
+            projectId: "tibatibaturnament",
+            storageBucket: "tibatibaturnament.firebasestorage.app",
+            messagingSenderId: "626781978918",
+            appId: "1:626781978918:web:9c4caf6a1d6a2ad03541e7",
+            measurementId: "G-Q64PK4M8P4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
-        // Daftar username panitia yang diizinkan
         const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
         const validPassword = 'tibatibaturnamen';
 
@@ -106,7 +116,7 @@
             }
         });
 
-        function handleLogin(event) {
+        window.handleLogin = function(event) {
             event.preventDefault();
             const user = document.getElementById('username').value.trim().toLowerCase();
             const pass = document.getElementById('password').value;
@@ -115,114 +125,95 @@
                 localStorage.setItem('panitiaUser', user);
                 showPanel(user);
             } else {
-                alert('Username atau Password salah! Gunakan panitia1 s.d. panitia5 dengan password yang benar.');
+                alert('Username atau Password salah! Gunakan panitia1 s.d. panitia5.');
             }
         }
 
-        function showPanel(username) {
+        window.showPanel = function(username) {
             document.getElementById('loginModal').classList.add('hidden');
             document.getElementById('panelContent').classList.remove('hidden');
             document.getElementById('welcomeUser').innerText = username.toUpperCase();
-            loadData();
+            initRealtimeData();
         }
 
-        function logout() {
+        window.logout = function() {
             localStorage.removeItem('panitiaUser');
             location.reload();
         }
 
-        function manualRefresh() {
-            const btn = document.getElementById('refreshBtn');
-            btn.innerHTML = '<i class="fa-solid fa-rotate fa-spin mr-1"></i> Memuat...';
-            loadData(() => {
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-solid fa-rotate mr-1"></i> Refresh Data';
-                }, 400);
+        // FUNGSI MENDENGARKAN DATA SECARA REAL-TIME DARI FIRESTORE
+        function initRealtimeData() {
+            const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
+
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('dataTable');
+                tbody.innerHTML = '';
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">Belum ada data pendaftaran yang masuk.</td></tr>';
+                    return;
+                }
+
+                snapshot.forEach((documentSnapshot) => {
+                    const row = documentSnapshot.data();
+                    const docId = documentSnapshot.id;
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
+                    
+                    let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
+                    rawWa = rawWa.replace(/[^0-9]/g, '');
+                    
+                    if (rawWa && !rawWa.startsWith('0') && !rawWa.startsWith('62')) {
+                        rawWa = '0' + rawWa;
+                    } else if (rawWa.startsWith('62')) {
+                        rawWa = '0' + rawWa.slice(2);
+                    }
+
+                    const waNumber = rawWa;
+                    const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + rawWa.slice(1) : waNumber}` : '#';
+                    const usernameDb = row.usernameDb || '';
+
+                    tr.innerHTML = `
+                        <td class="p-3 font-bold text-white">${row.nama || '-'}</td>
+                        <td class="p-3 text-cyan-400 font-mono">${row.idMl || '-'}</td>
+                        <td class="p-3 text-amber-400 font-semibold">${row.role1 || '-'}</td>
+                        <td class="p-3">
+                            ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${rawWa}</a>` : '-'}
+                        </td>
+                        <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
+                        <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
+                        <td class="p-3 text-center">
+                            <button onclick="deleteFirestoreData('${docId}', '${usernameDb}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20 cursor-pointer">
+                                <i class="fa-solid fa-trash"></i> Hapus
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }, (error) => {
+                console.error("Gagal mendengarkan data Firestore:", error);
+                document.getElementById('dataTable').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-400">Gagal memuat data dari database.</td></tr>';
             });
         }
 
-        function loadData(callback) {
-            fetch(SCRIPT_URL)
-                .then(response => response.json())
-                .then(responseObj => {
-                    const tbody = document.getElementById('dataTable');
-                    tbody.innerHTML = '';
+        // FUNGSI HAPUS DATA DI FIRESTORE DAN BUKA KUNCI AKUN PESERTA
+        window.deleteFirestoreData = async function(docId, usernameDb) {
+            if (confirm("Apakah kamu yakin ingin menghapus data pendaftar ini dari database?")) {
+                try {
+                    // 1. Hapus dokumen dari Firestore
+                    await deleteDoc(doc(db, "pendaftar", docId));
 
-                    const data = Array.isArray(responseObj) ? responseObj : (responseObj.data || []);
-
-                    if (!data || data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">Belum ada data pendaftaran yang masuk.</td></tr>';
-                        if (callback) callback();
-                        return;
+                    // 2. Buka kembali kunci akun peserta di Database agar bisa mendaftar ulang jika perlu
+                    if (usernameDb) {
+                        await fetch(DATABASE_SCRIPT_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: JSON.stringify({ action: 'unlockAccount', username: usernameDb })
+                        });
                     }
-
-                    data.reverse().forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
-                        
-                        let rawWa = row.whatsapp ? String(row.whatsapp).trim() : '';
-                        rawWa = rawWa.replace(/[^0-9]/g, '');
-                        
-                        if (rawWa && !rawWa.startsWith('0') && !rawWa.startsWith('62')) {
-                            rawWa = '0' + rawWa;
-                        } else if (rawWa.startsWith('62')) {
-                            rawWa = '0' + rawWa.slice(2);
-                        }
-
-                        const waNumber = rawWa;
-                        const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + rawWa.slice(1) : waNumber}` : '#';
-                        const usernameDb = row.usernameDb || row.username || '';
-
-                        tr.innerHTML = `
-                            <td class="p-3 font-bold text-white">${row.nama || '-'}</td>
-                            <td class="p-3 text-cyan-400 font-mono">${row.idMl || '-'}</td>
-                            <td class="p-3 text-amber-400 font-semibold">${row.role1 || '-'}</td>
-                            <td class="p-3">
-                                ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${rawWa}</a>` : '-'}
-                            </td>
-                            <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
-                            <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
-                            <td class="p-3 text-center">
-                                <button onclick="deleteData(this, ${row.rowIndex}, '${usernameDb}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20 cursor-pointer">
-                                    <i class="fa-solid fa-trash"></i> Hapus
-                                </button>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                    if (callback) callback();
-                })
-                .catch(error => {
-                    console.error('Gagal memuat data:', error);
-                    document.getElementById('dataTable').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-400">Gagal memuat data dari server.</td></tr>';
-                    if (callback) callback();
-                });
-        }
-
-        function deleteData(buttonElement, rowIndex, usernameDb) {
-            if (confirm("Apakah kamu yakin ingin menghapus data peserta ini dari Google Sheet?")) {
-                const row = buttonElement.closest('tr');
-                row.remove();
-
-                // 1. Hapus pendaftaran dari Sheet Turnamen
-                fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'delete', rowIndex: rowIndex })
-                }).catch(error => {
-                    console.error('Background delete error:', error);
-                });
-
-                // 2. Buka kembali kunci akun peserta di Database agar bisa mendaftar lagi
-                if (usernameDb) {
-                    fetch(DATABASE_SCRIPT_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify({ action: 'unlockAccount', username: usernameDb })
-                    }).catch(error => {
-                        console.error('Background unlock error:', error);
-                    });
+                } catch (error) {
+                    console.error("Gagal menghapus data: ", error);
+                    alert("Terjadi kesalahan saat menghapus data.");
                 }
             }
         }
