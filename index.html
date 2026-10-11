@@ -109,7 +109,7 @@
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2);
         }
 
-        /* ANIMASI MODAL YANG LEBIH SMOOTH, AESTHETIC, DAN ELEGAN */
+        /* ANIMASI MODAL YANG SMOOTH, AESTHETIC, DAN ELEGAN */
         .modal-overlay {
             opacity: 0;
             visibility: hidden;
@@ -180,7 +180,7 @@
                     <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> Live & Chat
                 </a>
                 <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
+                    <i class="fa-solid fa-trophy text-emerald-accent text-sm"></i> Juara
                 </button>
                 <button onclick="openChatModal()" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-comments text-sky-400 text-sm"></i> Chat Global
@@ -217,7 +217,7 @@
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
             <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">● Live & Chat Arena</a>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
-                <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
+                <i class="fa-solid fa-trophy"></i> Juara Season 4
             </button>
             <button onclick="openChatModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
                 <i class="fa-solid fa-comments"></i> Chat Global Arena
@@ -576,41 +576,51 @@
         </div>
     </div>
 
-    <!-- RULES MODAL -->
+    <!-- RULES MODAL / PENGUMUMAN JUARA (MUNCUL PERTAMA KALI) -->
     <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
-        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
-            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="flex items-center gap-2 mb-4">
+        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <div class="flex items-center gap-2 mb-3">
                 <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
-                <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
+                <h3 class="font-display font-bold text-base sm:text-lg text-white pr-6">SELAMAT KEPADA PARA JUARA!</h3>
             </div>
-            <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
-                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                    <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2"><i class="fa-solid fa-layer-group"></i> Group Stage</div>
-                    <ul class="space-y-1.5 text-slate-300">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> 5 tim dalam 1 grup.</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Sistem pertandingan <strong>BO 2</strong>.</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
-                    </ul>
-                </div>
-                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                    <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2"><i class="fa-solid fa-star"></i> Sistem Poin</div>
-                    <ul class="space-y-1.5 text-slate-300">
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-emerald-accent/20 text-emerald-accent font-bold text-[10px]">MENANG 2–0</span> = 3 Poin</li>
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">SERI 1–1</span> = 1 Poin</li>
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
-                    </ul>
-                </div>
-                <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
-                    <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2"><i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting</div>
-                    <ul class="space-y-2 text-slate-200">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-ban text-crimson mt-0.5"></i><span><strong>NO PAUSE</strong> selama pertandingan berlangsung.</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-wifi text-amber-400 mt-0.5"></i><span>Kendala <strong>sinyal/perangkat</strong> tanggung jawab masing-masing player.</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-gavel text-purple-400 mt-0.5"></i><span><strong>Keputusan panitia mutlak dan final.</strong></span></li>
-                    </ul>
+
+            <!-- FOTO JUARA -->
+            <div class="relative rounded-xl overflow-hidden border border-emerald-accent/40 shadow-lg mb-4">
+                <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[200px] sm:h-[260px] object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+                <div class="absolute bottom-3 left-3 right-3">
+                    <span class="px-3 py-1 bg-emerald-accent text-black font-tech font-bold text-[11px] rounded-lg uppercase tracking-wider shadow-md">
+                        <i class="fa-solid fa-crown mr-1"></i> CHAMPIONS SEASON 4
+                    </span>
                 </div>
             </div>
-            <div class="mt-6 text-right"><button onclick="closeModal('rulesModal')" class="px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg cursor-pointer">SAYA MEMAHAMI RULES</button></div>
+
+            <!-- UCAPAN SELAMAT & ROSTER -->
+            <div class="space-y-3 text-xs text-slate-300 font-tech">
+                <div class="bg-obsidian/80 p-3 rounded-xl border border-obsidian-border text-center">
+                    <p class="text-emerald-accent font-bold mb-1 text-sm">SELAMAT ATAS KEMENANGAN KALIAN!</p>
+                    <p class="text-slate-300 text-xs leading-relaxed mb-3">
+                        Terima kasih atas perjuangan luar biasa di arena. Dan <strong>kita akan kembali lagi di season berikutnya!</strong> Persiapkan tim kalian untuk pertempuran seru selanjutnya.
+                    </p>
+                    
+                    <span class="block font-tech text-[10px] text-slate-400 uppercase tracking-widest mb-2">ROSTER TIM PEMENANG:</span>
+                    <div class="grid grid-cols-3 gap-1.5 text-xs">
+                        <div class="bg-obsidian-card p-2 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-xs mr-1"></i> ANAM</div>
+                        <div class="bg-obsidian-card p-2 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-xs mr-1"></i> MAMAY</div>
+                        <div class="bg-obsidian-card p-2 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-xs mr-1"></i> ANANG</div>
+                        <div class="bg-obsidian-card p-2 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-xs mr-1"></i> ECON</div>
+                        <div class="col-span-2 bg-obsidian-card p-2 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-xs mr-1"></i> HENGKY</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 text-right">
+                <button onclick="closeModal('rulesModal')" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-emerald-glow cursor-pointer transition-all">
+                    LANJUT KE WEBSITE <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
         </div>
     </div>
 
