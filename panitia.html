@@ -50,11 +50,14 @@
                 <h1 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2 flex-wrap">
                     <i class="fa-solid fa-shield-halved text-emerald-400"></i> PANEL PANITIA - DATA PENDAFTARAN
                 </h1>
-                <span id="welcomeUser" class="inline-block mt-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
+                <div class="flex items-center gap-2 mt-2">
+                    <span id="welcomeUser" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs rounded-full font-bold"></span>
+                    <span class="text-[10px] text-emerald-400/80 animate-pulse bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10"><i class="fa-solid fa-circle text-[6px] mr-1"></i> Auto-Refresh Aktif</span>
+                </div>
             </div>
             
             <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
-                <!-- Tombol Refresh Data -->
+                <!-- Tombol Refresh Manual -->
                 <button onclick="manualRefresh()" id="refreshBtn" class="flex-1 md:flex-none px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black text-xs rounded-lg transition-all border border-emerald-500/25 text-center font-bold">
                     <i class="fa-solid fa-rotate mr-1"></i> Refresh Data
                 </button>
@@ -94,6 +97,8 @@
         const validUsers = ['panitia1', 'panitia2', 'panitia3', 'panitia4', 'panitia5'];
         const validPassword = 'tibatibaturnamen';
 
+        let autoRefreshInterval = null;
+
         window.addEventListener('DOMContentLoaded', () => {
             const loggedUser = localStorage.getItem('panitiaUser');
             if (loggedUser && validUsers.includes(loggedUser)) {
@@ -119,14 +124,21 @@
             document.getElementById('panelContent').classList.remove('hidden');
             document.getElementById('welcomeUser').innerText = username.toUpperCase();
             loadData();
+
+            // Jalankan auto-refresh setiap 10 detik sekali secara otomatis di latar belakang
+            if (!autoRefreshInterval) {
+                autoRefreshInterval = setInterval(() => {
+                    loadData();
+                }, 10000); // 10000 milidetik = 10 detik
+            }
         }
 
         function logout() {
             localStorage.removeItem('panitiaUser');
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
             location.reload();
         }
 
-        // Fungsi Tombol Refresh Manual dengan efek animasi putar
         function manualRefresh() {
             const btn = document.getElementById('refreshBtn');
             btn.innerHTML = '<i class="fa-solid fa-rotate fa-spin mr-1"></i> Memuat...';
@@ -178,11 +190,9 @@
 
         function deleteData(buttonElement, rowIndex) {
             if (confirm("Apakah kamu yakin ingin menghapus data peserta ini dari Google Sheet?")) {
-                // 1. Hapus baris dari tabel di layar secara instan (tanpa delay tunggu server)
                 const row = buttonElement.closest('tr');
                 row.remove();
 
-                // 2. Kirim permintaan hapus ke Google Sheet di latar belakang (background process)
                 fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
