@@ -240,14 +240,65 @@
         </section>
 
         <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in">
-                <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white">CATATAN JUARA</h3>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark"></i></button>
+            <!-- CATATAN JUARA SECTION -->
+            <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-trophy text-emerald-accent text-2xl"></i>
+                        <h3 class="font-display font-bold text-lg sm:text-2xl text-white">CATATAN JUARA</h3>
+                    </div>
+                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
-                <div class="text-center py-12 text-slate-400 text-xs sm:text-sm">Season ini belum ditentukan.</div>
+
+                <!-- DOKUMENTASI JUARA -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-obsidian/80 border border-obsidian-lightBorder rounded-xl p-4 sm:p-6">
+                    <div class="md:col-span-7 relative group overflow-hidden rounded-xl border border-emerald-accent/40 shadow-lg">
+                        <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[280px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                            <span class="px-3 py-1 bg-emerald-accent text-black font-tech font-bold text-xs rounded-lg uppercase tracking-wider shadow-md">
+                                <i class="fa-solid fa-crown mr-1"></i> CHAMPION S3
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-5 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-accent/10 border border-emerald-accent/30 text-emerald-accent text-xs font-tech font-semibold uppercase">
+                            <i class="fa-solid fa-star text-amber-400"></i> ROSTER WINNER
+                        </div>
+                        <h4 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-wide">
+                            TIM JUARA TIBA TIBA TOURNAMENT
+                        </h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed font-body">
+                            Selamat kepada para pemain terbaik yang berhasil mendominasi panggung turnamen dan mengamankan gelar juara!
+                        </p>
+
+                        <!-- DAFTAR NAMA JUARA -->
+                        <div class="pt-2">
+                            <span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-3">SQUAD ROSTER:</span>
+                            <div class="grid grid-cols-2 gap-2 font-tech text-xs">
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANAM
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> MAMAY
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANANG
+                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ECON
+                                </div>
+                                <div class="col-span-2 flex items-center justify-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
+                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> HENGKY
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- ROSTER TETAP SECTION -->
             <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in">
                 <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white">DAFTAR ROSTER TETAP</h3>
@@ -293,12 +344,10 @@
     <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
             <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            
             <div class="flex items-center gap-2 mb-4">
                 <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
                 <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
             </div>
-
             <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
                 <!-- GROUP STAGE -->
                 <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
@@ -311,7 +360,6 @@
                         <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
                     </ul>
                 </div>
-
                 <!-- SISTEM POIN -->
                 <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
                     <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2">
@@ -323,7 +371,6 @@
                         <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
                     </ul>
                 </div>
-
                 <!-- SEMIFINAL & GRAND FINAL -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
@@ -334,7 +381,6 @@
                         <div class="font-bold text-white mb-1">• 1st vs 3rd<br>• 2nd vs 4th</div>
                         <span class="text-[10px] text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Format BO 3</span>
                     </div>
-
                     <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
                         <div class="flex items-center gap-2 text-yellow-400 font-bold uppercase mb-2">
                             <i class="fa-solid fa-crown"></i> Grand Final
@@ -343,7 +389,6 @@
                         <span class="text-[10px] text-yellow-300 bg-yellow-500/10 px-2 py-0.5 rounded inline-block mt-2">Format BO 5</span>
                     </div>
                 </div>
-
                 <!-- KETENTUAN -->
                 <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
                     <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2">
@@ -372,12 +417,10 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="text-center pt-2 text-emerald-accent font-bold tracking-wider text-xs">
                     🔥 GOOD LUCK & HAVE FUN! 🔥
                 </div>
             </div>
-
             <div class="mt-6 text-right">
                 <button onclick="closeModal('rulesModal')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg">SAYA MEMAHAMI RULES</button>
             </div>
@@ -490,7 +533,6 @@
         function handleFormSubmit(event) {
             event.preventDefault();
             const inputs = event.target.querySelectorAll('input, select');
-            
             const formData = {
                 nama: inputs[0].value,
                 idMl: inputs[1].value,
