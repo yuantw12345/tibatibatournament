@@ -44,7 +44,7 @@
     </div>
 
     <!-- HALAMAN UTAMA PANEL PANITIA -->
-    <div id="panelContent" class="max-w-6xl mx-auto hidden">
+    <div id="panelContent" class="max-w-7xl mx-auto hidden">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
             <div>
                 <h1 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2 flex-wrap">
@@ -73,17 +73,18 @@
             <div class="overflow-x-auto w-full">
                 <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                     <thead>
-                        <tr class="border-b border-slate-800 text-slate-400">
-                            <th class="p-3">Waktu</th>
+                        <tr class="border-b border-slate-800 text-slate-400 uppercase font-bold text-[11px]">
                             <th class="p-3">Nama Lengkap</th>
                             <th class="p-3">ID Mobile Legends</th>
-                            <th class="p-3">Role</th>
+                            <th class="p-3">Role Utama</th>
+                            <th class="p-3">Nomor WhatsApp</th>
+                            <th class="p-3">Role Cadangan</th>
                             <th class="p-3">Pembayaran</th>
                             <th class="p-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="dataTable">
-                        <tr><td colspan="6" class="p-6 text-center text-slate-500">Memuat data dari Google Sheet...</td></tr>
+                        <tr><td colspan="7" class="p-6 text-center text-slate-500">Memuat data dari Google Sheet...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -129,7 +130,7 @@
             if (!autoRefreshInterval) {
                 autoRefreshInterval = setInterval(() => {
                     loadData();
-                }, 10000); // 10000 milidetik = 10 detik
+                }, 10000);
             }
         }
 
@@ -157,7 +158,7 @@
                     tbody.innerHTML = '';
 
                     if (data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-500">Belum ada data pendaftaran yang masuk.</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">Belum ada data pendaftaran yang masuk.</td></tr>';
                         if (callback) callback();
                         return;
                     }
@@ -165,14 +166,22 @@
                     data.reverse().forEach(row => {
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-slate-800 hover:bg-slate-800/50';
+                        
+                        // Menyiapkan tautan klik langsung WhatsApp
+                        const waNumber = row.whatsapp ? String(row.whatsapp).replace(/[^0-9]/g, '') : '';
+                        const waLink = waNumber ? `https://wa.me/${waNumber.startsWith('0') ? '62' + waNumber.slice(1) : waNumber}` : '#';
+
                         tr.innerHTML = `
-                            <td class="p-3 text-slate-400">${row.timestamp || '-'}</td>
                             <td class="p-3 font-bold text-white">${row.nama || '-'}</td>
-                            <td class="p-3 text-cyan-400">${row.idMl || '-'}</td>
-                            <td class="p-3 text-slate-300">${row.role || '-'}</td>
-                            <td class="p-3"><span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded">${row.payment || '-'}</span></td>
+                            <td class="p-3 text-cyan-400 font-mono">${row.idMl || '-'}</td>
+                            <td class="p-3 text-amber-400 font-semibold">${row.role1 || '-'}</td>
+                            <td class="p-3">
+                                ${waNumber ? `<a href="${waLink}" target="_blank" class="text-emerald-400 hover:underline inline-flex items-center gap-1 font-mono"><i class="fa-brands fa-whatsapp text-sm"></i> ${row.whatsapp}</a>` : '-'}
+                            </td>
+                            <td class="p-3 text-slate-300">${row.role2 || '-'}</td>
+                            <td class="p-3"><span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-md font-bold text-[10px] border border-emerald-500/20">${row.payment || '-'}</span></td>
                             <td class="p-3 text-center">
-                                <button onclick="deleteData(this, ${row.rowIndex})" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded transition-all">
+                                <button onclick="deleteData(this, ${row.rowIndex})" class="px-3 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all border border-red-500/20">
                                     <i class="fa-solid fa-trash"></i> Hapus
                                 </button>
                             </td>
@@ -183,7 +192,7 @@
                 })
                 .catch(error => {
                     console.error('Gagal memuat data:', error);
-                    document.getElementById('dataTable').innerHTML = '<tr><td colspan="6" class="p-6 text-center text-red-400">Gagal memuat data dari server.</td></tr>';
+                    document.getElementById('dataTable').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-400">Gagal memuat data dari server.</td></tr>';
                     if (callback) callback();
                 });
         }
