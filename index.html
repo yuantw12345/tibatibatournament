@@ -127,7 +127,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #messageModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -155,17 +155,32 @@
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-6 font-tech text-xs tracking-wider uppercase font-semibold">
+            <nav class="hidden md:flex items-center space-x-5 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
-                <button onclick="openModal('registerAccountModal')" class="text-emerald-accent hover:text-white transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-plus text-sm"></i> Buat Akun Web
-                </button>
-                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2">
+                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5">
                     <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
                 </button>
-                <button onclick="openModal('registerModal')" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
-                    Daftar Turnamen
-                </button>
+                
+                <!-- MENU SAAT BELUM LOGIN -->
+                <div id="authGuestMenu" class="flex items-center space-x-3">
+                    <button onclick="openModal('loginModal')" class="px-4 py-2 text-xs font-bold text-emerald-accent border border-emerald-accent/40 rounded-lg hover:bg-emerald-accent/10 transition-all">
+                        <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
+                    </button>
+                    <button onclick="openModal('registerAccountModal')" class="px-4 py-2 text-xs font-bold text-black bg-emerald-accent rounded-lg hover:bg-emerald-400 transition-all shadow-lg">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun
+                    </button>
+                </div>
+
+                <!-- MENU SAAT SUDAH LOGIN -->
+                <div id="authMemberMenu" class="hidden items-center space-x-3">
+                    <span id="loggedInUserBadge" class="px-3 py-1.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-xs font-bold"></span>
+                    <button onclick="openModal('registerModal')" id="navRegisterBtn" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
+                        Daftar Turnamen
+                    </button>
+                    <button onclick="handleLogout()" class="p-2 text-slate-400 hover:text-red-400 transition-colors" title="Keluar Akun">
+                        <i class="fa-solid fa-power-off text-base"></i>
+                    </button>
+                </div>
             </nav>
 
             <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white">
@@ -173,17 +188,28 @@
             </button>
         </div>
 
-        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-4 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
+        <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
-            <button onclick="openModal('registerAccountModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
-                <i class="fa-solid fa-user-plus"></i> Buat Akun Web
-            </button>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
             </button>
-            <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
-                Daftar Turnamen
-            </button>
+            <div id="mobileAuthGuest" class="space-y-2 pt-2 border-t border-obsidian-border">
+                <button onclick="openModal('loginModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-center font-bold">
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i> Login Akun
+                </button>
+                <button onclick="openModal('registerAccountModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent text-black font-bold rounded-lg text-center shadow-md">
+                    <i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru
+                </button>
+            </div>
+            <div id="mobileAuthMember" class="hidden space-y-2 pt-2 border-t border-obsidian-border">
+                <div id="mobileUserBadge" class="text-emerald-accent font-bold py-1"></div>
+                <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
+                    Daftar Turnamen
+                </button>
+                <button onclick="handleLogout()" class="w-full py-2 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-center">
+                    Keluar Akun
+                </button>
+            </div>
         </div>
     </header>
 
@@ -198,7 +224,7 @@
                     DOMINASI ARENA <br class="hidden sm:block"><span class="bg-gradient-to-r from-crimson via-red-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto px-2">
-                    Buat akun website Anda terlebih dahulu, lalu susun strategi roster terbaik untuk merebut total Prize Pool Rp 7.000.000!
+                    Login atau buat akun website Anda terlebih dahulu untuk membuka akses formulir pendaftaran turnamen berhadiah Rp 7.000.000!
                 </p>
             </div>
 
@@ -224,16 +250,21 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-                <div onclick="openModal('registerAccountModal')" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-user-plus"></i></div>
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">1. BUAT AKUN WEBSITE</h3>
-                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Daftarkan akun member baru Anda sebelum mengisi formulir turnamen.</p>
+                <!-- KARTU 1: DINAMIS (LOGIN / DAFTAR AKUN) -->
+                <div id="cardAuthAction" onclick="handleCardAuthClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div id="cardIconBox" class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-right-to-bracket" id="cardIcon"></i></div>
+                    <h3 id="cardTitle" class="font-display font-bold text-lg sm:text-xl text-white mb-2">1. LOGIN / BUAT AKUN</h3>
+                    <p id="cardDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.</p>
                 </div>
-                <div onclick="openModal('registerModal')" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+
+                <!-- KARTU 2: DAFTAR TURNAMEN (TERKUNCI JIKA BELUM LOGIN) -->
+                <div id="cardTournament" onclick="handleTournamentCardClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">2. DAFTAR TURNAMEN</h3>
-                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Login menggunakan akun web Anda untuk mendaftarkan tim bertanding.</p>
+                    <p id="cardTournamentDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Formulir pendaratan tim bertanding. <span id="lockStatusText" class="text-amber-400 font-semibold block mt-1"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span></p>
                 </div>
+
+                <!-- KARTU 3: CATATAN JUARA -->
                 <div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">3. CATATAN JUARA</h3>
@@ -288,41 +319,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- ROSTER TETAP SECTION -->
-            <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in">
-                <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white">DAFTAR ROSTER TETAP</h3>
-                    <button onclick="closeTab()" class="text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 max-h-[60vh] overflow-y-auto p-1">
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANANG</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ECON</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">HENGKY</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANAM</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">MAMAY</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ASEP</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">RIZKY</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">DANI</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">IRSYA</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">BANG BJ</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">EL</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">AGUNG</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">PIMEN</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ROY</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">DIKA</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">FIKRY</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">YANSUO</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">YUAN</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">AGIL</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">SIMPING</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">ANGGA</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">JITO</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">NANONG</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">RAYCHA</div>
-                    <div class="bg-obsidian p-3 rounded-lg border border-obsidian-border text-xs text-white font-tech text-center">BANG ARI</div>
-                </div>
-            </div>
         </section>
     </main>
 
@@ -331,7 +327,33 @@
         <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
     </a>
 
-    <!-- MODAL 1: BUAT AKUN WEB (REGISTRASI MEMBER) -->
+    <!-- MODAL: LOGIN AKUN WEBSITE -->
+    <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg mx-auto mb-2 border border-emerald-accent/30"><i class="fa-solid fa-right-to-bracket"></i></div>
+                <h3 class="font-display font-bold text-lg text-white">LOGIN AKUN WEBSITE</h3>
+                <p class="text-[11px] text-slate-400 mt-1">Masukkan username dan password akun Anda.</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username</label>
+                    <input type="text" id="loginUser" required placeholder="Username Anda" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password</label>
+                    <input type="password" id="loginPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <button type="submit" id="loginBtn" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg">MASUK AKUN</button>
+            </form>
+            <div class="mt-4 text-center text-xs text-slate-400">
+                Belum punya akun? <button onclick="closeModal('loginModal'); openModal('registerAccountModal')" class="text-emerald-accent font-bold hover:underline">Buat Akun</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BUAT AKUN WEB (REGISTRASI MEMBER) -->
     <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
             <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -351,52 +373,43 @@
                 </div>
                 <button type="submit" id="regBtn" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg">DAFTARKAN AKUN</button>
             </form>
+            <div class="mt-4 text-center text-xs text-slate-400">
+                Sudah punya akun? <button onclick="closeModal('registerAccountModal'); openModal('loginModal')" class="text-emerald-accent font-bold hover:underline">Login</button>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL 2: FORM PENDAFTARAN TURNAMEN (DENGAN LOGIN) -->
+    <!-- MODAL: FORM PENDAFTARAN TURNAMEN (TANPA INPUT USERNAME/PASSWORD LAGI) -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
             <h3 class="font-display font-bold text-lg text-white mb-2">FORMULIR PENDAFTARAN TURNAMEN</h3>
-            <p class="text-[11px] text-slate-400 mb-4">Masukkan akun web Anda untuk verifikasi (1 akun = 1x daftar).</p>
+            <p class="text-[11px] text-slate-400 mb-4">Anda mendaftar menggunakan akun: <strong id="activeAccountDisplay" class="text-emerald-accent"></strong></p>
             
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
-                <div class="bg-obsidian/50 p-3 rounded-xl border border-emerald-accent/30 space-y-3 mb-2">
-                    <span class="block text-[10px] font-tech text-emerald-accent uppercase font-bold"><i class="fa-solid fa-lock mr-1"></i> Autentikasi Akun Website</span>
-                    <div>
-                        <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Akun</label>
-                        <input type="text" id="dbUsername" required placeholder="Username Anda" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password Akun</label>
-                        <input type="password" id="dbPassword" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
-                    </div>
-                </div>
-
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nama Lengkap</label>
-                    <input type="text" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" id="tNama" required placeholder="Contoh: Budi Santoso" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username / ID Mobile Legend</label>
-                    <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" id="tIdMl" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Role Utama</label>
-                    <input type="text" required placeholder="Contoh: Jungler" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" id="tRole1" required placeholder="Contoh: Jungler" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp</label>
-                    <input type="tel" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="tel" id="tWhatsapp" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Role Cadangan</label>
-                    <input type="text" required placeholder="Contoh: Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
+                    <input type="text" id="tRole2" required placeholder="Contoh: Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pembayaran</label>
-                    <select required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
+                    <select id="tPayment" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
                         <option value="" disabled selected>-- Pilih Opsi Pembayaran --</option>
                         <option value="GAJIAN">GAJIAN</option>
                         <option value="UM">UM</option>
@@ -461,7 +474,8 @@
         const DATABASE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgB7X4vEnk2lwK3skp425b70zZdnrI6-s46s8SwBTgP0_JiwKF2dj1b8xQcL782gT4/exec';
 
         window.addEventListener('DOMContentLoaded', () => { 
-            setTimeout(() => openModal('rulesModal'), 300); 
+            setTimeout(() => openModal('rulesModal'), 300);
+            checkAuthStatus();
         });
 
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
@@ -476,14 +490,84 @@
 
         function switchTab(tab) {
             document.getElementById('content-champions').classList.add('hidden');
-            document.getElementById('content-roster').classList.add('hidden');
             if(tab === 'champions') document.getElementById('content-champions').classList.remove('hidden');
-            if(tab === 'roster') document.getElementById('content-roster').classList.remove('hidden');
             document.getElementById('dynamic-section').scrollIntoView({ behavior: 'smooth' });
         }
         function closeTab() {
             document.getElementById('content-champions').classList.add('hidden');
-            document.getElementById('content-roster').classList.add('hidden');
+        }
+
+        // CEK STATUS LOGIN SAAT HALAMAN DIBUKA
+        function checkAuthStatus() {
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            const authGuestMenu = document.getElementById('authGuestMenu');
+            const authMemberMenu = document.getElementById('authMemberMenu');
+            const mobileAuthGuest = document.getElementById('mobileAuthGuest');
+            const mobileAuthMember = document.getElementById('mobileAuthMember');
+            
+            const cardAuthAction = document.getElementById('cardAuthAction');
+            const cardIcon = document.getElementById('cardIcon');
+            const cardIconBox = document.getElementById('cardIconBox');
+            const cardTitle = document.getElementById('cardTitle');
+            const cardDesc = document.getElementById('cardDesc');
+            
+            const lockStatusText = document.getElementById('lockStatusText');
+
+            if (loggedUser) {
+                // KONDISI: SUDAH LOGIN
+                authGuestMenu.classList.add('hidden');
+                authMemberMenu.classList.remove('hidden');
+                mobileAuthGuest.classList.add('hidden');
+                mobileAuthMember.classList.remove('hidden');
+
+                document.getElementById('loggedInUserBadge.innerText = '@' + loggedUser'; // Diperbaiki bawahnya
+                document.getElementById('loggedInUserBadge').innerText = '@' + loggedUser;
+                document.getElementById('mobileUserBadge').innerText = 'Akun: @' + loggedUser;
+                document.getElementById('activeAccountDisplay').innerText = '@' + loggedUser;
+
+                // Ubah kartu 1 jadi info akun
+                cardIcon.className = "fa-solid fa-circle-check";
+                cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
+                cardTitle.innerText = "STATUS: TERLOGIN";
+                cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">@${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
+                cardAuthAction.onclick = () => alert(`Anda sudah login sebagai @${loggedUser}`);
+
+                // Buka kunci kartu 2 (Daftar Turnamen)
+                lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
+            } else {
+                // KONDISI: BELUM LOGIN
+                authGuestMenu.classList.remove('hidden');
+                authMemberMenu.classList.add('hidden');
+                mobileAuthGuest.classList.remove('hidden');
+                mobileAuthMember.classList.add('hidden');
+
+                cardIcon.className = "fa-solid fa-right-to-bracket";
+                cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
+                cardTitle.innerText = "1. LOGIN / BUAT AKUN";
+                cardDesc.innerText = "Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.";
+                cardAuthAction.onclick = () => openModal('loginModal');
+
+                lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span>';
+            }
+        }
+
+        // KLIK KARTU 1 DI MENU UTAMA
+        function handleCardAuthClick() {
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if (!loggedUser) {
+                openModal('loginModal');
+            }
+        }
+
+        // KLIK KARTU 2 (DAFTAR TURNAMEN)
+        function handleTournamentCardClick() {
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if (!loggedUser) {
+                alert('Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!');
+                openModal('loginModal');
+            } else {
+                openModal('registerModal');
+            }
         }
 
         // FUNGSI BUAT AKUN WEB
@@ -506,8 +590,12 @@
 
                 if (result.status === 'success') {
                     closeModal('registerAccountModal');
-                    document.getElementById('messageTitle').innerText = "AKUN BERHASIL DIBUAT!";
-                    document.getElementById('messageText').innerText = "Akun berhasil terdaftar. Silakan gunakan untuk mendaftar turnamen.";
+                    // Otomatis langsung login setelah berhasil buat akun
+                    localStorage.setItem('activeMemberUser', username);
+                    checkAuthStatus();
+
+                    document.getElementById('messageTitle').innerText = "AKUN BERHASIL DIBUAT & LOGIN!";
+                    document.getElementById('messageText').innerText = "Akun Anda berhasil terdaftar dan otomatis masuk. Silakan lanjutkan pendaftaran turnamen.";
                     openModal('messageModal');
                     event.target.reset();
                 } else {
@@ -522,44 +610,80 @@
             }
         }
 
-        // FUNGSI PENDAFTARAN TURNAMEN
+        // FUNGSI LOGIN AKUN
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUser').value.trim();
+            const password = document.getElementById('loginPass').value.trim();
+            const btn = document.getElementById('loginBtn');
+
+            btn.innerText = "MENGECEK AKUN...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'checkLogin', username, password })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    localStorage.setItem('activeMemberUser', username);
+                    closeModal('loginModal');
+                    checkAuthStatus();
+
+                    document.getElementById('messageTitle').innerText = "LOGIN BERHASIL!";
+                    document.getElementById('messageText').innerText = `Selamat datang kembali, @${username}! Tombol pendaftaran turnamen kini telah terbuka.`;
+                    openModal('messageModal');
+                    event.target.reset();
+                } else {
+                    alert(result.message || 'Username atau Password salah!');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Terjadi kesalahan koneksi.');
+            } finally {
+                btn.innerText = "MASUK AKUN";
+                btn.disabled = false;
+            }
+        }
+
+        // FUNGSI LOGOUT
+        function handleLogout() {
+            if (confirm("Apakah Anda yakin ingin keluar dari akun ini?")) {
+                localStorage.removeItem('activeMemberUser');
+                checkAuthStatus();
+                alert('Anda telah keluar dari akun.');
+            }
+        }
+
+        // FUNGSI SUBMIT PENDAFTARAN TURNAMEN (TANPA INPUT USER/PASS LAGI)
         async function handleFormSubmit(event) {
             event.preventDefault();
-            const usernameInput = document.getElementById('dbUsername').value.trim();
-            const passwordInput = document.getElementById('dbPassword').value.trim();
-            const submitBtn = document.getElementById('submitBtn');
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if (!loggedUser) {
+                alert('Sesi login kedaluwarsa. Silakan login kembali.');
+                openModal('loginModal');
+                return;
+            }
 
-            submitBtn.innerText = "MENGECEK AKUN...";
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "MENGIRIM DATA...";
             submitBtn.disabled = true;
 
             try {
-                const checkResponse = await fetch(DATABASE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'checkLogin', username: usernameInput, password: passwordInput })
-                });
-                const checkResult = await checkResponse.json();
-
-                if (checkResult.status !== 'success') {
-                    alert(checkResult.message || 'Autentikasi gagal!');
-                    submitBtn.innerText = "SUBMIT DATA";
-                    submitBtn.disabled = false;
-                    return;
-                }
-
-                const inputs = event.target.querySelectorAll('input, select');
                 const formData = {
-                    nama: inputs[2].value,
-                    idMl: inputs[3].value,
-                    role1: inputs[4].value,
-                    whatsapp: inputs[5].value,
-                    role2: inputs[6].value,
-                    payment: inputs[7].value,
-                    usernameDb: usernameInput
+                    nama: document.getElementById('tNama').value.trim(),
+                    idMl: document.getElementById('tIdMl').value.trim(),
+                    role1: document.getElementById('tRole1').value.trim(),
+                    whatsapp: document.getElementById('tWhatsapp').value.trim(),
+                    role2: document.getElementById('tRole2').value.trim(),
+                    payment: document.getElementById('tPayment').value,
+                    usernameDb: loggedUser
                 };
 
-                submitBtn.innerText = "MENGIRIM DATA...";
-
+                // 1. Kirim data ke sheet turnamen
                 await fetch(TOURNAMENT_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -567,10 +691,11 @@
                     body: JSON.stringify(formData)
                 });
 
+                // 2. Kunci akun di database agar tidak bisa daftar ganda
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: 'lockAccount', username: usernameInput })
+                    body: JSON.stringify({ action: 'lockAccount', username: loggedUser })
                 });
 
                 closeModal('registerModal');
