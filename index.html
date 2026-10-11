@@ -127,7 +127,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #messageModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #messageModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -155,14 +155,16 @@
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-8 font-tech text-xs tracking-wider uppercase font-semibold">
+            <nav class="hidden md:flex items-center space-x-6 font-tech text-xs tracking-wider uppercase font-semibold">
                 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
-                <a href="#main-menu" class="text-slate-300 hover:text-white transition-colors">Menu Utama</a>
-                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> RULES
+                <button onclick="openModal('registerAccountModal')" class="text-emerald-accent hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-plus text-sm"></i> Buat Akun Web
                 </button>
-                <button onclick="openModal('registerModal')" class="px-6 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
-                    DAFTAR SEKARANG
+                <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-file-shield text-emerald-accent text-sm"></i> Rules
+                </button>
+                <button onclick="openModal('registerModal')" class="px-5 py-2.5 text-xs font-bold font-tech tracking-widest text-white uppercase bg-gradient-to-r from-crimson to-crimson-dark rounded-lg shadow-crimson-glow hover:scale-[1.03] active:scale-[0.98] transition-all">
+                    Daftar Turnamen
                 </button>
             </nav>
 
@@ -173,12 +175,14 @@
 
         <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-4 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
             <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
-            <a href="#main-menu" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Menu Utama</a>
+            <button onclick="openModal('registerAccountModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
+                <i class="fa-solid fa-user-plus"></i> Buat Akun Web
+            </button>
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
-                <i class="fa-solid fa-file-shield"></i> RULES / PERATURAN
+                <i class="fa-solid fa-file-shield"></i> Rules / Peraturan
             </button>
             <button onclick="openModal('registerModal'); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
-                DAFTAR SEKARANG
+                Daftar Turnamen
             </button>
         </div>
     </header>
@@ -194,7 +198,7 @@
                     DOMINASI ARENA <br class="hidden sm:block"><span class="bg-gradient-to-r from-crimson via-red-400 to-emerald-accent bg-clip-text text-transparent">TIBA TIBA TOURNAMENT</span>
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto px-2">
-                    Persiapkan roster terbaikmu, susun strategi terhebat, dan rebut gelar juara Mobile Legends paling bergengsi musim ini. Total Prize Pool Rp 7.000.000!
+                    Buat akun website Anda terlebih dahulu, lalu susun strategi roster terbaik untuk merebut total Prize Pool Rp 7.000.000!
                 </p>
             </div>
 
@@ -220,25 +224,26 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <div onclick="openModal('registerAccountModal')" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-user-plus"></i></div>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">1. BUAT AKUN WEBSITE</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Daftarkan akun member baru Anda sebelum mengisi formulir turnamen.</p>
+                </div>
                 <div onclick="openModal('registerModal')" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
                     <div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">ISI FORMULIR PENDAFTARAN</h3>
-                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Daftarkan tim milikmu. Pastikan seluruh identitas dan data pemain telah valid.</p>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">2. DAFTAR TURNAMEN</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Login menggunakan akun web Anda untuk mendaftarkan tim bertanding.</p>
                 </div>
-                <div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">CATATAN JUARA</h3>
-                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Eksplorasi rekam jejak tim pemenang dan peraih penghargaan di season terdahulu.</p>
-                </div>
-                <div onclick="switchTab('roster')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-users"></i></div>
-                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">ROSTER TETAP</h3>
-                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Cek daftar lengkap pemain resmi terverifikasi yang bertanding musim ini.</p>
+                <div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
+                    <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">3. CATATAN JUARA</h3>
+                    <p class="text-slate-400 text-xs mb-4 sm:mb-6">Eksplorasi rekam jejak tim pemenang dan roster tetap musim ini.</p>
                 </div>
             </div>
         </section>
 
         <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <!-- CATATAN JUARA SECTION -->
             <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
                     <div class="flex items-center gap-3">
@@ -273,27 +278,18 @@
                         <div class="pt-2">
                             <span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-3">SQUAD ROSTER:</span>
                             <div class="grid grid-cols-2 gap-2 font-tech text-xs">
-                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
-                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANAM
-                                </div>
-                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
-                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> MAMAY
-                                </div>
-                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
-                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANANG
-                                </div>
-                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
-                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> ECON
-                                </div>
-                                <div class="col-span-2 flex items-center justify-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold">
-                                    <i class="fa-solid fa-medal text-amber-400 text-sm"></i> HENGKY
-                                </div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANAM</div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-sm"></i> MAMAY</div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-sm"></i> ANANG</div>
+                                <div class="flex items-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-sm"></i> ECON</div>
+                                <div class="col-span-2 flex items-center justify-center gap-2 bg-obsidian p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 text-sm"></i> HENGKY</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ROSTER TETAP SECTION -->
             <div id="content-roster" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in">
                 <div class="flex justify-between mb-6 pb-4 border-b border-obsidian-border">
                     <h3 class="font-display font-bold text-lg sm:text-xl text-white">DAFTAR ROSTER TETAP</h3>
@@ -330,106 +326,47 @@
         </section>
     </main>
 
+    <!-- FLOATING WHATSAPP -->
     <a href="https://wa.me/6287763331294?text=Halo%20Admin%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="fixed bottom-5 right-5 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-all">
         <i class="fa-brands fa-whatsapp text-xl sm:text-2xl"></i>
     </a>
 
-    <!-- RULES MODAL -->
-    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
-        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
-            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="flex items-center gap-2 mb-4">
-                <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
-                <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
+    <!-- MODAL 1: BUAT AKUN WEB (REGISTRASI MEMBER) -->
+    <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
+            <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg mx-auto mb-2 border border-emerald-accent/30"><i class="fa-solid fa-user-plus"></i></div>
+                <h3 class="font-display font-bold text-lg text-white">BUAT AKUN WEBSITE</h3>
+                <p class="text-[11px] text-slate-400 mt-1">Akun ini wajib dibuat terlebih dahulu sebagai syarat mendaftar turnamen.</p>
             </div>
-            <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
-                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                    <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2">
-                        <i class="fa-solid fa-layer-group"></i> Group Stage
-                    </div>
-                    <ul class="space-y-1.5 text-slate-300">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> 5 tim dalam 1 grup.</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Sistem pertandingan <strong>BO 2</strong>.</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
-                    </ul>
+            <form onsubmit="handleRegisterAccount(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Buat Username Baru</label>
+                    <input type="text" id="regUser" required placeholder="Contoh: gamerpro99" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
                 </div>
-                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                    <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2">
-                        <i class="fa-solid fa-star"></i> Sistem Poin
-                    </div>
-                    <ul class="space-y-1.5 text-slate-300">
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-emerald-accent/20 text-emerald-accent font-bold text-[10px]">MENANG 2–0</span> = 3 Poin</li>
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">SERI 1–1</span> = 1 Poin</li>
-                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
-                    </ul>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Buat Password Baru</label>
+                    <input type="password" id="regPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                        <div class="flex items-center gap-2 text-purple-400 font-bold uppercase mb-2">
-                            <i class="fa-solid fa-sitemap"></i> Semifinal
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-1">4 tim dengan klasemen teratas lolos:</p>
-                        <div class="font-bold text-white mb-1">• 1st vs 3rd<br>• 2nd vs 4th</div>
-                        <span class="text-[10px] text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Format BO 3</span>
-                    </div>
-                    <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
-                        <div class="flex items-center gap-2 text-yellow-400 font-bold uppercase mb-2">
-                            <i class="fa-solid fa-crown"></i> Grand Final
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-1">Pemenang semifinal bertemu.</p>
-                        <span class="text-[10px] text-yellow-300 bg-yellow-500/10 px-2 py-0.5 rounded inline-block mt-2">Format BO 5</span>
-                    </div>
-                </div>
-                <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
-                    <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2">
-                        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting
-                    </div>
-                    <ul class="space-y-2 text-slate-200">
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-ban text-crimson mt-0.5"></i>
-                            <span><strong>NO PAUSE</strong> selama pertandingan berlangsung.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-wifi text-amber-400 mt-0.5"></i>
-                            <span>Kendala <strong>sinyal, koneksi, atau perangkat</strong> menjadi tanggung jawab masing-masing player/tim.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-scale-balanced text-sky-400 mt-0.5"></i>
-                            <span>Jika poin sama, penentuan peringkat mengikuti <strong>tiebreaker yang ditetapkan panitia</strong>.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-gavel text-purple-400 mt-0.5"></i>
-                            <span><strong>Keputusan panitia mutlak dan final.</strong></span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-handshake text-emerald-accent mt-0.5"></i>
-                            <span>Wajib menjunjung tinggi <strong>sportivitas</strong> selama pertandingan.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="text-center pt-2 text-emerald-accent font-bold tracking-wider text-xs">
-                    🔥 GOOD LUCK & HAVE FUN! 🔥
-                </div>
-            </div>
-            <div class="mt-6 text-right">
-                <button onclick="closeModal('rulesModal')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg">SAYA MEMAHAMI RULES</button>
-            </div>
+                <button type="submit" id="regBtn" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg">DAFTARKAN AKUN</button>
+            </form>
         </div>
     </div>
 
-    <!-- REGISTRATION MODAL DENGAN LOGIN AKUN -->
+    <!-- MODAL 2: FORM PENDAFTARAN TURNAMEN (DENGAN LOGIN) -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">DAFTAR PESERTA</h3>
-            <p class="text-[11px] text-slate-400 mb-4">Masukkan Username & Password akun peserta Anda untuk verifikasi (1 akun = 1x daftar).</p>
+            <h3 class="font-display font-bold text-lg text-white mb-2">FORMULIR PENDAFTARAN TURNAMEN</h3>
+            <p class="text-[11px] text-slate-400 mb-4">Masukkan akun web Anda untuk verifikasi (1 akun = 1x daftar).</p>
             
             <form id="tournamentForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
                 <div class="bg-obsidian/50 p-3 rounded-xl border border-emerald-accent/30 space-y-3 mb-2">
-                    <span class="block text-[10px] font-tech text-emerald-accent uppercase font-bold"><i class="fa-solid fa-lock mr-1"></i> Autentikasi Akun Peserta</span>
+                    <span class="block text-[10px] font-tech text-emerald-accent uppercase font-bold"><i class="fa-solid fa-lock mr-1"></i> Autentikasi Akun Website</span>
                     <div>
                         <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Akun</label>
-                        <input type="text" id="dbUsername" required placeholder="Masukkan Username Akun" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                        <input type="text" id="dbUsername" required placeholder="Username Anda" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
                     </div>
                     <div>
                         <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password Akun</label>
@@ -446,19 +383,19 @@
                     <input type="text" required placeholder="Contoh: ProGamer (12345678/2001)" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Utama (Role 1)</label>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Role Utama</label>
                     <input type="text" required placeholder="Contoh: Jungler" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Nomor WhatsApp</label>
                     <input type="tel" required placeholder="Contoh: 081234567890" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pilihan Role Cadangan (Role 2)</label>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Role Cadangan</label>
                     <input type="text" required placeholder="Contoh: Gold Laner" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Metode Pembayaran</label>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Pembayaran</label>
                     <select required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-crimson cursor-pointer">
                         <option value="" disabled selected>-- Pilih Opsi Pembayaran --</option>
                         <option value="GAJIAN">GAJIAN</option>
@@ -472,11 +409,49 @@
         </div>
     </div>
 
+    <!-- RULES MODAL -->
+    <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
+        <div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-trophy text-emerald-accent text-xl"></i>
+                <h3 class="font-display font-bold text-lg sm:text-xl text-white pr-6">RULES TOURNAMENT MOBILE LEGENDS</h3>
+            </div>
+            <div class="space-y-4 text-xs text-slate-300 leading-relaxed font-tech">
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-emerald-accent font-bold uppercase mb-2"><i class="fa-solid fa-layer-group"></i> Group Stage</div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> 5 tim dalam 1 grup.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Sistem pertandingan <strong>BO 2</strong>.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle text-[4px] mt-1.5 text-emerald-accent"></i> Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
+                    </ul>
+                </div>
+                <div class="bg-obsidian/60 p-3.5 rounded-xl border border-obsidian-border">
+                    <div class="flex items-center gap-2 text-sky-400 font-bold uppercase mb-2"><i class="fa-solid fa-star"></i> Sistem Poin</div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-emerald-accent/20 text-emerald-accent font-bold text-[10px]">MENANG 2–0</span> = 3 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">SERI 1–1</span> = 1 Poin</li>
+                        <li class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded bg-crimson/20 text-crimson font-bold text-[10px]">KALAH 0–2</span> = 0 Poin</li>
+                    </ul>
+                </div>
+                <div class="bg-crimson/10 p-3.5 rounded-xl border border-crimson/30">
+                    <div class="flex items-center gap-2 text-crimson font-bold uppercase mb-2"><i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Ketentuan Penting</div>
+                    <ul class="space-y-2 text-slate-200">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-ban text-crimson mt-0.5"></i><span><strong>NO PAUSE</strong> selama pertandingan berlangsung.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-wifi text-amber-400 mt-0.5"></i><span>Kendala <strong>sinyal/perangkat</strong> tanggung jawab masing-masing player.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-gavel text-purple-400 mt-0.5"></i><span><strong>Keputusan panitia mutlak dan final.</strong></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 text-right"><button onclick="closeModal('rulesModal')" class="px-5 py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl shadow-lg">SAYA MEMAHAMI RULES</button></div>
+        </div>
+    </div>
+
     <!-- MESSAGE MODAL -->
     <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-obsidian/85 backdrop-blur-md p-4">
         <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
             <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
-            <p id="messageText" class="text-slate-400 text-xs mb-5">Data berhasil dikirim.</p>
+            <p id="messageText" class="text-slate-400 text-xs mb-5">Pesan sistem.</p>
             <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl">OK</button>
         </div>
     </div>
@@ -489,39 +464,15 @@
             setTimeout(() => openModal('rulesModal'), 300); 
         });
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
 
         let currentIndex = 0;
         const slidesContainer = document.getElementById('carouselSlides');
-        function nextSlide() { 
-            if(!slidesContainer) return;
-            currentIndex = (currentIndex + 1) % 3; 
-            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
-        }
-        function prevSlide() { 
-            if(!slidesContainer) return;
-            currentIndex = (currentIndex - 1 + 3) % 3; 
-            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
-        }
+        function nextSlide() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+        function prevSlide() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
         setInterval(nextSlide, 4500);
-
-        function openModal(id) { 
-            const el = document.getElementById(id);
-            if(el) {
-                el.classList.add('active'); 
-                document.body.style.overflow = 'hidden'; 
-            }
-        }
-        function closeModal(id) { 
-            const el = document.getElementById(id);
-            if(el) {
-                el.classList.remove('active'); 
-                document.body.style.overflow = 'auto'; 
-            }
-        }
 
         function switchTab(tab) {
             document.getElementById('content-champions').classList.add('hidden');
@@ -535,9 +486,45 @@
             document.getElementById('content-roster').classList.add('hidden');
         }
 
+        // FUNGSI BUAT AKUN WEB
+        async function handleRegisterAccount(event) {
+            event.preventDefault();
+            const username = document.getElementById('regUser').value.trim();
+            const password = document.getElementById('regPass').value.trim();
+            const btn = document.getElementById('regBtn');
+
+            btn.innerText = "MENDAFTARKAN AKUN...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(DATABASE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'registerAccount', username, password })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    closeModal('registerAccountModal');
+                    document.getElementById('messageTitle').innerText = "AKUN BERHASIL DIBUAT!";
+                    document.getElementById('messageText').innerText = "Akun berhasil terdaftar. Silakan gunakan untuk mendaftar turnamen.";
+                    openModal('messageModal');
+                    event.target.reset();
+                } else {
+                    alert(result.message || 'Gagal membuat akun.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Terjadi kesalahan koneksi.');
+            } finally {
+                btn.innerText = "DAFTARKAN AKUN";
+                btn.disabled = false;
+            }
+        }
+
+        // FUNGSI PENDAFTARAN TURNAMEN
         async function handleFormSubmit(event) {
             event.preventDefault();
-            
             const usernameInput = document.getElementById('dbUsername').value.trim();
             const passwordInput = document.getElementById('dbPassword').value.trim();
             const submitBtn = document.getElementById('submitBtn');
@@ -546,27 +533,20 @@
             submitBtn.disabled = true;
 
             try {
-                // 1. Validasi ke Spreadsheet Database Akun (JSON murni)
                 const checkResponse = await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        action: 'checkLogin',
-                        username: usernameInput,
-                        password: passwordInput
-                    })
+                    body: JSON.stringify({ action: 'checkLogin', username: usernameInput, password: passwordInput })
                 });
-                
                 const checkResult = await checkResponse.json();
 
                 if (checkResult.status !== 'success') {
-                    alert(checkResult.message || 'Akun tidak valid atau sudah digunakan!');
+                    alert(checkResult.message || 'Autentikasi gagal!');
                     submitBtn.innerText = "SUBMIT DATA";
                     submitBtn.disabled = false;
                     return;
                 }
 
-                // 2. Ambil data input form pendaftaran turnamen
                 const inputs = event.target.querySelectorAll('input, select');
                 const formData = {
                     nama: inputs[2].value,
@@ -580,7 +560,6 @@
 
                 submitBtn.innerText = "MENGIRIM DATA...";
 
-                // 3. Kirim data ke Spreadsheet Turnamen Utama
                 await fetch(TOURNAMENT_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -588,25 +567,21 @@
                     body: JSON.stringify(formData)
                 });
 
-                // 4. Kunci akun di Spreadsheet Database agar tidak bisa daftar 2x
                 await fetch(DATABASE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        action: 'lockAccount',
-                        username: usernameInput
-                    })
+                    body: JSON.stringify({ action: 'lockAccount', username: usernameInput })
                 });
 
                 closeModal('registerModal');
                 document.getElementById('messageTitle').innerText = "REGISTRASI BERHASIL!";
-                document.getElementById('messageText').innerText = "Data pendaftaran berhasil dikirim dan akun Anda telah terkunci.";
+                document.getElementById('messageText').innerText = "Data pendaftaran turnamen berhasil dikirim dan akun Anda telah terkunci.";
                 openModal('messageModal');
                 event.target.reset();
 
             } catch (error) {
-                console.error('Registration error:', error);
-                alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+                console.error(error);
+                alert('Terjadi kesalahan koneksi.');
             } finally {
                 submitBtn.innerText = "SUBMIT DATA";
                 submitBtn.disabled = false;
