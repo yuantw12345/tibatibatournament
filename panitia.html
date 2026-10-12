@@ -33,121 +33,106 @@
         .neon-glow-white { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2); }
     </style>
 </head>
-<body class="min-h-screen p-3 sm:p-8 relative">
+<body class="min-h-screen p-2.5 sm:p-8 relative">
 
     <!-- MODAL LOGIN KHUSUS PANITIA (LOCKED DASHBOARD) -->
-    <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-4">
-        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-2xl p-6 sm:p-8 shadow-2xl text-center">
-            <div class="relative w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+    <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
+        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
+            <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
                 <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo Panitia" class="w-full h-full object-contain">
             </div>
-            <h2 class="font-display font-black text-xl text-white mb-1">LOGIN PANITIA</h2>
-            <p class="text-xs text-slate-400 font-tech mb-6">Masukkan kredensial khusus panitia untuk mengakses kontrol panel.</p>
+            <h2 class="font-display font-black text-lg sm:text-xl text-white mb-1">LOGIN PANITIA</h2>
+            <p class="text-[11px] sm:text-xs text-slate-400 font-tech mb-4">Masukkan kredensial khusus panitia untuk mengakses kontrol panel.</p>
 
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3 text-left">
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Panitia</label>
-                    <input type="text" id="adminUser" required placeholder="panitia1 / panitia2 / ..." class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                    <input type="text" id="adminUser" required placeholder="panitia1 / panitia2 / ..." class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
                 </div>
                 <div>
                     <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password</label>
-                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
                 </div>
-                <button type="submit" class="w-full py-3.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl transition-all shadow-lg cursor-pointer">
+                <button type="submit" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-lg transition-all shadow-lg cursor-pointer">
                     <i class="fa-solid fa-lock-open mr-1.5"></i> MASUK KONTROL PANEL
                 </button>
             </form>
-            <div class="mt-4 pt-3 border-t border-obsidian-border">
-                <a href="index.html" class="text-xs text-slate-400 hover:text-white font-tech transition-colors">
+            <div class="mt-3 pt-2 border-t border-obsidian-border">
+                <a href="index.html" class="text-[11px] text-slate-400 hover:text-white font-tech transition-colors">
                     <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Website Utama
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- AREA KONTROL PANEL UTAMA (DISEMBUNYIKAN SEBELUM LOGIN) -->
+    <!-- AREA KONTROL PANEL UTAMA -->
     <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
-        <!-- HEADER PANEL DENGAN LOGO PNG -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-obsidian-card border border-obsidian-border p-4 sm:p-6 rounded-2xl mb-6 shadow-xl">
-            <div class="flex items-center space-x-3 sm:space-x-4">
-                <div class="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+        <!-- HEADER PANEL -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
+            <div class="flex items-center space-x-3">
+                <div class="relative w-9 h-9 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
                     <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
-                    <span class="absolute top-0 right-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-accent rounded-full animate-ping"></span>
-                    <span class="absolute top-0 right-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-accent rounded-full"></span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full animate-ping"></span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-[10px] sm:text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMINISTRATOR DASHBOARD</span>
-                        <span id="activeAdminBadge" class="px-2 py-0.5 bg-emerald-accent/20 text-emerald-accent border border-emerald-accent/30 rounded text-[10px] font-bold"></span>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="text-[9px] sm:text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMIN DASHBOARD</span>
+                        <span id="activeAdminBadge" class="px-1.5 py-0.5 bg-emerald-accent/20 text-emerald-accent border border-emerald-accent/30 rounded text-[9px] font-bold"></span>
                     </div>
-                    <h1 class="font-display font-black text-lg sm:text-2xl text-white mt-0.5 leading-tight">
-                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL PANITIA
+                    <h1 class="font-display font-black text-sm sm:text-2xl text-white mt-0.5 leading-tight">
+                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL
                     </h1>
                 </div>
             </div>
             <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <a href="index.html" class="px-3.5 py-2.5 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-xl font-tech text-xs font-bold transition-all shadow-md">
-                    <i class="fa-solid fa-arrow-left mr-1"></i> Website Utama
+                <a href="index.html" class="px-3 py-2 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-lg font-tech text-[11px] font-bold transition-all shadow-md">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Website
                 </a>
-                <button onclick="handleAdminLogout()" class="px-3.5 py-2.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 text-red-400 hover:text-white rounded-xl font-tech text-xs font-bold transition-all shadow-md cursor-pointer">
+                <button onclick="handleAdminLogout()" class="px-3 py-2 bg-red-500/10 border border-red-500/30 hover:bg-red-500 text-red-400 hover:text-white rounded-lg font-tech text-[11px] font-bold transition-all shadow-md cursor-pointer">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> LOGOUT
                 </button>
             </div>
         </div>
 
-        <!-- TOMBOL NAVIGASI MENU TAB (RESPONSIF GRID DI HP) -->
-        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 mb-6 font-tech text-xs font-bold">
-            <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3.5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2">
+        <!-- TOMBOL NAVIGASI MENU TAB -->
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-4 font-tech text-[11px] sm:text-xs font-bold">
+            <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
             </button>
-            <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3.5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2">
-                <i class="fa-solid fa-users-gear"></i> <span>AKUN MEMBER (<span id="countUsers">0</span>)</span>
+            <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-users-gear"></i> <span>MEMBER (<span id="countUsers">0</span>)</span>
             </button>
-            <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="px-3.5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2">
-                <i class="fa-solid fa-comments"></i> <span>CHAT GLOBAL (<span id="countChats">0</span>)</span>
+            <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-comments"></i> <span>CHAT (<span id="countChats">0</span>)</span>
             </button>
-            <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="px-3.5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2">
+            <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-headset"></i> <span>LIVE CHAT (<span id="countLiveChats">0</span>)</span>
             </button>
         </div>
 
         <!-- TAB 1: DATA PENDAFTAR TURNAMEN -->
-        <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-4 sm:p-6 shadow-2xl">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+        <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
                 </h2>
-                <span class="text-xs font-tech text-slate-400">Database "pendaftar"</span>
+                <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
             </div>
 
-            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM (BARU) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 font-tech">
-                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
-                    <div>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Total Pendaftar</p>
-                        <h3 id="statTotalPendaftar" class="text-xl font-bold text-white mt-0.5">0 Orang</h3>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
+            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM (PERKECIL DI HP) -->
+            <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p>
+                    <h3 id="statTotalPendaftar" class="text-sm sm:text-lg font-bold text-white">0</h3>
                 </div>
-                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
-                    <div>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Estimasi Tim Terbentuk</p>
-                        <h3 id="statTotalTim" class="text-xl font-bold text-emerald-accent mt-0.5">0 Tim</h3>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Tim (5 Orang)</p>
+                    <h3 id="statTotalTim" class="text-sm sm:text-lg font-bold text-emerald-accent">0 Tim</h3>
                 </div>
-                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
-                    <div>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Pemain Kurang / Sisa</p>
-                        <h3 id="statSisaPemain" class="text-xl font-bold text-amber-400 mt-0.5">0 Orang</h3>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-user-clock"></i>
-                    </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Sisa Pemain</p>
+                    <h3 id="statSisaPemain" class="text-sm sm:text-lg font-bold text-amber-400">0</h3>
                 </div>
             </div>
 
@@ -156,72 +141,72 @@
                 <table class="w-full text-left text-xs font-tech">
                     <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
                         <tr>
-                            <th class="p-3">No</th>
-                            <th class="p-3">Waktu Daftar</th>
-                            <th class="p-3">Username Db</th>
-                            <th class="p-3">Nama Lengkap</th>
-                            <th class="p-3">ID Mobile Legend</th>
-                            <th class="p-3">Role (Utama / Cadangan)</th>
-                            <th class="p-3">WhatsApp</th>
-                            <th class="p-3">Pembayaran</th>
-                            <th class="p-3 text-center">Aksi</th>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu Daftar</th>
+                            <th class="p-2.5">Username Db</th>
+                            <th class="p-2.5">Nama Lengkap</th>
+                            <th class="p-2.5">ID Mobile Legend</th>
+                            <th class="p-2.5">Role (Utama / Cadangan)</th>
+                            <th class="p-2.5">WhatsApp</th>
+                            <th class="p-2.5">Pembayaran</th>
+                            <th class="p-2.5 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tournamentTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="9" class="text-center py-8 text-slate-500">Memuat data pendaftar...</td></tr>
+                        <tr><td colspan="9" class="text-center py-6 text-slate-500">Memuat data pendaftar...</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Tampilan Card Praktis Khusus HP -->
-            <div id="tournamentCardMobile" class="block md:hidden space-y-3 font-tech">
-                <div class="text-center py-8 text-slate-500">Memuat data pendaftar...</div>
+            <!-- Tampilan Card Ringkas Khusus HP -->
+            <div id="tournamentCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
 
         <!-- TAB 2: DATA AKUN MEMBER & BANNED STATUS -->
-        <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-4 sm:p-6 shadow-2xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+        <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
                     <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Banned Status
                 </h2>
-                <span class="text-xs font-tech text-slate-400">Database "users"</span>
+                <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
 
             <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-xs font-tech">
                     <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
                         <tr>
-                            <th class="p-3">No</th>
-                            <th class="p-3">Waktu Buat Akun</th>
-                            <th class="p-3">Username Member</th>
-                            <th class="p-3">Password</th>
-                            <th class="p-3">Status Akun</th>
-                            <th class="p-3 text-center">Aksi Moderasi</th>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu Buat</th>
+                            <th class="p-2.5">Username</th>
+                            <th class="p-2.5">Password</th>
+                            <th class="p-2.5">Status</th>
+                            <th class="p-2.5 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="usersTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="6" class="text-center py-8 text-slate-500">Memuat data akun member...</td></tr>
+                        <tr><td colspan="6" class="text-center py-6 text-slate-500">Memuat data akun...</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="usersCardMobile" class="block md:hidden space-y-3 font-tech">
-                <div class="text-center py-8 text-slate-500">Memuat data akun member...</div>
+            <div id="usersCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
             </div>
         </div>
 
         <!-- TAB 3: MODERASI CHAT GLOBAL -->
-        <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-4 sm:p-6 shadow-2xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-obsidian-border">
+        <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
                 <div>
-                    <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
-                        <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Pesan Chat Global
+                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Chat Global
                     </h2>
-                    <span class="text-xs font-tech text-slate-400">Database "chats"</span>
+                    <span class="text-[10px] font-tech text-slate-400">Database "chats"</span>
                 </div>
-                <button onclick="deleteAllChats('chats')" class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT GLOBAL
+                <button onclick="deleteAllChats('chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
                 </button>
             </div>
 
@@ -229,34 +214,34 @@
                 <table class="w-full text-left text-xs font-tech">
                     <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
                         <tr>
-                            <th class="p-3">No</th>
-                            <th class="p-3">Waktu Kirim</th>
-                            <th class="p-3">Pengirim</th>
-                            <th class="p-3">Isi Pesan Chat</th>
-                            <th class="p-3 text-center">Aksi Hapus</th>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu</th>
+                            <th class="p-2.5">Pengirim</th>
+                            <th class="p-2.5">Pesan</th>
+                            <th class="p-2.5 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="chatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data chat global...</td></tr>
+                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat chat...</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="chatsCardMobile" class="block md:hidden space-y-3 font-tech">
-                <div class="text-center py-8 text-slate-500">Memuat data chat global...</div>
+            <div id="chatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
             </div>
         </div>
 
         <!-- TAB 4: MODERASI LIVE STREAM CHAT -->
-        <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-2xl p-4 sm:p-6 shadow-2xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-obsidian-border">
+        <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
                 <div>
-                    <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
-                        <i class="fa-solid fa-headset text-crimson"></i> Moderasi Pesan Live Stream Chat
+                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-crimson"></i> Moderasi Live Stream Chat
                     </h2>
-                    <span class="text-xs font-tech text-slate-400">Database "live_chats"</span>
+                    <span class="text-[10px] font-tech text-slate-400">Database "live_chats"</span>
                 </div>
-                <button onclick="deleteAllChats('live_chats')" class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2">
+                <button onclick="deleteAllChats('live_chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-broom"></i> HAPUS SEMUA LIVE CHAT
                 </button>
             </div>
@@ -265,21 +250,21 @@
                 <table class="w-full text-left text-xs font-tech">
                     <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
                         <tr>
-                            <th class="p-3">No</th>
-                            <th class="p-3">Waktu Kirim</th>
-                            <th class="p-3">Pengirim</th>
-                            <th class="p-3">Isi Komentar Live</th>
-                            <th class="p-3 text-center">Aksi Hapus</th>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu</th>
+                            <th class="p-2.5">Pengirim</th>
+                            <th class="p-2.5">Komentar</th>
+                            <th class="p-2.5 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="liveChatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="5" class="text-center py-8 text-slate-500">Memuat data live chat...</td></tr>
+                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat live chat...</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="liveChatsCardMobile" class="block md:hidden space-y-3 font-tech">
-                <div class="text-center py-8 text-slate-500">Memuat data live chat...</div>
+            <div id="liveChatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
             </div>
         </div>
     </div>
@@ -357,7 +342,7 @@
             const secC = document.getElementById('sectionChats');
             const secLC = document.getElementById('sectionLiveChats');
 
-            const defaultBtnClass = "px-3.5 py-3 rounded-xl bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2";
+            const defaultBtnClass = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
             
             btnT.className = defaultBtnClass;
             btnU.className = defaultBtnClass;
@@ -370,21 +355,21 @@
             secLC.classList.add('hidden');
 
             if (tab === 'tournaments') {
-                btnT.className = "px-3.5 py-3 rounded-xl bg-emerald-accent text-black shadow-lg transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2";
+                btnT.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secT.classList.remove('hidden');
             } else if (tab === 'users') {
-                btnU.className = "px-3.5 py-3 rounded-xl bg-crimson text-white shadow-lg transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2";
+                btnU.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secU.classList.remove('hidden');
             } else if (tab === 'chats') {
-                btnC.className = "px-3.5 py-3 rounded-xl bg-sky-500 text-black shadow-lg transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2";
+                btnC.className = "px-3 py-2.5 rounded-lg bg-sky-500 text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secC.classList.remove('hidden');
             } else if (tab === 'liveChats') {
-                btnLC.className = "px-3.5 py-3 rounded-xl bg-crimson text-white shadow-lg transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2";
+                btnLC.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secLC.classList.remove('hidden');
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN (TABEL PC & CARD HP) + STATISTIK PEMBAGIAN TIM
+        // 1. PENDAFTAR TURNAMEN + STATISTIK TIM
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -392,20 +377,18 @@
                 const mobileCardBox = document.getElementById('tournamentCardMobile');
                 const totalPendaftar = snapshot.size;
                 
-                // Update badge tab & kartu statistik
                 document.getElementById('countTournaments').innerText = totalPendaftar;
-                document.getElementById('statTotalPendaftar').innerText = totalPendaftar + " Orang";
+                document.getElementById('statTotalPendaftar').innerText = totalPendaftar;
                 
-                // Perhitungan otomatis (1 tim = 5 orang)
                 const totalTim = Math.floor(totalPendaftar / 5);
                 const sisaPemain = totalPendaftar % 5;
                 
                 document.getElementById('statTotalTim').innerText = totalTim + " Tim";
-                document.getElementById('statSisaPemain').innerText = sisaPemain + " Orang";
+                document.getElementById('statSisaPemain').innerText = sisaPemain;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
-                    mobileCardBox.innerHTML = `<div class="text-center py-8 text-slate-500">Belum ada data pendaftar turnamen.</div>`;
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar turnamen.</div>`;
                     return;
                 }
 
@@ -425,39 +408,39 @@
                     // Baris Tabel PC
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-3">${i}</td>
-                            <td class="p-3 text-slate-400">${timeStr}</td>
-                            <td class="p-3 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
-                            <td class="p-3 font-bold text-white">${data.nama || '-'}</td>
-                            <td class="p-3">${data.idMl || '-'}</td>
-                            <td class="p-3 font-semibold text-sky-300">${combinedRole}</td>
-                            <td class="p-3"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
-                            <td class="p-3"><span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
-                            <td class="p-3 text-center">
-                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg transition-all cursor-pointer" title="Hapus Data">
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
+                            <td class="p-2.5 font-bold text-white">${data.nama || '-'}</td>
+                            <td class="p-2.5">${data.idMl || '-'}</td>
+                            <td class="p-2.5 font-semibold text-sky-300">${combinedRole}</td>
+                            <td class="p-2.5"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
+                            <td class="p-2.5"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-xs transition-all cursor-pointer" title="Hapus">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
                     `;
 
-                    // Card Praktis HP
+                    // Card Ringkas Khusus HP
                     htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2">
-                            <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
-                                <span class="text-emerald-accent font-bold text-xs">#${i} @${data.usernameDb || '-'}</span>
-                                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[10px] font-bold">${data.payment || '-'}</span>
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
+                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
+                                <span class="text-emerald-accent font-bold">#${i} @${data.usernameDb || '-'}</span>
+                                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[9px] font-bold">${data.payment || '-'}</span>
                             </div>
-                            <div class="text-xs space-y-1">
+                            <div class="space-y-0.5">
                                 <p><strong class="text-slate-400">Nama:</strong> <span class="text-white font-bold">${data.nama || '-'}</span></p>
                                 <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
                                 <p><strong class="text-slate-400">Role:</strong> <span class="text-sky-300">${combinedRole}</span></p>
-                                <p><strong class="text-slate-400">WhatsApp:</strong> <a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
-                                <p><strong class="text-slate-400">Waktu:</strong> <span class="text-slate-400 text-[10px]">${timeStr}</span></p>
+                                <p><strong class="text-slate-400">WA:</strong> <a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
+                                <p><strong class="text-slate-400">Waktu:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
                             </div>
-                            <div class="pt-2 border-t border-obsidian-border text-right">
-                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="w-full py-2 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-lg text-xs font-bold transition-all">
-                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Data Pendaftar
+                            <div class="pt-1.5 border-t border-obsidian-border text-right">
+                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="w-full py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-[11px] font-bold transition-all">
+                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar
                                 </button>
                             </div>
                         </div>
@@ -479,8 +462,8 @@
                 document.getElementById('countUsers').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">Belum ada akun member.</td></tr>`;
-                    mobileCardBox.innerHTML = `<div class="text-center py-8 text-slate-500">Belum ada akun member.</div>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Belum ada akun member.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada akun member.</div>`;
                     return;
                 }
 
@@ -494,24 +477,24 @@
                     const isBanned = data.isBanned === true;
 
                     const statusBadge = isBanned 
-                        ? `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/40 rounded text-[10px] font-bold">BANNED</span>`
-                        : `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-[10px] font-bold">AKTIF</span>`;
+                        ? `<span class="px-1.5 py-0.5 bg-red-500/20 text-red-400 border border-red-500/40 rounded text-[9px] font-bold">BANNED</span>`
+                        : `<span class="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-[9px] font-bold">AKTIF</span>`;
 
-                    const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-1"></i> Unban' : '<i class="fa-solid fa-ban mr-1"></i> Banned';
+                    const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-0.5"></i> Unban' : '<i class="fa-solid fa-ban mr-0.5"></i> Ban';
                     const banBtnClass = isBanned ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
 
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-3">${i}</td>
-                            <td class="p-3 text-slate-400">${timeStr}</td>
-                            <td class="p-3 font-bold text-emerald-accent text-sm">@${data.username}</td>
-                            <td class="p-3 font-mono text-amber-300 bg-obsidian px-2 py-1 rounded inline-block">${data.password}</td>
-                            <td class="p-3">${statusBadge}</td>
-                            <td class="p-3 text-center flex items-center justify-center gap-1">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="px-2.5 py-1.5 ${banBtnClass} border rounded-lg text-xs font-bold transition-all">
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">@${data.username}</td>
+                            <td class="p-2.5 font-mono text-amber-300 bg-obsidian px-2 py-0.5 rounded inline-block">${data.password}</td>
+                            <td class="p-2.5">${statusBadge}</td>
+                            <td class="p-2.5 text-center flex items-center justify-center gap-1">
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="px-2 py-1 ${banBtnClass} border rounded text-[11px] font-bold">
                                     ${banBtnText}
                                 </button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg text-xs">
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px]">
                                     <i class="fa-solid fa-user-xmark"></i>
                                 </button>
                             </td>
@@ -519,18 +502,18 @@
                     `;
 
                     htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs">
-                            <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
-                                <span class="text-emerald-accent font-bold text-sm">@${data.username}</span>
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
+                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
+                                <span class="text-emerald-accent font-bold">@${data.username}</span>
                                 <div>${statusBadge}</div>
                             </div>
-                            <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-2 py-0.5 rounded">${data.password}</span></p>
-                            <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[10px]">${timeStr}</span></p>
-                            <div class="pt-2 border-t border-obsidian-border flex gap-2">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-2 ${banBtnClass} border rounded-lg font-bold">
+                            <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
+                            <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
+                            <div class="pt-1.5 border-t border-obsidian-border flex gap-1.5">
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px]">
                                     ${banBtnText}
                                 </button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-3 py-2 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg font-bold">
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px]">
                                     <i class="fa-solid fa-user-xmark"></i> Hapus
                                 </button>
                             </div>
@@ -553,8 +536,8 @@
                 document.getElementById('countChats').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada obrolan.</td></tr>`;
-                    mobileCardBox.innerHTML = `<div class="text-center py-8 text-slate-500">Belum ada obrolan.</div>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada obrolan.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada obrolan.</div>`;
                     return;
                 }
 
@@ -568,25 +551,25 @@
 
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-3">${i}</td>
-                            <td class="p-3 text-slate-400">${timeStr}</td>
-                            <td class="p-3 font-bold text-sky-400">@${data.username}</td>
-                            <td class="p-3 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
-                            <td class="p-3 text-center">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-sky-400">@${data.username}</td>
+                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
 
                     htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 space-y-1.5 text-xs">
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
                                 <span class="text-sky-400 font-bold">@${data.username}</span>
-                                <span class="text-[10px] text-slate-400">${timeStr}</span>
+                                <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
-                            <div class="text-right pt-1">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold">
+                            <div class="text-right pt-0.5">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
                                     <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan
                                 </button>
                             </div>
@@ -609,8 +592,8 @@
                 document.getElementById('countLiveChats').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">Belum ada live chat.</td></tr>`;
-                    mobileCardBox.innerHTML = `<div class="text-center py-8 text-slate-500">Belum ada live chat.</div>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada live chat.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada live chat.</div>`;
                     return;
                 }
 
@@ -624,25 +607,25 @@
 
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-3">${i}</td>
-                            <td class="p-3 text-slate-400">${timeStr}</td>
-                            <td class="p-3 font-bold text-crimson">@${data.username}</td>
-                            <td class="p-3 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
-                            <td class="p-3 text-center">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-crimson">@${data.username}</td>
+                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
 
                     htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 space-y-1.5 text-xs">
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
                                 <span class="text-crimson font-bold">@${data.username}</span>
-                                <span class="text-[10px] text-slate-400">${timeStr}</span>
+                                <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
-                            <div class="text-right pt-1">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-3 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold">
+                            <div class="text-right pt-0.5">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
                                     <i class="fa-solid fa-trash mr-1"></i> Hapus Komentar
                                 </button>
                             </div>
