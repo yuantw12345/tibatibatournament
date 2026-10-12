@@ -92,6 +92,13 @@
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
+        /* Perbaikan background khusus tampilan HP agar tidak terpotong/zoom berlebihan */
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll !important;
+                background-size: 100% 100% !important;
+            }
+        }
         .font-display { font-family: 'Syne', sans-serif; }
         .font-tech { font-family: 'Space Grotesk', sans-serif; }
         .glass-panel {
