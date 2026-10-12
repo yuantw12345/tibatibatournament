@@ -686,13 +686,12 @@ measurementId: "G-Q64PK4M8P4"
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-window.addEventListener('DOMContentLoaded', () => {
-setTimeout(() => openModal('rulesModal'), 300);
-});
+
 checkAuthStatus();
 initRealtimeChats();
 initRealtimeLiveChats();
 startSessionWatcher();
+
 window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
 window.openModal = function(id) { document.getElementById(id).classList.add('active'); if(id !== 'chatModal' && id !== 'rulesInfoModal') document.body.style.overflow = 'hidden'; }
 window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
@@ -1055,4 +1054,4 @@ submitBtn.disabled = false;
 }
 </script>
 </body>
-</html> 
+</html>
