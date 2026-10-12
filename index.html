@@ -13,6 +13,20 @@
     <meta property="og:title" content="TIBA TIBA TOURNAMENT — Neon Arena">
     <meta property="og:description" content="Pendaftaran turnamen Mobile Legends berhadiah total Rp 7.000.000. Yuk gabung sekarang!">
     <meta property="og:image" content="https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg">
+    
+    <!-- META NAMA SITUS RESMI GOOGLE (PENGGANTI TULISAN VERCEL) -->
+    <meta property="og:site_name" content="Tiba Tiba Tournament">
+
+    <!-- SCHEMA JSON-LD UNTUK MENGATUR NAMA SITUS DI GOOGLE SEARCH -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Tiba Tiba Tournament",
+      "alternateName": ["Tiba Tiba Tournament MLBB", "Neon Arena"],
+      "url": "https://tibatibatournament.vercel.app/"
+    }
+    </script>
 
     <!-- TAG FAVICON RESMI DENGAN FORMAT LENGKAP UNTUK GOOGLE SEARCH -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" sizes="any">
@@ -414,7 +428,7 @@
         </a>
     </div>
 
-    <!-- WIDGET CHAT GLOBAL POP-UP (MUNCUL DI KIRI BAWAH, HALAMAN TETAP BISA DI-SCROLL) -->
+    <!-- WIDGET CHAT GLOBAL POP-UP -->
     <div id="chatModal" class="modal-overlay fixed bottom-20 left-5 z-50 w-[92%] sm:w-[380px] h-[460px] bg-obsidian-card border border-sky-400/40 rounded-2xl p-4 shadow-2xl flex flex-col">
         <button onclick="closeChatModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1.5 cursor-pointer z-10"><i class="fa-solid fa-xmark text-base"></i></button>
         <div class="flex items-center gap-2.5 pb-2.5 border-b border-obsidian-border mb-2.5 shrink-0">
@@ -632,7 +646,7 @@
         window.openModal = function(id) { document.getElementById(id).classList.add('active'); if(id !== 'chatModal') document.body.style.overflow = 'hidden'; }
         window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
 
-        // TOGGLE CHAT DI KIRI BAWAH (HALAMAN UTAMA TETAP BISA DI-SCROLL)
+        // TOGGLE CHAT DI KIRI BAWAH
         window.openChatModal = function() {
             const chatModal = document.getElementById('chatModal');
             chatModal.classList.add('active');
@@ -663,7 +677,7 @@
                 document.getElementById('chatForm').classList.add('hidden');
                 document.getElementById('chatGuestNotice').classList.remove('hidden');
                 document.getElementById('liveChatForm').classList.add('hidden');
-                document.getElementById('liveChatGuestNotice').classList.add('hidden');
+                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
             }
         }
 
