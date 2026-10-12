@@ -120,6 +120,37 @@
                 <span class="text-xs font-tech text-slate-400">Database "pendaftar"</span>
             </div>
 
+            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM (BARU) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 font-tech">
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Total Pendaftar</p>
+                        <h3 id="statTotalPendaftar" class="text-xl font-bold text-white mt-0.5">0 Orang</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Estimasi Tim Terbentuk</p>
+                        <h3 id="statTotalTim" class="text-xl font-bold text-emerald-accent mt-0.5">0 Tim</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Pemain Kurang / Sisa</p>
+                        <h3 id="statSisaPemain" class="text-xl font-bold text-amber-400 mt-0.5">0 Orang</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-user-clock"></i>
+                    </div>
+                </div>
+            </div>
+
             <!-- Tampilan Tabel untuk PC / Layar Besar -->
             <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-xs font-tech">
@@ -353,13 +384,24 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN (TABEL PC & CARD HP)
+        // 1. PENDAFTAR TURNAMEN (TABEL PC & CARD HP) + STATISTIK PEMBAGIAN TIM
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
                 const tbody = document.getElementById('tournamentTableBody');
                 const mobileCardBox = document.getElementById('tournamentCardMobile');
-                document.getElementById('countTournaments').innerText = snapshot.size;
+                const totalPendaftar = snapshot.size;
+                
+                // Update badge tab & kartu statistik
+                document.getElementById('countTournaments').innerText = totalPendaftar;
+                document.getElementById('statTotalPendaftar').innerText = totalPendaftar + " Orang";
+                
+                // Perhitungan otomatis (1 tim = 5 orang)
+                const totalTim = Math.floor(totalPendaftar / 5);
+                const sisaPemain = totalPendaftar % 5;
+                
+                document.getElementById('statTotalTim').innerText = totalTim + " Tim";
+                document.getElementById('statSisaPemain').innerText = sisaPemain + " Orang";
 
                 if (snapshot.empty) {
                     tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
