@@ -92,12 +92,24 @@
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
-        /* Mengatur agar gambar background di HP diperkecil dan kelihatan utuh (tidak nge-zoom berlebihan) */
+        /* Mengunci background agar tidak ikut bergerak saat di-scroll di HP */
         @media (max-width: 768px) {
             body {
-                background-attachment: scroll !important;
-                background-size: 100% auto !important;
-                background-repeat: repeat !important;
+                background-image: none !important;
+            }
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: -1;
+                background-color: #090b18;
+                background-image: linear-gradient(rgba(9, 11, 24, 0.85), rgba(9, 11, 24, 0.85)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
             }
         }
         .font-display { font-family: 'Syne', sans-serif; }
