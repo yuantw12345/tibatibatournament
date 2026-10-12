@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PANEL PANITIA — TIBA TIBA TOURNAMENT</title>
+    
+    <!-- Favicon Custom Logo -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,107 +20,259 @@
                         crimson: { DEFAULT: '#ff1e56', dark: '#c40d3d' },
                         emerald: { accent: '#00e699' }
                     },
-                    fontFamily: {
-                        display: ['Syne', 'sans-serif'],
-                        tech: ['Space Grotesk', 'sans-serif']
-                    }
+                    fontFamily: { tech: ['Space Grotesk', 'sans-serif'], display: ['Syne', 'sans-serif'] }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080a0f; color: #f8faff; }
-        .font-display { font-family: 'Syne', sans-serif; }
-        .font-tech { font-family: 'Space Grotesk', sans-serif; }
+        .neon-glow-red { text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3); }
+        .neon-glow-white { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2); }
     </style>
 </head>
-<body class="min-h-screen bg-obsidian p-4 sm:p-8">
+<body class="min-h-screen p-2.5 sm:p-8 relative">
 
-    <!-- HEADER PANEL PANITIA -->
-    <header class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-obsidian-border">
-        <div>
-            <span class="font-tech text-xs tracking-widest text-crimson font-bold uppercase">ADMINISTRATOR CONTROL PANEL</span>
-            <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-white">PANEL PANITIA TOURNAMENT</h1>
-        </div>
-
-        <div class="flex items-center gap-3">
-            <!-- TOMBOL REFRESH HALAMAN / TAB -->
-            <button onclick="refreshPage()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 font-tech font-bold text-xs transition-all cursor-pointer shadow-lg active:scale-95">
-                <i class="fa-solid fa-arrows-rotate text-sm" id="refreshIcon"></i>
-                <span>REFRESH DATA</span>
-            </button>
-
-            <!-- TOMBOL LOGOUT ADMIN -->
-            <button onclick="adminLogout()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-tech font-bold text-xs transition-all cursor-pointer">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>LOGOUT</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- CONTENT PANEL -->
-    <main class="max-w-7xl mx-auto space-y-6">
-        <!-- RINGKASAN STATISTIK -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-tech">
-            <div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border shadow-lg">
-                <span class="text-xs text-slate-400 uppercase">Total Tim Mendaftar</span>
-                <p id="statTotalRegistrations" class="text-3xl font-bold text-emerald-accent mt-1">0</p>
+    <!-- MODAL LOGIN KHUSUS PANITIA -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
+        <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
+            <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
+                <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo Panitia" class="w-full h-full object-contain">
             </div>
-            <div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border shadow-lg">
-                <span class="text-xs text-slate-400 uppercase">Total Akun Terdaftar</span>
-                <p id="statTotalUsers" class="text-3xl font-bold text-sky-400 mt-1">0</p>
-            </div>
-            <div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border shadow-lg">
-                <span class="text-xs text-slate-400 uppercase">Status Server / DB</span>
-                <p class="text-3xl font-bold text-emerald-accent mt-1 flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-emerald-accent animate-ping"></span> ONLINE
-                </p>
+            <h2 class="font-display font-black text-lg sm:text-xl text-white mb-1">LOGIN PANITIA</h2>
+            <p class="text-[11px] sm:text-xs text-slate-400 font-tech mb-4">Masukkan kredensial khusus panitia untuk mengakses kontrol panel.</p>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3 text-left">
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Username Panitia</label>
+                    <input type="text" id="adminUser" required placeholder="panitia1 / panitia2 / ..." class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-tech text-slate-400 uppercase mb-1">Password</label>
+                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-obsidian border border-obsidian-border rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent">
+                </div>
+                <button type="submit" class="w-full py-3 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-lg transition-all shadow-lg cursor-pointer">
+                    <i class="fa-solid fa-lock-open mr-1.5"></i> MASUK KONTROL PANEL
+                </button>
+            </form>
+            <div class="mt-3 pt-2 border-t border-obsidian-border">
+                <a href="index.html" class="text-[11px] text-slate-400 hover:text-white font-tech transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Website Utama
+                </a>
             </div>
         </div>
+    </div>
 
-        <!-- TABEL DATA PENDAFTAR -->
-        <div class="bg-obsidian-card rounded-2xl border border-obsidian-border p-5 shadow-2xl">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-3 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
-                    <i class="fa-solid fa-users-gear text-emerald-accent"></i> DAFTAR TIM & USER TERDAPAT
-                </h2>
-                <!-- TOMBOL REFRESH KEDUA DI DEKAT TABEL -->
-                <button onclick="refreshPage()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-obsidian text-slate-300 hover:text-white border border-obsidian-border font-tech text-xs cursor-pointer">
-                    <i class="fa-solid fa-rotate text-xs"></i> Refresh Tab
+    <!-- AREA KONTROL PANEL UTAMA -->
+    <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
+        <!-- HEADER PANEL -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
+            <div class="flex items-center space-x-3">
+                <div class="relative w-9 h-9 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Tournament Logo" class="w-full h-full object-contain">
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full animate-ping"></span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-accent rounded-full"></span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="text-[9px] sm:text-xs font-tech text-emerald-accent uppercase tracking-widest font-bold">ADMIN DASHBOARD</span>
+                        <span id="activeAdminBadge" class="px-1.5 py-0.5 bg-emerald-accent/20 text-emerald-accent border border-emerald-accent/30 rounded text-[9px] font-bold"></span>
+                    </div>
+                    <h1 class="font-display font-black text-sm sm:text-2xl text-white mt-0.5 leading-tight">
+                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL
+                    </h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <a href="index.html" class="px-3 py-2 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-lg font-tech text-[11px] font-bold transition-all shadow-md">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Website
+                </a>
+                <button onclick="handleAdminLogout()" class="px-3 py-2 bg-red-500/10 border border-red-500/30 hover:bg-red-500 text-red-400 hover:text-white rounded-lg font-tech text-[11px] font-bold transition-all shadow-md cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> LOGOUT
                 </button>
             </div>
+        </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left font-tech text-xs text-slate-300">
-                    <thead class="bg-obsidian uppercase text-[10px] text-slate-400 border-b border-obsidian-border">
+        <!-- TOMBOL NAVIGASI MENU TAB -->
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-4 font-tech text-[11px] sm:text-xs font-bold">
+            <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
+            </button>
+            <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-users-gear"></i> <span>MEMBER (<span id="countUsers">0</span>)</span>
+            </button>
+            <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-comments"></i> <span>CHAT (<span id="countChats">0</span>)</span>
+            </button>
+            <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-headset"></i> <span>LIVE CHAT (<span id="countLiveChats">0</span>)</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: DATA PENDAFTAR TURNAMEN -->
+        <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
+                </h2>
+                <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
+            </div>
+
+            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM -->
+            <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p>
+                    <h3 id="statTotalPendaftar" class="text-sm sm:text-lg font-bold text-white">0</h3>
+                </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Tim (5 Orang)</p>
+                    <h3 id="statTotalTim" class="text-sm sm:text-lg font-bold text-emerald-accent">0 Tim</h3>
+                </div>
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                    <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Sisa Pemain</p>
+                    <h3 id="statSisaPemain" class="text-sm sm:text-lg font-bold text-amber-400">0</h3>
+                </div>
+            </div>
+
+            <!-- Tampilan Tabel untuk PC / Layar Besar -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
                         <tr>
-                            <th class="p-3">No</th>
-                            <th class="p-3">Username Akun</th>
-                            <th class="p-3">Nama Lengkap</th>
-                            <th class="p-3">ID MLBB</th>
-                            <th class="p-3">Role Utama</th>
-                            <th class="p-3">Role Cadangan</th>
-                            <th class="p-3">WhatsApp</th>
-                            <th class="p-3">Pembayaran</th>
-                            <th class="p-3">Aksi</th>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu Daftar</th>
+                            <th class="p-2.5">User ID</th>
+                            <th class="p-2.5">Nama Lengkap</th>
+                            <th class="p-2.5">ID Mobile Legend</th>
+                            <th class="p-2.5">Role (Utama / Cadangan)</th>
+                            <th class="p-2.5">WhatsApp</th>
+                            <th class="p-2.5">Pembayaran</th>
+                            <th class="p-2.5 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="pendaftarTableBody" class="divide-y divide-obsidian-border">
-                        <tr>
-                            <td colspan="9" class="text-center py-8 text-slate-500">Memuat data pendaftar...</td>
-                        </tr>
+                    <tbody id="tournamentTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="9" class="text-center py-6 text-slate-500">Memuat data pendaftar...</td></tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </main>
 
-    <!-- SCRIPT LOGIC -->
+            <!-- Tampilan Card Ringkas Khusus HP -->
+            <div id="tournamentCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
+            </div>
+        </div>
+
+        <!-- TAB 2: DATA AKUN MEMBER -->
+        <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Banned Status
+                </h2>
+                <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
+            </div>
+
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu Buat</th>
+                            <th class="p-2.5">User ID</th>
+                            <th class="p-2.5">Password</th>
+                            <th class="p-2.5">Status</th>
+                            <th class="p-2.5 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="6" class="text-center py-6 text-slate-500">Memuat data akun...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="usersCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MODERASI CHAT GLOBAL -->
+        <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
+                <div>
+                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Chat Global
+                    </h2>
+                    <span class="text-[10px] font-tech text-slate-400">Database "chats"</span>
+                </div>
+                <button onclick="deleteAllChats('chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
+                </button>
+            </div>
+
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu</th>
+                            <th class="p-2.5">User ID</th>
+                            <th class="p-2.5">Pesan</th>
+                            <th class="p-2.5 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat chat...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="chatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
+            </div>
+        </div>
+
+        <!-- TAB 4: MODERASI LIVE STREAM CHAT -->
+        <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
+                <div>
+                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-crimson"></i> Moderasi Live Stream Chat
+                    </h2>
+                    <span class="text-[10px] font-tech text-slate-400">Database "live_chats"</span>
+                </div>
+                <button onclick="deleteAllChats('live_chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA LIVE CHAT
+                </button>
+            </div>
+
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full text-left text-xs font-tech">
+                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
+                        <tr>
+                            <th class="p-2.5">No</th>
+                            <th class="p-2.5">Waktu</th>
+                            <th class="p-2.5">User ID</th>
+                            <th class="p-2.5">Komentar</th>
+                            <th class="p-2.5 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liveChatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
+                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat live chat...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="liveChatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+                <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FIREBASE & LOGIKA PANEL -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, orderBy, query, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -131,81 +287,408 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // FUNGSI REFRESH HALAMAN / TAB
-        window.refreshPage = function() {
-            const icon = document.getElementById('refreshIcon');
-            if (icon) icon.classList.add('fa-spin');
-            setTimeout(() => {
-                window.location.reload();
-            }, 300);
-        }
+        const VALID_PANITIA = ["panitia1", "panitia2", "panitia3", "panitia4", "panitia5"];
+        const PANITIA_PASSWORD = "tibatibaturnamen";
 
-        window.adminLogout = function() {
-            if (confirm("Apakah Anda yakin ingin logout dari Panel Panitia?")) {
-                window.location.href = "index.html";
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAdminAuth();
+        });
+
+        function checkAdminAuth() {
+            const activePanitia = localStorage.getItem('activePanitiaSession');
+            if (activePanitia && VALID_PANITIA.includes(activePanitia)) {
+                document.getElementById('adminLoginModal').classList.add('hidden');
+                document.getElementById('adminMainContent').classList.remove('hidden');
+                document.getElementById('activeAdminBadge').innerText = activePanitia;
+                
+                loadTournamentApplicants();
+                loadMemberUsers();
+                loadGlobalChats();
+                loadLiveChats();
+            } else {
+                document.getElementById('adminLoginModal').classList.remove('hidden');
+                document.getElementById('adminMainContent').classList.add('hidden');
             }
         }
 
-        // LOAD DATA PENDAFTAR REALTIME
-        function loadData() {
-            const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
+        window.handleAdminLogin = function(e) {
+            e.preventDefault();
+            const user = document.getElementById('adminUser').value.trim().toLowerCase();
+            const pass = document.getElementById('adminPass').value.trim();
+
+            if (VALID_PANITIA.includes(user) && pass === PANITIA_PASSWORD) {
+                localStorage.setItem('activePanitiaSession', user);
+                checkAdminAuth();
+            } else {
+                alert("Login Panitia Gagal! Username atau password salah.");
+            }
+        }
+
+        window.handleAdminLogout = function() {
+            if (confirm("Apakah Anda yakin ingin keluar dari Panel Panitia?")) {
+                localStorage.removeItem('activePanitiaSession');
+                checkAdminAuth();
+            }
+        }
+
+        window.switchAdminTab = function(tab) {
+            const btnT = document.getElementById('tabBtnTournaments');
+            const btnU = document.getElementById('tabBtnUsers');
+            const btnC = document.getElementById('tabBtnChats');
+            const btnLC = document.getElementById('tabBtnLiveChats');
             
+            const secT = document.getElementById('sectionTournaments');
+            const secU = document.getElementById('sectionUsers');
+            const secC = document.getElementById('sectionChats');
+            const secLC = document.getElementById('sectionLiveChats');
+
+            const defaultBtnClass = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+            
+            btnT.className = defaultBtnClass;
+            btnU.className = defaultBtnClass;
+            btnC.className = defaultBtnClass;
+            btnLC.className = defaultBtnClass;
+
+            secT.classList.add('hidden');
+            secU.classList.add('hidden');
+            secC.classList.add('hidden');
+            secLC.classList.add('hidden');
+
+            if (tab === 'tournaments') {
+                btnT.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                secT.classList.remove('hidden');
+            } else if (tab === 'users') {
+                btnU.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                secU.classList.remove('hidden');
+            } else if (tab === 'chats') {
+                btnC.className = "px-3 py-2.5 rounded-lg bg-sky-500 text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                secC.classList.remove('hidden');
+            } else if (tab === 'liveChats') {
+                btnLC.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                secLC.classList.remove('hidden');
+            }
+        }
+
+        // 1. PENDAFTAR TURNAMEN
+        function loadTournamentApplicants() {
+            const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('pendaftarTableBody');
-                document.getElementById('statTotalRegistrations').innerText = snapshot.size;
+                const tbody = document.getElementById('tournamentTableBody');
+                const mobileCardBox = document.getElementById('tournamentCardMobile');
+                const totalPendaftar = snapshot.size;
+                
+                document.getElementById('countTournaments').innerText = totalPendaftar;
+                document.getElementById('statTotalPendaftar').innerText = totalPendaftar;
+                
+                const totalTim = Math.floor(totalPendaftar / 5);
+                const sisaPemain = totalPendaftar % 5;
+                
+                document.getElementById('statTotalTim').innerText = totalTim + " Tim";
+                document.getElementById('statSisaPemain').innerText = sisaPemain;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="9" class="text-center py-8 text-slate-500">Belum ada tim yang mendaftar.</td></tr>';
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar turnamen.</div>`;
                     return;
                 }
 
-                let html = '';
-                let index = 1;
+                let htmlTable = '';
+                let htmlMobile = '';
+                let i = 1;
 
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    const id = docSnap.id;
+                    let timeStr = (data.waktuDaftar && data.waktuDaftar.toDate) ? data.waktuDaftar.toDate().toLocaleString() : '-';
 
-                    html += `
+                    let combinedRole = data.role1 || '-';
+                    if (data.role2 && data.role2.trim() !== '') {
+                        combinedRole += ` / ${data.role2}`;
+                    }
+
+                    htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-3">${index++}</td>
-                            <td class="p-3 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
-                            <td class="p-3 text-white font-bold">${data.nama || '-'}</td>
-                            <td class="p-3">${data.idMl || '-'}</td>
-                            <td class="p-3">${data.role1 || '-'}</td>
-                            <td class="p-3">${data.role2 || '-'}</td>
-                            <td class="p-3"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp}</a></td>
-                            <td class="p-3"><span class="px-2 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[10px] font-bold">${data.payment || '-'}</span></td>
-                            <td class="p-3">
-                                <button onclick="deleteRegistration('${id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded text-[10px] font-bold cursor-pointer">
-                                    <i class="fa-solid fa-trash"></i> Hapus
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">${data.usernameDb || '-'}</td>
+                            <td class="p-2.5 font-bold text-white">${data.nama || '-'}</td>
+                            <td class="p-2.5">${data.idMl || '-'}</td>
+                            <td class="p-2.5 font-semibold text-sky-300">${combinedRole}</td>
+                            <td class="p-2.5"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
+                            <td class="p-2.5"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-xs transition-all cursor-pointer" title="Hapus">
+                                    <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
                     `;
+
+                    htmlMobile += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
+                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
+                                <span class="text-emerald-accent font-bold">#${i} ${data.usernameDb || '-'}</span>
+                                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[9px] font-bold">${data.payment || '-'}</span>
+                            </div>
+                            <div class="space-y-0.5">
+                                <p><strong class="text-slate-400">Nama:</strong> <span class="text-white font-bold">${data.nama || '-'}</span></p>
+                                <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
+                                <p><strong class="text-slate-400">Role:</strong> <span class="text-sky-300">${combinedRole}</span></p>
+                                <p><strong class="text-slate-400">WA:</strong> <a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
+                                <p><strong class="text-slate-400">Waktu:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
+                            </div>
+                            <div class="pt-1.5 border-t border-obsidian-border text-right">
+                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="w-full py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-[11px] font-bold transition-all">
+                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    i++;
                 });
 
-                tbody.innerHTML = html;
-            });
-
-            // LOAD TOTAL USER AKUN
-            onSnapshot(collection(db, "users"), (snapshot) => {
-                document.getElementById('statTotalUsers').innerText = snapshot.size;
+                tbody.innerHTML = htmlTable;
+                mobileCardBox.innerHTML = htmlMobile;
             });
         }
 
-        window.deleteRegistration = async function(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus data pendaftar ini?")) {
+        // 2. AKUN MEMBER
+        function loadMemberUsers() {
+            const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('usersTableBody');
+                const mobileCardBox = document.getElementById('usersCardMobile');
+                document.getElementById('countUsers').innerText = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Belum ada akun member.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada akun member.</div>`;
+                    return;
+                }
+
+                let htmlTable = '';
+                let htmlMobile = '';
+                let i = 1;
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = (data.createdAt && data.createdAt.toDate) ? data.createdAt.toDate().toLocaleString() : '-';
+                    const isBanned = data.isBanned === true;
+
+                    const statusBadge = isBanned 
+                        ? `<span class="px-1.5 py-0.5 bg-red-500/20 text-red-400 border border-red-500/40 rounded text-[9px] font-bold">BANNED</span>`
+                        : `<span class="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-[9px] font-bold">AKTIF</span>`;
+
+                    const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-0.5"></i> Unban' : '<i class="fa-solid fa-ban mr-0.5"></i> Ban';
+                    const banBtnClass = isBanned ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+
+                    htmlTable += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">${data.username}</td>
+                            <td class="p-2.5 font-mono text-amber-300 bg-obsidian px-2 py-0.5 rounded inline-block">${data.password}</td>
+                            <td class="p-2.5">${statusBadge}</td>
+                            <td class="p-2.5 text-center flex items-center justify-center gap-1">
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="px-2 py-1 ${banBtnClass} border rounded text-[11px] font-bold">
+                                    ${banBtnText}
+                                </button>
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px]">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    htmlMobile += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
+                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
+                                <span class="text-emerald-accent font-bold">${data.username}</span>
+                                <div>${statusBadge}</div>
+                            </div>
+                            <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
+                            <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
+                            <div class="pt-1.5 border-t border-obsidian-border flex gap-1.5">
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px]">
+                                    ${banBtnText}
+                                </button>
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px]">
+                                    <i class="fa-solid fa-user-xmark"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    i++;
+                });
+
+                tbody.innerHTML = htmlTable;
+                usersCardMobile.innerHTML = htmlMobile;
+            });
+        }
+
+        // 3. CHAT GLOBAL
+        function loadGlobalChats() {
+            const q = query(collection(db, "chats"), orderBy("time", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('chatsTableBody');
+                const mobileCardBox = document.getElementById('chatsCardMobile');
+                document.getElementById('countChats').innerText = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada obrolan.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada obrolan.</div>`;
+                    return;
+                }
+
+                let htmlTable = '';
+                let htmlMobile = '';
+                let i = 1;
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
+
+                    htmlTable += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-sky-400">${data.username}</td>
+                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+
+                    htmlMobile += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sky-400 font-bold">${data.username}</span>
+                                <span class="text-[9px] text-slate-400">${timeStr}</span>
+                            </div>
+                            <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
+                            <div class="text-right pt-0.5">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
+                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    i++;
+                });
+
+                tbody.innerHTML = htmlTable;
+                chatsCardMobile.innerHTML = htmlMobile;
+            });
+        }
+
+        // 4. LIVE STREAM CHAT
+        function loadLiveChats() {
+            const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const tbody = document.getElementById('liveChatsTableBody');
+                const mobileCardBox = document.getElementById('liveChatsCardMobile');
+                document.getElementById('countLiveChats').innerText = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada live chat.</td></tr>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada live chat.</div>`;
+                    return;
+                }
+
+                let htmlTable = '';
+                let htmlMobile = '';
+                let i = 1;
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
+
+                    htmlTable += `
+                        <tr class="hover:bg-obsidian/50 transition-colors">
+                            <td class="p-2.5">${i}</td>
+                            <td class="p-2.5 text-slate-400">${timeStr}</td>
+                            <td class="p-2.5 font-bold text-crimson">${data.username}</td>
+                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
+                            <td class="p-2.5 text-center">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+
+                    htmlMobile += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
+                            <div class="flex items-center justify-between">
+                                <span class="text-crimson font-bold">${data.username}</span>
+                                <span class="text-[9px] text-slate-400">${timeStr}</span>
+                            </div>
+                            <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
+                            <div class="text-right pt-0.5">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
+                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Komentar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    i++;
+                });
+
+                tbody.innerHTML = htmlTable;
+                liveChatsCardMobile.innerHTML = htmlMobile;
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        window.toggleBanUser = async function(docId, username, shouldBan) {
+            const actionText = shouldBan ? "MEMBLOKIR (BANNED)" : "MEMBUKA BLOKIR (UNBANNED)";
+            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${username}?`)) {
                 try {
-                    await deleteDoc(doc(db, "pendaftar", id));
-                    alert("Data berhasil dihapus!");
+                    const userRef = doc(db, "users", docId);
+                    await updateDoc(userRef, {
+                        isBanned: shouldBan,
+                        sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2)
+                    });
+                    alert(`Status akun ${username} berhasil diperbarui!`);
                 } catch (err) {
-                    alert("Gagal menghapus data: " + err.message);
+                    alert("Gagal memperbarui status akun.");
                 }
             }
         }
 
-        window.addEventListener('DOMContentLoaded', loadData);
+        window.deleteTournamentData = async function(docId, username) {
+            if (confirm(`Hapus data pendaftaran untuk akun ${username}?`)) {
+                try { await deleteDoc(doc(db, "pendaftar", docId)); } catch (err) { alert("Gagal menghapus data."); }
+            }
+        }
+
+        window.deleteMemberAccount = async function(docId, username) {
+            if (confirm(`Hapus permanen akun ${username}?`)) {
+                try { await deleteDoc(doc(db, "users", username)); } catch (err) { alert("Gagal menghapus akun."); }
+            }
+        }
+
+        window.deleteSingleChatMessage = async function(collectionName, docId) {
+            if (confirm(`Hapus pesan ini?`)) {
+                try { await deleteDoc(doc(db, collectionName, docId)); } catch (err) { alert("Gagal menghapus pesan."); }
+            }
+        }
+
+        window.deleteAllChats = async function(collectionName) {
+            const targetName = collectionName === 'chats' ? "CHAT GLOBAL" : "LIVE STREAM CHAT";
+            if (confirm(`PERHATIAN: Apakah Anda yakin ingin MENGHAPUS SEMUA PESAN di ${targetName}?`)) {
+                try {
+                    const querySnapshot = await getDocs(collection(db, collectionName));
+                    const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, collectionName, docSnap.id)));
+                    await Promise.all(deletePromises);
+                    alert(`Seluruh obrolan ${targetName} berhasil dibersihkan!`);
+                } catch (err) {
+                    console.error(err);
+                    alert("Gagal membersihkan pesan.");
+                }
+            }
+        }
     </script>
 </body>
 </html>
