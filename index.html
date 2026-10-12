@@ -135,7 +135,7 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div, #rulesInfoModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
@@ -167,7 +167,8 @@
                 <button onclick="openModal('rulesModal')" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-trophy text-emerald-accent text-sm"></i> Juara
                 </button>
-                <button onclick="openChatModal()" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer">
+                <!-- MENU ATAS DIUBAH MENJADI RULES -->
+                <button onclick="openRulesInfoModal()" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-book text-sky-400 text-sm"></i> Rules
                 </button>
                 <div id="authGuestMenu" class="flex items-center space-x-3">
@@ -198,7 +199,7 @@
             <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
                 <i class="fa-solid fa-trophy"></i> Juara Season 4
             </button>
-            <button onclick="openChatModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
+            <button onclick="openRulesInfoModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
                 <i class="fa-solid fa-book"></i> Rules Tournament
             </button>
             <div id="mobileAuthGuest" class="space-y-2 pt-2 border-t border-obsidian-border">
@@ -373,10 +374,10 @@
         </section>
     </main>
 
-    <!-- TOMBOL FLOATING RULES DI KIRI BAWAH -->
+    <!-- TOMBOL FLOATING CHAT GLOBAL DI KIRI BAWAH (DIKEMBALIKAN SEMULA) -->
     <button onclick="toggleChatModal()" class="fixed bottom-5 left-5 z-50 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-black font-bold shadow-xl hover:scale-105 transition-all cursor-pointer font-tech text-xs">
-        <i class="fa-solid fa-book text-base"></i>
-        <span>RULES</span>
+        <i class="fa-solid fa-comments text-base"></i>
+        <span>CHAT GLOBAL</span>
     </button>
     <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 items-end">
         <a href="https://wa.me/6281398115475?text=Halo%20Panitia%202%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold">
@@ -389,61 +390,93 @@
         </a>
     </div>
 
-    <!-- WIDGET RULES POP-UP -->
-    <div id="chatModal" class="modal-overlay fixed bottom-20 left-5 z-50 w-[92%] sm:w-[420px] h-[520px] bg-obsidian-card border border-sky-400/40 rounded-2xl p-4 shadow-2xl flex flex-col">
+    <!-- WIDGET CHAT GLOBAL POP-UP (KEMBALI DI KIRI BAWAH) -->
+    <div id="chatModal" class="modal-overlay fixed bottom-20 left-5 z-50 w-[92%] sm:w-[380px] h-[460px] bg-obsidian-card border border-sky-400/40 rounded-2xl p-4 shadow-2xl flex flex-col">
         <button onclick="closeChatModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1.5 cursor-pointer z-10"><i class="fa-solid fa-xmark text-base"></i></button>
         <div class="flex items-center gap-2.5 pb-2.5 border-b border-obsidian-border mb-2.5 shrink-0">
-            <div class="w-8 h-8 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-sm border border-sky-400/30"><i class="fa-solid fa-trophy"></i></div>
+            <div class="w-8 h-8 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-sm border border-sky-400/30"><i class="fa-solid fa-comments"></i></div>
             <div>
-                <h3 class="font-display font-bold text-sm text-white leading-tight">RULES TOURNAMENT MOBILE LEGENDS</h3>
-                <p class="text-[9px] text-slate-400 font-tech">Peraturan Resmi & Format Pertandingan</p>
+                <h3 class="font-display font-bold text-sm text-white leading-tight">CHAT GLOBAL ARENA</h3>
+                <p class="text-[9px] text-slate-400 font-tech">Komunitas & Diskusi Player (Real-time)</p>
             </div>
         </div>
-        <div id="chatBox" class="flex-grow overflow-y-auto space-y-3 pr-2 mb-2.5 text-xs font-tech text-slate-300 min-h-0 leading-relaxed">
-            <div>
-                <p class="font-bold text-emerald-accent mb-1"><i class="fa-solid fa-users mr-1"></i> GROUP STAGE</p>
-                <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
-                    <li>5 tim dalam 1 grup.</li>
-                    <li>Sistem pertandingan BO 2.</li>
-                    <li>Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
-                </ul>
+        <div id="chatBox" class="flex-grow overflow-y-auto space-y-2 pr-1 mb-2.5 text-xs font-tech min-h-0">
+            <div class="text-center text-slate-500 py-6">Memuat chat real-time...</div>
+        </div>
+        <div id="chatInputArea" class="shrink-0 pt-1">
+            <form id="chatForm" onsubmit="handleSendChat(event)" class="hidden flex gap-2">
+                <input type="text" id="chatMessageInput" required placeholder="Ketik pesan kamu..." autocomplete="off" class="flex-grow bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-sky-400">
+                <button type="submit" id="chatSendBtn" class="px-3 py-2 bg-sky-400 hover:bg-sky-300 text-black font-bold text-xs rounded-xl cursor-pointer transition-all"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+            <div id="chatGuestNotice" class="bg-obsidian border border-amber-500/30 p-2.5 rounded-xl text-center">
+                <p class="text-[10px] text-amber-400 mb-1.5 font-tech"><i class="fa-solid fa-lock mr-1"></i> Wajib login akun untuk dapat ikut chatting!</p>
+                <button onclick="closeChatModal(); openModal('loginModal')" class="px-3 py-1 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-[11px] rounded-lg cursor-pointer">Login / Buat Akun</button>
             </div>
-            <div>
-                <p class="font-bold text-emerald-accent mb-1"><i class="fa-solid fa-star mr-1"></i> SISTEM POIN</p>
-                <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
-                    <li>Menang 2–0 = 3 Poin</li>
-                    <li>Seri 1–1 = 1 Poin</li>
-                    <li>Kalah 0–2 = 0 Poin</li>
-                </ul>
+        </div>
+    </div>
+
+    <!-- WIDGET MODAL RULES TURNAMEN (DI TENGAH & LEBAR) -->
+    <div id="rulesInfoModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+        <div class="modal-container relative w-full max-w-xl bg-obsidian-card border border-sky-400/40 rounded-2xl p-6 sm:p-7 shadow-2xl flex flex-col max-h-[90vh]">
+            <button onclick="closeRulesInfoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-4 shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30"><i class="fa-solid fa-trophy"></i></div>
+                <div>
+                    <h3 class="font-display font-bold text-base sm:text-lg text-white leading-tight">RULES TOURNAMENT MOBILE LEGENDS</h3>
+                    <p class="text-[10px] sm:text-xs text-slate-400 font-tech">Peraturan Resmi & Format Pertandingan</p>
+                </div>
             </div>
-            <div>
-                <p class="font-bold text-emerald-accent mb-1"><i class="fa-solid fa-sitemap mr-1"></i> SEMIFINAL</p>
-                <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
-                    <li>4 tim dengan klasemen teratas lolos.</li>
-                    <li>1st vs 3rd</li>
-                    <li>2nd vs 4th</li>
-                    <li>Format BO 3</li>
-                </ul>
+            <div class="flex-grow overflow-y-auto space-y-4 pr-2 mb-4 text-xs sm:text-sm font-tech text-slate-300 min-h-0 leading-relaxed">
+                <div>
+                    <p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-users"></i> GROUP STAGE</p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
+                        <li>5 tim dalam 1 grup.</li>
+                        <li>Sistem pertandingan BO 2.</li>
+                        <li>Setiap tim bertemu seluruh tim sebanyak 1 kali.</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-star"></i> SISTEM POIN</p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
+                        <li>Menang 2–0 = 3 Poin</li>
+                        <li>Seri 1–1 = 1 Poin</li>
+                        <li>Kalah 0–2 = 0 Poin</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-sitemap"></i> SEMIFINAL</p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
+                        <li>4 tim dengan klasemen teratas lolos.</li>
+                        <li>1st vs 3rd</li>
+                        <li>2nd vs 4th</li>
+                        <li>Format BO 3</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-crown"></i> GRAND FINAL</p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
+                        <li>Pemenang semifinal bertemu di Grand Final.</li>
+                        <li>Format BO 5</li>
+                    </ul>
+                </div>
+                <div class="pt-3 border-t border-obsidian-border">
+                    <p class="font-bold text-crimson mb-2 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> KETENTUAN</p>
+                    <ul class="space-y-2 text-slate-300 pl-1">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-ban text-crimson mt-0.5 shrink-0"></i> <span>NO PAUSE selama pertandingan.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-signal text-amber-400 mt-0.5 shrink-0"></i> <span>Kendala sinyal, koneksi, atau perangkat menjadi tanggung jawab masing-masing player/tim.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5 shrink-0"></i> <span>Jika poin sama, penentuan peringkat mengikuti tiebreaker yang ditetapkan panitia.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-shield-halved text-sky-400 mt-0.5 shrink-0"></i> <span>Keputusan panitia mutlak dan final.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-handshake text-emerald-accent mt-0.5 shrink-0"></i> <span>Wajib menjunjung tinggi sportivitas selama pertandingan.</span></li>
+                    </ul>
+                </div>
+                <div class="text-center pt-3 font-bold text-amber-400 tracking-wider text-sm">
+                    🔥 GOOD LUCK & HAVE FUN!
+                </div>
             </div>
-            <div>
-                <p class="font-bold text-emerald-accent mb-1"><i class="fa-solid fa-crown mr-1"></i> GRAND FINAL</p>
-                <ul class="list-disc list-inside space-y-1 text-slate-300 pl-1">
-                    <li>Pemenang semifinal bertemu di Grand Final.</li>
-                    <li>Format BO 5</li>
-                </ul>
-            </div>
-            <div class="pt-2 border-t border-obsidian-border">
-                <p class="font-bold text-crimson mb-1 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> KETENTUAN</p>
-                <ul class="space-y-1.5 text-slate-300 pl-1">
-                    <li class="flex items-start gap-1.5"><i class="fa-solid fa-ban text-crimson mt-0.5"></i> <span>NO PAUSE selama pertandingan.</span></li>
-                    <li class="flex items-start gap-1.5"><i class="fa-solid fa-signal text-amber-400 mt-0.5"></i> <span>Kendala sinyal, koneksi, atau perangkat menjadi tanggung jawab masing-masing player/tim.</span></li>
-                    <li class="flex items-start gap-1.5"><i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i> <span>Jika poin sama, penentuan peringkat mengikuti tiebreaker yang ditetapkan panitia.</span></li>
-                    <li class="flex items-start gap-1.5"><i class="fa-solid fa-shield-halved text-sky-400 mt-0.5"></i> <span>Keputusan panitia mutlak dan final.</span></li>
-                    <li class="flex items-start gap-1.5"><i class="fa-solid fa-handshake text-emerald-accent mt-0.5"></i> <span>Wajib menjunjung tinggi sportivitas selama pertandingan.</span></li>
-                </ul>
-            </div>
-            <div class="text-center pt-2 font-bold text-amber-400 tracking-wider">
-                🔥 GOOD LUCK & HAVE FUN!
+            <div class="pt-2 border-t border-obsidian-border text-right">
+                <button onclick="closeRulesInfoModal()" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg cursor-pointer transition-all">
+                    MENGERTI / TUTUP
+                </button>
             </div>
         </div>
     </div>
@@ -629,18 +662,20 @@
         window.addEventListener('DOMContentLoaded', () => { 
             setTimeout(() => openModal('rulesModal'), 300);
             checkAuthStatus();
+            initRealtimeChats();
             initRealtimeLiveChats();
             startSessionWatcher();
         });
 
         window.toggleMobileMenu = function() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        window.openModal = function(id) { document.getElementById(id).classList.add('active'); if(id !== 'chatModal') document.body.style.overflow = 'hidden'; }
+        window.openModal = function(id) { document.getElementById(id).classList.add('active'); if(id !== 'chatModal' && id !== 'rulesInfoModal') document.body.style.overflow = 'hidden'; }
         window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
 
-        // TOGGLE RULES MODAL DI KIRI BAWAH
+        // TOGGLE CHAT GLOBAL DI KIRI BAWAH
         window.openChatModal = function() {
             const chatModal = document.getElementById('chatModal');
             chatModal.classList.add('active');
+            updateChatAccessUI();
         }
         window.closeChatModal = function() {
             document.getElementById('chatModal').classList.remove('active');
@@ -651,6 +686,31 @@
                 closeChatModal();
             } else {
                 openChatModal();
+            }
+        }
+
+        // TOGGLE RULES INFO MODAL DI TENGAH
+        window.openRulesInfoModal = function() {
+            document.getElementById('rulesInfoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        window.closeRulesInfoModal = function() {
+            document.getElementById('rulesInfoModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.updateChatAccessUI = function() {
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            if (loggedUser) {
+                document.getElementById('chatForm').classList.remove('hidden');
+                document.getElementById('chatGuestNotice').classList.add('hidden');
+                document.getElementById('liveChatForm').classList.remove('hidden');
+                document.getElementById('liveChatGuestNotice').classList.add('hidden');
+            } else {
+                document.getElementById('chatForm').classList.add('hidden');
+                document.getElementById('chatGuestNotice').classList.remove('hidden');
+                document.getElementById('liveChatForm').classList.add('hidden');
+                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
             }
         }
 
@@ -686,7 +746,46 @@
             }, 6000);
         }
 
-        // LIVE STREAM CHAT REAL-TIME
+        // 1. CHAT GLOBAL REAL-TIME
+        function initRealtimeChats() {
+            const q = query(collection(db, "chats"), orderBy("time", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const chatBox = document.getElementById('chatBox');
+                if (snapshot.empty) {
+                    if(chatBox) chatBox.innerHTML = '<div class="text-center text-slate-500 py-6">Belum ada obrolan global. Yuk mulai mengobrol!</div>';
+                    return;
+                }
+                const loggedUser = localStorage.getItem('activeMemberUser');
+                let html = '';
+                snapshot.forEach((docSnap) => {
+                    const c = docSnap.data();
+                    const isMe = loggedUser && (c.username.toLowerCase() === loggedUser.toLowerCase());
+                    let formattedTime = (c.time && c.time.toDate) ? c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                    if (isMe) {
+                        html += `
+                            <div class="flex flex-col items-end">
+                                <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
+                                    ${escapeHtml(c.message)}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="flex flex-col items-start">
+                                <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
+                                    ${escapeHtml(c.message)}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                if(chatBox) { chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight; }
+            });
+        }
+
+        // 2. LIVE STREAM CHAT REAL-TIME
         function initRealtimeLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "asc"));
             onSnapshot(q, (snapshot) => {
@@ -725,6 +824,24 @@
             });
         }
 
+        // KIRIM PESAN CHAT GLOBAL
+        window.handleSendChat = async function(e) {
+            e.preventDefault();
+            const loggedUser = localStorage.getItem('activeMemberUser');
+            const input = document.getElementById('chatMessageInput');
+            if(!loggedUser || !input.value.trim()) return;
+            const msg = input.value.trim();
+            input.value = '';
+            try {
+                await addDoc(collection(db, "chats"), {
+                    username: loggedUser,
+                    message: msg,
+                    time: serverTimestamp()
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        // KIRIM PESAN LIVE STREAM CHAT
         window.handleSendLiveChat = async function(e) {
             e.preventDefault();
             const loggedUser = localStorage.getItem('activeMemberUser');
@@ -813,14 +930,7 @@
                 cardAuthAction.onclick = () => openModal('loginModal');
                 lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span>';
             }
-            const loggedIn = localStorage.getItem('activeMemberUser');
-            if (loggedIn) {
-                document.getElementById('liveChatForm').classList.remove('hidden');
-                document.getElementById('liveChatGuestNotice').classList.add('hidden');
-            } else {
-                document.getElementById('liveChatForm').classList.add('hidden');
-                document.getElementById('liveChatGuestNotice').classList.remove('hidden');
-            }
+            updateChatAccessUI();
         }
 
         window.handleCardAuthClick = function() {
