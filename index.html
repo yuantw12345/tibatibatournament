@@ -532,7 +532,7 @@
         </div>
     </div>
 
-    <!-- MODAL PENDAFTARAN TURNAMEN (DENGAN DROPDOWN ROLE) -->
+    <!-- MODAL PENDAFTARAN TURNAMEN -->
     <div id="registerModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div class="modal-container relative w-full max-w-md bg-obsidian-card border border-obsidian-lightBorder rounded-2xl p-5 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -759,7 +759,7 @@
             }, 6000);
         }
 
-        // 1. CHAT GLOBAL REAL-TIME
+        // 1. CHAT GLOBAL REAL-TIME (TANPA @)
         function initRealtimeChats() {
             const q = query(collection(db, "chats"), orderBy("time", "asc"));
             onSnapshot(q, (snapshot) => {
@@ -777,7 +777,7 @@
                     if (isMe) {
                         html += `
                             <div class="flex flex-col items-end">
-                                <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                <span class="text-[9px] text-slate-400 mb-0.5">${c.username} • ${formattedTime}</span>
                                 <div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
                                     ${escapeHtml(c.message)}
                                 </div>
@@ -786,7 +786,7 @@
                     } else {
                         html += `
                             <div class="flex flex-col items-start">
-                                <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                <span class="text-[9px] text-emerald-accent mb-0.5 font-bold">${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
                                 <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
                                     ${escapeHtml(c.message)}
                                 </div>
@@ -798,7 +798,7 @@
             });
         }
 
-        // 2. LIVE STREAM CHAT REAL-TIME
+        // 2. LIVE STREAM CHAT REAL-TIME (TANPA @)
         function initRealtimeLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "asc"));
             onSnapshot(q, (snapshot) => {
@@ -816,7 +816,7 @@
                     if (isMe) {
                         html += `
                             <div class="flex flex-col items-end">
-                                <span class="text-[9px] text-slate-400 mb-0.5">@${c.username} • ${formattedTime}</span>
+                                <span class="text-[9px] text-slate-400 mb-0.5">${c.username} • ${formattedTime}</span>
                                 <div class="bg-crimson text-white px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">
                                     ${escapeHtml(c.message)}
                                 </div>
@@ -825,7 +825,7 @@
                     } else {
                         html += `
                             <div class="flex flex-col items-start">
-                                <span class="text-[9px] text-sky-400 mb-0.5 font-bold">@${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
+                                <span class="text-[9px] text-sky-400 mb-0.5 font-bold">${c.username} • <span class="text-slate-400 font-normal">${formattedTime}</span></span>
                                 <div class="bg-obsidian-card border border-obsidian-border text-slate-200 px-3 py-1.5 rounded-xl rounded-tl-none max-w-[85%] break-words shadow-md">
                                     ${escapeHtml(c.message)}
                                 </div>
@@ -922,14 +922,14 @@
                 authMemberMenu.classList.remove('hidden');
                 mobileAuthGuest.classList.add('hidden');
                 mobileAuthMember.classList.remove('hidden');
-                document.getElementById('loggedInUserBadge').innerText = '@' + loggedUser;
-                document.getElementById('mobileUserBadge').innerText = 'Akun: @' + loggedUser;
-                document.getElementById('activeAccountDisplay').innerText = '@' + loggedUser;
+                document.getElementById('loggedInUserBadge').innerText = loggedUser;
+                document.getElementById('mobileUserBadge').innerText = 'Akun: ' + loggedUser;
+                document.getElementById('activeAccountDisplay').innerText = loggedUser;
                 cardIcon.className = "fa-solid fa-circle-check";
                 cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
                 cardTitle.innerText = "STATUS: TERLOGIN";
-                cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">@${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
-                cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai @${loggedUser}`);
+                cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
+                cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai ${loggedUser}`);
                 lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
             } else {
                 authGuestMenu.classList.remove('hidden');
@@ -962,7 +962,7 @@
                 const q = query(collection(db, "pendaftar"), where("usernameDb", "==", loggedUser));
                 const querySnapshot = await getDocs(q);
                 if (!querySnapshot.empty) {
-                    showCustomAlert("SUDAH MENDAFTAR", `Akun @${loggedUser} sudah pernah terdaftar di turnamen ini!`, true);
+                    showCustomAlert("SUDAH MENDAFTAR", `Akun ${loggedUser} sudah pernah terdaftar di turnamen ini!`, true);
                 } else {
                     openModal('registerModal');
                 }
@@ -1035,7 +1035,7 @@
                 localStorage.setItem('sessionToken', sessionToken);
                 closeModal('loginModal');
                 checkAuthStatus();
-                showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, @${username}!`);
+                showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, ${username}!`);
                 event.target.reset();
             } catch (error) {
                 console.error(error);
