@@ -35,7 +35,7 @@
 </head>
 <body class="min-h-screen p-2.5 sm:p-8 relative">
 
-    <!-- MODAL LOGIN KHUSUS PANITIA (LOCKED DASHBOARD) -->
+    <!-- MODAL LOGIN KHUSUS PANITIA -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
         <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
             <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
@@ -120,7 +120,7 @@
                 <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
             </div>
 
-            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM (PERKECIL DI HP) -->
+            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM -->
             <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
                 <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
                     <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p>
@@ -143,7 +143,7 @@
                         <tr>
                             <th class="p-2.5">No</th>
                             <th class="p-2.5">Waktu Daftar</th>
-                            <th class="p-2.5">Username Db</th>
+                            <th class="p-2.5">User ID</th>
                             <th class="p-2.5">Nama Lengkap</th>
                             <th class="p-2.5">ID Mobile Legend</th>
                             <th class="p-2.5">Role (Utama / Cadangan)</th>
@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: DATA AKUN MEMBER & BANNED STATUS -->
+        <!-- TAB 2: DATA AKUN MEMBER -->
         <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
@@ -179,7 +179,7 @@
                         <tr>
                             <th class="p-2.5">No</th>
                             <th class="p-2.5">Waktu Buat</th>
-                            <th class="p-2.5">Username</th>
+                            <th class="p-2.5">User ID</th>
                             <th class="p-2.5">Password</th>
                             <th class="p-2.5">Status</th>
                             <th class="p-2.5 text-center">Aksi</th>
@@ -216,7 +216,7 @@
                         <tr>
                             <th class="p-2.5">No</th>
                             <th class="p-2.5">Waktu</th>
-                            <th class="p-2.5">Pengirim</th>
+                            <th class="p-2.5">User ID</th>
                             <th class="p-2.5">Pesan</th>
                             <th class="p-2.5 text-center">Aksi</th>
                         </tr>
@@ -252,7 +252,7 @@
                         <tr>
                             <th class="p-2.5">No</th>
                             <th class="p-2.5">Waktu</th>
-                            <th class="p-2.5">Pengirim</th>
+                            <th class="p-2.5">User ID</th>
                             <th class="p-2.5">Komentar</th>
                             <th class="p-2.5 text-center">Aksi</th>
                         </tr>
@@ -269,7 +269,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & LOGIKA LOGIN PANITIA -->
+    <!-- SCRIPT FIREBASE & LOGIKA PANEL -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -299,7 +299,7 @@
             if (activePanitia && VALID_PANITIA.includes(activePanitia)) {
                 document.getElementById('adminLoginModal').classList.add('hidden');
                 document.getElementById('adminMainContent').classList.remove('hidden');
-                document.getElementById('activeAdminBadge').innerText = '@' + activePanitia;
+                document.getElementById('activeAdminBadge').innerText = activePanitia;
                 
                 loadTournamentApplicants();
                 loadMemberUsers();
@@ -369,7 +369,7 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN + STATISTIK TIM
+        // 1. PENDAFTAR TURNAMEN
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -405,12 +405,11 @@
                         combinedRole += ` / ${data.role2}`;
                     }
 
-                    // Baris Tabel PC
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-2.5">${i}</td>
                             <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-emerald-accent">@${data.usernameDb || '-'}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">${data.usernameDb || '-'}</td>
                             <td class="p-2.5 font-bold text-white">${data.nama || '-'}</td>
                             <td class="p-2.5">${data.idMl || '-'}</td>
                             <td class="p-2.5 font-semibold text-sky-300">${combinedRole}</td>
@@ -424,11 +423,10 @@
                         </tr>
                     `;
 
-                    // Card Ringkas Khusus HP
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
                             <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                <span class="text-emerald-accent font-bold">#${i} @${data.usernameDb || '-'}</span>
+                                <span class="text-emerald-accent font-bold">#${i} ${data.usernameDb || '-'}</span>
                                 <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[9px] font-bold">${data.payment || '-'}</span>
                             </div>
                             <div class="space-y-0.5">
@@ -453,7 +451,7 @@
             });
         }
 
-        // 2. AKUN MEMBER & BANNED STATUS
+        // 2. AKUN MEMBER
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -487,7 +485,7 @@
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-2.5">${i}</td>
                             <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-emerald-accent">@${data.username}</td>
+                            <td class="p-2.5 font-bold text-emerald-accent">${data.username}</td>
                             <td class="p-2.5 font-mono text-amber-300 bg-obsidian px-2 py-0.5 rounded inline-block">${data.password}</td>
                             <td class="p-2.5">${statusBadge}</td>
                             <td class="p-2.5 text-center flex items-center justify-center gap-1">
@@ -504,7 +502,7 @@
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
                             <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                <span class="text-emerald-accent font-bold">@${data.username}</span>
+                                <span class="text-emerald-accent font-bold">${data.username}</span>
                                 <div>${statusBadge}</div>
                             </div>
                             <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
@@ -553,7 +551,7 @@
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-2.5">${i}</td>
                             <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-sky-400">@${data.username}</td>
+                            <td class="p-2.5 font-bold text-sky-400">${data.username}</td>
                             <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
                             <td class="p-2.5 text-center">
                                 <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -564,7 +562,7 @@
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
-                                <span class="text-sky-400 font-bold">@${data.username}</span>
+                                <span class="text-sky-400 font-bold">${data.username}</span>
                                 <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
@@ -609,7 +607,7 @@
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-2.5">${i}</td>
                             <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-crimson">@${data.username}</td>
+                            <td class="p-2.5 font-bold text-crimson">${data.username}</td>
                             <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
                             <td class="p-2.5 text-center">
                                 <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -620,7 +618,7 @@
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
-                                <span class="text-crimson font-bold">@${data.username}</span>
+                                <span class="text-crimson font-bold">${data.username}</span>
                                 <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
@@ -645,14 +643,14 @@
 
         window.toggleBanUser = async function(docId, username, shouldBan) {
             const actionText = shouldBan ? "MEMBLOKIR (BANNED)" : "MEMBUKA BLOKIR (UNBANNED)";
-            if (confirm(`Apakah Anda yakin ingin ${actionText} akun @${username}?`)) {
+            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${username}?`)) {
                 try {
                     const userRef = doc(db, "users", docId);
                     await updateDoc(userRef, {
                         isBanned: shouldBan,
                         sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2)
                     });
-                    alert(`Status akun @${username} berhasil diperbarui!`);
+                    alert(`Status akun ${username} berhasil diperbarui!`);
                 } catch (err) {
                     alert("Gagal memperbarui status akun.");
                 }
@@ -660,14 +658,14 @@
         }
 
         window.deleteTournamentData = async function(docId, username) {
-            if (confirm(`Hapus data pendaftaran untuk akun @${username}?`)) {
+            if (confirm(`Hapus data pendaftaran untuk akun ${username}?`)) {
                 try { await deleteDoc(doc(db, "pendaftar", docId)); } catch (err) { alert("Gagal menghapus data."); }
             }
         }
 
         window.deleteMemberAccount = async function(docId, username) {
-            if (confirm(`Hapus permanen akun @${username}?`)) {
-                try { await deleteDoc(doc(db, "users", docId)); } catch (err) { alert("Gagal menghapus akun."); }
+            if (confirm(`Hapus permanen akun ${username}?`)) {
+                try { await deleteDoc(doc(db, "users", username)); } catch (err) { alert("Gagal menghapus akun."); }
             }
         }
 
