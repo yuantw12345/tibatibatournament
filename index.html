@@ -215,33 +215,34 @@ LOGOUT
 </button>
 </div>
 </nav>
-<button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white cursor-pointer">
+<button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-obsidian-card text-slate-300 border border-obsidian-border hover:text-white">
 <i class="fa-solid fa-bars text-base"></i>
 </button>
 </div>
-<div id="mobileMenu" class="md:hidden fixed top-20 left-0 right-0 bg-[#0f131d] border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase shadow-2xl transition-all duration-200 ease-in-out opacity-0 pointer-events-none -translate-y-2 z-40">
+<div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
 <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
-<a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">Live & Chat Arena</a>
-<button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1 cursor-pointer">
+<a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">
+Live & Chat Arena</a>
+<button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
 <i class="fa-solid fa-trophy"></i> Juara Season 4
 </button>
-<button onclick="openRulesInfoModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1 cursor-pointer">
+<button onclick="openRulesInfoModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
 <i class="fa-solid fa-book"></i> Rules Tournament
 </button>
 <div id="mobileAuthGuest" class="space-y-2 pt-2 border-t border-obsidian-border">
-<button onclick="openModal('loginModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-center font-bold cursor-pointer">
+<button onclick="openModal('loginModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/30 rounded-lg text-center font-bold">
 <i class="fa-solid fa-right-to-bracket mr-1"></i> Login Akun
 </button>
-<button onclick="openModal('registerAccountModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent text-black font-bold rounded-lg text-center shadow-md cursor-pointer">
+<button onclick="openModal('registerAccountModal'); toggleMobileMenu()" class="w-full py-2.5 bg-emerald-accent text-black font-bold rounded-lg text-center shadow-md">
 <i class="fa-solid fa-user-plus mr-1"></i> Daftar Akun Baru
 </button>
 </div>
 <div id="mobileAuthMember" class="hidden space-y-2 pt-2 border-t border-obsidian-border">
 <div id="mobileUserBadge" class="text-emerald-accent font-bold py-1"></div>
-<button onclick="handleTournamentCardClick(); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md cursor-pointer">
+<button onclick="handleTournamentCardClick(); toggleMobileMenu()" class="w-full py-3 bg-gradient-to-r from-crimson to-crimson-dark text-white font-bold rounded-lg text-center shadow-md">
 Daftar Turnamen
 </button>
-<button onclick="handleLogout()" class="w-full py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-center font-bold cursor-pointer">
+<button onclick="handleLogout()" class="w-full py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-center font-bold">
 LOGOUT
 </button>
 </div>
@@ -698,14 +699,7 @@ initRealtimeLiveChats();
 startSessionWatcher();
 
 window.toggleMobileMenu = function() {
-  const menu = document.getElementById('mobileMenu');
-  if (menu.classList.contains('opacity-0')) {
-    menu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
-    menu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-  } else {
-    menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-    menu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
-  }
+  document.getElementById('mobileMenu').classList.toggle('hidden');
 }
 
 window.openModal = function(id) {
