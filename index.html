@@ -133,11 +133,13 @@ opacity: 0;
 visibility: hidden;
 transform: translateY(20px) scale(0.95);
 transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+pointer-events: none;
 }
 .modal-overlay.active {
 opacity: 1;
 visibility: visible;
 transform: translateY(0) scale(1);
+pointer-events: auto;
 }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #080a0f; }
@@ -1034,7 +1036,7 @@ try {
 await addDoc(collection(db, "pendaftar"), {
 nama: document.getElementById('tNama').value.trim(),
 idMI: document.getElementById('tIdMI').value.trim(),
-role1: document.getElementById('tRole1').value,
+role1: document.getElementById('tRoute1')?.value || document.getElementById('tRole1').value,
 whatsapp: document.getElementById('tWhatsapp').value.trim(),
 role2: document.getElementById('tRole2').value,
 payment: document.getElementById('tPayment').value,
