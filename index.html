@@ -88,12 +88,10 @@
             color: #f8faff;
             background-image: linear-gradient(rgba(9, 11, 24, 0.85), rgba(9, 11, 24, 0.85)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg') !important;
             background-size: cover !important;
-            /* Diatur ke center 20% agar gambar sedikit turun dan kepala Lunox terlihat utuh di PC */
             background-position: center 20% !important;
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
-        /* Mengunci background agar tidak ikut bergerak saat di-scroll di HP */
         @media (max-width: 768px) {
             body {
                 background-image: none !important;
@@ -156,11 +154,22 @@
             transform: translateY(-4px);
             border-color: rgba(178,160,255,.65) !important;
         }
-        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #loginModal > div, #messageModal > div, #confirmModal > div, #rulesInfoModal > div {
+        #rulesModal > div, #registerModal > div, #registerAccountModal > div, #messageModal > div, #confirmModal > div, #rulesInfoModal > div {
             background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
             border-color: rgba(156,139,255,.48) !important;
             box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
         }
+        
+        /* BACKGROUND KHUSUS KOTAK POP-UP LOGIN (DISAMAKAN DENGAN BACKGROUND WEBSITE TAPI DIPERKECIL/DI-CENTER) */
+        #loginModal > div {
+            background-image: linear-gradient(rgba(9, 11, 24, 0.90), rgba(9, 11, 24, 0.90)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            border-color: rgba(0, 230, 153, 0.4) !important;
+            box-shadow: 0 28px 90px rgba(0,0,0,0.7), 0 0 35px rgba(0, 230, 153, 0.15);
+        }
+
         footer { background: rgba(7,9,22,.9) !important; }
     </style>
 </head>
