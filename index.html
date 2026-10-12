@@ -92,11 +92,12 @@
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
-        /* Perbaikan background khusus tampilan HP agar tidak terpotong/zoom berlebihan */
+        /* Mengatur agar gambar background di HP diperkecil dan kelihatan utuh (tidak nge-zoom berlebihan) */
         @media (max-width: 768px) {
             body {
                 background-attachment: scroll !important;
-                background-size: 100% 100% !important;
+                background-size: 100% auto !important;
+                background-repeat: repeat !important;
             }
         }
         .font-display { font-family: 'Syne', sans-serif; }
