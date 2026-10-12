@@ -85,7 +85,11 @@
                     </h1>
                 </div>
             </div>
-            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
+                <!-- TOMBOL REFRESH PANEL -->
+                <button onclick="handleRefreshAdminPanel()" class="px-3 py-2 bg-sky-500/10 border border-sky-500/30 hover:bg-sky-500/20 text-sky-400 rounded-lg font-tech text-[11px] font-bold transition-all shadow-md cursor-pointer flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-right" id="adminRefreshIcon"></i> REFRESH PANEL
+                </button>
                 <a href="index.html" class="px-3 py-2 bg-obsidian border border-obsidian-border hover:border-emerald-accent text-slate-300 hover:text-white rounded-lg font-tech text-[11px] font-bold transition-all shadow-md">
                     <i class="fa-solid fa-arrow-left mr-1"></i> Website
                 </a>
@@ -294,6 +298,25 @@
             checkAdminAuth();
         });
 
+        // FUNGSI REFRESH PANEL PANITIA
+        window.handleRefreshAdminPanel = function() {
+            const icon = document.getElementById('adminRefreshIcon');
+            if (icon) icon.classList.add('fa-spin');
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+        }
+
+        // FUNGSI BANTU MENGUBAH NOMOR WA AGAR BERAWALAN 62 (TANPA ANGKA 0 DI DEPAN)
+        function formatWaUrl(waNum) {
+            if (!waNum) return '#';
+            let clean = waNum.toString().replace(/[^0-9]/g, '');
+            if (clean.startsWith('0')) {
+                clean = '62' + clean.slice(1);
+            }
+            return `https://wa.me/${clean}`;
+        }
+
         function checkAdminAuth() {
             const activePanitia = localStorage.getItem('activePanitiaSession');
             if (activePanitia && VALID_PANITIA.includes(activePanitia)) {
@@ -405,6 +428,9 @@
                         combinedRole += ` / ${data.role2}`;
                     }
 
+                    // Panggil fungsi formatWaUrl agar awalan '0' otomatis terkonversi menjadi '62'
+                    const waUrl = formatWaUrl(data.whatsapp);
+
                     htmlTable += `
                         <tr class="hover:bg-obsidian/50 transition-colors">
                             <td class="p-2.5">${i}</td>
@@ -413,7 +439,7 @@
                             <td class="p-2.5 font-bold text-white">${data.nama || '-'}</td>
                             <td class="p-2.5">${data.idMl || '-'}</td>
                             <td class="p-2.5 font-semibold text-sky-300">${combinedRole}</td>
-                            <td class="p-2.5"><a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
+                            <td class="p-2.5"><a href="${waUrl}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
                             <td class="p-2.5"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
                             <td class="p-2.5 text-center">
                                 <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-xs transition-all cursor-pointer" title="Hapus">
@@ -433,7 +459,7 @@
                                 <p><strong class="text-slate-400">Nama:</strong> <span class="text-white font-bold">${data.nama || '-'}</span></p>
                                 <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
                                 <p><strong class="text-slate-400">Role:</strong> <span class="text-sky-300">${combinedRole}</span></p>
-                                <p><strong class="text-slate-400">WA:</strong> <a href="https://wa.me/${data.whatsapp}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
+                                <p><strong class="text-slate-400">WA:</strong> <a href="${waUrl}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
                                 <p><strong class="text-slate-400">Waktu:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
                             </div>
                             <div class="pt-1.5 border-t border-obsidian-border text-right">
@@ -670,7 +696,7 @@
         }
 
         window.deleteSingleChatMessage = async function(collectionName, docId) {
-            if (confirm(`Hapus pesan ini?`)) {
+            if (confirm(`Hapus pesan me-`)) {
                 try { await deleteDoc(doc(db, collectionName, docId)); } catch (err) { alert("Gagal menghapus pesan."); }
             }
         }
