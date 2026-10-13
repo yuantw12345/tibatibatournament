@@ -184,7 +184,6 @@
                 </div>
             </div>
 
-            <!-- TABEL SIMPEL, RINGKAS, & PAS DI LAYAR HP (TANPA SCROLL) -->
             <div class="overflow-hidden rounded-xl border border-obsidian-border">
                 <table class="w-full text-left border-collapse font-tech text-[11px] sm:text-xs">
                     <thead>
@@ -217,7 +216,6 @@
                 </button>
             </div>
 
-            <!-- DYNAMIC TEAM SELECTOR (2 - 10 TIM) -->
             <div class="bg-obsidian p-4 rounded-xl border border-sky-400/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-tech">
                 <div>
                     <label class="block text-sky-400 font-bold text-xs uppercase mb-1"><i class="fa-solid fa-users mr-1"></i> Pilih Jumlah Tim Terkumpul:</label>
@@ -237,17 +235,14 @@
             </div>
 
             <div class="space-y-6 font-tech text-xs">
-                <!-- GROUP STAGE CONTAINER -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
                     <p id="groupStageInfoText" class="text-[11px] text-slate-400 mb-4">Total 10 Pertandingan (Setiap Tim Bertanding 4 Kali)</p>
                     
                     <div id="groupStageMatchGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Otomatis di-generate oleh JavaScript -->
                     </div>
                 </div>
 
-                <!-- SEMIFINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> 2. Semifinal Bagan (BO 3)</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -289,7 +284,6 @@
                     </div>
                 </div>
 
-                <!-- GRAND FINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> 3. Grand Final (BO 5)</h3>
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
@@ -563,7 +557,26 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // TAMPILAN SUPER RINGKAS: NAMA LENGKAP, STATUS, & AKSI (PAS DI HP TANPA SCROLL)
+        // AKSI ACC DAN HAPUS PENDAFTAR
+        window.handleAccPendaftar = async function(id, newStatus) {
+            try {
+                await updateDoc(doc(db, 'pendaftar', id), { status: newStatus });
+            } catch (err) {
+                alert("Gagal mengubah status pendaftar!");
+            }
+        }
+
+        window.handleDeletePendaftar = async function(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus data pendaftar ini?")) {
+                try {
+                    await deleteDoc(doc(db, 'pendaftar', id));
+                } catch (err) {
+                    alert("Gagal menghapus pendaftar!");
+                }
+            }
+        }
+
+        // TAMPILAN TABEL PENDAFTAR
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -581,8 +594,8 @@
                     const isApp = d.status === 'Approved';
 
                     const btnAcc = isApp 
-                        ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Pending'})" class="px-2 py-1 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-[11px] font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
-                        : `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Approved'})" class="px-2 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
+                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-[11px] font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
+                        : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
 
                     html += `
                         <tr class="hover:bg-obsidian/60 transition-colors">
@@ -595,7 +608,7 @@
                             </td>
                             <td class="py-2.5 px-2.5 text-right space-x-1 shrink-0">
                                 ${btnAcc}
-                                <button onclick="deleteDoc(doc(db, 'pendaftar', '${id}'))" class="p-1 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
@@ -634,6 +647,30 @@
             document.getElementById('applicantDetailModal').classList.add('hidden');
         }
 
+        // AKSI MEMBER USER (BAN & HAPUS)
+        window.toggleBanUser = async function(userId, setBanned) {
+            const actionText = setBanned ? "memblokir (ban)" : "membuka blokir (unban)";
+            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${userId}?`)) {
+                try {
+                    await updateDoc(doc(db, "users", userId), { isBanned: setBanned });
+                    alert(`Akun ${userId} berhasil di-${setBanned ? 'banned' : 'unban'}!`);
+                } catch (err) {
+                    alert("Gagal mengubah status akun.");
+                }
+            }
+        }
+
+        window.handleDeleteUser = async function(userId) {
+            if (confirm(`Apakah Anda yakin ingin menghapus akun member ${userId}?`)) {
+                try {
+                    await deleteDoc(doc(db, "users", userId));
+                    alert(`Akun ${userId} berhasil dihapus!`);
+                } catch (err) {
+                    alert("Gagal menghapus akun.");
+                }
+            }
+        }
+
         function loadMemberUsers() {
             onSnapshot(query(collection(db, "users")), (snapshot) => {
                 document.getElementById('countUsers').innerText = snapshot.size;
@@ -663,7 +700,7 @@
                                 </div>
                                 <div class="flex items-center justify-end gap-2 pt-2 border-t border-obsidian-border/60">
                                     ${btnBan}
-                                    <button onclick="deleteDoc(doc(db, 'users', '${userId}'))" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                    <button onclick="handleDeleteUser('${userId}')" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i> Hapus</button>
                                 </div>
                             </div>
 
@@ -679,7 +716,7 @@
                                 </div>
                                 <div class="col-span-2 flex items-center justify-end gap-2">
                                     ${btnBan}
-                                    <button onclick="deleteDoc(doc(db, 'users', '${userId}'))" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="handleDeleteUser('${userId}')" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -689,15 +726,11 @@
             });
         }
 
-        window.toggleBanUser = async function(userId, setBanned) {
-            const actionText = setBanned ? "memblokir (ban)" : "membuka blokir (unban)";
-            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${userId}?`)) {
-                try {
-                    await updateDoc(doc(db, "users", userId), { isBanned: setBanned });
-                    alert(`Akun ${userId} berhasil di-${setBanned ? 'banned' : 'unban'}!`);
-                } catch (err) {
-                    alert("Gagal mengubah status akun.");
-                }
+        window.handleDeleteChat = async function(col, id) {
+            try {
+                await deleteDoc(doc(db, col, id));
+            } catch (e) {
+                alert("Gagal menghapus pesan!");
             }
         }
 
@@ -707,7 +740,7 @@
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('chats', '${docSnap.id}')" class="text-red-400 cursor-pointer">Hapus</button></div>`;
                 });
                 document.getElementById('chatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
@@ -719,7 +752,7 @@
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'live_chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('live_chats', '${docSnap.id}')" class="text-red-400 cursor-pointer">Hapus</button></div>`;
                 });
                 document.getElementById('liveChatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
