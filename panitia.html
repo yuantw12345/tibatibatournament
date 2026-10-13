@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TIBA TIBA TOURNAMENT — PANEL PANITIA</title>
     
-    <!-- Favicon Custom Logo -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -35,7 +33,6 @@
 </head>
 <body class="min-h-screen p-2.5 sm:p-8 relative">
 
-    <!-- MODAL LOGIN KHUSUS PANITIA -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
         <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
             <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
@@ -65,9 +62,7 @@
         </div>
     </div>
 
-    <!-- AREA KONTROL PANEL UTAMA -->
     <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
-        <!-- HEADER PANEL -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
             <div class="flex items-center space-x-3">
                 <div class="relative w-9 h-9 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
@@ -98,7 +93,6 @@
             </div>
         </div>
 
-        <!-- TOMBOL NAVIGASI MENU TAB -->
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-4 font-tech text-[11px] sm:text-xs font-bold">
             <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
@@ -234,7 +228,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & LOGIKA PANEL -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
