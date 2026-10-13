@@ -33,7 +33,6 @@
 </head>
 <body class="min-h-screen p-2.5 sm:p-8 relative">
 
-    <!-- MODAL LOGIN PANITIA -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
         <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
             <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
@@ -63,7 +62,6 @@
         </div>
     </div>
 
-    <!-- KONTEN UTAMA PANEL PANITIA -->
     <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
             <div class="flex items-center space-x-3">
@@ -95,7 +93,6 @@
             </div>
         </div>
 
-        <!-- NAVIGASI TAB PANEL PANITIA -->
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-4 font-tech text-[11px] sm:text-xs font-bold">
             <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
@@ -117,11 +114,11 @@
             </button>
         </div>
 
-        <!-- TAB 1: DATA PENDAFTAR TURNAMEN -->
+        <!-- TAB 1: DATA PENDAFTAR -->
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen (ACC untuk Tampil di Web)
+                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
             </div>
@@ -146,7 +143,7 @@
             </div>
         </div>
 
-        <!-- TAB BARU: KELOLA JADWAL & BAGAN -->
+        <!-- TAB 2: KELOLA JADWAL & BAGAN -->
         <div id="sectionJadwal" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <div>
@@ -161,7 +158,7 @@
             </div>
 
             <div class="space-y-6 font-tech text-xs">
-                <!-- FORM GROUP STAGE -->
+                <!-- GROUP STAGE -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-sky-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -201,7 +198,7 @@
                     </div>
                 </div>
 
-                <!-- FORM SEMIFINAL -->
+                <!-- SEMIFINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> 2. Semifinal Bagan (BO 3)</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -241,7 +238,7 @@
                     </div>
                 </div>
 
-                <!-- FORM GRAND FINAL -->
+                <!-- GRAND FINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> 3. Grand Final (BO 5)</h3>
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
@@ -264,71 +261,48 @@
             </div>
         </div>
 
-        <!-- TAB PENGATURAN TAMPILAN WEBSITE -->
+        <!-- TAB 3: PENGATURAN WEB -->
         <div id="sectionSettings" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gear text-sky-400"></i> Pengaturan Tampilan & Status Website Utama
-                </h2>
-                <span class="text-[10px] font-tech text-slate-400">Database "settings/website"</span>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white"><i class="fa-solid fa-gear text-sky-400"></i> Pengaturan Website</h2>
             </div>
-
             <form onsubmit="handleSaveWebSettings(event)" class="space-y-4 max-w-xl font-tech text-xs">
                 <div>
                     <label class="block text-slate-300 font-bold mb-1">Status Pendaftaran Turnamen</label>
-                    <select id="inputRegStatus" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-400 cursor-pointer">
-                        <option value="OPEN">PENDAFTARAN DIBUKA (HIJAU)</option>
-                        <option value="CLOSED">PENDAFTARAN DITUTUP (MERAH)</option>
+                    <select id="inputRegStatus" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white">
+                        <option value="OPEN">PENDAFTARAN DIBUKA</option>
+                        <option value="CLOSED">PENDAFTARAN DITUTUP</option>
                     </select>
                 </div>
-                <div class="pt-2">
-                    <button type="submit" id="saveSettingsBtn" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold uppercase rounded-xl transition-all shadow-lg cursor-pointer">
-                        <i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN PERUBAHAN
-                    </button>
-                </div>
+                <button type="submit" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold uppercase rounded-xl cursor-pointer">Simpan Pengaturan</button>
             </form>
         </div>
 
-        <!-- TAB 2: DATA AKUN MEMBER -->
+        <!-- TAB 4: MEMBER -->
         <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Banned Status
-                </h2>
-            </div>
-            <div id="usersCardMobile" class="space-y-2.5 font-tech">
-                <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
-            </div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border"><h2 class="font-display font-bold text-sm sm:text-base text-white">Manajemen Akun</h2></div>
+            <div id="usersCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
         </div>
 
-        <!-- TAB 3: MODERASI CHAT GLOBAL -->
+        <!-- TAB 5: CHAT -->
         <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Chat Global
-                </h2>
-                <button onclick="deleteAllChats('chats')" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow cursor-pointer">HAPUS SEMUA CHAT</button>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white">Chat Global</h2>
+                <button onclick="deleteAllChats('chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs">Hapus Semua</button>
             </div>
-            <div id="chatsCardMobile" class="space-y-2.5 font-tech">
-                <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
-            </div>
+            <div id="chatsCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
         </div>
 
-        <!-- TAB 4: MODERASI LIVE STREAM CHAT -->
+        <!-- TAB 6: LIVE CHAT -->
         <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
-                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-headset text-crimson"></i> Moderasi Live Stream Chat
-                </h2>
-                <button onclick="deleteAllChats('live_chats')" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow cursor-pointer">HAPUS SEMUA LIVE CHAT</button>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white">Live Stream Chat</h2>
+                <button onclick="deleteAllChats('live_chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs">Hapus Semua</button>
             </div>
-            <div id="liveChatsCardMobile" class="space-y-2.5 font-tech">
-                <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
-            </div>
+            <div id="liveChatsCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE & KONTROL PANITIA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -355,21 +329,7 @@
             loadJadwalDataToPanel();
         });
 
-        window.handleRefreshAdminPanel = function() {
-            window.location.reload();
-        }
-
-        function formatWaUrl(waNum) {
-            if (!waNum) return '#';
-            let clean = waNum.toString().replace(/[^0-9]/g, '');
-            if (clean.startsWith('0')) clean = '62' + clean.slice(1);
-            return `https://wa.me/${clean}`;
-        }
-
-        window.toggleDetailCard = function(cardId) {
-            const detailEl = document.getElementById(cardId);
-            if (detailEl) detailEl.classList.toggle('hidden');
-        }
+        window.handleRefreshAdminPanel = function() { window.location.reload(); }
 
         function checkAdminAuth() {
             const activePanitia = localStorage.getItem('activePanitiaSession');
@@ -377,11 +337,7 @@
                 document.getElementById('adminLoginModal').classList.add('hidden');
                 document.getElementById('adminMainContent').classList.remove('hidden');
                 document.getElementById('activeAdminBadge').innerText = activePanitia;
-                
-                loadTournamentApplicants();
-                loadMemberUsers();
-                loadGlobalChats();
-                loadLiveChats();
+                loadTournamentApplicants(); loadMemberUsers(); loadGlobalChats(); loadLiveChats();
             } else {
                 document.getElementById('adminLoginModal').classList.remove('hidden');
                 document.getElementById('adminMainContent').classList.add('hidden');
@@ -392,35 +348,28 @@
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim().toLowerCase();
             const pass = document.getElementById('adminPass').value.trim();
-
             if (VALID_PANITIA.includes(user) && pass === PANITIA_PASSWORD) {
                 localStorage.setItem('activePanitiaSession', user);
                 checkAdminAuth();
-            } else {
-                alert("Login Panitia Gagal! Username atau password salah.");
-            }
+            } else { alert("Login Panitia Gagal!"); }
         }
 
         window.handleAdminLogout = function() {
-            if (confirm("Apakah Anda yakin ingin keluar dari Panel Panitia?")) {
+            if (confirm("Keluar dari panel?")) {
                 localStorage.removeItem('activePanitiaSession');
                 checkAdminAuth();
             }
         }
 
         window.switchAdminTab = function(tab) {
-            const tabs = ['tournaments', 'jadwal', 'settings', 'users', 'chats', 'liveChats'];
-            tabs.forEach(t => {
+            ['tournaments', 'jadwal', 'settings', 'users', 'chats', 'liveChats'].forEach(t => {
                 const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
                 if(btn) btn.className = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 if(sec) sec.classList.add('hidden');
             });
-
-            const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
-            const activeSec = document.getElementById('section' + tab.charAt(0).toUpperCase() + tab.slice(1));
-            if(activeBtn) activeBtn.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5 font-bold";
-            if(activeSec) activeSec.classList.remove('hidden');
+            document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1)).className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5 font-bold";
+            document.getElementById('section' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
         }
 
         async function loadCurrentWebSettings() {
@@ -429,18 +378,15 @@
                 if (docSnap.exists() && docSnap.data().regStatus) {
                     document.getElementById('inputRegStatus').value = docSnap.data().regStatus;
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {}
         }
 
         window.handleSaveWebSettings = async function(e) {
             e.preventDefault();
-            try {
-                await setDoc(doc(db, "settings", "website"), { regStatus: document.getElementById('inputRegStatus').value }, { merge: true });
-                alert("Pengaturan website berhasil disimpan!");
-            } catch (err) { alert("Gagal menyimpan."); }
+            await setDoc(doc(db, "settings", "website"), { regStatus: document.getElementById('inputRegStatus').value }, { merge: true });
+            alert("Pengaturan disimpan!");
         }
 
-        // AMBIL & SIMPAN DATA JADWAL KE FIRESTORE
         async function loadJadwalDataToPanel() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "jadwal_bagan"));
@@ -456,14 +402,12 @@
                         }
                     });
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {}
         }
 
         window.saveAllJadwal = async function() {
             const btn = document.getElementById('saveJadwalGlobalBtn');
-            btn.innerText = "MENYIMPAN...";
-            btn.disabled = true;
-
+            btn.innerText = "MENYIMPAN..."; btn.disabled = true;
             try {
                 const payload = {};
                 ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
@@ -475,91 +419,39 @@
                         pemenang: document.getElementById(`${id}_pemenang`).value.trim()
                     };
                 });
-
                 await setDoc(doc(db, "settings", "jadwal_bagan"), payload);
-                alert("Jadwal & Bagan berhasil diperbarui secara real-time ke website utama!");
-            } catch (err) {
-                console.error(err);
-                alert("Gagal menyimpan jadwal.");
-            } finally {
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL';
-                btn.disabled = false;
-            }
+                alert("Jadwal & Bagan berhasil diperbarui secara real-time!");
+            } catch (err) { alert("Gagal menyimpan."); }
+            finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
         function loadTournamentApplicants() {
-            const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const mobileCardBox = document.getElementById('tournamentCardMobile');
-                const totalPendaftar = snapshot.size;
-                document.getElementById('countTournaments').innerText = totalPendaftar;
-                document.getElementById('statTotalPendaftar').innerText = totalPendaftar;
-                document.getElementById('statTotalTim').innerText = Math.floor(totalPendaftar / 5) + " Tim";
-                document.getElementById('statSisaPemain').innerText = totalPendaftar % 5;
-
-                if (snapshot.empty) {
-                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar.</div>`;
-                    return;
-                }
-
-                let html = '';
-                let i = 1;
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let combinedRole = data.role1 || '-';
-                    if (data.role2) combinedRole += ` / ${data.role2}`;
-                    const isApproved = data.status === 'Approved';
-                    const statusBadge = isApproved ? `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/40 rounded text-[10px] font-bold">CONFIRMED</span>` : `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded text-[10px] font-bold">PENDING</span>`;
-                    const accBtn = isApproved ? `<button onclick="updateApprovalStatus('${docSnap.id}', 'Pending')" class="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold cursor-pointer">Batalkan ACC</button>` : `<button onclick="updateApprovalStatus('${docSnap.id}', 'Approved')" class="px-3 py-1 bg-emerald-accent text-black font-bold rounded cursor-pointer">ACC KE WEB</button>`;
-
-                    html += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs">
-                            <div onclick="toggleDetailCard('d_${docSnap.id}')" class="flex items-center justify-between cursor-pointer">
-                                <div class="flex items-center gap-2 overflow-hidden mr-2">
-                                    <span class="text-slate-500 font-bold shrink-0">#${i}</span>
-                                    <span class="text-white font-bold truncate">${data.nama || '-'}</span>
-                                    <span class="text-slate-400 text-[11px] shrink-0">— (${combinedRole})</span>
-                                </div>
-                                <div class="flex items-center gap-2 shrink-0">
-                                    <span class="px-2 py-0.5 bg-obsidian-card text-slate-300 border border-obsidian-border rounded text-[10px]">${data.payment || '-'}</span>
-                                    ${statusBadge}
-                                    <i class="fa-solid fa-chevron-down text-slate-400 text-[10px]"></i>
-                                </div>
-                            </div>
-                            <div id="d_${docSnap.id}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] bg-obsidian-card p-3 rounded-lg">
-                                <p><strong class="text-slate-400">Username Web:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
-                                <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
-                                <p><strong class="text-slate-400">WhatsApp:</strong> <a href="${formatWaUrl(data.whatsapp)}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
-                                <div class="pt-2 flex items-center justify-between gap-2">
-                                    <div>${accBtn}</div>
-                                    <button onclick="deleteTournamentData('${docSnap.id}')" class="px-3 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold cursor-pointer">Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+            onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
+                document.getElementById('countTournaments').innerText = snapshot.size;
+                document.getElementById('statTotalPendaftar').innerText = snapshot.size;
+                document.getElementById('statTotalTim').innerText = Math.floor(snapshot.size / 5) + " Tim";
+                document.getElementById('statSisaPemain').innerText = snapshot.size % 5;
+                let html = ''; let i = 1;
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    const isApp = d.status === 'Approved';
+                    const btnAcc = isApp ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded">Batalkan ACC</button>` : `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-2 py-1 bg-emerald-accent text-black font-bold rounded">ACC</button>`;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-3 text-xs flex justify-between items-center"><span>#${i} <b>${d.nama}</b> (${d.payment}) - ${d.status}</span><div class="flex gap-2">${btnAcc}<button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="px-2 py-1 bg-red-500/10 text-red-400 rounded">Hapus</button></div></div>`;
                     i++;
                 });
-                mobileCardBox.innerHTML = html;
+                document.getElementById('tournamentCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada pendaftar.</div>';
             });
-        }
-
-        window.updateApprovalStatus = async function(id, status) {
-            await updateDoc(doc(db, "pendaftar", id), { status });
-        }
-        window.deleteTournamentData = async function(id) {
-            if (confirm("Hapus data pendaftaran ini?")) await deleteDoc(doc(db, "pendaftar", id));
         }
 
         function loadMemberUsers() {
             onSnapshot(query(collection(db, "users")), (snapshot) => {
                 document.getElementById('countUsers').innerText = snapshot.size;
-                let html = ''; let i = 1;
+                let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-3 flex justify-between items-center text-[11px]"><span>#${i} <b>${d.username}</b> (Pass: ${d.password})</span><button onclick="deleteDoc(doc(db, 'users', '${docSnap.id}'))" class="px-2 py-1 bg-red-500/10 text-red-400 rounded">Hapus</button></div>`;
-                    i++;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}</b></span><button onclick="deleteDoc(doc(db, 'users', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
                 });
-                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada akun.</div>';
+                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
 
@@ -569,9 +461,9 @@
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-[11px] flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
                 });
-                document.getElementById('chatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada chat.</div>';
+                document.getElementById('chatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
 
@@ -581,14 +473,14 @@
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-[11px] flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'live_chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'live_chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
                 });
-                document.getElementById('liveChatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada live chat.</div>';
+                document.getElementById('liveChatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
 
         window.deleteAllChats = async function(col) {
-            if (confirm("Hapus semua pesan?")) {
+            if (confirm("Hapus semua?")) {
                 const snap = await getDocs(collection(db, col));
                 await Promise.all(snap.docs.map(s => deleteDoc(doc(db, col, s.id))));
             }
