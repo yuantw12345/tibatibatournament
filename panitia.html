@@ -33,6 +33,7 @@
 </head>
 <body class="min-h-screen p-2.5 sm:p-8 relative">
 
+    <!-- MODAL LOGIN PANITIA -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
         <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
             <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
@@ -62,6 +63,7 @@
         </div>
     </div>
 
+    <!-- KONTEN UTAMA PANEL PANITIA -->
     <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
             <div class="flex items-center space-x-3">
@@ -93,9 +95,13 @@
             </div>
         </div>
 
+        <!-- NAVIGASI TAB PANEL PANITIA -->
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-4 font-tech text-[11px] sm:text-xs font-bold">
             <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
+            </button>
+            <button onclick="switchAdminTab('jadwal')" id="tabBtnJadwal" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-calendar-days"></i> <span>KELOLA JADWAL & BAGAN</span>
             </button>
             <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-gear"></i> <span>PENGATURAN WEB</span>
@@ -135,19 +141,126 @@
                 </div>
             </div>
 
-            <div class="bg-obsidian border border-obsidian-border rounded-t-lg px-3.5 py-2 font-tech text-[10px] text-slate-400 uppercase tracking-wider font-bold flex justify-between items-center mb-1">
-                <div class="flex items-center gap-2">
-                    <span class="w-6">NO</span>
-                    <span>NAMA LENGKAP & ROLE (UTAMA / CADANGAN)</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span>PEMBAYARAN & STATUS</span>
-                    <span class="w-3"></span>
-                </div>
-            </div>
-
             <div id="tournamentCardMobile" class="space-y-2 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
+            </div>
+        </div>
+
+        <!-- TAB BARU: KELOLA JADWAL & BAGAN -->
+        <div id="sectionJadwal" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <div>
+                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-sky-400"></i> Kelola Nama Tim, Skor, & Bagan Pertandingan
+                    </h2>
+                    <span class="text-[10px] font-tech text-slate-400">Perubahan akan langsung tampil secara real-time di website utama.</span>
+                </div>
+                <button onclick="saveAllJadwal()" id="saveJadwalGlobalBtn" class="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-black font-tech font-bold text-xs rounded-lg shadow transition-all cursor-pointer">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL
+                </button>
+            </div>
+
+            <div class="space-y-6 font-tech text-xs">
+                <!-- FORM GROUP STAGE -->
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
+                    <h3 class="font-bold text-sky-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
+                            <span class="text-white font-bold block mb-1">Match 1: Group A</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="m1_tim1" placeholder="Nama Tim A" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="m1_tim2" placeholder="Nama Tim B" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="text" id="m1_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <select id="m1_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                    <option value="PENDING">PENDING</option>
+                                    <option value="LIVE">LIVE</option>
+                                    <option value="SELESAI">SELESAI</option>
+                                </select>
+                                <input type="text" id="m1_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
+                            </div>
+                        </div>
+
+                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
+                            <span class="text-white font-bold block mb-1">Match 2: Group B</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="m2_tim1" placeholder="Nama Tim C" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="m2_tim2" placeholder="Nama Tim D" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="text" id="m2_skor" placeholder="Skor (Cth: 1 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <select id="m2_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                    <option value="PENDING">PENDING</option>
+                                    <option value="LIVE">LIVE</option>
+                                    <option value="SELESAI">SELESAI</option>
+                                </select>
+                                <input type="text" id="m2_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM SEMIFINAL -->
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
+                    <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> 2. Semifinal Bagan (BO 3)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
+                            <span class="text-white font-bold block mb-1">Semifinal 1 (1st vs 3rd)</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="sf1_tim1" placeholder="Tim Peringkat 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf1_tim2" placeholder="Tim Peringkat 3" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="text" id="sf1_skor" placeholder="Skor (Cth: 2 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <select id="sf1_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                    <option value="TBA">TBA</option>
+                                    <option value="LIVE">LIVE</option>
+                                    <option value="SELESAI">SELESAI</option>
+                                </select>
+                                <input type="text" id="sf1_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
+                            </div>
+                        </div>
+
+                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
+                            <span class="text-white font-bold block mb-1">Semifinal 2 (2nd vs 4th)</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="sf2_tim1" placeholder="Tim Peringkat 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf2_tim2" placeholder="Tim Peringkat 4" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="text" id="sf2_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <select id="sf2_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                    <option value="TBA">TBA</option>
+                                    <option value="LIVE">LIVE</option>
+                                    <option value="SELESAI">SELESAI</option>
+                                </select>
+                                <input type="text" id="sf2_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM GRAND FINAL -->
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
+                    <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> 3. Grand Final (BO 5)</h3>
+                    <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
+                        <span class="text-white font-bold block mb-1">Grand Final Match</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="gf_tim1" placeholder="Pemenang Semifinal 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="gf_tim2" placeholder="Pemenang Semifinal 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="text" id="gf_skor" placeholder="Skor (Cth: 3 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <select id="gf_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <option value="TBA">TBA</option>
+                                <option value="LIVE">LIVE</option>
+                                <option value="SELESAI">SELESAI</option>
+                            </select>
+                            <input type="text" id="gf_pemenang" placeholder="CHAMPION UTAMA" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-amber-400 font-bold">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -167,12 +280,10 @@
                         <option value="OPEN">PENDAFTARAN DIBUKA (HIJAU)</option>
                         <option value="CLOSED">PENDAFTARAN DITUTUP (MERAH)</option>
                     </select>
-                    <p class="text-[10px] text-slate-400 mt-1">Mengatur warna & teks status pendaftaran pada banner atas dan pop-up welcome website secara otomatis.</p>
                 </div>
-
                 <div class="pt-2">
-                    <button type="submit" id="saveSettingsBtn" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold uppercase rounded-xl transition-all shadow-lg cursor-pointer flex items-center gap-2">
-                        <i class="fa-solid fa-floppy-disk"></i> SIMPAN PERUBAHAN KE WEBSITE
+                    <button type="submit" id="saveSettingsBtn" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold uppercase rounded-xl transition-all shadow-lg cursor-pointer">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN PERUBAHAN
                     </button>
                 </div>
             </form>
@@ -184,7 +295,6 @@
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
                     <i class="fa-solid fa-key text-crimson"></i> Manajemen Akun & Banned Status
                 </h2>
-                <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
             <div id="usersCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
@@ -194,15 +304,10 @@
         <!-- TAB 3: MODERASI CHAT GLOBAL -->
         <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
-                <div>
-                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                        <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Chat Global
-                    </h2>
-                    <span class="text-[10px] font-tech text-slate-400">Database "chats"</span>
-                </div>
-                <button onclick="deleteAllChats('chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
-                </button>
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-comments text-sky-400"></i> Moderasi Chat Global
+                </h2>
+                <button onclick="deleteAllChats('chats')" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow cursor-pointer">HAPUS SEMUA CHAT</button>
             </div>
             <div id="chatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
@@ -212,15 +317,10 @@
         <!-- TAB 4: MODERASI LIVE STREAM CHAT -->
         <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-obsidian-border">
-                <div>
-                    <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                        <i class="fa-solid fa-headset text-crimson"></i> Moderasi Live Stream Chat
-                    </h2>
-                    <span class="text-[10px] font-tech text-slate-400">Database "live_chats"</span>
-                </div>
-                <button onclick="deleteAllChats('live_chats')" class="w-full sm:w-auto px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow transition-all cursor-pointer flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-broom"></i> HAPUS SEMUA LIVE CHAT
-                </button>
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-headset text-crimson"></i> Moderasi Live Stream Chat
+                </h2>
+                <button onclick="deleteAllChats('live_chats')" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-tech font-bold text-[11px] rounded-lg shadow cursor-pointer">HAPUS SEMUA LIVE CHAT</button>
             </div>
             <div id="liveChatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
@@ -228,6 +328,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT FIREBASE & KONTROL PANITIA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -251,30 +352,23 @@
         window.addEventListener('DOMContentLoaded', () => {
             checkAdminAuth();
             loadCurrentWebSettings();
+            loadJadwalDataToPanel();
         });
 
         window.handleRefreshAdminPanel = function() {
-            const icon = document.getElementById('adminRefreshIcon');
-            if (icon) icon.classList.add('fa-spin');
-            setTimeout(() => {
-                window.location.reload();
-            }, 300);
+            window.location.reload();
         }
 
         function formatWaUrl(waNum) {
             if (!waNum) return '#';
             let clean = waNum.toString().replace(/[^0-9]/g, '');
-            if (clean.startsWith('0')) {
-                clean = '62' + clean.slice(1);
-            }
+            if (clean.startsWith('0')) clean = '62' + clean.slice(1);
             return `https://wa.me/${clean}`;
         }
 
         window.toggleDetailCard = function(cardId) {
             const detailEl = document.getElementById(cardId);
-            if (detailEl) {
-                detailEl.classList.toggle('hidden');
-            }
+            if (detailEl) detailEl.classList.toggle('hidden');
         }
 
         function checkAdminAuth() {
@@ -315,81 +409,80 @@
         }
 
         window.switchAdminTab = function(tab) {
-            const btnT = document.getElementById('tabBtnTournaments');
-            const btnS = document.getElementById('tabBtnSettings');
-            const btnU = document.getElementById('tabBtnUsers');
-            const btnC = document.getElementById('tabBtnChats');
-            const btnLC = document.getElementById('tabBtnLiveChats');
-            
-            const secT = document.getElementById('sectionTournaments');
-            const secS = document.getElementById('sectionSettings');
-            const secU = document.getElementById('sectionUsers');
-            const secC = document.getElementById('sectionChats');
-            const secLC = document.getElementById('sectionLiveChats');
+            const tabs = ['tournaments', 'jadwal', 'settings', 'users', 'chats', 'liveChats'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
+                if(btn) btn.className = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                if(sec) sec.classList.add('hidden');
+            });
 
-            const defaultBtnClass = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-            
-            btnT.className = defaultBtnClass;
-            btnS.className = defaultBtnClass;
-            btnU.className = defaultBtnClass;
-            btnC.className = defaultBtnClass;
-            btnLC.className = defaultBtnClass;
-
-            secT.classList.add('hidden');
-            secS.classList.add('hidden');
-            secU.classList.add('hidden');
-            secC.classList.add('hidden');
-            secLC.classList.add('hidden');
-
-            if (tab === 'tournaments') {
-                btnT.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-                secT.classList.remove('hidden');
-            } else if (tab === 'settings') {
-                btnS.className = "px-3 py-2.5 rounded-lg bg-sky-500 text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-                secS.classList.remove('hidden');
-            } else if (tab === 'users') {
-                btnU.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-                secU.classList.remove('hidden');
-            } else if (tab === 'chats') {
-                btnC.className = "px-3 py-2.5 rounded-lg bg-sky-500 text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-                secC.classList.remove('hidden');
-            } else if (tab === 'liveChats') {
-                btnLC.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
-                secLC.classList.remove('hidden');
-            }
+            const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            const activeSec = document.getElementById('section' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            if(activeBtn) activeBtn.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5 font-bold";
+            if(activeSec) activeSec.classList.remove('hidden');
         }
 
         async function loadCurrentWebSettings() {
             try {
-                const docRef = doc(db, "settings", "website");
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.regStatus) document.getElementById('inputRegStatus').value = data.regStatus;
+                const docSnap = await getDoc(doc(db, "settings", "website"));
+                if (docSnap.exists() && docSnap.data().regStatus) {
+                    document.getElementById('inputRegStatus').value = docSnap.data().regStatus;
                 }
-            } catch (e) {
-                console.error("Gagal memuat pengaturan web:", e);
-            }
+            } catch (e) { console.error(e); }
         }
 
         window.handleSaveWebSettings = async function(e) {
             e.preventDefault();
-            const regStatus = document.getElementById('inputRegStatus').value;
-            const btn = document.getElementById('saveSettingsBtn');
+            try {
+                await setDoc(doc(db, "settings", "website"), { regStatus: document.getElementById('inputRegStatus').value }, { merge: true });
+                alert("Pengaturan website berhasil disimpan!");
+            } catch (err) { alert("Gagal menyimpan."); }
+        }
 
+        // AMBIL & SIMPAN DATA JADWAL KE FIRESTORE
+        async function loadJadwalDataToPanel() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "jadwal_bagan"));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
+                        if (d[id]) {
+                            document.getElementById(`${id}_tim1`).value = d[id].tim1 || '';
+                            document.getElementById(`${id}_tim2`).value = d[id].tim2 || '';
+                            document.getElementById(`${id}_skor`).value = d[id].skor || '';
+                            document.getElementById(`${id}_status`).value = d[id].status || 'PENDING';
+                            document.getElementById(`${id}_pemenang`).value = d[id].pemenang || '';
+                        }
+                    });
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        window.saveAllJadwal = async function() {
+            const btn = document.getElementById('saveJadwalGlobalBtn');
             btn.innerText = "MENYIMPAN...";
             btn.disabled = true;
 
             try {
-                await setDoc(doc(db, "settings", "website"), {
-                    regStatus: regStatus
+                const payload = {};
+                ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
+                    payload[id] = {
+                        tim1: document.getElementById(`${id}_tim1`).value.trim(),
+                        tim2: document.getElementById(`${id}_tim2`).value.trim(),
+                        skor: document.getElementById(`${id}_skor`).value.trim(),
+                        status: document.getElementById(`${id}_status`).value,
+                        pemenang: document.getElementById(`${id}_pemenang`).value.trim()
+                    };
                 });
-                alert("Status pendaftaran berhasil disimpan dan diperbarui secara real-time ke website!");
+
+                await setDoc(doc(db, "settings", "jadwal_bagan"), payload);
+                alert("Jadwal & Bagan berhasil diperbarui secara real-time ke website utama!");
             } catch (err) {
                 console.error(err);
-                alert("Gagal menyimpan pengaturan.");
+                alert("Gagal menyimpan jadwal.");
             } finally {
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> SIMPAN PERUBAHAN KE WEBSITE';
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL';
                 btn.disabled = false;
             }
         }
@@ -399,239 +492,105 @@
             onSnapshot(q, (snapshot) => {
                 const mobileCardBox = document.getElementById('tournamentCardMobile');
                 const totalPendaftar = snapshot.size;
-                
                 document.getElementById('countTournaments').innerText = totalPendaftar;
                 document.getElementById('statTotalPendaftar').innerText = totalPendaftar;
-                
-                const totalTim = Math.floor(totalPendaftar / 5);
-                const sisaPemain = totalPendaftar % 5;
-                
-                document.getElementById('statTotalTim').innerText = totalTim + " Tim";
-                document.getElementById('statSisaPemain').innerText = sisaPemain;
+                document.getElementById('statTotalTim').innerText = Math.floor(totalPendaftar / 5) + " Tim";
+                document.getElementById('statSisaPemain').innerText = totalPendaftar % 5;
 
                 if (snapshot.empty) {
-                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar turnamen.</div>`;
+                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar.</div>`;
                     return;
                 }
 
-                let htmlMobile = '';
+                let html = '';
                 let i = 1;
-
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    let timeStr = (data.waktuDaftar && data.waktuDaftar.toDate) ? data.waktuDaftar.toDate().toLocaleString() : '-';
-
                     let combinedRole = data.role1 || '-';
-                    if (data.role2 && data.role2.trim() !== '') {
-                        combinedRole += ` / ${data.role2}`;
-                    }
-
-                    const waUrl = formatWaUrl(data.whatsapp);
-                    const cardDetailId = `detailCard_${docSnap.id}`;
+                    if (data.role2) combinedRole += ` / ${data.role2}`;
                     const isApproved = data.status === 'Approved';
+                    const statusBadge = isApproved ? `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/40 rounded text-[10px] font-bold">CONFIRMED</span>` : `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded text-[10px] font-bold">PENDING</span>`;
+                    const accBtn = isApproved ? `<button onclick="updateApprovalStatus('${docSnap.id}', 'Pending')" class="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold cursor-pointer">Batalkan ACC</button>` : `<button onclick="updateApprovalStatus('${docSnap.id}', 'Approved')" class="px-3 py-1 bg-emerald-accent text-black font-bold rounded cursor-pointer">ACC KE WEB</button>`;
 
-                    const statusBadge = isApproved
-                        ? `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/40 rounded text-[10px] font-bold"><i class="fa-solid fa-check mr-1"></i>CONFIRMED</span>`
-                        : `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded text-[10px] font-bold">PENDING</span>`;
-
-                    const accBtnHtml = isApproved
-                        ? `<button onclick="updateApprovalStatus('${docSnap.id}', 'Pending')" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded font-bold transition-all cursor-pointer"><i class="fa-solid fa-xmark mr-1"></i> Batalkan ACC</button>`
-                        : `<button onclick="updateApprovalStatus('${docSnap.id}', 'Approved')" class="px-3 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold rounded shadow transition-all cursor-pointer"><i class="fa-solid fa-check mr-1"></i> ACC / KONFIRMASI KE WEB</button>`;
-
-                    htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs transition-all hover:border-emerald-accent/50">
-                            <div onclick="toggleDetailCard('${cardDetailId}')" class="flex items-center justify-between cursor-pointer select-none">
+                    html += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs">
+                            <div onclick="toggleDetailCard('d_${docSnap.id}')" class="flex items-center justify-between cursor-pointer">
                                 <div class="flex items-center gap-2 overflow-hidden mr-2">
                                     <span class="text-slate-500 font-bold shrink-0">#${i}</span>
-                                    <span class="text-white font-bold tracking-wide truncate">${data.nama || '-'}</span>
+                                    <span class="text-white font-bold truncate">${data.nama || '-'}</span>
                                     <span class="text-slate-400 text-[11px] shrink-0">— (${combinedRole})</span>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0">
-                                    <span class="px-2 py-0.5 bg-obsidian-card text-slate-300 border border-obsidian-border rounded text-[10px] font-bold">${data.payment || '-'}</span>
+                                    <span class="px-2 py-0.5 bg-obsidian-card text-slate-300 border border-obsidian-border rounded text-[10px]">${data.payment || '-'}</span>
                                     ${statusBadge}
                                     <i class="fa-solid fa-chevron-down text-slate-400 text-[10px]"></i>
                                 </div>
                             </div>
-
-                            <div id="${cardDetailId}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] font-tech bg-obsidian-card p-3 rounded-lg">
-                                <p><strong class="text-slate-400">Akun Web User:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
-                                <p><strong class="text-slate-400">ID Mobile Legend:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
-                                <p><strong class="text-slate-400">Nomor WhatsApp:</strong> <a href="${waUrl}" target="_blank" class="text-sky-400 underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></p>
-                                <p><strong class="text-slate-400">Waktu Pendaftaran:</strong> <span class="text-slate-400">${timeStr}</span></p>
-                                
+                            <div id="d_${docSnap.id}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] bg-obsidian-card p-3 rounded-lg">
+                                <p><strong class="text-slate-400">Username Web:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
+                                <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
+                                <p><strong class="text-slate-400">WhatsApp:</strong> <a href="${formatWaUrl(data.whatsapp)}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
                                 <div class="pt-2 flex items-center justify-between gap-2">
-                                    <div>${accBtnHtml}</div>
-                                    <button onclick="deleteTournamentData('${docSnap.id}', '${data.nama}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded font-bold transition-all cursor-pointer">
-                                        <i class="fa-solid fa-trash mr-1"></i> Hapus
-                                    </button>
+                                    <div>${accBtn}</div>
+                                    <button onclick="deleteTournamentData('${docSnap.id}')" class="px-3 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold cursor-pointer">Hapus</button>
                                 </div>
                             </div>
                         </div>
                     `;
                     i++;
                 });
-
-                mobileCardBox.innerHTML = htmlMobile;
+                mobileCardBox.innerHTML = html;
             });
         }
 
-        window.updateApprovalStatus = async function(docId, newStatus) {
-            try {
-                const docRef = doc(db, "pendaftar", docId);
-                await updateDoc(docRef, { status: newStatus });
-                alert(newStatus === 'Approved' ? "Peserta berhasil di-ACC dan akan tampil di website!" : "Status peserta dibatalkan.");
-            } catch (err) {
-                console.error(err);
-                alert("Gagal mengubah status.");
-            }
+        window.updateApprovalStatus = async function(id, status) {
+            await updateDoc(doc(db, "pendaftar", id), { status });
+        }
+        window.deleteTournamentData = async function(id) {
+            if (confirm("Hapus data pendaftaran ini?")) await deleteDoc(doc(db, "pendaftar", id));
         }
 
         function loadMemberUsers() {
-            const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const mobileCardBox = document.getElementById('usersCardMobile');
+            onSnapshot(query(collection(db, "users")), (snapshot) => {
                 document.getElementById('countUsers').innerText = snapshot.size;
-                if (snapshot.empty) {
-                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada akun member.</div>`;
-                    return;
-                }
-                let htmlMobile = '';
-                let i = 1;
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let timeStr = (data.createdAt && data.createdAt.toDate) ? data.createdAt.toDate().toLocaleString() : '-';
-                    const isBanned = data.isBanned === true;
-                    const statusBadge = isBanned 
-                        ? `<span class="px-1.5 py-0.5 bg-red-500/20 text-red-400 border border-red-500/40 rounded text-[9px] font-bold">BANNED</span>`
-                        : `<span class="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-[9px] font-bold">AKTIF</span>`;
-                    const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-0.5"></i> Unban' : '<i class="fa-solid fa-ban mr-0.5"></i> Ban';
-                    const banBtnClass = isBanned ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
-
-                    htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
-                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                <span class="text-emerald-accent font-bold">#${i} ${data.username}</span>
-                                <div>${statusBadge}</div>
-                            </div>
-                            <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
-                            <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
-                            <div class="pt-1.5 border-t border-obsidian-border flex gap-1.5">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px] cursor-pointer">${banBtnText}</button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-user-xmark"></i> Hapus</button>
-                            </div>
-                        </div>
-                    `;
+                let html = ''; let i = 1;
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-3 flex justify-between items-center text-[11px]"><span>#${i} <b>${d.username}</b> (Pass: ${d.password})</span><button onclick="deleteDoc(doc(db, 'users', '${docSnap.id}'))" class="px-2 py-1 bg-red-500/10 text-red-400 rounded">Hapus</button></div>`;
                     i++;
                 });
-                usersCardMobile.innerHTML = htmlMobile;
+                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada akun.</div>';
             });
         }
 
         function loadGlobalChats() {
-            const q = query(collection(db, "chats"), orderBy("time", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const mobileCardBox = document.getElementById('chatsCardMobile');
+            onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (snapshot) => {
                 document.getElementById('countChats').innerText = snapshot.size;
-                if (snapshot.empty) {
-                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada obrolan.</div>`;
-                    return;
-                }
-                let htmlMobile = '';
-                let i = 1;
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
-                    htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sky-400 font-bold">#${i} ${data.username}</span>
-                                <span class="text-[9px] text-slate-400">${timeStr}</span>
-                            </div>
-                            <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
-                            <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus Pesan</button>
-                            </div>
-                        </div>
-                    `;
-                    i++;
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-[11px] flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
                 });
-                chatsCardMobile.innerHTML = htmlMobile;
+                document.getElementById('chatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada chat.</div>';
             });
         }
 
         function loadLiveChats() {
-            const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const mobileCardBox = document.getElementById('liveChatsCardMobile');
+            onSnapshot(query(collection(db, "live_chats"), orderBy("time", "desc")), (snapshot) => {
                 document.getElementById('countLiveChats').innerText = snapshot.size;
-                if (snapshot.empty) {
-                    mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada live chat.</div>`;
-                    return;
-                }
-                let htmlMobile = '';
-                let i = 1;
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
-                    htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
-                            <div class="flex items-center justify-between">
-                                <span class="text-crimson font-bold">#${i} ${data.username}</span>
-                                <span class="text-[9px] text-slate-400">${timeStr}</span>
-                            </div>
-                            <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
-                            <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus Komentar</button>
-                            </div>
-                        </div>
-                    `;
-                    i++;
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-[11px] flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="deleteDoc(doc(db, 'live_chats', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
                 });
-                liveChatsCardMobile.innerHTML = htmlMobile;
+                document.getElementById('liveChatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada live chat.</div>';
             });
         }
 
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        window.toggleBanUser = async function(docId, username, shouldBan) {
-            if (confirm(`Apakah Anda yakin ingin mengubah status banned akun ${username}?`)) {
-                try {
-                    const userRef = doc(db, "users", docId);
-                    await updateDoc(userRef, { isBanned: shouldBan, sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2) });
-                    alert("Status akun berhasil diperbarui!");
-                } catch (err) { alert("Gagal memperbarui status."); }
-            }
-        }
-
-        window.deleteTournamentData = async function(docId, nama) {
-            if (confirm(`Hapus data pendaftaran untuk ${nama}?`)) {
-                try { await deleteDoc(doc(db, "pendaftar", docId)); } catch (err) { alert("Gagal menghapus data."); }
-            }
-        }
-
-        window.deleteMemberAccount = async function(docId, username) {
-            if (confirm(`Hapus permanen akun ${username}?`)) {
-                try { await deleteDoc(doc(db, "users", username)); } catch (err) { alert("Gagal menghapus akun."); }
-            }
-        }
-
-        window.deleteSingleChatMessage = async function(collectionName, docId) {
-            if (confirm("Hapus pesan ini?")) {
-                try { await deleteDoc(doc(db, collectionName, docId)); } catch (err) { alert("Gagal menghapus pesan."); }
-            }
-        }
-
-        window.deleteAllChats = async function(collectionName) {
-            const targetName = collectionName === 'chats' ? "CHAT GLOBAL" : "LIVE STREAM CHAT";
-            if (confirm(`PERHATIAN: Hapus semua pesan di ${targetName}?`)) {
-                try {
-                    const querySnapshot = await getDocs(collection(db, collectionName));
-                    const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, collectionName, docSnap.id)));
-                    await Promise.all(deletePromises);
-                    alert("Berhasil dibersihkan!");
-                } catch (err) { alert("Gagal membersihkan pesan."); }
+        window.deleteAllChats = async function(col) {
+            if (confirm("Hapus semua pesan?")) {
+                const snap = await getDocs(collection(db, col));
+                await Promise.all(snap.docs.map(s => deleteDoc(doc(db, col, s.id))));
             }
         }
     </script>
