@@ -1,23 +1,9 @@
-window.openPendaftarModal = function() {
-  const modal = document.getElementById('pendaftarModal');
-  if(modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-window.closePendaftarModal = function() {
-  const modal = document.getElementById('pendaftarModal');
-  if(modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
-}
-
-// MEMUAT DATA PENDAFTAR YANG SUDAH DI-ACC KE DALAM MODAL POP-UP (HANYA NOMOR URUT & NAMA LENGKAP)
+// MEMUAT DATA PENDAFTAR YANG SUDAH DI-ACC KE DALAM MODAL POP-UP (TANPA SYARAT COMPOSITE INDEX)
 function initPublicPendaftar() {
   try {
-    const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"), orderBy("waktuDaftar", "desc"));
+    // Kueri hanya filter status 'Approved' tanpa orderBy di Firestore
+    const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"));
+    
     onSnapshot(q, (snapshot) => {
       const container = document.getElementById('publicPendaftarList');
       if (!container) return;
@@ -27,11 +13,23 @@ function initPublicPendaftar() {
         return;
       }
 
+      // Ambil dokumen dan urutkan berdasarkan waktuDaftar secara lokal di JavaScript
+      const docsData = [];
+      snapshot.forEach((docSnap) => {
+        docsData.push({ id: docSnap.id, ...docSnap.data() });
+      });
+
+      // Urutkan dari yang terbaru ke terlama
+      docsData.sort((a, b) => {
+        const timeA = a.waktuDaftar && a.waktuDaftar.seconds ? a.waktuDaftar.seconds : 0;
+        const timeB = b.waktuDaftar && b.waktuDaftar.seconds ? b.waktuDaftar.seconds : 0;
+        return timeB - timeA;
+      });
+
       let html = '';
       let i = 1;
-      snapshot.forEach((docSnap) => {
-        const d = docSnap.data();
 
+      docsData.forEach((d) => {
         html += `
           <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -43,7 +41,14 @@ function initPublicPendaftar() {
         `;
         i++;
       });
+
       container.innerHTML = html;
+    }, (error) => {
+      console.error("Error Firestore listener:", error);
+      const container = document.getElementById('publicPendaftarList');
+      if (container) {
+        container.innerHTML = '<div class="text-center text-red-400 py-6 text-xs">Gagal memuat data peserta. Cek koneksi atau pendaftaran.</div>';
+      }
     });
   } catch (e) {
     console.error("Gagal memuat pendaftar publik:", e);
