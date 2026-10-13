@@ -169,7 +169,7 @@ Login atau buat akun website Anda terlebih dahulu untuk membuka akses pendaftara
 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson opacity-75"></span>
 <span class="relative inline-flex rounded-full h-3 w-3 bg-crimson"></span>
 </span>
-<h2 class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-wide">LIVE STREAMING & CHAT ARENA</h2>
+<h2 class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-wide">LIVE STREAMING FINAL & CHAT ARENA</h2>
 </div>
 <span class="px-3 py-1 bg-crimson/20 border border-crimson/50 text-crimson font-tech font-bold text-xs rounded-lg uppercase">LIVE BROADCAST</span>
 </div>
@@ -564,6 +564,79 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl">OK</button>
 </div>
 </div>
+
+<!-- FOOTER WEBSITE -->
+<footer class="bg-obsidian-card border-t border-obsidian-border text-slate-400 pt-12 pb-8 mt-16 font-tech">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-obsidian-border">
+      
+      <!-- KOLOM 1: LOGO & DESKRIPSI -->
+      <div class="md:col-span-5 space-y-4">
+        <div class="flex items-center space-x-3">
+          <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-10 h-10 object-contain">
+          <span class="font-display font-extrabold text-sm tracking-wider text-white">
+            <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span>
+          </span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+          Situs resmi pendaftaran Tiba Tiba Tournament Mobile Legends (MLBB). Tunjukkan dominasi tim esport kamu, raih kemenangan, dan rebut total prize pool jutaan rupiah!
+        </p>
+        <!-- IKON SOSIAL MEDIA -->
+        <div class="flex items-center space-x-3 pt-2">
+          <a href="https://instagram.com" target="_blank" class="w-8 h-8 rounded-lg bg-obsidian border border-obsidian-border flex items-center justify-center text-slate-300 hover:text-crimson hover:border-crimson transition-all text-sm">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://tiktok.com" target="_blank" class="w-8 h-8 rounded-lg bg-obsidian border border-obsidian-border flex items-center justify-center text-slate-300 hover:text-emerald-accent hover:border-emerald-accent transition-all text-sm">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://wa.me/6287763331294" target="_blank" class="w-8 h-8 rounded-lg bg-obsidian border border-obsidian-border flex items-center justify-center text-slate-300 hover:text-emerald-accent hover:border-emerald-accent transition-all text-sm">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a href="https://youtube.com" target="_blank" class="w-8 h-8 rounded-lg bg-obsidian border border-obsidian-border flex items-center justify-center text-slate-300 hover:text-crimson hover:border-crimson transition-all text-sm">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- KOLOM 2: PETA SITUS -->
+      <div class="md:col-span-3 space-y-3">
+        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest font-display">Peta Situs</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#hero-banner" class="hover:text-white transition-colors">Beranda</a></li>
+          <li><button onclick="openPendaftarModal()" class="hover:text-amber-400 transition-colors text-left cursor-pointer">Pendaftar Musim Ini</button></li>
+          <li><button onclick="openJadwalModal()" class="hover:text-sky-400 transition-colors text-left cursor-pointer">Jadwal & Klasemen</button></li>
+          <li><button onclick="openChampionsModal()" class="hover:text-emerald-accent transition-colors text-left cursor-pointer">Catatan Juara</button></li>
+        </ul>
+      </div>
+
+      <!-- KOLOM 3: DUKUNGAN / BANTUAN -->
+      <div class="md:col-span-2 space-y-3">
+        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest font-display">Dukungan</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="https://wa.me/6287763331294" target="_blank" class="hover:text-emerald-accent transition-colors">Panitia 1 (WhatsApp)</a></li>
+          <li><a href="https://wa.me/6281398115475" target="_blank" class="hover:text-emerald-accent transition-colors">Panitia 2 (WhatsApp)</a></li>
+          <li><a href="#live-stream" class="hover:text-white transition-colors">Live Streaming</a></li>
+        </ul>
+      </div>
+
+      <!-- KOLOM 4: LEGALITAS & RULES -->
+      <div class="md:col-span-2 space-y-3">
+        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest font-display">Legalitas</h4>
+        <ul class="space-y-2 text-xs">
+          <li><button onclick="openRulesInfoModal()" class="hover:text-sky-400 transition-colors text-left cursor-pointer">Rules Turnamen</button></li>
+          <li><button onclick="openModal('rulesModal')" class="hover:text-white transition-colors text-left cursor-pointer">Info Prize Pool</button></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- HAK CIPTA (COPYRIGHT) -->
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+      <p>© 2026 TIBA TIBA TOURNAMENT. All rights reserved.</p>
+      <p class="text-slate-600">Official Esports Arena MLBB</p>
+    </div>
+  </div>
+</footer>
 
 <script type="module" src="script.js"></script>
 </body>
