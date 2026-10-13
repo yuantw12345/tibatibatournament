@@ -47,46 +47,29 @@ window.closeModal = function(id) {
   }
 }
 
-// BUKA & TUTUP MODAL JADWAL & BAGAN
 window.openJadwalModal = function() {
   const modal = document.getElementById('jadwalModal');
-  if(modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+  if(modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
 }
 
 window.closeJadwalModal = function() {
   const modal = document.getElementById('jadwalModal');
-  if(modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
+  if(modal) { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
 }
 
-// BUKA & TUTUP MODAL CATATAN JUARA
 window.openChampionsModal = function() {
   const modal = document.getElementById('championsModal');
-  if(modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+  if(modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
 }
 
 window.closeChampionsModal = function() {
   const modal = document.getElementById('championsModal');
-  if(modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
+  if(modal) { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
 }
 
 window.openChatModal = function() {
   const chatModal = document.getElementById('chatModal');
-  if(chatModal) {
-    chatModal.classList.add('active');
-    updateChatAccessUI();
-  }
+  if(chatModal) { chatModal.classList.add('active'); updateChatAccessUI(); }
 }
 
 window.closeChatModal = function() {
@@ -113,18 +96,12 @@ window.closeRulesInfoModal = function() {
 
 window.openPendaftarModal = function() {
   const modal = document.getElementById('pendaftarModal');
-  if(modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+  if(modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
 }
 
 window.closePendaftarModal = function() {
   const modal = document.getElementById('pendaftarModal');
-  if(modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
+  if(modal) { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
 }
 
 window.updateChatAccessUI = function() {
@@ -164,7 +141,7 @@ function startSessionWatcher() {
           localStorage.removeItem('activeMemberUser');
           localStorage.removeItem('sessionToken');
           checkAuthStatus();
-          showCustomAlert("AKUN DIBLOKIR", "Sesi diakhiri. Akun Anda telah di-banned oleh panitia.", true);
+          showCustomAlert("AKUN DIBLOKIR", "Sesi diakhiri. Akun Anda telah di-banned oleh panitia.");
           return;
         }
         const serverToken = userData.sessionToken;
@@ -172,7 +149,7 @@ function startSessionWatcher() {
           localStorage.removeItem('activeMemberUser');
           localStorage.removeItem('sessionToken');
           checkAuthStatus();
-          showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain.", true);
+          showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain.");
         }
       }
     } catch (err) { console.error("Gagal memeriksa sesi:", err); }
@@ -209,34 +186,83 @@ function initRealtimeWebSettings() {
   } catch (e) { console.error(e); }
 }
 
-// REAL-TIME SINKRONISASI JADWAL & BAGAN DARI PANEL PANITIA
+// REAL-TIME JADWAL & BAGAN DENGAN TANGGAL, JAM, DAN MATCH DINAMIS
 function initRealtimeJadwal() {
   try {
     const docRef = doc(db, "settings", "jadwal_bagan");
     onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const d = docSnap.data();
-        ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
+        const totalTeams = parseInt(d.totalTeams || 5);
+        const totalGroupMatches = (totalTeams * (totalTeams - 1)) / 2;
+
+        const badgeEl = document.getElementById('webTotalGroupMatchBadge');
+        if (badgeEl) badgeEl.innerText = `${totalGroupMatches} MATCHES (${totalTeams} TIM)`;
+
+        const container = document.getElementById('webGroupStageContainer');
+        if (container) {
+          let groupHtml = '';
+          for (let i = 1; i <= totalGroupMatches; i++) {
+            const key = `m${i}`;
+            const mData = d[key] || {};
+            const t1 = mData.tim1 || '-';
+            const t2 = mData.tim2 || '-';
+            const skor = mData.skor || 'VS';
+            const status = mData.status || 'PENDING';
+            const win = mData.pemenang || '-';
+            const datetime = mData.datetime || 'Belum diatur';
+
+            let statusBadgeClass = "bg-amber-500/10 text-amber-400";
+            if (status === 'LIVE') statusBadgeClass = "bg-crimson/20 text-crimson animate-pulse";
+            if (status === 'SELESAI') statusBadgeClass = "bg-emerald-500/20 text-emerald-accent";
+
+            groupHtml += `
+              <div class="bg-obsidian-card p-3 rounded-xl border border-obsidian-border space-y-2">
+                <div class="flex justify-between items-center text-[10px] text-slate-400">
+                  <span class="font-bold text-slate-300">Match ${i}</span>
+                  <span class="px-2 py-0.5 ${statusBadgeClass} rounded font-bold text-[9px]">${status}</span>
+                </div>
+                <div class="text-[10px] text-sky-400 font-bold bg-obsidian px-2 py-1 rounded border border-obsidian-border text-center">
+                  <i class="fa-regular fa-clock mr-1"></i> ${datetime}
+                </div>
+                <div class="flex justify-between items-center font-bold text-white text-xs">
+                  <span class="truncate max-w-[40%]">${t1}</span>
+                  <span class="text-sky-400 px-2 py-0.5 bg-obsidian rounded font-mono">${skor}</span>
+                  <span class="truncate max-w-[40%] text-right">${t2}</span>
+                </div>
+                <div class="text-[10px] text-emerald-accent pt-1 border-t border-obsidian-border flex justify-between">
+                  <span>Pemenang:</span> <strong class="text-white">${win}</strong>
+                </div>
+              </div>
+            `;
+          }
+          container.innerHTML = groupHtml;
+        }
+
+        // SEMIFINAL & GRAND FINAL
+        ['sf1', 'sf2', 'gf'].forEach(id => {
           if (d[id]) {
             const t1El = document.getElementById(`web_${id}_t1`);
             const t2El = document.getElementById(`web_${id}_t2`);
             const skorEl = document.getElementById(`web_${id}_skor`);
             const statusEl = document.getElementById(`web_${id}_status`);
             const winEl = document.getElementById(`web_${id}_win`);
+            const dtEl = document.getElementById(`web_${id}_datetime`);
 
             if (t1El) t1El.innerText = d[id].tim1 || '-';
             if (t2El) t2El.innerText = d[id].tim2 || '-';
             if (skorEl) skorEl.innerText = d[id].skor || 'VS';
             if (winEl) winEl.innerText = d[id].pemenang || '-';
+            if (dtEl) dtEl.innerText = d[id].datetime || 'Belum diatur';
 
             if (statusEl) {
-              statusEl.innerText = d[id].status || 'PENDING';
+              statusEl.innerText = d[id].status || 'TBA';
               if (d[id].status === 'LIVE') {
                 statusEl.className = "px-2 py-0.5 bg-crimson/20 text-crimson rounded font-bold text-[9px] animate-pulse";
               } else if (d[id].status === 'SELESAI') {
                 statusEl.className = "px-2 py-0.5 bg-emerald-500/20 text-emerald-accent rounded font-bold text-[9px]";
               } else {
-                statusEl.className = "px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded font-bold text-[9px]";
+                statusEl.className = "px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]";
               }
             }
           }
@@ -376,7 +402,7 @@ window.showCustomConfirm = function(text, onYesCallback) {
 let currentIndex = 0;
 const slidesContainer = document.getElementById('carouselSlides');
 window.nextSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
-window.prevSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
+window.prevSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex - 1 + 3) % 3 * 100}%)`; }
 setInterval(nextSlide, 4500);
 
 window.checkAuthStatus = function() {
@@ -425,11 +451,11 @@ window.handleCardAuthClick = function() {
 
 window.handleTournamentCardClick = async function() {
   const loggedUser = localStorage.getItem('activeMemberUser');
-  if (!loggedUser) { showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun terlebih dahulu!", true); openModal('loginModal'); return; }
+  if (!loggedUser) { showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun terlebih dahulu!"); openModal('loginModal'); return; }
   try {
     const q = query(collection(db, "pendaftar"), where("usernameDb", "==", loggedUser));
     const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) { showCustomAlert("SUDAH MENDAFTAR", `Akun ${loggedUser} sudah pernah terdaftar di turnamen ini!`, true); }
+    if (!querySnapshot.empty) { showCustomAlert("SUDAH MENDAFTAR", `Akun ${loggedUser} sudah pernah terdaftar di turnamen ini!`); }
     else { openModal('registerModal'); }
   } catch (err) { openModal('registerModal'); }
 }
@@ -443,7 +469,7 @@ window.handleRegisterAccount = async function(event) {
   try {
     const userRef = doc(db, "users", username);
     const userSnap = await getDoc(userRef);
-    if (userSnap.exists()) { showCustomAlert("GAGAL", "Username sudah dipakai!", true); return; }
+    if (userSnap.exists()) { showCustomAlert("GAGAL", "Username sudah dipakai!"); return; }
     const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
     await setDoc(userRef, { username, password, sessionToken, isBanned: false, createdAt: serverTimestamp() });
     closeModal('registerAccountModal');
@@ -451,7 +477,7 @@ window.handleRegisterAccount = async function(event) {
     localStorage.setItem('sessionToken', sessionToken);
     checkAuthStatus(); showCustomAlert("BERHASIL", "Akun berhasil dibuat!");
     event.target.reset();
-  } catch (error) { showCustomAlert("KESALAHAN", "Gagal mendaftar akun.", true); }
+  } catch (error) { showCustomAlert("KESALAHAN", "Gagal mendaftar akun."); }
   finally { btn.innerText = "DAFTARKAN AKUN"; btn.disabled = false; }
 }
 
@@ -464,10 +490,10 @@ window.handleLogin = async function(event) {
   try {
     const userRef = doc(db, "users", username);
     const userSnap = await getDoc(userRef);
-    if (!userSnap.exists()) { showCustomAlert("GAGAL", "Username tidak ditemukan!", true); return; }
+    if (!userSnap.exists()) { showCustomAlert("GAGAL", "Username tidak ditemukan!"); return; }
     const userData = userSnap.data();
-    if (userData.isBanned === true) { showCustomAlert("DIBLOKIR", "Akun Anda di-banned panitia!", true); return; }
-    if (userData.password !== password) { showCustomAlert("GAGAL", "Password salah!", true); return; }
+    if (userData.isBanned === true) { showCustomAlert("DIBLOKIR", "Akun Anda di-banned panitia!"); return; }
+    if (userData.password !== password) { showCustomAlert("GAGAL", "Password salah!"); return; }
     const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
     await updateDoc(userRef, { sessionToken });
     localStorage.setItem('activeMemberUser', username);
@@ -475,7 +501,7 @@ window.handleLogin = async function(event) {
     closeModal('loginModal'); checkAuthStatus();
     showCustomAlert("BERHASIL", `Selamat datang kembali, ${username}!`);
     event.target.reset();
-  } catch (error) { showCustomAlert("KESALAHAN", "Gagal login.", true); }
+  } catch (error) { showCustomAlert("KESALAHAN", "Gagal login."); }
   finally { btn.innerText = "MASUK AKUN"; btn.disabled = false; }
 }
 
@@ -492,7 +518,7 @@ window.handleLogout = async function() {
 window.handleFormSubmit = async function(event) {
   event.preventDefault();
   const loggedUser = localStorage.getItem('activeMemberUser');
-  if (!loggedUser) { showCustomAlert("SESI HABIS", "Silakan login kembali.", true); openModal('loginModal'); return; }
+  if (!loggedUser) { showCustomAlert("SESI HABIS", "Silakan login kembali."); openModal('loginModal'); return; }
   const submitBtn = document.getElementById('submitBtn');
   submitBtn.innerText = "MENGIRIM..."; submitBtn.disabled = true;
   try {
@@ -510,6 +536,6 @@ window.handleFormSubmit = async function(event) {
     closeModal('registerModal');
     showCustomAlert("BERHASIL", "Pendaftaran terkirim! Tunggu konfirmasi panitia (ACC).");
     event.target.reset();
-  } catch (error) { showCustomAlert("KESALAHAN", "Gagal menyimpan data.", true); }
+  } catch (error) { showCustomAlert("KESALAHAN", "Gagal menyimpan data."); }
   finally { submitBtn.innerText = "SUBMIT DATA"; submitBtn.disabled = false; }
 }
