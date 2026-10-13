@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
   checkAuthStatus();
   initRealtimeChats();
   initRealtimeLiveChats();
+  initPublicPendaftar();
   startSessionWatcher();
 });
 
@@ -54,36 +55,24 @@ window.openChatModal = function() {
 
 window.closeChatModal = function() {
   const chatModal = document.getElementById('chatModal');
-  if(chatModal) {
-    chatModal.classList.remove('active');
-  }
+  if(chatModal) { chatModal.classList.remove('active'); }
 }
 
 window.toggleChatModal = function() {
   const chatModal = document.getElementById('chatModal');
   if(chatModal) {
-    if (chatModal.classList.contains('active')) {
-      closeChatModal();
-    } else {
-      openChatModal();
-    }
+    if (chatModal.classList.contains('active')) { closeChatModal(); } else { openChatModal(); }
   }
 }
 
 window.openRulesInfoModal = function() {
   const modal = document.getElementById('rulesInfoModal');
-  if(modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+  if(modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
 }
 
 window.closeRulesInfoModal = function() {
   const modal = document.getElementById('rulesInfoModal');
-  if(modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
+  if(modal) { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
 }
 
 window.updateChatAccessUI = function() {
@@ -134,10 +123,51 @@ function startSessionWatcher() {
           showCustomAlert("SESI BERAKHIR", "Akun Anda telah login di perangkat lain.", true);
         }
       }
-    } catch (err) {
-      console.error("Gagal memeriksa sesi:", err);
-    }
+    } catch (err) { console.error("Gagal memeriksa sesi:", err); }
   }, 10000);
+}
+
+// MEMUAT DATA PENDAFTAR YANG SUDAH DI-ACC KE WEBSITE UTAMA
+function initPublicPendaftar() {
+  try {
+    const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"), orderBy("waktuDaftar", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const container = document.getElementById('publicPendaftarList');
+      if (!container) return;
+
+      if (snapshot.empty) {
+        container.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada peserta yang dikonfirmasi oleh panitia.</div>';
+        return;
+      }
+
+      let html = '';
+      let i = 1;
+      snapshot.forEach((docSnap) => {
+        const d = docSnap.data();
+        let combinedRole = d.role1 || '-';
+        if (d.role2 && d.role2.trim() !== '') {
+          combinedRole += ` / ${d.role2}`;
+        }
+
+        html += `
+          <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-amber-400 font-bold">#${i}</span>
+              <div>
+                <h4 class="text-white font-bold text-xs">${d.nama || '-'}</h4>
+                <p class="text-[10px] text-slate-400">Role: <span class="text-sky-300">${combinedRole}</span></p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold text-[10px]">${d.payment || '-'}</span>
+          </div>
+        `;
+        i++;
+      });
+      container.innerHTML = html;
+    });
+  } catch (e) {
+    console.error("Gagal memuat pendaftar publik:", e);
+  }
 }
 
 function initRealtimeChats() {
@@ -147,7 +177,7 @@ function initRealtimeChats() {
       const chatBox = document.getElementById('chatBox');
       if (!chatBox) return;
       if (snapshot.empty) {
-        chatBox.innerHTML = '<div class="text-center text-slate-500 py-6">Belum ada obrolan global. Yuk mulai mengobrol!</div>';
+        chatBox.innerHTML = '<div class="text-center text-slate-500 py-6">Belum ada obrolan global.</div>';
         return;
       }
       const loggedUser = localStorage.getItem('activeMemberUser');
@@ -156,7 +186,6 @@ function initRealtimeChats() {
         const c = docSnap.data();
         const isMe = loggedUser && c.username && (c.username.toLowerCase() === loggedUser.toLowerCase());
         let formattedTime = (c.time && c.time.toDate) ? c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-        
         if (isMe) {
           html += `<div class="flex flex-col items-end"><span class="text-[9px] text-slate-400 mb-0.5">${c.username || ''} ${formattedTime}</span><div class="bg-sky-500 text-black px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">${escapeHtml(c.message || '')}</div></div>`;
         } else {
@@ -185,7 +214,6 @@ function initRealtimeLiveChats() {
         const c = docSnap.data();
         const isMe = loggedUser && c.username && (c.username.toLowerCase() === loggedUser.toLowerCase());
         let formattedTime = (c.time && c.time.toDate)? c.time.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-        
         if (isMe) {
           html += `<div class="flex flex-col items-end"><span class="text-[9px] text-slate-400 mb-0.5">${c.username || ''} ${formattedTime}</span><div class="bg-crimson text-white px-3 py-1.5 rounded-xl rounded-tr-none max-w-[85%] break-words font-semibold shadow-md">${escapeHtml(c.message || '')}</div></div>`;
         } else {
@@ -205,9 +233,7 @@ window.handleSendChat = async function(e) {
   if (!loggedUser || !input || !input.value.trim()) return;
   const msg = input.value.trim();
   input.value = '';
-  try {
-    await addDoc(collection(db, "chats"), { username: loggedUser, message: msg, time: serverTimestamp() });
-  } catch (err) { console.error(err); }
+  try { await addDoc(collection(db, "chats"), { username: loggedUser, message: msg, time: serverTimestamp() }); } catch (err) { console.error(err); }
 }
 
 window.handleSendLiveChat = async function(e) {
@@ -217,9 +243,7 @@ window.handleSendLiveChat = async function(e) {
   if (!loggedUser || !input || !input.value.trim()) return;
   const msg = input.value.trim();
   input.value = '';
-  try {
-    await addDoc(collection(db, "live_chats"), { username: loggedUser, message: msg, time: serverTimestamp() });
-  } catch (err) { console.error(err); }
+  try { await addDoc(collection(db, "live_chats"), { username: loggedUser, message: msg, time: serverTimestamp() }); } catch (err) { console.error(err); }
 }
 
 function escapeHtml(text) {
@@ -230,12 +254,8 @@ function escapeHtml(text) {
 window.showCustomAlert = function(title, text, isError = false) {
   const titleEl = document.getElementById('messageTitle');
   const textEl = document.getElementById('messageText');
-  const icon = document.getElementById('messageIcon');
   if(titleEl) titleEl.innerText = title;
   if(textEl) textEl.innerText = text;
-  if(icon) {
-    icon.className = isError ? "fa-solid fa-triangle-exclamation text-crimson" : "fa-solid fa-circle-check text-emerald-accent";
-  }
   openModal('messageModal');
 }
 
@@ -256,30 +276,32 @@ window.showCustomConfirm = function(text, onYesCallback) {
 
 let currentIndex = 0;
 const slidesContainer = document.getElementById('carouselSlides');
-
 window.nextSlide = function() { 
   if(!slidesContainer) return;
   currentIndex = (currentIndex + 1) % 3;
   slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
 }
-
 window.prevSlide = function() { 
   if(!slidesContainer) return;
   currentIndex = (currentIndex - 1 + 3) % 3; 
   slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
 }
-
 setInterval(nextSlide, 4500);
 
 window.switchTab = function(tab) {
   const championsTab = document.getElementById('content-champions');
+  const pendaftarTab = document.getElementById('content-pendaftar');
   const dynamicSection = document.getElementById('dynamic-section');
-  if(championsTab) {
-    championsTab.classList.add('hidden');
-    if(tab === 'champions') {
-      championsTab.classList.remove('hidden');
-    }
+
+  if(championsTab) championsTab.classList.add('hidden');
+  if(pendaftarTab) pendaftarTab.classList.add('hidden');
+
+  if(tab === 'champions' && championsTab) {
+    championsTab.classList.remove('hidden');
+  } else if(tab === 'pendaftar' && pendaftarTab) {
+    pendaftarTab.classList.remove('hidden');
   }
+
   if(dynamicSection) {
     dynamicSection.scrollIntoView({ behavior: 'smooth' });
   }
@@ -287,7 +309,9 @@ window.switchTab = function(tab) {
 
 window.closeTab = function() { 
   const championsTab = document.getElementById('content-champions');
+  const pendaftarTab = document.getElementById('content-pendaftar');
   if(championsTab) championsTab.classList.add('hidden'); 
+  if(pendaftarTab) pendaftarTab.classList.add('hidden'); 
 }
 
 window.checkAuthStatus = function() {
@@ -298,7 +322,6 @@ window.checkAuthStatus = function() {
   const mobileAuthMember = document.getElementById('mobileAuthMember');
   const cardAuthAction = document.getElementById('cardAuthAction');
   const cardIcon = document.getElementById('cardIcon');
-  const cardIconBox = document.getElementById('cardIconBox');
   const cardTitle = document.getElementById('cardTitle');
   const cardDesc = document.getElementById('cardDesc');
   const lockStatusText = document.getElementById('lockStatusText');
@@ -320,9 +343,8 @@ window.checkAuthStatus = function() {
     if(activeAccDisplay) activeAccDisplay.innerText = loggedUser;
 
     if(cardIcon) cardIcon.className = "fa-solid fa-circle-check";
-    if(cardIconBox) cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
     if(cardTitle) cardTitle.innerText = "STATUS: TERLOGIN";
-    if(cardDesc) cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">${loggedUser}</strong>. Akun siap digunakan untuk bertanding.`;
+    if(cardDesc) cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">${loggedUser}</strong>.`;
     cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai ${loggedUser}`);
     if(lockStatusText) lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
   } else {
@@ -332,11 +354,10 @@ window.checkAuthStatus = function() {
     if(mobileAuthMember) mobileAuthMember.classList.add('hidden');
 
     if(cardIcon) cardIcon.className = "fa-solid fa-right-to-bracket";
-    if(cardIconBox) cardIconBox.className = "w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all";
     if(cardTitle) cardTitle.innerText = "1. LOGIN / BUAT AKUN";
-    if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.";
+    if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran.";
     cardAuthAction.onclick = () => openModal('loginModal');
-    if(lockStatusText) lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span>';
+    if(lockStatusText) lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span>';
   }
   updateChatAccessUI();
 }
@@ -349,7 +370,7 @@ window.handleCardAuthClick = function() {
 window.handleTournamentCardClick = async function() {
   const loggedUser = localStorage.getItem('activeMemberUser');
   if (!loggedUser) {
-    showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun Website terlebih dahulu sebelum mendaftar turnamen!", true);
+    showCustomAlert("AKSES DITUTUP", "Silakan Login atau Buat Akun terlebih dahulu!", true);
     openModal('loginModal');
     return;
   }
@@ -366,87 +387,71 @@ window.handleTournamentCardClick = async function() {
 
 window.handleRegisterAccount = async function(event) {
   event.preventDefault();
-  const regUser = document.getElementById('regUser');
-  const regPass = document.getElementById('regPass');
+  const username = document.getElementById('regUser').value.trim().toLowerCase();
+  const password = document.getElementById('regPass').value.trim();
   const btn = document.getElementById('regBtn');
-  if(!regUser || !regPass || !btn) return;
-
-  const username = regUser.value.trim().toLowerCase();
-  const password = regPass.value.trim();
   
-  btn.innerText = "MENDAFTARKAN AKUN...";
+  btn.innerText = "MENDAFTARKAN...";
   btn.disabled = true;
 
   try {
     const userRef = doc(db, "users", username);
     const userSnap = await getDoc(userRef);
     if (userSnap.exists()) {
-      showCustomAlert("GAGAL", "Username sudah terpakai! Silakan gunakan username lain.", true);
+      showCustomAlert("GAGAL", "Username sudah dipakai!", true);
       return;
     }
     const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
-    await setDoc(userRef, {
-      username: username,
-      password: password,
-      sessionToken: sessionToken,
-      isBanned: false,
-      createdAt: serverTimestamp()
-    });
+    await setDoc(userRef, { username, password, sessionToken, isBanned: false, createdAt: serverTimestamp() });
     closeModal('registerAccountModal');
     localStorage.setItem('activeMemberUser', username);
     localStorage.setItem('sessionToken', sessionToken);
     checkAuthStatus();
-    showCustomAlert("BERHASIL", "Akun berhasil dibuat dan masuk ke perangkat ini!");
+    showCustomAlert("BERHASIL", "Akun berhasil dibuat!");
     event.target.reset();
   } catch (error) {
-    console.error(error);
     showCustomAlert("KESALAHAN", "Gagal mendaftar akun.", true);
   } finally {
-    btn.innerText = "DAFTARKAN AKUN";
+    btn.innerText = "DAFTAR AKUN";
     btn.disabled = false;
   }
 }
 
-window.handleLogin = async function (event) {
+window.handleLogin = async function(event) {
   event.preventDefault();
-  const loginUser = document.getElementById('loginUser');
-  const loginPass = document.getElementById('loginPass');
+  const username = document.getElementById('loginUser').value.trim().toLowerCase();
+  const password = document.getElementById('loginPass').value.trim();
   const btn = document.getElementById('loginBtn');
-  if(!loginUser || !loginPass || !btn) return;
-
-  const username = loginUser.value.trim().toLowerCase();
-  const password = loginPass.value.trim();
   
-  btn.innerText = "MENGECEK AKUN...";
+  btn.innerText = "MENGECEK...";
   btn.disabled = true;
 
   try {
     const userRef = doc(db, "users", username);
     const userSnap = await getDoc(userRef);
     if (!userSnap.exists()) {
-      showCustomAlert("LOGIN GAGAL", "Username tidak ditemukan!", true);
+      showCustomAlert("GAGAL", "Username tidak ditemukan!", true);
       return;
     }
     const userData = userSnap.data();
     if (userData.isBanned === true) {
-      showCustomAlert("AKUN DIBLOKIR", "Akun Anda telah di-banned oleh panitia karena melanggar aturan!", true);
+      showCustomAlert("DIBLOKIR", "Akun Anda di-banned panitia!", true);
       return;
     }
     if (userData.password !== password) {
-      showCustomAlert("LOGIN GAGAL", "Password salah!", true);
+      showCustomAlert("GAGAL", "Password salah!", true);
       return;
     }
     const sessionToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
-    await updateDoc(userRef, { sessionToken: sessionToken });
+    await updateDoc(userRef, { sessionToken });
     localStorage.setItem('activeMemberUser', username);
     localStorage.setItem('sessionToken', sessionToken);
     closeModal('loginModal');
     checkAuthStatus();
-    showCustomAlert("LOGIN BERHASIL", `Selamat datang kembali, ${username}!`);
+    showCustomAlert("BERHASIL", `Selamat datang kembali, ${username}!`);
     event.target.reset();
   } catch (error) {
-    console.error(error);
-    showCustomAlert("KESALAHAN", "Gagal melakukan proses login.", true);
+    showCustomAlert("KESALAHAN", "Gagal login.", true);
   } finally {
     btn.innerText = "MASUK AKUN";
     btn.disabled = false;
@@ -454,13 +459,10 @@ window.handleLogin = async function (event) {
 }
 
 window.handleLogout = async function() {
-  showCustomConfirm("Apakah Anda yakin ingin keluar dari akun ini?", async () => {
+  showCustomConfirm("Apakah Anda yakin ingin keluar?", async () => {
     const loggedUser = localStorage.getItem('activeMemberUser');
     if (loggedUser) {
-      try {
-        const userRef = doc(db, "users", loggedUser);
-        await updateDoc(userRef, { sessionToken: "" });
-      } catch(e) {}
+      try { await updateDoc(doc(db, "users", loggedUser), { sessionToken: "" }); } catch(e){}
     }
     localStorage.removeItem('activeMemberUser');
     localStorage.removeItem('sessionToken');
@@ -469,37 +471,36 @@ window.handleLogout = async function() {
   });
 }
 
+// MENDAFTAR TURNAMEN DENGAN STATUS AWAL 'Pending'
 window.handleFormSubmit = async function(event) {
   event.preventDefault();
   const loggedUser = localStorage.getItem('activeMemberUser');
   if (!loggedUser) {
-    showCustomAlert("SESI HABIS", "Sesi login kedaluwarsa. Silakan login kembali.", true);
+    showCustomAlert("SESI HABIS", "Silakan login kembali.", true);
     openModal('loginModal');
     return;
   }
   const submitBtn = document.getElementById('submitBtn');
-  if(!submitBtn) return;
-
-  submitBtn.innerText = "MENGIRIM DATA...";
+  submitBtn.innerText = "MENGIRIM...";
   submitBtn.disabled = true;
 
   try {
     await addDoc(collection(db, "pendaftar"), {
       nama: document.getElementById('tNama').value.trim(),
-      idMI: document.getElementById('tIdMI').value.trim(),
+      idMl: document.getElementById('tIdMI').value.trim(),
       role1: document.getElementById('tRole1').value,
       whatsapp: document.getElementById('tWhatsapp').value.trim(),
       role2: document.getElementById('tRole2').value,
       payment: document.getElementById('tPayment').value,
       usernameDb: loggedUser,
+      status: "Pending", // Status awal pending sebelum di-ACC panitia
       waktuDaftar: serverTimestamp()
     });
     closeModal('registerModal');
-    showCustomAlert("REGISTRASI BERHASIL", "Data pendaftaran turnamen berhasil dikirim ke database Firestore!");
+    showCustomAlert("BERHASIL", "Pendaftaran terkirim! Silakan tunggu panitia melakukan konfirmasi (ACC) agar tampil di website.");
     event.target.reset();
   } catch (error) {
-    console.error("Gagal kirim ke database: ", error);
-    showCustomAlert("KESALAHAN", "Terjadi kesalahan saat menyimpan data ke database.", true);
+    showCustomAlert("KESALAHAN", "Gagal menyimpan data pendaftaran.", true);
   } finally {
     submitBtn.innerText = "SUBMIT DATA";
     submitBtn.disabled = false;
