@@ -144,21 +144,44 @@ function startSessionWatcher() {
   }, 10000);
 }
 
-// REAL-TIME LISTENER PENGATURAN WEBSITE (BANNER & STATUS PENDAFTARAN)
+// REAL-TIME LISTENER SINKRONISASI TAMPILAN BANNER & POP-UP WELCOME
 function initRealtimeWebSettings() {
   try {
     const docRef = doc(db, "settings", "website");
     onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
+        const bannerBadgeEl = document.getElementById('webBannerBadge');
+        const bannerDotEl = document.getElementById('webBannerDot');
         const bannerTextEl = document.getElementById('webBannerText');
         const modalStatusEl = document.getElementById('modalRegStatusBadge');
 
-        if (bannerTextEl && data.bannerText) {
-          bannerTextEl.innerText = data.bannerText;
-        }
-        if (modalStatusEl && data.regStatus) {
-          modalStatusEl.innerText = data.regStatus;
+        if (data.regStatus) {
+          const isOpened = data.regStatus === "OPEN";
+
+          if (isOpened) {
+            // Tampilan DIBUKA (Warna Hijau / Emerald)
+            if (bannerTextEl) bannerTextEl.innerText = "PENDAFTARAN DIBUKA";
+            if (modalStatusEl) modalStatusEl.innerText = "ARENA REGISTRATION OPEN";
+
+            if (bannerBadgeEl) {
+              bannerBadgeEl.className = "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-accent/10 border border-emerald-accent/40 text-emerald-accent text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3 shadow-emerald-glow";
+            }
+            if (bannerDotEl) {
+              bannerDotEl.className = "w-1.5 h-1.5 rounded-full bg-emerald-accent animate-pulse";
+            }
+          } else {
+            // Tampilan DITUTUP (Warna Merah / Crimson)
+            if (bannerTextEl) bannerTextEl.innerText = "PENDAFTARAN DITUTUP";
+            if (modalStatusEl) modalStatusEl.innerText = "REGISTRATION CLOSED";
+
+            if (bannerBadgeEl) {
+              bannerBadgeEl.className = "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3 shadow-crimson-glow";
+            }
+            if (bannerDotEl) {
+              bannerDotEl.className = "w-1.5 h-1.5 rounded-full bg-crimson animate-pulse";
+            }
+          }
         }
       }
     });
@@ -167,7 +190,6 @@ function initRealtimeWebSettings() {
   }
 }
 
-// MEMUAT DATA PENDAFTAR & STATISTIK TIM (TOTAL & TIM) DI MODAL POP-UP
 function initPublicPendaftar() {
   try {
     const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"));
@@ -180,11 +202,8 @@ function initPublicPendaftar() {
       if (!container) return;
 
       const totalPendaftar = snapshot.size;
-
-      // Hitung total tim
       const totalTim = Math.floor(totalPendaftar / 5);
 
-      // Update Tampilan Header Statistik
       if (totalEl) totalEl.innerText = totalPendaftar;
       if (timEl) timEl.innerText = totalTim + " Tim";
 
@@ -223,10 +242,6 @@ function initPublicPendaftar() {
       container.innerHTML = html;
     }, (error) => {
       console.error("Error Firestore listener:", error);
-      const container = document.getElementById('publicPendaftarList');
-      if (container) {
-        container.innerHTML = '<div class="text-center text-red-400 py-6 text-xs">Gagal memuat data peserta.</div>';
-      }
     });
   } catch (e) {
     console.error("Gagal memuat pendaftar publik:", e);
