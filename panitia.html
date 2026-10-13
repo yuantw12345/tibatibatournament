@@ -33,6 +33,7 @@
 </head>
 <body class="min-h-screen p-2.5 sm:p-8 relative">
 
+    <!-- LOGIN MODAL PANITIA -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg p-3">
         <div class="relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 sm:p-8 shadow-2xl text-center">
             <div class="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center">
@@ -62,6 +63,7 @@
         </div>
     </div>
 
+    <!-- MAIN CONTENT KONTROL PANEL -->
     <div id="adminMainContent" class="max-w-7xl mx-auto hidden">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-obsidian-card border border-obsidian-border p-3.5 sm:p-6 rounded-xl mb-4 shadow-xl">
             <div class="flex items-center space-x-3">
@@ -143,12 +145,12 @@
             </div>
         </div>
 
-        <!-- TAB 2: KELOLA JADWAL & BAGAN -->
+        <!-- TAB 2: KELOLA JADWAL & BAGAN (DENGAN TANGGAL, JAM & DINAMIS MATCHES) -->
         <div id="sectionJadwal" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <div>
                     <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                        <i class="fa-solid fa-calendar-days text-sky-400"></i> Kelola Nama Tim, Skor, & Bagan Pertandingan
+                        <i class="fa-solid fa-calendar-days text-sky-400"></i> Kelola Nama Tim, Tanggal, Jam, Skor, & Bagan
                     </h2>
                     <span class="text-[10px] font-tech text-slate-400">Perubahan akan langsung tampil secara real-time di website utama.</span>
                 </div>
@@ -157,44 +159,26 @@
                 </button>
             </div>
 
-            <div class="space-y-6 font-tech text-xs">
-                <!-- GROUP STAGE -->
-                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-sky-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
-                            <span class="text-white font-bold block mb-1">Match 1: Group A</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="m1_tim1" placeholder="Nama Tim A" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <input type="text" id="m1_tim2" placeholder="Nama Tim B" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                            </div>
-                            <div class="grid grid-cols-3 gap-2">
-                                <input type="text" id="m1_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <select id="m1_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                    <option value="PENDING">PENDING</option>
-                                    <option value="LIVE">LIVE</option>
-                                    <option value="SELESAI">SELESAI</option>
-                                </select>
-                                <input type="text" id="m1_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
-                            </div>
-                        </div>
+            <!-- DYNAMIC TEAM SELECTOR -->
+            <div class="bg-obsidian p-4 rounded-xl border border-sky-400/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-tech">
+                <div>
+                    <label class="block text-sky-400 font-bold text-xs uppercase mb-1"><i class="fa-solid fa-users mr-1"></i> Pilih Jumlah Tim Terkumpul:</label>
+                    <p class="text-[11px] text-slate-400">Pilih 5 Tim untuk otomatis membuat 10 Match (semua tim saling bertemu 4x).</p>
+                </div>
+                <select id="selectTotalTeams" onchange="handleTeamCountChange()" class="bg-obsidian-card border border-sky-400 text-sky-400 font-bold rounded-lg px-4 py-2 text-xs focus:outline-none">
+                    <option value="5" selected>5 Tim (10 Match - Saling Bertemu 4x)</option>
+                    <option value="4">4 Tim (6 Match - Saling Bertemu 3x)</option>
+                </select>
+            </div>
 
-                        <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
-                            <span class="text-white font-bold block mb-1">Match 2: Group B</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="m2_tim1" placeholder="Nama Tim C" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <input type="text" id="m2_tim2" placeholder="Nama Tim D" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                            </div>
-                            <div class="grid grid-cols-3 gap-2">
-                                <input type="text" id="m2_skor" placeholder="Skor (Cth: 1 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <select id="m2_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                    <option value="PENDING">PENDING</option>
-                                    <option value="LIVE">LIVE</option>
-                                    <option value="SELESAI">SELESAI</option>
-                                </select>
-                                <input type="text" id="m2_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
-                            </div>
-                        </div>
+            <div class="space-y-6 font-tech text-xs">
+                <!-- GROUP STAGE CONTAINER -->
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
+                    <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
+                    <p id="groupStageInfoText" class="text-[11px] text-slate-400 mb-4">Total 10 Pertandingan (Setiap Tim Bertanding 4 Kali)</p>
+                    
+                    <div id="groupStageMatchGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Otomatis di-generate oleh JavaScript -->
                     </div>
                 </div>
 
@@ -205,6 +189,7 @@
                         <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                             <span class="text-white font-bold block mb-1">Semifinal 1 (1st vs 3rd)</span>
                             <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="sf1_datetime" placeholder="Tanggal & Jam (Contoh: 26 Oct, 19:00 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
                                 <input type="text" id="sf1_tim1" placeholder="Tim Peringkat 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                                 <input type="text" id="sf1_tim2" placeholder="Tim Peringkat 3" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             </div>
@@ -222,6 +207,7 @@
                         <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                             <span class="text-white font-bold block mb-1">Semifinal 2 (2nd vs 4th)</span>
                             <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="sf2_datetime" placeholder="Tanggal & Jam (Contoh: 26 Oct, 20:30 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
                                 <input type="text" id="sf2_tim1" placeholder="Tim Peringkat 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                                 <input type="text" id="sf2_tim2" placeholder="Tim Peringkat 4" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             </div>
@@ -244,6 +230,7 @@
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
                         <span class="text-white font-bold block mb-1">Grand Final Match</span>
                         <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="gf_datetime" placeholder="Tanggal & Jam (Contoh: 27 Oct, 19:30 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-amber-400 font-bold">
                             <input type="text" id="gf_tim1" placeholder="Pemenang Semifinal 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             <input type="text" id="gf_tim2" placeholder="Pemenang Semifinal 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                         </div>
@@ -385,31 +372,102 @@
             alert("Pengaturan disimpan!");
         }
 
+        // GENERATE KOTAK MATCH SESUAI JUMLAH TIM
+        window.handleTeamCountChange = function() {
+            const teamCount = parseInt(document.getElementById('selectTotalTeams').value);
+            const totalMatches = (teamCount * (teamCount - 1)) / 2;
+            const container = document.getElementById('groupStageMatchGrid');
+            const infoText = document.getElementById('groupStageInfoText');
+
+            infoText.innerText = `Total ${totalMatches} Pertandingan (Setiap Tim Bertanding ${teamCount - 1} Kali)`;
+
+            let html = '';
+            for (let i = 1; i <= totalMatches; i++) {
+                html += `
+                    <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
+                        <span class="text-white font-bold block mb-1">Match ${i}: Group Stage</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="m${i}_datetime" placeholder="Tanggal & Jam (Cth: 25 Oct, 19:00 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
+                            <input type="text" id="m${i}_tim1" placeholder="Nama Tim A" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="m${i}_tim2" placeholder="Nama Tim B" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="text" id="m${i}_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <select id="m${i}_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <option value="PENDING">PENDING</option>
+                                <option value="LIVE">LIVE</option>
+                                <option value="SELESAI">SELESAI</option>
+                            </select>
+                            <input type="text" id="m${i}_pemenang" placeholder="Pemenang" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-emerald-accent font-bold">
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
         async function loadJadwalDataToPanel() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "jadwal_bagan"));
                 if (docSnap.exists()) {
                     const d = docSnap.data();
-                    ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
+                    const totalTeams = d.totalTeams || "5";
+                    document.getElementById('selectTotalTeams').value = totalTeams;
+                    handleTeamCountChange();
+
+                    const totalMatches = (parseInt(totalTeams) * (parseInt(totalTeams) - 1)) / 2;
+                    for (let i = 1; i <= totalMatches; i++) {
+                        const id = `m${i}`;
                         if (d[id]) {
-                            document.getElementById(`${id}_tim1`).value = d[id].tim1 || '';
-                            document.getElementById(`${id}_tim2`).value = d[id].tim2 || '';
-                            document.getElementById(`${id}_skor`).value = d[id].skor || '';
-                            document.getElementById(`${id}_status`).value = d[id].status || 'PENDING';
-                            document.getElementById(`${id}_pemenang`).value = d[id].pemenang || '';
+                            if(document.getElementById(`${id}_datetime`)) document.getElementById(`${id}_datetime`).value = d[id].datetime || '';
+                            if(document.getElementById(`${id}_tim1`)) document.getElementById(`${id}_tim1`).value = d[id].tim1 || '';
+                            if(document.getElementById(`${id}_tim2`)) document.getElementById(`${id}_tim2`).value = d[id].tim2 || '';
+                            if(document.getElementById(`${id}_skor`)) document.getElementById(`${id}_skor`).value = d[id].skor || '';
+                            if(document.getElementById(`${id}_status`)) document.getElementById(`${id}_status`).value = d[id].status || 'PENDING';
+                            if(document.getElementById(`${id}_pemenang`)) document.getElementById(`${id}_pemenang`).value = d[id].pemenang || '';
+                        }
+                    }
+
+                    ['sf1', 'sf2', 'gf'].forEach(id => {
+                        if (d[id]) {
+                            if(document.getElementById(`${id}_datetime`)) document.getElementById(`${id}_datetime`).value = d[id].datetime || '';
+                            if(document.getElementById(`${id}_tim1`)) document.getElementById(`${id}_tim1`).value = d[id].tim1 || '';
+                            if(document.getElementById(`${id}_tim2`)) document.getElementById(`${id}_tim2`).value = d[id].tim2 || '';
+                            if(document.getElementById(`${id}_skor`)) document.getElementById(`${id}_skor`).value = d[id].skor || '';
+                            if(document.getElementById(`${id}_status`)) document.getElementById(`${id}_status`).value = d[id].status || 'TBA';
+                            if(document.getElementById(`${id}_pemenang`)) document.getElementById(`${id}_pemenang`).value = d[id].pemenang || '';
                         }
                     });
+                } else {
+                    handleTeamCountChange();
                 }
-            } catch (e) {}
+            } catch (e) { console.error(e); }
         }
 
         window.saveAllJadwal = async function() {
             const btn = document.getElementById('saveJadwalGlobalBtn');
             btn.innerText = "MENYIMPAN..."; btn.disabled = true;
             try {
-                const payload = {};
-                ['m1', 'm2', 'sf1', 'sf2', 'gf'].forEach(id => {
+                const totalTeams = document.getElementById('selectTotalTeams').value;
+                const totalMatches = (parseInt(totalTeams) * (parseInt(totalTeams) - 1)) / 2;
+
+                const payload = { totalTeams: totalTeams };
+
+                for (let i = 1; i <= totalMatches; i++) {
+                    const id = `m${i}`;
                     payload[id] = {
+                        datetime: document.getElementById(`${id}_datetime`).value.trim(),
+                        tim1: document.getElementById(`${id}_tim1`).value.trim(),
+                        tim2: document.getElementById(`${id}_tim2`).value.trim(),
+                        skor: document.getElementById(`${id}_skor`).value.trim(),
+                        status: document.getElementById(`${id}_status`).value,
+                        pemenang: document.getElementById(`${id}_pemenang`).value.trim()
+                    };
+                }
+
+                ['sf1', 'sf2', 'gf'].forEach(id => {
+                    payload[id] = {
+                        datetime: document.getElementById(`${id}_datetime`).value.trim(),
                         tim1: document.getElementById(`${id}_tim1`).value.trim(),
                         tim2: document.getElementById(`${id}_tim2`).value.trim(),
                         skor: document.getElementById(`${id}_skor`).value.trim(),
@@ -417,8 +475,9 @@
                         pemenang: document.getElementById(`${id}_pemenang`).value.trim()
                     };
                 });
+
                 await setDoc(doc(db, "settings", "jadwal_bagan"), payload);
-                alert("Jadwal & Bagan berhasil diperbarui secara real-time!");
+                alert("Jadwal, Tanggal, Jam & Bagan berhasil diperbarui secara real-time!");
             } catch (err) { alert("Gagal menyimpan."); }
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
