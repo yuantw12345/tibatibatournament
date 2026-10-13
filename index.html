@@ -48,7 +48,7 @@ tailwind.config = {
 
 <body class="min-h-screen flex flex-col justify-between selection:bg-crimson selection:text-white relative">
 
-<!-- HEADER / NAVIGASI UTAMA (RAPI SEJAJAR DI PC) -->
+<!-- HEADER / NAVIGASI UTAMA -->
 <header class="fixed top-0 left-0 right-0 w-full z-50 glass-nav transition-all duration-300">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 <a href="#hero-banner" class="flex items-center space-x-3 group shrink-0">
@@ -250,7 +250,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <!-- SEKSI TAB DINAMIS (JADWAL & BAGAN / CHAMPIONS) -->
 <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
   
-  <!-- KONTEN TAB 1: JADWAL & BAGAN PERTANDINGAN -->
+  <!-- KONTEN TAB 1: JADWAL & BAGAN PERTANDINGAN (TERHUBUNG KE PANEL PANITIA) -->
   <div id="content-jadwal" class="bg-obsidian-card border border-sky-400/30 rounded-2xl p-6 hidden animate-fade-in shadow-lg">
     <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
       <div class="flex items-center gap-3">
@@ -261,52 +261,105 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 font-tech">
+      <!-- GROUP STAGE -->
       <div class="bg-obsidian border border-obsidian-border rounded-xl p-5 space-y-3">
         <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
           <span class="text-xs font-bold text-sky-400 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1"></i> FASE GROUP STAGE</span>
           <span class="px-2 py-0.5 bg-sky-500/20 text-sky-400 text-[10px] rounded font-bold">BO 2</span>
         </div>
-        <p class="text-xs text-slate-300">Pertandingan penyisihan grup antar tim yang telah terdaftar dan terkonfirmasi.</p>
-        <div class="space-y-2 text-xs pt-2">
-          <div class="bg-obsidian-card p-3 rounded-lg border border-obsidian-border flex justify-between items-center">
-            <div><span class="text-white font-bold block">Match 1: Group A</span><span class="text-[10px] text-slate-400">Segera Dijadwalkan</span></div>
-            <span class="px-2 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] rounded font-bold">PENDING</span>
+        <div class="space-y-3 text-xs pt-1">
+          <div class="bg-obsidian-card p-3.5 rounded-xl border border-obsidian-border space-y-2">
+            <div class="flex justify-between items-center text-[11px] text-slate-400">
+              <span>Match 1 (Group A)</span>
+              <span id="web_m1_status" class="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded font-bold text-[9px]">PENDING</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-white text-sm">
+              <span id="web_m1_t1" class="truncate max-w-[40%]">-</span>
+              <span id="web_m1_skor" class="text-sky-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
+              <span id="web_m1_t2" class="truncate max-w-[40%] text-right">-</span>
+            </div>
+            <div class="text-[11px] text-emerald-accent pt-1 border-t border-obsidian-border flex justify-between">
+              <span>Pemenang:</span> <strong id="web_m1_win" class="text-white">-</strong>
+            </div>
           </div>
-          <div class="bg-obsidian-card p-3 rounded-lg border border-obsidian-border flex justify-between items-center">
-            <div><span class="text-white font-bold block">Match 2: Group B</span><span class="text-[10px] text-slate-400">Segera Dijadwalkan</span></div>
-            <span class="px-2 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] rounded font-bold">PENDING</span>
+
+          <div class="bg-obsidian-card p-3.5 rounded-xl border border-obsidian-border space-y-2">
+            <div class="flex justify-between items-center text-[11px] text-slate-400">
+              <span>Match 2 (Group B)</span>
+              <span id="web_m2_status" class="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded font-bold text-[9px]">PENDING</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-white text-sm">
+              <span id="web_m2_t1" class="truncate max-w-[40%]">-</span>
+              <span id="web_m2_skor" class="text-sky-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
+              <span id="web_m2_t2" class="truncate max-w-[40%] text-right">-</span>
+            </div>
+            <div class="text-[11px] text-emerald-accent pt-1 border-t border-obsidian-border flex justify-between">
+              <span>Pemenang:</span> <strong id="web_m2_win" class="text-white">-</strong>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- SEMIFINAL -->
       <div class="bg-obsidian border border-obsidian-border rounded-xl p-5 space-y-3">
         <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
           <span class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1"></i> SEMIFINAL BAGAN</span>
           <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] rounded font-bold">BO 3</span>
         </div>
-        <p class="text-xs text-slate-300">4 Tim terbaik dari babak grup akan bertarung memperebutkan tiket ke Grand Final.</p>
-        <div class="space-y-2 text-xs pt-2">
-          <div class="bg-obsidian-card p-3 rounded-lg border border-obsidian-border flex justify-between items-center">
-            <div><span class="text-white font-bold block">Semifinal 1 (1st vs 3rd)</span><span class="text-[10px] text-slate-400">Menunggu Klasemen</span></div>
-            <span class="px-2 py-1 bg-slate-800 text-slate-400 text-[10px] rounded font-bold">TBA</span>
+        <div class="space-y-3 text-xs pt-1">
+          <div class="bg-obsidian-card p-3.5 rounded-xl border border-obsidian-border space-y-2">
+            <div class="flex justify-between items-center text-[11px] text-slate-400">
+              <span>Semifinal 1 (1st vs 3rd)</span>
+              <span id="web_sf1_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-white text-sm">
+              <span id="web_sf1_t1" class="truncate max-w-[40%]">-</span>
+              <span id="web_sf1_skor" class="text-amber-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
+              <span id="web_sf1_t2" class="truncate max-w-[40%] text-right">-</span>
+            </div>
+            <div class="text-[11px] pt-1 border-t border-obsidian-border flex justify-between">
+              <span>Pemenang:</span> <strong id="web_sf1_win" class="text-emerald-accent">-</strong>
+            </div>
           </div>
-          <div class="bg-obsidian-card p-3 rounded-lg border border-obsidian-border flex justify-between items-center">
-            <div><span class="text-white font-bold block">Semifinal 2 (2nd vs 4th)</span><span class="text-[10px] text-slate-400">Menunggu Klasemen</span></div>
-            <span class="px-2 py-1 bg-slate-800 text-slate-400 text-[10px] rounded font-bold">TBA</span>
+
+          <div class="bg-obsidian-card p-3.5 rounded-xl border border-obsidian-border space-y-2">
+            <div class="flex justify-between items-center text-[11px] text-slate-400">
+              <span>Semifinal 2 (2nd vs 4th)</span>
+              <span id="web_sf2_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-white text-sm">
+              <span id="web_sf2_t1" class="truncate max-w-[40%]">-</span>
+              <span id="web_sf2_skor" class="text-amber-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
+              <span id="web_sf2_t2" class="truncate max-w-[40%] text-right">-</span>
+            </div>
+            <div class="text-[11px] pt-1 border-t border-obsidian-border flex justify-between">
+              <span>Pemenang:</span> <strong id="web_sf2_win" class="text-emerald-accent">-</strong>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- GRAND FINAL -->
       <div class="bg-obsidian border border-obsidian-border rounded-xl p-5 space-y-3">
         <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
           <span class="text-xs font-bold text-crimson uppercase tracking-wider"><i class="fa-solid fa-crown mr-1"></i> GRAND FINAL</span>
           <span class="px-2 py-0.5 bg-crimson/20 text-crimson text-[10px] rounded font-bold">BO 5</span>
         </div>
-        <p class="text-xs text-slate-300">Perebutan takhta juara utama dan total hadiah Rp 7.000.000.</p>
-        <div class="space-y-2 text-xs pt-2">
-          <div class="bg-obsidian-card p-3 rounded-lg border border-obsidian-border flex justify-between items-center">
-            <div><span class="text-white font-bold block">Grand Final Match</span><span class="text-[10px] text-slate-400">Puncak Turnamen</span></div>
-            <span class="px-2 py-1 bg-slate-800 text-slate-400 text-[10px] rounded font-bold">TBA</span>
+        <div class="space-y-3 text-xs pt-1">
+          <div class="bg-obsidian-card p-4 rounded-xl border border-crimson/30 space-y-2.5 shadow-crimson-glow">
+            <div class="flex justify-between items-center text-[11px] text-slate-400">
+              <span>Puncak Grand Final</span>
+              <span id="web_gf_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-white text-sm">
+              <span id="web_gf_t1" class="truncate max-w-[40%]">-</span>
+              <span id="web_gf_skor" class="text-crimson px-2.5 py-1 bg-obsidian rounded font-mono">VS</span>
+              <span id="web_gf_t2" class="truncate max-w-[40%] text-right">-</span>
+            </div>
+            <div class="text-xs pt-2 border-t border-obsidian-border text-center bg-obsidian p-2 rounded-lg">
+              <span class="text-slate-400 block text-[10px]">CHAMPION UTAMA:</span>
+              <strong id="web_gf_win" class="text-amber-400 text-sm tracking-wide block uppercase">-</strong>
+            </div>
           </div>
         </div>
       </div>
@@ -418,7 +471,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </div>
 
-<!-- MODAL LOGIN, REGISTER AKUN, REGISTER TURNAMEN, WELCOME, & ALERT -->
+<!-- MODAL LOGIN, REGISTER, DLL -->
 <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
 <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
 <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
