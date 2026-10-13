@@ -455,20 +455,64 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </div>
 
+<!-- MODAL WELCOME / SELAMAT DATANG (WELCOME POP-UP KETIKA BUKA WEBSITE) -->
 <div id="rulesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
 <div class="modal-container relative w-full max-w-2xl bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
 <button onclick="closeModal('rulesModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-<div class="flex items-center gap-2.5 mb-4"><i class="fa-solid fa-trophy text-emerald-accent text-2xl"></i><h3 class="font-display font-bold text-lg sm:text-2xl text-white pr-6">SELAMAT KEPADA PARA JUARA!</h3></div>
+
+<!-- JUDUL WELCOME -->
+<div class="flex items-center gap-2.5 mb-4">
+<i class="fa-solid fa-gamepad text-emerald-accent text-2xl animate-pulse"></i>
+<h3 class="font-display font-bold text-lg sm:text-2xl text-white pr-6">SELAMAT DATANG DI TIBA TIBA TOURNAMENT!</h3>
+</div>
+
+<!-- BANNER DAN INDIKATOR STATUS KEREN -->
 <div class="relative rounded-xl overflow-hidden border border-emerald-accent/40 shadow-lg mb-5">
 <img src="https://i.postimg.cc/YSz0nBtk/IMG-3841.jpg" alt="Foto Juara Tournament" class="w-full h-[260px] sm:h-[380px] object-cover object-center">
 <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
-<div class="absolute bottom-4 left-4 right-4"><span class="px-3.5 py-1.5 bg-emerald-accent text-black font-tech font-bold text-xs sm:text-sm rounded-lg uppercase tracking-wider shadow-md"><i class="fa-solid fa-crown mr-1"></i> CHAMPIONS SEASON 4</span></div>
+
+<!-- INDIKATOR STATUS AKTIF ARENA (BADGE KEREN) -->
+<div class="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian/80 border border-emerald-accent/40 backdrop-blur-md">
+<span class="relative flex h-2.5 w-2.5">
+  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-accent opacity-75"></span>
+  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-accent"></span>
+</span>
+<span class="font-tech text-[10px] sm:text-xs font-bold text-emerald-accent tracking-wider uppercase">ARENA REGISTRATION OPEN</span>
 </div>
+
+<div class="absolute bottom-4 left-4 right-4">
+<span class="px-3.5 py-1.5 bg-emerald-accent text-black font-tech font-bold text-xs sm:text-sm rounded-lg uppercase tracking-wider shadow-md"><i class="fa-solid fa-crown mr-1"></i> CHAMPIONS SEASON 4</span>
+</div>
+</div>
+
+<!-- DESKRIPSI GAME & LOGIKA TURNAMEN KEREN -->
 <div class="space-y-4 text-xs sm:text-sm text-slate-300 font-tech">
 <div class="bg-obsidian/80 p-4 sm:p-5 rounded-xl border border-obsidian-border text-center">
-<p class="text-emerald-accent font-bold mb-1.5 text-base">SELAMAT ATAS KEMENANGAN KALIAN!</p>
-<p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">Terima kasih atas perjuangan luar biasa di arena. Dan <strong>kita akan kembali lagi di season berikutnya!</strong> Persiapkan tim kalian untuk pertempuran seru selanjutnya.</p>
-<span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-2.5">ROSTER TIM PEMENANG:</span>
+<p class="text-emerald-accent font-bold mb-2 text-base tracking-wide">PANGGUNG PERTANDINGAN PARA CHAMPIONS!</p>
+<p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+Selamat datang di hub resmi <strong>Tiba Tiba Tournament MLBB</strong>! Tempat berkumpulnya para player bertalenta untuk bertanding, membuktikan mekanik, dan meraih takhta kejuaraan. Daftarkan squad terbaikmu, pantau live broadcast, dan cetak sejarahmu di musim ini!
+</p>
+
+<!-- INDIKATOR MATRIKS LOGIKA WEBSITE -->
+<div class="grid grid-cols-3 gap-2 my-4 text-[10px] sm:text-xs font-tech">
+<div class="bg-obsidian-card p-2 rounded-lg border border-emerald-accent/20 text-center">
+<i class="fa-solid fa-user-check text-emerald-accent text-sm mb-1 block"></i>
+<span class="text-slate-400 block text-[9px]">STEP 1</span>
+<span class="text-white font-bold">LOGIN AKUN</span>
+</div>
+<div class="bg-obsidian-card p-2 rounded-lg border border-crimson/30 text-center">
+<i class="fa-solid fa-file-signature text-crimson text-sm mb-1 block"></i>
+<span class="text-slate-400 block text-[9px]">STEP 2</span>
+<span class="text-white font-bold">ISI ROSTER</span>
+</div>
+<div class="bg-obsidian-card p-2 rounded-lg border border-amber-400/30 text-center">
+<i class="fa-solid fa-trophy text-amber-400 text-sm mb-1 block"></i>
+<span class="text-slate-400 block text-[9px]">STEP 3</span>
+<span class="text-white font-bold">REBUT JUARA</span>
+</div>
+</div>
+
+<span class="block font-tech text-xs text-slate-400 uppercase tracking-widest mb-2.5">DEFENDING CHAMPIONS (SEASON 4):</span>
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs sm:text-sm">
 <div class="bg-obsidian-card p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 mr-1"></i> ANAM</div>
 <div class="bg-obsidian-card p-2.5 rounded-lg border border-emerald-accent/30 text-emerald-accent font-bold"><i class="fa-solid fa-medal text-amber-400 mr-1"></i> MAMAY</div>
@@ -478,7 +522,12 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </div>
 </div>
-<div class="mt-5 text-right"><button onclick="closeModal('rulesModal')" class="w-full py-3.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-emerald-glow cursor-pointer transition-all">LANJUT KE WEBSITE <i class="fa-solid fa-arrow-right ml-1"></i></button></div>
+
+<!-- TOMBOL MASUK KEREN -->
+<div class="mt-5 text-right">
+<button onclick="closeModal('rulesModal')" class="w-full py-3.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-emerald-glow cursor-pointer transition-all">MASUK KE ARENA WEBSITE <i class="fa-solid fa-arrow-right ml-1"></i></button>
+</div>
+
 </div>
 </div>
 
@@ -494,7 +543,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <div id="confirmModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
 <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
 <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30"><i class="fa-solid fa-triangle-exclamation"></i></div>
-<h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
+<h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">KONFIRMASI</h3>
 <p id="confirmText" class="text-slate-300 text-xs mb-5">Apakah Anda yakin?</p>
 <div class="flex gap-2">
 <button id="confirmYesBtn" class="flex-1 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs rounded-xl cursor-pointer transition-all">YA</button>
