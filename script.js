@@ -20,6 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initRealtimeChats();
   initRealtimeLiveChats();
   initPublicPendaftar();
+  initRealtimeWebSettings();
   startSessionWatcher();
 });
 
@@ -141,6 +142,29 @@ function startSessionWatcher() {
       }
     } catch (err) { console.error("Gagal memeriksa sesi:", err); }
   }, 10000);
+}
+
+// REAL-TIME LISTENER PENGATURAN WEBSITE (BANNER & STATUS PENDAFTARAN)
+function initRealtimeWebSettings() {
+  try {
+    const docRef = doc(db, "settings", "website");
+    onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const bannerTextEl = document.getElementById('webBannerText');
+        const modalStatusEl = document.getElementById('modalRegStatusBadge');
+
+        if (bannerTextEl && data.bannerText) {
+          bannerTextEl.innerText = data.bannerText;
+        }
+        if (modalStatusEl && data.regStatus) {
+          modalStatusEl.innerText = data.regStatus;
+        }
+      }
+    });
+  } catch (e) {
+    console.error("Gagal mendengarkan pengaturan web real-time:", e);
+  }
 }
 
 // MEMUAT DATA PENDAFTAR & STATISTIK TIM (TOTAL & TIM) DI MODAL POP-UP
