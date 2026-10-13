@@ -140,7 +140,7 @@
                 </div>
             </div>
 
-            <!-- HEADER TABEL BERSIH UNTUK LAYAR DESKTOP -->
+            <!-- HEADER TABEL DESKTOP -->
             <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
                 <div class="col-span-1">#</div>
                 <div class="col-span-3">NAMA LENGKAP</div>
@@ -280,17 +280,33 @@
             </form>
         </div>
 
-        <!-- TAB 4: MEMBER -->
+        <!-- TAB 4: MEMBER (DENGAN PASSWORD & FITUR BANNED LENGKAP) -->
         <div id="sectionUsers" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border"><h2 class="font-display font-bold text-sm sm:text-base text-white">Manajemen Akun</h2></div>
-            <div id="usersCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-users-gear text-emerald-accent"></i> Manajemen Akun Member
+                </h2>
+                <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
+            </div>
+            
+            <!-- HEADER TABEL MEMBER DESKTOP -->
+            <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <div class="col-span-4">USERNAME MEMBER</div>
+                <div class="col-span-4">PASSWORD</div>
+                <div class="col-span-2">STATUS AKUN</div>
+                <div class="col-span-2 text-right">AKSI (BAN / HAPUS)</div>
+            </div>
+
+            <div id="usersCardMobile" class="space-y-2 font-tech text-xs">
+                <div class="text-center py-6 text-slate-500">Memuat data member...</div>
+            </div>
         </div>
 
         <!-- TAB 5: CHAT -->
         <div id="sectionChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white">Chat Global</h2>
-                <button onclick="deleteAllChats('chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs">Hapus Semua</button>
+                <button onclick="deleteAllChats('chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs cursor-pointer">Hapus Semua</button>
             </div>
             <div id="chatsCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
         </div>
@@ -299,7 +315,7 @@
         <div id="sectionLiveChats" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white">Live Stream Chat</h2>
-                <button onclick="deleteAllChats('live_chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs">Hapus Semua</button>
+                <button onclick="deleteAllChats('live_chats')" class="px-3 py-1.5 bg-red-600 text-white rounded text-xs cursor-pointer">Hapus Semua</button>
             </div>
             <div id="liveChatsCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat...</div></div>
         </div>
@@ -499,7 +515,7 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // TAMPILAN RESPORSIF HP & DESKTOP DENGAN WHATSAPP KLIK DIRECT
+        // TAMPILAN RESPORSIF PENDAFTAR
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -515,17 +531,15 @@
                         ? `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-2.5 py-1.5 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
                         : `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-2.5 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
 
-                    // BERSIHKAN NOMOR WA UNTUK LINK DIRECT WHATSAPP
                     let cleanWa = (d.whatsapp || '').toString().replace(/[^0-9]/g, '');
                     if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
                     const waLink = cleanWa ? `https://wa.me/${cleanWa}` : '#';
 
-                    // GABUNGAN ROLE (UTAMA / CADANGAN)
                     const roleDisplay = d.role2 ? `${d.role1 || '-'} / ${d.role2}` : (d.role1 || '-');
 
                     html += `
                         <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 transition-all hover:border-emerald-accent/40 cursor-pointer" onclick="toggleApplicantDetail('${docSnap.id}')">
-                            <!-- TAMPILAN UNTUK LAYAR HP (STACK VERTICAL RAPI) -->
+                            <!-- HP LAYOUT -->
                             <div class="block sm:hidden space-y-2">
                                 <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
                                     <div class="flex items-center gap-2 overflow-hidden mr-2">
@@ -549,7 +563,7 @@
                                 </div>
                             </div>
 
-                            <!-- TAMPILAN UNTUK LAYAR TABLET & KOMPUTER/DESKTOP -->
+                            <!-- DESKTOP LAYOUT -->
                             <div class="hidden sm:grid grid-cols-12 gap-2 items-center">
                                 <div class="col-span-1 text-amber-400 font-bold text-xs">#${i}</div>
                                 <div class="col-span-3 text-white font-bold text-xs uppercase truncate">${d.nama || '-'}</div>
@@ -563,7 +577,7 @@
                                 </div>
                             </div>
 
-                            <!-- DETAIL LENGKAP SAAT DIKLIK (ACCORDION) -->
+                            <!-- DETAIL ACCORDION -->
                             <div id="detail_${docSnap.id}" class="hidden mt-3 pt-3 border-t border-obsidian-border grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300 font-tech">
                                 <div><span class="text-slate-500 block text-[10px]">ID MOBILE LEGEND:</span> <strong class="text-white">${d.idMl || '-'}</strong></div>
                                 <div>
@@ -582,7 +596,6 @@
             });
         }
 
-        // FUNGSI TOGGLE ACCORDION
         window.toggleApplicantDetail = function(id) {
             const detailEl = document.getElementById(`detail_${id}`);
             const iconEl = document.getElementById(`icon_${id}`);
@@ -595,16 +608,75 @@
             }
         }
 
+        // FUNGSI LOAD MEMBER DENGAN PASSWORD & BANNED STATUS (LENGKAP SEPERTI AWAL)
         function loadMemberUsers() {
             onSnapshot(query(collection(db, "users")), (snapshot) => {
                 document.getElementById('countUsers').innerText = snapshot.size;
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}</b></span><button onclick="deleteDoc(doc(db, 'users', '${docSnap.id}'))" class="text-red-400">Hapus</button></div>`;
+                    const userId = docSnap.id;
+                    const isBanned = d.isBanned === true;
+
+                    const statusBadge = isBanned 
+                        ? `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded font-bold text-[10px]">BANNED</span>`
+                        : `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[10px]">ACTIVE</span>`;
+
+                    const btnBan = isBanned
+                        ? `<button onclick="toggleBanUser('${userId}', false)" class="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-400 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-unlock mr-1"></i> Unban</button>`
+                        : `<button onclick="toggleBanUser('${userId}', true)" class="px-2.5 py-1 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-ban mr-1"></i> Banned</button>`;
+
+                    html += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 sm:p-4 hover:border-emerald-accent/40 transition-all space-y-2 sm:space-y-0">
+                            <!-- HP VIEW -->
+                            <div class="block sm:hidden space-y-1.5">
+                                <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
+                                    <span class="font-bold text-white text-xs"><i class="fa-solid fa-user text-emerald-accent mr-1"></i> ${d.username}</span>
+                                    ${statusBadge}
+                                </div>
+                                <div class="text-xs text-slate-400">
+                                    <span>Password: <strong class="text-amber-400 font-mono">${d.password || '-'}</strong></span>
+                                </div>
+                                <div class="flex items-center justify-end gap-2 pt-2 border-t border-obsidian-border/60">
+                                    ${btnBan}
+                                    <button onclick="deleteDoc(doc(db, 'users', '${userId}'))" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                </div>
+                            </div>
+
+                            <!-- DESKTOP VIEW -->
+                            <div class="hidden sm:grid grid-cols-12 gap-2 items-center">
+                                <div class="col-span-4 font-bold text-white text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user text-emerald-accent"></i> ${d.username}
+                                </div>
+                                <div class="col-span-4 text-amber-400 font-mono text-xs font-bold">
+                                    <i class="fa-solid fa-key text-[10px] text-slate-500 mr-1"></i> ${d.password || '-'}
+                                </div>
+                                <div class="col-span-2">
+                                    ${statusBadge}
+                                </div>
+                                <div class="col-span-2 flex items-center justify-end gap-2">
+                                    ${btnBan}
+                                    <button onclick="deleteDoc(doc(db, 'users', '${userId}'))" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 });
-                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
+                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada member terdaftar.</div>';
             });
+        }
+
+        // FUNGSI BAN / UNBAN USER AKUN
+        window.toggleBanUser = async function(userId, setBanned) {
+            const actionText = setBanned ? "memblokir (ban)" : "membuka blokir (unban)";
+            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${userId}?`)) {
+                try {
+                    await updateDoc(doc(db, "users", userId), { isBanned: setBanned });
+                    alert(`Akun ${userId} berhasil di-${setBanned ? 'banned' : 'unban'}!`);
+                } catch (err) {
+                    alert("Gagal mengubah status akun.");
+                }
+            }
         }
 
         function loadGlobalChats() {
