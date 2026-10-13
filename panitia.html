@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANEL PANITIA — TIBA TIBA TOURNAMENT</title>
+    <title>TIBA TIBA TOURNAMENT — PANEL PANITIA</title>
     
     <!-- Favicon Custom Logo -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png">
@@ -81,7 +81,7 @@
                         <span id="activeAdminBadge" class="px-1.5 py-0.5 bg-emerald-accent/20 text-emerald-accent border border-emerald-accent/30 rounded text-[9px] font-bold"></span>
                     </div>
                     <h1 class="font-display font-black text-sm sm:text-2xl text-white mt-0.5 leading-tight">
-                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span> — PANEL
+                        <span class="neon-glow-white">TIBA TIBA</span> <span class="text-crimson neon-glow-red">TOURNAMENT</span>
                     </h1>
                 </div>
             </div>
@@ -119,7 +119,7 @@
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
+                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen (Klik Nama untuk Detail)
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
             </div>
@@ -140,30 +140,8 @@
                 </div>
             </div>
 
-            <!-- Tampilan Tabel untuk PC / Layar Besar -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left text-xs font-tech">
-                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
-                        <tr>
-                            <th class="p-2.5">No</th>
-                            <th class="p-2.5">Waktu Daftar</th>
-                            <th class="p-2.5">User ID</th>
-                            <th class="p-2.5">Nama Lengkap</th>
-                            <th class="p-2.5">ID Mobile Legend</th>
-                            <th class="p-2.5">Role (Utama / Cadangan)</th>
-                            <th class="p-2.5">WhatsApp</th>
-                            <th class="p-2.5">Pembayaran</th>
-                            <th class="p-2.5 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tournamentTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="9" class="text-center py-6 text-slate-500">Memuat data pendaftar...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Tampilan Card Ringkas Khusus HP -->
-            <div id="tournamentCardMobile" class="block md:hidden space-y-2.5 font-tech">
+            <!-- Tampilan List / Card Ringkas yang Bisa Diklik -->
+            <div id="tournamentCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
@@ -177,25 +155,7 @@
                 <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
 
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left text-xs font-tech">
-                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
-                        <tr>
-                            <th class="p-2.5">No</th>
-                            <th class="p-2.5">Waktu Buat</th>
-                            <th class="p-2.5">User ID</th>
-                            <th class="p-2.5">Password</th>
-                            <th class="p-2.5">Status</th>
-                            <th class="p-2.5 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="6" class="text-center py-6 text-slate-500">Memuat data akun...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="usersCardMobile" class="block md:hidden space-y-2.5 font-tech">
+            <div id="usersCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
             </div>
         </div>
@@ -214,24 +174,7 @@
                 </button>
             </div>
 
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left text-xs font-tech">
-                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
-                        <tr>
-                            <th class="p-2.5">No</th>
-                            <th class="p-2.5">Waktu</th>
-                            <th class="p-2.5">User ID</th>
-                            <th class="p-2.5">Pesan</th>
-                            <th class="p-2.5 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="chatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat chat...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="chatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+            <div id="chatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
             </div>
         </div>
@@ -250,24 +193,7 @@
                 </button>
             </div>
 
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full text-left text-xs font-tech">
-                    <thead class="bg-obsidian text-slate-400 uppercase tracking-wider border-b border-obsidian-border">
-                        <tr>
-                            <th class="p-2.5">No</th>
-                            <th class="p-2.5">Waktu</th>
-                            <th class="p-2.5">User ID</th>
-                            <th class="p-2.5">Komentar</th>
-                            <th class="p-2.5 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="liveChatsTableBody" class="divide-y divide-obsidian-border text-slate-300">
-                        <tr><td colspan="5" class="text-center py-6 text-slate-500">Memuat live chat...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="liveChatsCardMobile" class="block md:hidden space-y-2.5 font-tech">
+            <div id="liveChatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
             </div>
         </div>
@@ -298,7 +224,6 @@
             checkAdminAuth();
         });
 
-        // FUNGSI REFRESH PANEL PANITIA
         window.handleRefreshAdminPanel = function() {
             const icon = document.getElementById('adminRefreshIcon');
             if (icon) icon.classList.add('fa-spin');
@@ -307,7 +232,6 @@
             }, 300);
         }
 
-        // FUNGSI BANTU MENGUBAH NOMOR WA AGAR BERAWALAN 62 (TANPA ANGKA 0 DI DEPAN)
         function formatWaUrl(waNum) {
             if (!waNum) return '#';
             let clean = waNum.toString().replace(/[^0-9]/g, '');
@@ -315,6 +239,14 @@
                 clean = '62' + clean.slice(1);
             }
             return `https://wa.me/${clean}`;
+        }
+
+        // FUNGSI TOGGLE DETAIL AKORDION (KLIK UNTUK BUKA/TUTUP DETAIL LENGKAP)
+        window.toggleDetailCard = function(cardId) {
+            const detailEl = document.getElementById(cardId);
+            if (detailEl) {
+                detailEl.classList.toggle('hidden');
+            }
         }
 
         function checkAdminAuth() {
@@ -392,11 +324,10 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN
+        // 1. PENDAFTAR TURNAMEN (TAMPILAN RINGKAS + KLIK UNTUK DETAIL)
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('tournamentTableBody');
                 const mobileCardBox = document.getElementById('tournamentCardMobile');
                 const totalPendaftar = snapshot.size;
                 
@@ -410,12 +341,10 @@
                 document.getElementById('statSisaPemain').innerText = sisaPemain;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-500">Belum ada data pendaftar turnamen.</td></tr>`;
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada data pendaftar turnamen.</div>`;
                     return;
                 }
 
-                let htmlTable = '';
                 let htmlMobile = '';
                 let i = 1;
 
@@ -428,51 +357,43 @@
                         combinedRole += ` / ${data.role2}`;
                     }
 
-                    // Panggil fungsi formatWaUrl agar awalan '0' otomatis terkonversi menjadi '62'
                     const waUrl = formatWaUrl(data.whatsapp);
+                    const cardDetailId = `detailCard_${docSnap.id}`;
 
-                    htmlTable += `
-                        <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-2.5">${i}</td>
-                            <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-emerald-accent">${data.usernameDb || '-'}</td>
-                            <td class="p-2.5 font-bold text-white">${data.nama || '-'}</td>
-                            <td class="p-2.5">${data.idMl || '-'}</td>
-                            <td class="p-2.5 font-semibold text-sky-300">${combinedRole}</td>
-                            <td class="p-2.5"><a href="${waUrl}" target="_blank" class="text-sky-400 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></td>
-                            <td class="p-2.5"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded font-bold">${data.payment || '-'}</span></td>
-                            <td class="p-2.5 text-center">
-                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-xs transition-all cursor-pointer" title="Hapus">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-
+                    // Tampilan awal ringkas: NAMA LENGKAP - ROLE - PEMBAYARAN
                     htmlMobile += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
-                            <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                <span class="text-emerald-accent font-bold">#${i} ${data.usernameDb || '-'}</span>
-                                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[9px] font-bold">${data.payment || '-'}</span>
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs transition-all hover:border-emerald-accent/50">
+                            <!-- HEADER RINGKAS (BISA DIKLIK) -->
+                            <div onclick="toggleDetailCard('${cardDetailId}')" class="flex items-center justify-between cursor-pointer select-none">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-slate-500 font-bold">#${i}</span>
+                                    <span class="text-white font-bold tracking-wide">${data.nama || '-'}</span>
+                                    <span class="text-slate-400 text-[11px]">— (${combinedRole})</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[10px] font-bold">${data.payment || '-'}</span>
+                                    <i class="fa-solid fa-chevron-down text-slate-400 text-[10px]"></i>
+                                </div>
                             </div>
-                            <div class="space-y-0.5">
-                                <p><strong class="text-slate-400">Nama:</strong> <span class="text-white font-bold">${data.nama || '-'}</span></p>
-                                <p><strong class="text-slate-400">ID ML:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
-                                <p><strong class="text-slate-400">Role:</strong> <span class="text-sky-300">${combinedRole}</span></p>
-                                <p><strong class="text-slate-400">WA:</strong> <a href="${waUrl}" target="_blank" class="text-sky-400 underline">${data.whatsapp || '-'}</a></p>
-                                <p><strong class="text-slate-400">Waktu:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
-                            </div>
-                            <div class="pt-1.5 border-t border-obsidian-border text-right">
-                                <button onclick="deleteTournamentData('${docSnap.id}', '${data.usernameDb}')" class="w-full py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-[11px] font-bold transition-all">
-                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar
-                                </button>
+
+                            <!-- BAGIAN DETAIL LENGKAP (TERSEMBUNYI SEBELUM DIKLIK) -->
+                            <div id="${cardDetailId}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] font-tech bg-obsidian-card p-3 rounded-lg">
+                                <p><strong class="text-slate-400">Akun Web User:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
+                                <p><strong class="text-slate-400">ID Mobile Legend:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
+                                <p><strong class="text-slate-400">Nomor WhatsApp:</strong> <a href="${waUrl}" target="_blank" class="text-sky-400 underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></p>
+                                <p><strong class="text-slate-400">Waktu Pendaftaran:</strong> <span class="text-slate-400">${timeStr}</span></p>
+                                
+                                <div class="pt-2 text-right">
+                                    <button onclick="deleteTournamentData('${docSnap.id}', '${data.nama}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded font-bold transition-all">
+                                        <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar Ini
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     `;
                     i++;
                 });
 
-                tbody.innerHTML = htmlTable;
                 mobileCardBox.innerHTML = htmlMobile;
             });
         }
@@ -481,17 +402,14 @@
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('usersTableBody');
                 const mobileCardBox = document.getElementById('usersCardMobile');
                 document.getElementById('countUsers').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Belum ada akun member.</td></tr>`;
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada akun member.</div>`;
                     return;
                 }
 
-                let htmlTable = '';
                 let htmlMobile = '';
                 let i = 1;
 
@@ -507,28 +425,10 @@
                     const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-0.5"></i> Unban' : '<i class="fa-solid fa-ban mr-0.5"></i> Ban';
                     const banBtnClass = isBanned ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
 
-                    htmlTable += `
-                        <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-2.5">${i}</td>
-                            <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-emerald-accent">${data.username}</td>
-                            <td class="p-2.5 font-mono text-amber-300 bg-obsidian px-2 py-0.5 rounded inline-block">${data.password}</td>
-                            <td class="p-2.5">${statusBadge}</td>
-                            <td class="p-2.5 text-center flex items-center justify-center gap-1">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="px-2 py-1 ${banBtnClass} border rounded text-[11px] font-bold">
-                                    ${banBtnText}
-                                </button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px]">
-                                    <i class="fa-solid fa-user-xmark"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-3 space-y-1.5 text-[11px]">
                             <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                <span class="text-emerald-accent font-bold">${data.username}</span>
+                                <span class="text-emerald-accent font-bold">#${i} ${data.username}</span>
                                 <div>${statusBadge}</div>
                             </div>
                             <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
@@ -546,7 +446,6 @@
                     i++;
                 });
 
-                tbody.innerHTML = htmlTable;
                 usersCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -555,17 +454,14 @@
         function loadGlobalChats() {
             const q = query(collection(db, "chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('chatsTableBody');
                 const mobileCardBox = document.getElementById('chatsCardMobile');
                 document.getElementById('countChats').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada obrolan.</td></tr>`;
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada obrolan.</div>`;
                     return;
                 }
 
-                let htmlTable = '';
                 let htmlMobile = '';
                 let i = 1;
 
@@ -573,22 +469,10 @@
                     const data = docSnap.data();
                     let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
 
-                    htmlTable += `
-                        <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-2.5">${i}</td>
-                            <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-sky-400">${data.username}</td>
-                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
-                            <td class="p-2.5 text-center">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `;
-
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
-                                <span class="text-sky-400 font-bold">${data.username}</span>
+                                <span class="text-sky-400 font-bold">#${i} ${data.username}</span>
                                 <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
@@ -602,7 +486,6 @@
                     i++;
                 });
 
-                tbody.innerHTML = htmlTable;
                 chatsCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -611,17 +494,14 @@
         function loadLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
-                const tbody = document.getElementById('liveChatsTableBody');
                 const mobileCardBox = document.getElementById('liveChatsCardMobile');
                 document.getElementById('countLiveChats').innerText = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-500">Belum ada live chat.</td></tr>`;
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada live chat.</div>`;
                     return;
                 }
 
-                let htmlTable = '';
                 let htmlMobile = '';
                 let i = 1;
 
@@ -629,22 +509,10 @@
                     const data = docSnap.data();
                     let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
 
-                    htmlTable += `
-                        <tr class="hover:bg-obsidian/50 transition-colors">
-                            <td class="p-2.5">${i}</td>
-                            <td class="p-2.5 text-slate-400">${timeStr}</td>
-                            <td class="p-2.5 font-bold text-crimson">${data.username}</td>
-                            <td class="p-2.5 text-slate-200 max-w-md break-words">${escapeHtml(data.message || '')}</td>
-                            <td class="p-2.5 text-center">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `;
-
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
-                                <span class="text-crimson font-bold">${data.username}</span>
+                                <span class="text-crimson font-bold">#${i} ${data.username}</span>
                                 <span class="text-[9px] text-slate-400">${timeStr}</span>
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
@@ -658,7 +526,6 @@
                     i++;
                 });
 
-                tbody.innerHTML = htmlTable;
                 liveChatsCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -683,8 +550,8 @@
             }
         }
 
-        window.deleteTournamentData = async function(docId, username) {
-            if (confirm(`Hapus data pendaftaran untuk akun ${username}?`)) {
+        window.deleteTournamentData = async function(docId, nama) {
+            if (confirm(`Hapus data pendaftaran untuk ${nama}?`)) {
                 try { await deleteDoc(doc(db, "pendaftar", docId)); } catch (err) { alert("Gagal menghapus data."); }
             }
         }
@@ -696,7 +563,7 @@
         }
 
         window.deleteSingleChatMessage = async function(collectionName, docId) {
-            if (confirm(`Hapus pesan me-`)) {
+            if (confirm("Hapus pesan ini?")) {
                 try { await deleteDoc(doc(db, collectionName, docId)); } catch (err) { alert("Gagal menghapus pesan."); }
             }
         }
