@@ -26,7 +26,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 window.toggleMobileMenu = function() {
-  document.getElementById('mobileMenu').classList.toggle('hidden');
+  const menu = document.getElementById('mobileMenu');
+  if(menu) menu.classList.toggle('hidden');
 }
 
 window.openModal = function(id) {
@@ -186,7 +187,6 @@ function initRealtimeWebSettings() {
   } catch (e) { console.error(e); }
 }
 
-// REAL-TIME JADWAL & BAGAN DENGAN TANGGAL, JAM, DAN MATCH DINAMIS
 function initRealtimeJadwal() {
   try {
     const docRef = doc(db, "settings", "jadwal_bagan");
@@ -239,7 +239,6 @@ function initRealtimeJadwal() {
           container.innerHTML = groupHtml;
         }
 
-        // SEMIFINAL & GRAND FINAL
         ['sf1', 'sf2', 'gf'].forEach(id => {
           if (d[id]) {
             const t1El = document.getElementById(`web_${id}_t1`);
@@ -399,10 +398,20 @@ window.showCustomConfirm = function(text, onYesCallback) {
   openModal('confirmModal');
 }
 
+// BUMPER / CAROUSEL SLIDER PERBAIKAN
 let currentIndex = 0;
-const slidesContainer = document.getElementById('carouselSlides');
-window.nextSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
-window.prevSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex - 1 + 3) % 3 * 100}%)`; }
+window.nextSlide = function() { 
+  const slidesContainer = document.getElementById('carouselSlides');
+  if(!slidesContainer) return; 
+  currentIndex = (currentIndex + 1) % 3; 
+  slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
+}
+window.prevSlide = function() { 
+  const slidesContainer = document.getElementById('carouselSlides');
+  if(!slidesContainer) return; 
+  currentIndex = (currentIndex - 1 + 3) % 3; 
+  slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; 
+}
 setInterval(nextSlide, 4500);
 
 window.checkAuthStatus = function() {
