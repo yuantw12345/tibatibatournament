@@ -160,7 +160,6 @@ function initRealtimeWebSettings() {
           const isOpened = data.regStatus === "OPEN";
 
           if (isOpened) {
-            // Tampilan DIBUKA (Warna Hijau / Emerald)
             if (bannerTextEl) bannerTextEl.innerText = "PENDAFTARAN DIBUKA";
             if (modalStatusEl) modalStatusEl.innerText = "ARENA REGISTRATION OPEN";
 
@@ -171,7 +170,6 @@ function initRealtimeWebSettings() {
               bannerDotEl.className = "w-1.5 h-1.5 rounded-full bg-emerald-accent animate-pulse";
             }
           } else {
-            // Tampilan DITUTUP (Warna Merah / Crimson)
             if (bannerTextEl) bannerTextEl.innerText = "PENDAFTARAN DITUTUP";
             if (modalStatusEl) modalStatusEl.innerText = "REGISTRATION CLOSED";
 
