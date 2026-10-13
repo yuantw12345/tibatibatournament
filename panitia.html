@@ -30,7 +30,6 @@
         .neon-glow-red { text-shadow: 0 0 8px rgba(255, 30, 86, 0.5), 0 0 15px rgba(255, 30, 86, 0.3); }
         .neon-glow-white { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 230, 153, 0.2); }
         
-        /* SMOOTH MODAL TRANSITION */
         #applicantDetailModal {
             transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
         }
@@ -71,7 +70,7 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP DETAIL PESERTA (SMOOTH TRANSITION) -->
+    <!-- MODAL POP-UP DETAIL PESERTA -->
     <div id="applicantDetailModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-3 opacity-0 pointer-events-none">
         <div class="relative w-full max-w-md bg-obsidian-card border border-emerald-accent/40 rounded-xl p-5 shadow-2xl space-y-4 font-tech text-xs scale-95 opacity-0">
             <div class="flex items-center justify-between border-b border-obsidian-border pb-3">
@@ -584,7 +583,7 @@
             }
         }
 
-        // TAMPILAN TABEL PENDAFTAR (KOLOM TENGAH = ROLE, TOMBOL ACC = STATUS APPROVED)
+        // TAMPILAN TABEL PENDAFTAR (KIKUTI UKURAN DENGAN FLEX ROW KEKAL UNTUK TOMBOL ACC & HAPUS)
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -602,23 +601,27 @@
                     const isApp = d.status === 'Approved';
 
                     const btnAcc = isApp 
-                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/40 hover:bg-amber-500/20 text-emerald-accent hover:text-amber-400 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1 inline-flex" title="Klik untuk membatalkan ACC"><i class="fa-solid fa-circle-check text-[10px]"></i> Approved</button>` 
-                        : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2.5 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
+                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 hover:bg-amber-500/20 text-emerald-accent hover:text-amber-400 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1 shrink-0 whitespace-nowrap" title="Klik untuk membatalkan ACC"><i class="fa-solid fa-circle-check text-[9px]"></i> Approved</button>` 
+                        : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[10px] font-bold transition-all cursor-pointer shadow-md shrink-0 whitespace-nowrap">ACC Peserta</button>`;
 
                     const roleDisplay = d.role2 ? `${d.role1 || '-'} / ${d.role2}` : (d.role1 || '-');
 
                     html += `
                         <tr class="hover:bg-obsidian/60 transition-colors">
-                            <td class="py-2.5 px-2.5 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent transition-colors" onclick="openApplicantModal('${id}')">
-                                <span class="text-amber-400 mr-1.5 font-mono">#${i}</span>
-                                <span class="underline decoration-dashed decoration-emerald-accent/50">${d.nama || '-'}</span>
+                            <td class="py-3 px-2 sm:px-2.5 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent transition-colors align-middle" onclick="openApplicantModal('${id}')">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-amber-400 font-mono shrink-0 text-[10px] sm:text-xs">#${i}</span>
+                                    <span class="underline decoration-dashed decoration-emerald-accent/50 break-words text-[11px] sm:text-xs">${d.nama || '-'}</span>
+                                </div>
                             </td>
-                            <td class="py-2.5 px-2.5 text-center font-bold text-sky-400 text-[10px] sm:text-xs">
-                                ${roleDisplay}
+                            <td class="py-3 px-2 sm:px-2.5 text-center font-bold text-sky-400 text-[10px] sm:text-xs align-middle">
+                                <span class="break-words">${roleDisplay}</span>
                             </td>
-                            <td class="py-2.5 px-2.5 text-right space-x-1 shrink-0">
-                                ${btnAcc}
-                                <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                            <td class="py-3 px-2 sm:px-2.5 text-right align-middle">
+                                <div class="flex items-center justify-end gap-1.5 shrink-0">
+                                    ${btnAcc}
+                                    <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -628,7 +631,7 @@
             });
         }
 
-        // BUKA POPUP MODAL DENGAN EFEK SMOOTH FADE & ZOOM (TANPA KEDIP)
+        // BUKA POPUP MODAL DENGAN EFEK SMOOTH FADE & ZOOM
         window.openApplicantModal = function(id) {
             const data = window.applicantsDataStore[id];
             if (!data) return;
