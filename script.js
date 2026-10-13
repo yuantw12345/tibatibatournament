@@ -15,7 +15,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.addEventListener('DOMContentLoaded', () => {
+  // MEMUNCULKAN KEMBALI WELCOME POP-UP OTOMATIS SAAT HALAMAN DIBUKA
   setTimeout(() => openModal('rulesModal'), 300);
+  
   checkAuthStatus();
   initRealtimeChats();
   initRealtimeLiveChats();
@@ -199,6 +201,9 @@ function initRealtimeJadwal() {
         const badgeEl = document.getElementById('webTotalGroupMatchBadge');
         if (badgeEl) badgeEl.innerText = `${totalGroupMatches} MATCHES (${totalTeams} TIM)`;
 
+        // Hitung dan Perbarui Klasemen Otomatis di Website
+        calculateAndUpdateStandings(d);
+
         const container = document.getElementById('webGroupStageContainer');
         if (container) {
           let groupHtml = '';
@@ -269,6 +274,82 @@ function initRealtimeJadwal() {
       }
     });
   } catch (e) { console.error(e); }
+}
+
+// Logika Kalkulasi Klasemen Otomatis Poin Berdasarkan Skor Group Stage
+function calculateAndUpdateStandings(data) {
+  const tableBody = document.getElementById('webKlasemenTableBody');
+  if (!tableBody) return;
+
+  // Kumpulkan semua nama tim unik dari match group stage
+  let teamsSet = new Set();
+  const totalTeams = parseInt(data.totalTeams || 5);
+  const totalMatches = (totalTeams * (totalTeams - 1)) / 2;
+
+  for (let i = 1; i <= totalMatches; i++) {
+    const m = data[`m${i}`];
+    if (m) {
+      if (m.tim1 && m.tim1.trim() !== '') teamsSet.add(m.tim1.trim());
+      if (m.tim2 && m.tim2.trim() !== '') teamsSet.add(m.tim2.trim());
+    }
+  }
+
+  if (teamsSet.size === 0) {
+    tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-500">Belum ada tim yang dimasukkan di match.</td></tr>`;
+    return;
+  }
+
+  let stats = {};
+  teamsSet.forEach(team => {
+    stats[team] = { name: team, played: 0, win: 0, draw: 0, lose: 0, points: 0 };
+  });
+
+  for (let i = 1; i <= totalMatches; i++) {
+    const m = data[`m${i}`];
+    if (m && m.status === 'SELESAI' && m.tim1 && m.tim2 && m.skor) {
+      const t1 = m.tim1.trim();
+      const t2 = m.tim2.trim();
+      const parts = m.skor.split('-').map(s => parseInt(s.trim()));
+
+      if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        const s1 = parts[0];
+        const s2 = parts[1];
+
+        if (stats[t1]) stats[t1].played++;
+        if (stats[t2]) stats[t2].played++;
+
+        if (s1 > s2) {
+          if (stats[t1]) { stats[t1].win++; stats[t1].points += 3; }
+          if (stats[t2]) { stats[t2].lose++; }
+        } else if (s2 > s1) {
+          if (stats[t2]) { stats[t2].win++; stats[t2].points += 3; }
+          if (stats[t1]) { stats[t1].lose++; }
+        } else {
+          if (stats[t1]) { stats[t1].draw++; stats[t1].points += 1; }
+          if (stats[t2]) { stats[t2].draw++; stats[t2].points += 1; }
+        }
+      }
+    }
+  }
+
+  let sortedTeams = Object.values(stats).sort((a, b) => b.points - a.points || b.win - a.win);
+
+  let html = '';
+  sortedTeams.forEach((team, idx) => {
+    html += `
+      <tr class="hover:bg-obsidian/60 transition-colors">
+        <td class="py-2.5 px-3 text-center font-bold text-amber-400">#${idx + 1}</td>
+        <td class="py-2.5 px-3 font-bold text-white uppercase">${team.name}</td>
+        <td class="py-2.5 px-3 text-center text-slate-300">${team.played}</td>
+        <td class="py-2.5 px-3 text-center font-bold text-emerald-accent">${team.win}</td>
+        <td class="py-2.5 px-3 text-center font-bold text-sky-400">${team.draw}</td>
+        <td class="py-2.5 px-3 text-center font-bold text-crimson">${team.lose}</td>
+        <td class="py-2.5 px-3 text-center font-extrabold text-amber-400 text-sm">${team.points}</td>
+      </tr>
+    `;
+  });
+
+  tableBody.innerHTML = html;
 }
 
 function initPublicPendaftar() {
@@ -398,7 +479,6 @@ window.showCustomConfirm = function(text, onYesCallback) {
   openModal('confirmModal');
 }
 
-// BUMPER / CAROUSEL SLIDER PERBAIKAN
 let currentIndex = 0;
 window.nextSlide = function() { 
   const slidesContainer = document.getElementById('carouselSlides');
