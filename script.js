@@ -35,7 +35,7 @@ window.openModal = function(id) {
   const modal = document.getElementById(id);
   if(modal) {
     modal.classList.add('active');
-    if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'jadwalModal' && id !== 'championsModal') {
+    if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'championsModal') {
       document.body.style.overflow = 'hidden';
     }
   }
@@ -47,16 +47,6 @@ window.closeModal = function(id) {
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
   }
-}
-
-window.openJadwalModal = function() {
-  const modal = document.getElementById('jadwalModal');
-  if(modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
-}
-
-window.closeJadwalModal = function() {
-  const modal = document.getElementById('jadwalModal');
-  if(modal) { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
 }
 
 window.openChampionsModal = function() {
@@ -200,7 +190,6 @@ function initRealtimeJadwal() {
         const badgeEl = document.getElementById('webTotalGroupMatchBadge');
         if (badgeEl) badgeEl.innerText = `${totalGroupMatches} MATCHES (${totalTeams} TIM)`;
 
-        // Kalkulasi Klasemen Otomatis berdasarkan teamNames dari panel panitia
         calculateAndUpdateStandings(d);
 
         const container = document.getElementById('webGroupStageContainer');
@@ -275,7 +264,6 @@ function initRealtimeJadwal() {
   } catch (e) { console.error(e); }
 }
 
-// Logika Kalkulasi Klasemen Berdasarkan teamNames & Skor Group Stage
 function calculateAndUpdateStandings(data) {
   const tableBody = document.getElementById('webKlasemenTableBody');
   if (!tableBody) return;
@@ -485,37 +473,49 @@ window.checkAuthStatus = function() {
   const authMemberMenu = document.getElementById('authMemberMenu');
   const mobileAuthGuest = document.getElementById('mobileAuthGuest');
   const mobileAuthMember = document.getElementById('mobileAuthMember');
-  const cardAuthAction = document.getElementById('cardAuthAction');
-  const cardIcon = document.getElementById('cardIcon');
-  const cardTitle = document.getElementById('cardTitle');
-  const cardDesc = document.getElementById('cardDesc');
-  const lockStatusText = document.getElementById('lockStatusText');
-  if (!cardAuthAction) return;
+  const loggedInUserBadge = document.getElementById('loggedInUserBadge');
+  const mobileUserBadge = document.getElementById('mobileUserBadge');
+  const activeAccountDisplay = document.getElementById('activeAccountDisplay');
 
+  // 1. Update Navbar & Sidebar (Berjalan di SEMUA Halaman)
   if (loggedUser) {
     if(authGuestMenu) authGuestMenu.classList.add('hidden');
     if(authMemberMenu) authMemberMenu.classList.remove('hidden');
     if(mobileAuthGuest) mobileAuthGuest.classList.add('hidden');
     if(mobileAuthMember) mobileAuthMember.classList.remove('hidden');
-    document.getElementById('loggedInUserBadge').innerText = loggedUser;
-    document.getElementById('mobileUserBadge').innerText = 'Akun: ' + loggedUser;
-    document.getElementById('activeAccountDisplay').innerText = loggedUser;
-    if(cardIcon) cardIcon.className = "fa-solid fa-circle-check";
-    if(cardTitle) cardTitle.innerText = "STATUS: TERLOGIN";
-    if(cardDesc) cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">${loggedUser}</strong>.`;
-    cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai ${loggedUser}`);
-    if(lockStatusText) lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
+    if(loggedInUserBadge) loggedInUserBadge.innerText = loggedUser;
+    if(mobileUserBadge) mobileUserBadge.innerText = 'Akun: ' + loggedUser;
+    if(activeAccountDisplay) activeAccountDisplay.innerText = loggedUser;
   } else {
     if(authGuestMenu) authGuestMenu.classList.remove('hidden');
     if(authMemberMenu) authMemberMenu.classList.add('hidden');
     if(mobileAuthGuest) mobileAuthGuest.classList.remove('hidden');
     if(mobileAuthMember) mobileAuthMember.classList.add('hidden');
-    if(cardIcon) cardIcon.className = "fa-solid fa-right-to-bracket";
-    if(cardTitle) cardTitle.innerText = "1. LOGIN / BUAT AKUN";
-    if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru.";
-    cardAuthAction.onclick = () => openModal('loginModal');
-    if(lockStatusText) lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span>';
   }
+
+  // 2. Update Card Menu Utama (HANYA jika ada di index.html)
+  const cardAuthAction = document.getElementById('cardAuthAction');
+  const cardIcon = document.getElementById('cardIcon');
+  const cardTitle = document.getElementById('cardTitle');
+  const cardDesc = document.getElementById('cardDesc');
+  const lockStatusText = document.getElementById('lockStatusText');
+
+  if (cardAuthAction) {
+    if (loggedUser) {
+      if(cardIcon) cardIcon.className = "fa-solid fa-circle-check";
+      if(cardTitle) cardTitle.innerText = "STATUS: TERLOGIN";
+      if(cardDesc) cardDesc.innerHTML = `Masuk sebagai <strong class="text-emerald-accent">${loggedUser}</strong>.`;
+      cardAuthAction.onclick = () => showCustomAlert("INFO AKUN", `Anda sudah login sebagai ${loggedUser}`);
+      if(lockStatusText) lockStatusText.innerHTML = '<span class="text-emerald-accent"><i class="fa-solid fa-unlock text-[10px]"></i> (Akses Terbuka)</span>';
+    } else {
+      if(cardIcon) cardIcon.className = "fa-solid fa-right-to-bracket";
+      if(cardTitle) cardTitle.innerText = "1. LOGIN / BUAT AKUN";
+      if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru.";
+      cardAuthAction.onclick = () => openModal('loginModal');
+      if(lockStatusText) lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span>';
+    }
+  }
+
   updateChatAccessUI();
 }
 
