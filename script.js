@@ -143,7 +143,7 @@ function startSessionWatcher() {
   }, 10000);
 }
 
-// MEMUAT DATA PENDAFTAR & STATISTIK TIM DI MODAL POP-UP
+// MEMUAT DATA PENDAFTAR & STATISTIK TIM (TOTAL & TIM) DI MODAL POP-UP
 function initPublicPendaftar() {
   try {
     const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"));
@@ -152,21 +152,17 @@ function initPublicPendaftar() {
       const container = document.getElementById('publicPendaftarList');
       const totalEl = document.getElementById('pubStatTotal');
       const timEl = document.getElementById('pubStatTim');
-      const sisaEl = document.getElementById('pubStatSisa');
 
       if (!container) return;
 
       const totalPendaftar = snapshot.size;
 
-      // Hitung total tim dan kurang pemain
+      // Hitung total tim
       const totalTim = Math.floor(totalPendaftar / 5);
-      const sisaPemain = totalPendaftar % 5;
-      const kurangPemain = sisaPemain === 0 ? 0 : 5 - sisaPemain;
 
       // Update Tampilan Header Statistik
       if (totalEl) totalEl.innerText = totalPendaftar;
       if (timEl) timEl.innerText = totalTim + " Tim";
-      if (sisaEl) sisaEl.innerText = kurangPemain > 0 ? `Kurang ${kurangPemain}` : "Lengkap";
 
       if (snapshot.empty) {
         container.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada peserta yang dikonfirmasi oleh panitia.</div>';
