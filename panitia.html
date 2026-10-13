@@ -157,7 +157,7 @@
             </div>
         </div>
 
-        <!-- TAB BARU: PENGATURAN TAMPILAN WEBSITE -->
+        <!-- TAB PENGATURAN TAMPILAN WEBSITE -->
         <div id="sectionSettings" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
@@ -168,18 +168,12 @@
 
             <form onsubmit="handleSaveWebSettings(event)" class="space-y-4 max-w-xl font-tech text-xs">
                 <div>
-                    <label class="block text-slate-300 font-bold mb-1">Teks Pengumuman Banner Atas</label>
-                    <input type="text" id="inputBannerText" required placeholder="Contoh: SEASON BARU TELAH DIBUKA atau REGISTRASI REGULER SEGERA DITUTUP" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-400">
-                    <p class="text-[10px] text-slate-400 mt-1">Teks ini akan langsung muncul di bagian atas halaman utama website.</p>
-                </div>
-
-                <div>
                     <label class="block text-slate-300 font-bold mb-1">Status Pendaftaran Turnamen</label>
                     <select id="inputRegStatus" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-400 cursor-pointer">
-                        <option value="PENDAFTARAN DIBUKA">PENDAFTARAN DIBUKA (ARENA REGISTRATION OPEN)</option>
-                        <option value="PENDAFTARAN DITUTUP">PENDAFTARAN DITUTUP (REGISTRATION CLOSED)</option>
+                        <option value="OPEN">PENDAFTARAN DIBUKA (HIJAU)</option>
+                        <option value="CLOSED">PENDAFTARAN DITUTUP (MERAH)</option>
                     </select>
-                    <p class="text-[10px] text-slate-400 mt-1">Mengatur status badge di poster/banner modal website.</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Mengatur warna & teks status pendaftaran pada banner atas dan pop-up welcome website secara otomatis.</p>
                 </div>
 
                 <div class="pt-2">
@@ -372,14 +366,12 @@
             }
         }
 
-        // FUNGSI LOAD & SIMPAN PENGATURAN WEBSITE
         async function loadCurrentWebSettings() {
             try {
                 const docRef = doc(db, "settings", "website");
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.bannerText) document.getElementById('inputBannerText').value = data.bannerText;
                     if (data.regStatus) document.getElementById('inputRegStatus').value = data.regStatus;
                 }
             } catch (e) {
@@ -389,7 +381,6 @@
 
         window.handleSaveWebSettings = async function(e) {
             e.preventDefault();
-            const bannerText = document.getElementById('inputBannerText').value.trim();
             const regStatus = document.getElementById('inputRegStatus').value;
             const btn = document.getElementById('saveSettingsBtn');
 
@@ -398,10 +389,9 @@
 
             try {
                 await setDoc(doc(db, "settings", "website"), {
-                    bannerText: bannerText,
                     regStatus: regStatus
                 });
-                alert("Pengaturan website berhasil disimpan dan diperbarui secara real-time!");
+                alert("Status pendaftaran berhasil disimpan dan diperbarui secara real-time ke website!");
             } catch (err) {
                 console.error(err);
                 alert("Gagal menyimpan pengaturan.");
@@ -411,7 +401,6 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN DENGAN TOMBOL ACC
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -493,7 +482,6 @@
             });
         }
 
-        // FUNGSI UPDATE STATUS ACC KE FIRESTORE
         window.updateApprovalStatus = async function(docId, newStatus) {
             try {
                 const docRef = doc(db, "pendaftar", docId);
@@ -505,7 +493,6 @@
             }
         }
 
-        // 2. AKUN MEMBER
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -547,7 +534,6 @@
             });
         }
 
-        // 3. CHAT GLOBAL
         function loadGlobalChats() {
             const q = query(collection(db, "chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -580,7 +566,6 @@
             });
         }
 
-        // 4. LIVE STREAM CHAT
         function loadLiveChats() {
             const q = query(collection(db, "live_chats"), orderBy("time", "desc"));
             onSnapshot(q, (snapshot) => {
