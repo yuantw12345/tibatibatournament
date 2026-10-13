@@ -116,7 +116,7 @@
             </button>
         </div>
 
-        <!-- TAB 1: DATA PENDAFTAR (SINGKAT AWAL, BUKA DETAIL SAAT DIKLIK) -->
+        <!-- TAB 1: DATA PENDAFTAR -->
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
@@ -140,7 +140,17 @@
                 </div>
             </div>
 
-            <div id="tournamentCardMobile" class="space-y-3 font-tech">
+            <!-- HEADER TABEL BERSIH -->
+            <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <div class="col-span-1">#</div>
+                <div class="col-span-3">NAMA LENGKAP</div>
+                <div class="col-span-3">ROLE (UTAMA / CADANGAN)</div>
+                <div class="col-span-2">PEMBAYARAN</div>
+                <div class="col-span-1">STATUS</div>
+                <div class="col-span-2 text-right">AKSI</div>
+            </div>
+
+            <div id="tournamentCardMobile" class="space-y-2 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
@@ -489,7 +499,7 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // TAMPILAN KARTU PENDAFTAR (RINGKAS DI AWAL, MUNCUL LENGKAP KETIKA DIKLIK)
+        // TAMPILAN BERSIH, TERSTRUKTUR DENGAN LINK WA SIKAT
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -502,42 +512,42 @@
                     const isApp = d.status === 'Approved';
 
                     const btnAcc = isApp 
-                        ? `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
-                        : `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-3 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
+                        ? `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-2.5 py-1.5 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
+                        : `<button onclick="event.stopPropagation(); updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-2.5 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
+
+                    // BERSIHKAN NOMOR WA UNTUK LINK DIRECT WHATSAPP
+                    let cleanWa = (d.whatsapp || '').toString().replace(/[^0-9]/g, '');
+                    if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
+                    const waLink = cleanWa ? `https://wa.me/${cleanWa}` : '#';
+
+                    // GABUNGAN ROLE (UTAMA / CADANGAN)
+                    const roleDisplay = d.role2 ? `${d.role1 || '-'} / ${d.role2}` : (d.role1 || '-');
 
                     html += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 transition-all hover:border-emerald-accent/40 cursor-pointer" onclick="toggleApplicantDetail('${docSnap.id}')">
-                            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-                                <div class="flex items-center justify-between sm:justify-start gap-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold">#${i}</span>
-                                        <h3 class="text-white font-bold text-sm uppercase">${d.nama || '-'}</h3>
-                                    </div>
-                                    <span class="text-sky-400 font-bold text-xs bg-sky-500/10 px-2.5 py-1 rounded-lg border border-sky-500/20">
-                                        Role: ${d.role1 || '-'}
-                                    </span>
-                                    <span class="text-purple-400 font-bold text-xs bg-purple-500/10 px-2.5 py-1 rounded-lg border border-purple-500/20">
-                                        Bayar: (${d.payment || '-'})
-                                    </span>
-                                    <span class="text-xs ${isApp ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold'}">
-                                        - ${d.status}
-                                    </span>
-                                </div>
-                                <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-obsidian-border">
-                                    <div class="flex items-center gap-2" onclick="event.stopPropagation()">
-                                        ${btnAcc}
-                                        <button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="px-3 py-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
-                                    </div>
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 transition-all hover:border-emerald-accent/40 cursor-pointer" onclick="toggleApplicantDetail('${docSnap.id}')">
+                            <div class="grid grid-cols-12 gap-2 items-center">
+                                <div class="col-span-1 text-amber-400 font-bold text-xs">#${i}</div>
+                                <div class="col-span-11 sm:col-span-3 text-white font-bold text-xs uppercase truncate">${d.nama || '-'}</div>
+                                <div class="col-span-12 sm:col-span-3 text-sky-400 font-bold text-xs">${roleDisplay}</div>
+                                <div class="col-span-6 sm:col-span-2 text-purple-400 font-bold text-xs">${d.payment || '-'}</div>
+                                <div class="col-span-6 sm:col-span-1 text-xs ${isApp ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold'}">${d.status || 'Pending'}</div>
+                                <div class="col-span-12 sm:col-span-2 flex items-center justify-end gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-obsidian-border" onclick="event.stopPropagation()">
+                                    ${btnAcc}
+                                    <button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 ml-1" id="icon_${docSnap.id}"></i>
                                 </div>
                             </div>
 
-                            <!-- DETAIL LENGKAP YANG MUNCUL SAAT DIKLIK -->
-                            <div id="detail_${docSnap.id}" class="hidden mt-3 pt-3 border-t border-obsidian-border grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-300 font-tech">
+                            <!-- DETAIL LENGKAP SAAT DIKLIK (TERMASUK WA KLIK DIRECT) -->
+                            <div id="detail_${docSnap.id}" class="hidden mt-3 pt-3 border-t border-obsidian-border grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300 font-tech">
                                 <div><span class="text-slate-500 block text-[10px]">ID MOBILE LEGEND:</span> <strong class="text-white">${d.idMl || '-'}</strong></div>
-                                <div><span class="text-slate-500 block text-[10px]">ROLE CADANGAN:</span> <strong class="text-white">${d.role2 || '-'}</strong></div>
-                                <div><span class="text-slate-500 block text-[10px]">NOMOR WHATSAPP:</span> <strong class="text-white">${d.whatsapp || '-'}</strong></div>
-                                <div class="sm:col-span-3"><span class="text-slate-500 block text-[10px]">AKUN PENDAFTAR:</span> <strong class="text-emerald-accent">${d.usernameDb || '-'}</strong></div>
+                                <div>
+                                    <span class="text-slate-500 block text-[10px]">NOMOR WHATSAPP (KLIK UNTUK CHAT):</span> 
+                                    <a href="${waLink}" target="_blank" onclick="event.stopPropagation()" class="text-emerald-accent font-bold hover:underline inline-flex items-center gap-1">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i> ${d.whatsapp || '-'}
+                                    </a>
+                                </div>
+                                <div><span class="text-slate-500 block text-[10px]">AKUN PENDAFTAR:</span> <strong class="text-sky-400">${d.usernameDb || '-'}</strong></div>
                             </div>
                         </div>
                     `;
@@ -547,7 +557,7 @@
             });
         }
 
-        // FUNGSI TOGGLE UNTUK MEMBUKA DETAIL SAAT DIKLIK
+        // FUNGSI TOGGLE ACCORDION
         window.toggleApplicantDetail = function(id) {
             const detailEl = document.getElementById(`detail_${id}`);
             const iconEl = document.getElementById(`icon_${id}`);
