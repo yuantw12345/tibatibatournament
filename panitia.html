@@ -103,6 +103,9 @@
             <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-trophy"></i> <span>PENDAFTAR (<span id="countTournaments">0</span>)</span>
             </button>
+            <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
+                <i class="fa-solid fa-gear"></i> <span>PENGATURAN WEB</span>
+            </button>
             <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5">
                 <i class="fa-solid fa-users-gear"></i> <span>MEMBER (<span id="countUsers">0</span>)</span>
             </button>
@@ -152,6 +155,39 @@
             <div id="tournamentCardMobile" class="space-y-2 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
+        </div>
+
+        <!-- TAB BARU: PENGATURAN TAMPILAN WEBSITE -->
+        <div id="sectionSettings" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
+                <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-gear text-sky-400"></i> Pengaturan Tampilan & Status Website Utama
+                </h2>
+                <span class="text-[10px] font-tech text-slate-400">Database "settings/website"</span>
+            </div>
+
+            <form onsubmit="handleSaveWebSettings(event)" class="space-y-4 max-w-xl font-tech text-xs">
+                <div>
+                    <label class="block text-slate-300 font-bold mb-1">Teks Pengumuman Banner Atas</label>
+                    <input type="text" id="inputBannerText" required placeholder="Contoh: SEASON BARU TELAH DIBUKA atau REGISTRASI REGULER SEGERA DITUTUP" class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-400">
+                    <p class="text-[10px] text-slate-400 mt-1">Teks ini akan langsung muncul di bagian atas halaman utama website.</p>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-1">Status Pendaftaran Turnamen</label>
+                    <select id="inputRegStatus" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-400 cursor-pointer">
+                        <option value="PENDAFTARAN DIBUKA">PENDAFTARAN DIBUKA (ARENA REGISTRATION OPEN)</option>
+                        <option value="PENDAFTARAN DITUTUP">PENDAFTARAN DITUTUP (REGISTRATION CLOSED)</option>
+                    </select>
+                    <p class="text-[10px] text-slate-400 mt-1">Mengatur status badge di poster/banner modal website.</p>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="saveSettingsBtn" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold uppercase rounded-xl transition-all shadow-lg cursor-pointer flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> SIMPAN PERUBAHAN KE WEBSITE
+                    </button>
+                </div>
+            </form>
         </div>
 
         <!-- TAB 2: DATA AKUN MEMBER -->
@@ -207,7 +243,7 @@
     <!-- SCRIPT FIREBASE & LOGIKA PANEL -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy, getDocs, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJSbXvoVqSPFbgwhRZzM4utTuJNgYsxb0",
@@ -227,6 +263,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             checkAdminAuth();
+            loadCurrentWebSettings();
         });
 
         window.handleRefreshAdminPanel = function() {
@@ -292,11 +329,13 @@
 
         window.switchAdminTab = function(tab) {
             const btnT = document.getElementById('tabBtnTournaments');
+            const btnS = document.getElementById('tabBtnSettings');
             const btnU = document.getElementById('tabBtnUsers');
             const btnC = document.getElementById('tabBtnChats');
             const btnLC = document.getElementById('tabBtnLiveChats');
             
             const secT = document.getElementById('sectionTournaments');
+            const secS = document.getElementById('sectionSettings');
             const secU = document.getElementById('sectionUsers');
             const secC = document.getElementById('sectionChats');
             const secLC = document.getElementById('sectionLiveChats');
@@ -304,11 +343,13 @@
             const defaultBtnClass = "px-3 py-2.5 rounded-lg bg-obsidian-card border border-obsidian-border text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
             
             btnT.className = defaultBtnClass;
+            btnS.className = defaultBtnClass;
             btnU.className = defaultBtnClass;
             btnC.className = defaultBtnClass;
             btnLC.className = defaultBtnClass;
 
             secT.classList.add('hidden');
+            secS.classList.add('hidden');
             secU.classList.add('hidden');
             secC.classList.add('hidden');
             secLC.classList.add('hidden');
@@ -316,6 +357,9 @@
             if (tab === 'tournaments') {
                 btnT.className = "px-3 py-2.5 rounded-lg bg-emerald-accent text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secT.classList.remove('hidden');
+            } else if (tab === 'settings') {
+                btnS.className = "px-3 py-2.5 rounded-lg bg-sky-500 text-black shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
+                secS.classList.remove('hidden');
             } else if (tab === 'users') {
                 btnU.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secU.classList.remove('hidden');
@@ -325,6 +369,45 @@
             } else if (tab === 'liveChats') {
                 btnLC.className = "px-3 py-2.5 rounded-lg bg-crimson text-white shadow-md transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1.5";
                 secLC.classList.remove('hidden');
+            }
+        }
+
+        // FUNGSI LOAD & SIMPAN PENGATURAN WEBSITE
+        async function loadCurrentWebSettings() {
+            try {
+                const docRef = doc(db, "settings", "website");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.bannerText) document.getElementById('inputBannerText').value = data.bannerText;
+                    if (data.regStatus) document.getElementById('inputRegStatus').value = data.regStatus;
+                }
+            } catch (e) {
+                console.error("Gagal memuat pengaturan web:", e);
+            }
+        }
+
+        window.handleSaveWebSettings = async function(e) {
+            e.preventDefault();
+            const bannerText = document.getElementById('inputBannerText').value.trim();
+            const regStatus = document.getElementById('inputRegStatus').value;
+            const btn = document.getElementById('saveSettingsBtn');
+
+            btn.innerText = "MENYIMPAN...";
+            btn.disabled = true;
+
+            try {
+                await setDoc(doc(db, "settings", "website"), {
+                    bannerText: bannerText,
+                    regStatus: regStatus
+                });
+                alert("Pengaturan website berhasil disimpan dan diperbarui secara real-time!");
+            } catch (err) {
+                console.error(err);
+                alert("Gagal menyimpan pengaturan.");
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> SIMPAN PERUBAHAN KE WEBSITE';
+                btn.disabled = false;
             }
         }
 
