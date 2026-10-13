@@ -113,7 +113,7 @@ tailwind.config = {
 </a>
 <nav class="hidden md:flex items-center space-x-4 font-tech text-xs tracking-wider uppercase font-semibold">
 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
-<button onclick="switchTab('pendaftar')" class="text-slate-300 hover:text-amber-400 transition-colors flex items-center gap-1.5 cursor-pointer">
+<button onclick="openPendaftarModal()" class="text-slate-300 hover:text-amber-400 transition-colors flex items-center gap-1.5 cursor-pointer">
 <i class="fa-solid fa-users text-amber-400 text-sm"></i> Pendaftar
 </button>
 <a href="#live-stream" class="text-slate-300 hover:text-crimson transition-colors flex items-center gap-1.5">
@@ -149,7 +149,7 @@ LOGOUT
 </div>
 <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
 <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
-<button onclick="switchTab('pendaftar'); toggleMobileMenu()" class="w-full text-left text-amber-400 flex items-center gap-2 py-1 font-bold">
+<button onclick="openPendaftarModal(); toggleMobileMenu()" class="w-full text-left text-amber-400 flex items-center gap-2 py-1 font-bold">
 <i class="fa-solid fa-users"></i> Pendaftar Musim Ini
 </button>
 <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">Live & Chat Arena</a>
@@ -274,7 +274,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <p class="text-slate-400 text-xs mb-4">Formulir pendaftaran tim bertanding. <span id="lockStatusText" class="text-amber-400 font-semibold block mt-1"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span></p>
 </div>
 
-<div onclick="switchTab('pendaftar')" class="group bg-obsidian-card border border-obsidian-border hover:border-amber-400 p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<div onclick="openPendaftarModal()" class="group bg-obsidian-card border border-obsidian-border hover:border-amber-400 p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
 <div class="w-12 h-12 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:bg-amber-400 group-hover:text-black transition-all"><i class="fa-solid fa-users"></i></div>
 <h3 class="font-display font-bold text-base text-white mb-2">3. PENDAFTAR MUSIM INI</h3>
 <p class="text-slate-400 text-xs mb-4">Lihat daftar nama lengkap peserta yang telah dikonfirmasi panitia.</p>
@@ -288,23 +288,8 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </section>
 
-<!-- SEKSI TAB DINAMIS (PENDAFTAR & CHAMPIONS) -->
+<!-- SEKSI TAB DINAMIS KHUSUS CHAMPIONS DI BAWAH -->
 <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-<!-- KONTEN 1: PENDAFTAR MUSIM INI -->
-<div id="content-pendaftar" class="bg-obsidian-card border border-amber-400/30 rounded-2xl p-6 hidden animate-fade-in shadow-lg">
-<div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
-<div class="flex items-center gap-3">
-<i class="fa-solid fa-users text-amber-400 text-2xl"></i>
-<h3 class="font-display font-bold text-lg sm:text-2xl text-white">DAFTAR PENDAFTAR MUSIM INI (CONFIRMED)</h3>
-</div>
-<button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 transition-colors cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
-</div>
-<div id="publicPendaftarList" class="space-y-2.5 font-tech text-xs">
-<div class="text-center py-6 text-slate-500">Memuat data peserta terkonfirmasi...</div>
-</div>
-</div>
-
-<!-- KONTEN 2: CATATAN JUARA -->
 <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
 <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
 <div class="flex items-center gap-3">
@@ -351,7 +336,24 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <a href="https://wa.me/6287763331294?text=Halo%20Panitia%201%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold"><span class="text-[11px]">Panitia 1</span><i class="fa-brands fa-whatsapp text-lg"></i></a>
 </div>
 
-<!-- MODALS -->
+<!-- MODAL POP-UP KHUSUS PENDAFTAR MUSIM INI -->
+<div id="pendaftarModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+<div class="modal-container relative w-full max-w-lg bg-obsidian-card border border-amber-400/40 rounded-2xl p-6 sm:p-7 shadow-2xl flex flex-col max-h-[85vh]">
+<button onclick="closePendaftarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
+<div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-4 shrink-0">
+<div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center text-base border border-amber-400/30"><i class="fa-solid fa-users"></i></div>
+<div><h3 class="font-display font-bold text-base sm:text-lg text-white leading-tight">DAFTAR PENDAFTAR MUSIM INI</h3><p class="text-[10px] sm:text-xs text-slate-400 font-tech">Peserta Resmi yang Telah Dikonfirmasi (ACC)</p></div>
+</div>
+<div id="publicPendaftarList" class="flex-grow overflow-y-auto space-y-2.5 pr-2 mb-4 font-tech text-xs min-h-0">
+<div class="text-center text-slate-500 py-8">Memuat data peserta terkonfirmasi...</div>
+</div>
+<div class="pt-3 border-t border-obsidian-border text-right">
+<button onclick="closePendaftarModal()" class="w-full py-3 bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg cursor-pointer transition-all">TUTUP</button>
+</div>
+</div>
+</div>
+
+<!-- MODALS LAINNYA -->
 <div id="chatModal" class="modal-overlay fixed bottom-20 left-5 z-50 w-[92%] sm:w-[380px] h-[460px] bg-obsidian-card border border-sky-400/40 rounded-2xl p-4 shadow-2xl flex flex-col">
 <button onclick="closeChatModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1.5 cursor-pointer z-10"><i class="fa-solid fa-xmark text-base"></i></button>
 <div class="flex items-center gap-2.5 pb-2.5 border-b border-obsidian-border mb-2.5 shrink-0">
