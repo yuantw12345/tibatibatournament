@@ -74,9 +74,9 @@ tailwind.config = {
 <a href="#live-stream" class="text-slate-300 hover:text-crimson transition-colors flex items-center gap-1 px-1">
 <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span> Live & Chat
 </a>
-<button onclick="openJadwalModal()" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1 cursor-pointer px-1">
+<a href="jadwal.html" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1 px-1">
 <i class="fa-solid fa-calendar-days text-sky-400 text-xs"></i> Jadwal & Klasemen
-</button>
+</a>
 <button onclick="openChampionsModal()" class="text-slate-300 hover:text-emerald-accent transition-colors flex items-center gap-1 cursor-pointer px-1">
 <i class="fa-solid fa-trophy text-emerald-accent text-xs"></i> Juara
 </button>
@@ -108,9 +108,9 @@ tailwind.config = {
 <i class="fa-solid fa-users"></i> Pendaftar Musim Ini
 </button>
 <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">Live & Chat Arena</a>
-<button onclick="openJadwalModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1 font-bold">
+<a href="jadwal.html" class="block text-sky-400 font-bold py-1 flex items-center gap-2">
 <i class="fa-solid fa-calendar-days"></i> Jadwal & Klasemen
-</button>
+</a>
 <button onclick="openChampionsModal(); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1 font-bold">
 <i class="fa-solid fa-trophy"></i> Juara Season 4
 </button>
@@ -233,11 +233,11 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <p class="text-slate-400 text-[11px] mb-3">Lihat daftar nama lengkap peserta yang telah dikonfirmasi.</p>
 </div>
 
-<div onclick="openJadwalModal()" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-5 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<a href="jadwal.html" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-5 rounded-2xl cursor-pointer transition-all hover:-translate-y-1 block">
 <div class="w-11 h-11 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-lg mb-3 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-calendar-days"></i></div>
 <h3 class="font-display font-bold text-sm text-white mb-1.5">4. JADWAL & KLASEMEN</h3>
 <p class="text-slate-400 text-[11px] mb-3">Lihat klasemen sementara, jadwal & bagan turnamen.</p>
-</div>
+</a>
 
 <div onclick="openChampionsModal()" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-5 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
 <div class="w-11 h-11 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-lg mb-3 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
@@ -256,135 +256,6 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 items-end">
 <a href="https://wa.me/6281398115475?text=Halo%20Panitia%202%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold"><span class="text-[11px]">Panitia 2</span><i class="fa-brands fa-whatsapp text-lg"></i></a>
 <a href="https://wa.me/6287763331294?text=Halo%20Panitia%201%20TIBA%20TIBA%20TOURNAMENT,%20saya%20ingin%20bertanya%20mengenai%20turnamen." target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:scale-105 transition-all font-tech text-xs font-bold"><span class="text-[11px]">Panitia 1</span><i class="fa-brands fa-whatsapp text-lg"></i></a>
-</div>
-
-<!-- ================= MODAL JADWAL, KLASEMEN & BAGAN ================= -->
-<div id="jadwalModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-<div class="modal-container relative w-full max-w-6xl bg-obsidian-card border border-sky-400/40 rounded-2xl p-5 sm:p-7 shadow-2xl flex flex-col max-h-[90vh]">
-<button onclick="closeJadwalModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-xl"></i></button>
-
-<div class="flex items-center gap-3 pb-4 border-b border-obsidian-border mb-5 shrink-0">
-<div class="w-10 h-10 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-lg border border-sky-400/30"><i class="fa-solid fa-calendar-days"></i></div>
-<div>
-<h3 class="font-display font-bold text-lg sm:text-2xl text-white leading-tight">JADWAL, KLASEMEN & BAGAN PERTANDINGAN</h3>
-<p class="text-[10px] sm:text-xs text-slate-400 font-tech">Klasemen Otomatis & Real-time Update dari Panel Panitia</p>
-</div>
-</div>
-
-<div class="flex-grow overflow-y-auto space-y-6 pr-2 mb-4 font-tech text-xs min-h-0">
-  
-  <!-- TABEL KLASEMEN SEMENTARA -->
-  <div class="bg-obsidian border border-sky-400/30 rounded-xl p-4 sm:p-5 space-y-3 shadow-lg">
-    <div class="flex items-center justify-between border-b border-obsidian-border pb-2 flex-wrap gap-2">
-      <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-trophy text-amber-400"></i> KLASEMEN SEMENTARA GROUP STAGE</span>
-      <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] rounded font-bold">MENANG: 3 PTS | SERI: 1 PT | KALAH: 0 PTS</span>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse text-xs">
-        <thead>
-          <tr class="bg-obsidian-card text-slate-400 uppercase text-[10px] font-bold border-b border-obsidian-border">
-            <th class="py-2 px-3 text-center">POS</th>
-            <th class="py-2 px-3">NAMA TIM</th>
-            <th class="py-2 px-3 text-center">M</th>
-            <th class="py-2 px-3 text-center text-emerald-accent">W</th>
-            <th class="py-2 px-3 text-center text-sky-400">D</th>
-            <th class="py-2 px-3 text-center text-crimson">L</th>
-            <th class="py-2 px-3 text-center font-bold text-amber-400">POIN</th>
-          </tr>
-        </thead>
-        <tbody id="webKlasemenTableBody" class="divide-y divide-obsidian-border">
-          <tr><td colspan="7" class="text-center py-4 text-slate-500">Memuat klasemen...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-    <!-- GROUP STAGE -->
-    <div class="lg:col-span-7 bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5 space-y-3">
-      <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
-        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1"></i> FASE GROUP STAGE (BO 2)</span>
-        <span id="webTotalGroupMatchBadge" class="px-2 py-0.5 bg-sky-500/20 text-sky-400 text-[10px] rounded font-bold">MATCHES</span>
-      </div>
-      <div id="webGroupStageContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-        <div class="text-center text-slate-500 py-6 col-span-2">Memuat jadwal pertandingan...</div>
-      </div>
-    </div>
-
-    <!-- SEMIFINAL & GRAND FINAL -->
-    <div class="lg:col-span-5 space-y-6">
-      <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5 space-y-3">
-        <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
-          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1"></i> SEMIFINAL BAGAN</span>
-          <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] rounded font-bold">BO 3</span>
-        </div>
-        <div class="space-y-3 pt-1">
-          <div class="bg-obsidian-card p-3 rounded-xl border border-obsidian-border space-y-2">
-            <div class="flex justify-between items-center text-[10px] text-slate-400">
-              <span>Semifinal 1 (1st vs 3rd)</span>
-              <span id="web_sf1_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
-            </div>
-            <div class="text-[10px] text-sky-400 font-bold bg-obsidian px-2 py-1 rounded border border-obsidian-border text-center"><i class="fa-regular fa-clock mr-1"></i> <span id="web_sf1_datetime">TBA</span></div>
-            <div class="flex justify-between items-center font-bold text-white text-xs">
-              <span id="web_sf1_t1" class="truncate max-w-[40%]">-</span>
-              <span id="web_sf1_skor" class="text-amber-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
-              <span id="web_sf1_t2" class="truncate max-w-[40%] text-right">-</span>
-            </div>
-            <div class="text-[10px] pt-1 border-t border-obsidian-border flex justify-between">
-              <span>Pemenang:</span> <strong id="web_sf1_win" class="text-emerald-accent">-</strong>
-            </div>
-          </div>
-
-          <div class="bg-obsidian-card p-3 rounded-xl border border-obsidian-border space-y-2">
-            <div class="flex justify-between items-center text-[10px] text-slate-400">
-              <span>Semifinal 2 (2nd vs 4th)</span>
-              <span id="web_sf2_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
-            </div>
-            <div class="text-[10px] text-sky-400 font-bold bg-obsidian px-2 py-1 rounded border border-obsidian-border text-center"><i class="fa-regular fa-clock mr-1"></i> <span id="web_sf2_datetime">TBA</span></div>
-            <div class="flex justify-between items-center font-bold text-white text-xs">
-              <span id="web_sf2_t1" class="truncate max-w-[40%]">-</span>
-              <span id="web_sf2_skor" class="text-amber-400 px-2 py-0.5 bg-obsidian rounded font-mono">VS</span>
-              <span id="web_sf2_t2" class="truncate max-w-[40%] text-right">-</span>
-            </div>
-            <div class="text-[10px] pt-1 border-t border-obsidian-border flex justify-between">
-              <span>Pemenang:</span> <strong id="web_sf2_win" class="text-emerald-accent">-</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5 space-y-3">
-        <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
-          <span class="text-xs font-bold text-crimson uppercase tracking-wider"><i class="fa-solid fa-crown mr-1"></i> GRAND FINAL</span>
-          <span class="px-2 py-0.5 bg-crimson/20 text-crimson text-[10px] rounded font-bold">BO 5</span>
-        </div>
-        <div class="space-y-3 pt-1">
-          <div class="bg-obsidian-card p-4 rounded-xl border border-crimson/30 space-y-2.5 shadow-crimson-glow">
-            <div class="flex justify-between items-center text-[10px] text-slate-400">
-              <span>Puncak Grand Final</span>
-              <span id="web_gf_status" class="px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-bold text-[9px]">TBA</span>
-            </div>
-            <div class="text-[10px] text-amber-400 font-bold bg-obsidian px-2 py-1 rounded border border-obsidian-border text-center"><i class="fa-regular fa-clock mr-1"></i> <span id="web_gf_datetime">TBA</span></div>
-            <div class="flex justify-between items-center font-bold text-white text-sm">
-              <span id="web_gf_t1" class="truncate max-w-[40%]">-</span>
-              <span id="web_gf_skor" class="text-crimson px-2.5 py-1 bg-obsidian rounded font-mono">VS</span>
-              <span id="web_gf_t2" class="truncate max-w-[40%] text-right">-</span>
-            </div>
-            <div class="text-xs pt-2 border-t border-obsidian-border text-center bg-obsidian p-2 rounded-lg">
-              <span class="text-slate-400 block text-[10px]">CHAMPION UTAMA:</span>
-              <strong id="web_gf_win" class="text-amber-400 text-sm tracking-wide block uppercase">-</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="pt-3 border-t border-obsidian-border text-right shrink-0">
-  <button onclick="closeJadwalModal()" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg cursor-pointer transition-all">TUTUP JADWAL</button>
-</div>
-</div>
 </div>
 
 <!-- MODAL CATATAN JUARA -->
@@ -557,14 +428,6 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </div>
 
-<div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-<div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
-<h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
-<p id="messageText" class="text-slate-400 text-xs mb-5">Pesan sistem.</p>
-<button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent text-black font-bold text-xs rounded-xl">OK</button>
-</div>
-</div>
-
 <!-- FOOTER WEBSITE -->
 <footer class="bg-obsidian-card border-t border-obsidian-border text-slate-400 pt-12 pb-8 mt-16 font-tech">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -604,7 +467,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
         <ul class="space-y-2 text-xs">
           <li><a href="#hero-banner" class="hover:text-white transition-colors">Beranda</a></li>
           <li><button onclick="openPendaftarModal()" class="hover:text-amber-400 transition-colors text-left cursor-pointer">Pendaftar Musim Ini</button></li>
-          <li><button onclick="openJadwalModal()" class="hover:text-sky-400 transition-colors text-left cursor-pointer">Jadwal & Klasemen</button></li>
+          <li><a href="jadwal.html" class="hover:text-sky-400 transition-colors">Jadwal & Klasemen</a></li>
           <li><button onclick="openChampionsModal()" class="hover:text-emerald-accent transition-colors text-left cursor-pointer">Catatan Juara</button></li>
         </ul>
       </div>
