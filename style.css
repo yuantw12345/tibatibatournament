@@ -1,1 +1,73 @@
-a
+html {
+  scroll-padding-top: 95px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #090b18 !important;
+  color: #f8faff;
+  background-image: linear-gradient(rgba(9, 11, 24, 0.85), rgba(9, 11, 24, 0.85)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg') !important;
+  background-size: cover !important;
+  background-position: center 20% !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+@media (max-width: 768px) {
+  body { background-image: none !important; }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+    background-color: #090b18;
+    background-image: linear-gradient(rgba(9, 11, 24, 0.85), rgba(9, 11, 24, 0.85)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg');
+    background-size: cover; background-position: center 20%; background-repeat: no-repeat;
+  }
+}
+.font-display { font-family: 'Syne', sans-serif; }
+.font-tech { font-family: 'Space Grotesk', sans-serif; }
+.glass-panel {
+  background: rgba(15, 19, 29, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glass-nav {
+  background: rgba(8, 10, 25, 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 2px solid #00e699 !important;
+  box-shadow: 0 4px 25px rgba(0, 230, 153, 0.3), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
+}
+.neon-glow-red { text-shadow: 0 0 10px rgba(255, 30, 86, 0.4); }
+.neon-glow-white { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+.modal-overlay {
+  opacity: 0; visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #080a0f; }
+::-webkit-scrollbar-thumb { background: #1e2638; border-radius: 4px; }
+h1, h2, h3, h4 { text-wrap: balance; }
+#main-menu .grid > div {
+  overflow: hidden; isolation: isolate;
+  background: linear-gradient(145deg, rgba(23,28,58,.95), rgba(12,15,33,.96)) !important;
+  border-color: rgba(151,160,255,.2) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055);
+}
+#main-menu .grid > div:hover { transform: translateY(-4px); border-color: rgba(178,160,255,.65) !important; }
+#rulesModal > div, #registerModal > div, #registerAccountModal > div, #messageModal > div, #confirmModal > div, #rulesInfoModal > div {
+  background: linear-gradient(145deg,#171b3a,#0c1024 72%) !important;
+  border-color: rgba(156,139,255,.48) !important;
+  box-shadow: 0 28px 90px rgba(0,0,0,.6), 0 0 45px rgba(120,77,255,.12);
+}
+#loginModal > div {
+  background-image: linear-gradient(rgba(9, 11, 24, 0.90), rgba(9, 11, 24, 0.90)), url('https://i.postimg.cc/vH4Cg3CL/mobile-legends-bang-bang-star-dream-ph-1920x1080.jpg') !important;
+  background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
+  border-color: rgba(0, 230, 153, 0.4) !important;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.7), 0 0 35px rgba(0, 230, 153, 0.15);
+}
+footer { background: rgba(7,9,22,.9) !important; }
