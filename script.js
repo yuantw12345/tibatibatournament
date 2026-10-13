@@ -33,7 +33,7 @@ window.openModal = function(id) {
   const modal = document.getElementById(id);
   if(modal) {
     modal.classList.add('active');
-    if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal') {
+    if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'jadwalModal' && id !== 'championsModal') {
       document.body.style.overflow = 'hidden';
     }
   }
@@ -41,6 +41,40 @@ window.openModal = function(id) {
 
 window.closeModal = function(id) {
   const modal = document.getElementById(id);
+  if(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// BUKA & TUTUP MODAL JADWAL & BAGAN
+window.openJadwalModal = function() {
+  const modal = document.getElementById('jadwalModal');
+  if(modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+window.closeJadwalModal = function() {
+  const modal = document.getElementById('jadwalModal');
+  if(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// BUKA & TUTUP MODAL CATATAN JUARA
+window.openChampionsModal = function() {
+  const modal = document.getElementById('championsModal');
+  if(modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+window.closeChampionsModal = function() {
+  const modal = document.getElementById('championsModal');
   if(modal) {
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
@@ -344,27 +378,6 @@ const slidesContainer = document.getElementById('carouselSlides');
 window.nextSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex + 1) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
 window.prevSlide = function() { if(!slidesContainer) return; currentIndex = (currentIndex - 1 + 3) % 3; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; }
 setInterval(nextSlide, 4500);
-
-window.switchTab = function(tab) {
-  const jadwalTab = document.getElementById('content-jadwal');
-  const championsTab = document.getElementById('content-champions');
-  const dynamicSection = document.getElementById('dynamic-section');
-  if(jadwalTab) jadwalTab.classList.add('hidden');
-  if(championsTab) championsTab.classList.add('hidden');
-
-  if(tab === 'jadwal' && jadwalTab) {
-    jadwalTab.classList.remove('hidden');
-    if(dynamicSection) dynamicSection.scrollIntoView({ behavior: 'smooth' });
-  } else if(tab === 'champions' && championsTab) {
-    championsTab.classList.remove('hidden');
-    if(dynamicSection) dynamicSection.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-
-window.closeTab = function() {
-  document.getElementById('content-jadwal').classList.add('hidden');
-  document.getElementById('content-champions').classList.add('hidden');
-}
 
 window.checkAuthStatus = function() {
   const loggedUser = localStorage.getItem('activeMemberUser');
