@@ -182,8 +182,9 @@ LOGOUT
 <main class="flex-grow pt-24 sm:pt-24">
 <section id="hero-banner" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-6">
 <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3">
-<span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span> REGISTRASI REGULER SEGERA DITUTUP
+<!-- BANNER TEKS DINAMIS DARI FIREBASE -->
+<div id="webBannerBadge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-[10px] sm:text-xs font-tech font-semibold tracking-widest uppercase mb-3">
+<span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span> <span id="webBannerText">REGISTRASI REGULER SEGERA DITUTUP</span>
 </div>
 <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight text-white mb-3 leading-tight px-2">
 DOMINASI ARENA <br class="hidden sm:block">
@@ -477,7 +478,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-accent opacity-75"></span>
   <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-accent"></span>
 </span>
-<span class="font-tech text-[10px] sm:text-xs font-bold text-emerald-accent tracking-wider uppercase">ARENA REGISTRATION OPEN</span>
+<span id="modalRegStatusBadge" class="font-tech text-[10px] sm:text-xs font-bold text-emerald-accent tracking-wider uppercase">ARENA REGISTRATION OPEN</span>
 </div>
 
 <div class="absolute bottom-4 left-4 right-4">
