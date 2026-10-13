@@ -15,7 +15,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.addEventListener('DOMContentLoaded', () => {
-  // MEMUNCULKAN KEMBALI WELCOME POP-UP OTOMATIS SAAT HALAMAN DIBUKA
   setTimeout(() => openModal('rulesModal'), 300);
   
   checkAuthStatus();
@@ -201,7 +200,7 @@ function initRealtimeJadwal() {
         const badgeEl = document.getElementById('webTotalGroupMatchBadge');
         if (badgeEl) badgeEl.innerText = `${totalGroupMatches} MATCHES (${totalTeams} TIM)`;
 
-        // Hitung dan Perbarui Klasemen Otomatis di Website
+        // Kalkulasi Klasemen Otomatis berdasarkan teamNames dari panel panitia
         calculateAndUpdateStandings(d);
 
         const container = document.getElementById('webGroupStageContainer');
@@ -276,33 +275,28 @@ function initRealtimeJadwal() {
   } catch (e) { console.error(e); }
 }
 
-// Logika Kalkulasi Klasemen Otomatis Poin Berdasarkan Skor Group Stage
+// Logika Kalkulasi Klasemen Berdasarkan teamNames & Skor Group Stage
 function calculateAndUpdateStandings(data) {
   const tableBody = document.getElementById('webKlasemenTableBody');
   if (!tableBody) return;
 
-  // Kumpulkan semua nama tim unik dari match group stage
-  let teamsSet = new Set();
-  const totalTeams = parseInt(data.totalTeams || 5);
-  const totalMatches = (totalTeams * (totalTeams - 1)) / 2;
-
-  for (let i = 1; i <= totalMatches; i++) {
-    const m = data[`m${i}`];
-    if (m) {
-      if (m.tim1 && m.tim1.trim() !== '') teamsSet.add(m.tim1.trim());
-      if (m.tim2 && m.tim2.trim() !== '') teamsSet.add(m.tim2.trim());
-    }
+  let teamsList = [];
+  if (data.teamNames && Array.isArray(data.teamNames)) {
+    teamsList = data.teamNames.filter(name => name && name.trim() !== '');
   }
 
-  if (teamsSet.size === 0) {
-    tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-500">Belum ada tim yang dimasukkan di match.</td></tr>`;
+  if (teamsList.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-500">Belum ada tim yang dimasukkan di panel panitia.</td></tr>`;
     return;
   }
 
   let stats = {};
-  teamsSet.forEach(team => {
+  teamsList.forEach(team => {
     stats[team] = { name: team, played: 0, win: 0, draw: 0, lose: 0, points: 0 };
   });
+
+  const totalTeams = parseInt(data.totalTeams || 5);
+  const totalMatches = (totalTeams * (totalTeams - 1)) / 2;
 
   for (let i = 1; i <= totalMatches; i++) {
     const m = data[`m${i}`];
@@ -470,15 +464,6 @@ window.showCustomAlert = function(title, text) {
   openModal('messageModal');
 }
 
-window.showCustomConfirm = function(text, onYesCallback) {
-  document.getElementById('confirmText').innerText = text;
-  const yesBtn = document.getElementById('confirmYesBtn');
-  const newYesBtn = yesBtn.cloneNode(true);
-  yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
-  newYesBtn.addEventListener('click', () => { closeModal('confirmModal'); if(onYesCallback) onYesCallback(); });
-  openModal('confirmModal');
-}
-
 let currentIndex = 0;
 window.nextSlide = function() { 
   const slidesContainer = document.getElementById('carouselSlides');
@@ -595,13 +580,13 @@ window.handleLogin = async function(event) {
 }
 
 window.handleLogout = async function() {
-  showCustomConfirm("Apakah Anda yakin ingin keluar?", async () => {
+  if (confirm("Apakah Anda yakin ingin keluar?")) {
     const loggedUser = localStorage.getItem('activeMemberUser');
     if (loggedUser) { try { await updateDoc(doc(db, "users", loggedUser), { sessionToken: "" }); } catch(e){} }
     localStorage.removeItem('activeMemberUser');
     localStorage.removeItem('sessionToken');
     checkAuthStatus(); showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
-  });
+  }
 }
 
 window.handleFormSubmit = async function(event) {
