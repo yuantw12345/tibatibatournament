@@ -140,8 +140,20 @@
                 </div>
             </div>
 
+            <!-- HEADER LABEL KOLOM (NAMA LENGKAP, ROLE, PEMBAYARAN) -->
+            <div class="bg-obsidian border border-obsidian-border rounded-t-lg px-3.5 py-2 font-tech text-[10px] text-slate-400 uppercase tracking-wider font-bold flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="w-6">NO</span>
+                    <span>NAMA LENGKAP & ROLE (UTAMA / CADANGAN)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span>PEMBAYARAN</span>
+                    <span class="w-3"></span>
+                </div>
+            </div>
+
             <!-- Tampilan List / Card Ringkas yang Bisa Diklik -->
-            <div id="tournamentCardMobile" class="space-y-2.5 font-tech">
+            <div id="tournamentCardMobile" class="space-y-2 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
@@ -241,7 +253,6 @@
             return `https://wa.me/${clean}`;
         }
 
-        // FUNGSI TOGGLE DETAIL AKORDION (KLIK UNTUK BUKA/TUTUP DETAIL LENGKAP)
         window.toggleDetailCard = function(cardId) {
             const detailEl = document.getElementById(cardId);
             if (detailEl) {
@@ -324,7 +335,7 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN (TAMPILAN RINGKAS + KLIK UNTUK DETAIL)
+        // 1. PENDAFTAR TURNAMEN (TAMPILAN RINGKAS + HEADER LABEL + KLIK DETAIL)
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -360,23 +371,22 @@
                     const waUrl = formatWaUrl(data.whatsapp);
                     const cardDetailId = `detailCard_${docSnap.id}`;
 
-                    // Tampilan awal ringkas: NAMA LENGKAP - ROLE - PEMBAYARAN
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs transition-all hover:border-emerald-accent/50">
-                            <!-- HEADER RINGKAS (BISA DIKLIK) -->
+                            <!-- BARIS RINGKAS (BISA DIKLIK) -->
                             <div onclick="toggleDetailCard('${cardDetailId}')" class="flex items-center justify-between cursor-pointer select-none">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-slate-500 font-bold">#${i}</span>
-                                    <span class="text-white font-bold tracking-wide">${data.nama || '-'}</span>
-                                    <span class="text-slate-400 text-[11px]">— (${combinedRole})</span>
+                                <div class="flex items-center gap-2 overflow-hidden mr-2">
+                                    <span class="text-slate-500 font-bold shrink-0">#${i}</span>
+                                    <span class="text-white font-bold tracking-wide truncate">${data.nama || '-'}</span>
+                                    <span class="text-slate-400 text-[11px] shrink-0">— (${combinedRole})</span>
                                 </div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 shrink-0">
                                     <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[10px] font-bold">${data.payment || '-'}</span>
                                     <i class="fa-solid fa-chevron-down text-slate-400 text-[10px]"></i>
                                 </div>
                             </div>
 
-                            <!-- BAGIAN DETAIL LENGKAP (TERSEMBUNYI SEBELUM DIKLIK) -->
+                            <!-- BAGIAN DETAIL LENGKAP -->
                             <div id="${cardDetailId}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] font-tech bg-obsidian-card p-3 rounded-lg">
                                 <p><strong class="text-slate-400">Akun Web User:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
                                 <p><strong class="text-slate-400">ID Mobile Legend:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
@@ -384,7 +394,7 @@
                                 <p><strong class="text-slate-400">Waktu Pendaftaran:</strong> <span class="text-slate-400">${timeStr}</span></p>
                                 
                                 <div class="pt-2 text-right">
-                                    <button onclick="deleteTournamentData('${docSnap.id}', '${data.nama}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded font-bold transition-all">
+                                    <button onclick="deleteTournamentData('${docSnap.id}', '${data.nama}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded font-bold transition-all cursor-pointer">
                                         <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar Ini
                                     </button>
                                 </div>
@@ -434,10 +444,10 @@
                             <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
                             <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
                             <div class="pt-1.5 border-t border-obsidian-border flex gap-1.5">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px]">
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px] cursor-pointer">
                                     ${banBtnText}
                                 </button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px]">
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px] cursor-pointer">
                                     <i class="fa-solid fa-user-xmark"></i> Hapus
                                 </button>
                             </div>
@@ -477,7 +487,7 @@
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
                             <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer">
                                     <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan
                                 </button>
                             </div>
@@ -517,7 +527,7 @@
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
                             <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold">
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer">
                                     <i class="fa-solid fa-trash mr-1"></i> Hapus Komentar
                                 </button>
                             </div>
