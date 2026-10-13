@@ -166,7 +166,7 @@
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen
                 </h2>
-                <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
+                <span class="text-[10px] font-tech text-slate-400">Klik nama peserta untuk melihat detail data lengkap</span>
             </div>
 
             <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
@@ -184,22 +184,19 @@
                 </div>
             </div>
 
-            <!-- CONTAINER TABEL SIMPEL MENYAMPING (DESKTOP & HP SCROLL) -->
-            <div class="overflow-x-auto rounded-xl border border-obsidian-border">
-                <table class="w-full text-left border-collapse min-w-[650px] font-tech text-xs">
+            <!-- TABEL SIMPEL, RINGKAS, & PAS DI LAYAR HP (TANPA SCROLL) -->
+            <div class="overflow-hidden rounded-xl border border-obsidian-border">
+                <table class="w-full text-left border-collapse font-tech text-[11px] sm:text-xs">
                     <thead>
-                        <tr class="bg-obsidian text-slate-400 uppercase text-[10px] font-bold border-b border-obsidian-border">
-                            <th class="py-3 px-3 w-10">#</th>
-                            <th class="py-3 px-3">NAMA LENGKAP</th>
-                            <th class="py-3 px-3">ROLE / CADANGAN</th>
-                            <th class="py-3 px-3">PEMBAYARAN</th>
-                            <th class="py-3 px-3">STATUS</th>
-                            <th class="py-3 px-3 text-right">AKSI</th>
+                        <tr class="bg-obsidian text-slate-400 uppercase text-[9px] sm:text-[10px] font-bold border-b border-obsidian-border">
+                            <th class="py-2.5 px-2.5">ATAS NAMA LENGKAP</th>
+                            <th class="py-2.5 px-2.5 text-center">STATUS</th>
+                            <th class="py-2.5 px-2.5 text-right">AKSI</th>
                         </tr>
                     </thead>
                     <tbody id="pendaftarTableBody" class="divide-y divide-obsidian-border">
                         <tr>
-                            <td colspan="6" class="text-center py-6 text-slate-500">Memuat data pendaftar...</td>
+                            <td colspan="3" class="text-center py-6 text-slate-500">Memuat data pendaftar...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -566,7 +563,7 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // TAMPILAN TABEL RAPI MENYAMPING + KLIK NAMA POPUP MODAL
+        // TAMPILAN SUPER RINGKAS: NAMA LENGKAP, STATUS, & AKSI (PAS DI HP TANPA SCROLL)
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -584,33 +581,31 @@
                     const isApp = d.status === 'Approved';
 
                     const btnAcc = isApp 
-                        ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Pending'})" class="px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
-                        : `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Approved'})" class="px-2.5 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
-
-                    const roleDisplay = d.role2 ? `${d.role1 || '-'} / ${d.role2}` : (d.role1 || '-');
+                        ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Pending'})" class="px-2 py-1 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-[11px] font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
+                        : `<button onclick="updateDoc(doc(db, 'pendaftar', '${id}'), {status: 'Approved'})" class="px-2 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
 
                     html += `
                         <tr class="hover:bg-obsidian/60 transition-colors">
-                            <td class="py-3 px-3 text-amber-400 font-bold">#${i}</td>
-                            <td class="py-3 px-3 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent underline decoration-dashed" onclick="openApplicantModal('${id}')">
-                                ${d.nama || '-'}
+                            <td class="py-2.5 px-2.5 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent transition-colors" onclick="openApplicantModal('${id}')">
+                                <span class="text-amber-400 mr-1.5 font-mono">#${i}</span>
+                                <span class="underline decoration-dashed decoration-emerald-accent/50">${d.nama || '-'}</span>
                             </td>
-                            <td class="py-3 px-3 text-sky-400 font-bold">${roleDisplay}</td>
-                            <td class="py-3 px-3 text-purple-400 font-bold">${d.payment || '-'}</td>
-                            <td class="py-3 px-3 font-bold ${isApp ? 'text-emerald-accent' : 'text-amber-400'}">${d.status || 'Pending'}</td>
-                            <td class="py-3 px-3 text-right space-x-1.5">
+                            <td class="py-2.5 px-2.5 text-center font-bold text-[10px] sm:text-xs ${isApp ? 'text-emerald-accent' : 'text-amber-400'}">
+                                ${d.status || 'Pending'}
+                            </td>
+                            <td class="py-2.5 px-2.5 text-right space-x-1 shrink-0">
                                 ${btnAcc}
-                                <button onclick="deleteDoc(doc(db, 'pendaftar', '${id}'))" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button onclick="deleteDoc(doc(db, 'pendaftar', '${id}'))" class="p-1 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
                     i++;
                 });
-                document.getElementById('pendaftarTableBody').innerHTML = html || '<tr><td colspan="6" class="text-center py-6 text-slate-500">Belum ada pendaftar.</td></tr>';
+                document.getElementById('pendaftarTableBody').innerHTML = html || '<tr><td colspan="3" class="text-center py-6 text-slate-500">Belum ada pendaftar.</td></tr>';
             });
         }
 
-        // BUKA POPUP MODAL DATA PESERTA
+        // BUKA POPUP MODAL DETAIL PESERTA
         window.openApplicantModal = function(id) {
             const data = window.applicantsDataStore[id];
             if (!data) return;
