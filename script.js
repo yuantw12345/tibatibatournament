@@ -144,7 +144,6 @@ function startSessionWatcher() {
   }, 10000);
 }
 
-// REAL-TIME LISTENER SINKRONISASI TAMPILAN BANNER & POP-UP WELCOME
 function initRealtimeWebSettings() {
   try {
     const docRef = doc(db, "settings", "website");
@@ -364,7 +363,6 @@ window.prevSlide = function() {
 }
 setInterval(nextSlide, 4500);
 
-// FUNGSI TAB DINAMIS (JADWAL & CHAMPIONS)
 window.switchTab = function(tab) {
   const jadwalTab = document.getElementById('content-jadwal');
   const championsTab = document.getElementById('content-champions');
