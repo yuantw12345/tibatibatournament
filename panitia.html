@@ -126,21 +126,21 @@
             </div>
 
             <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
-                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2 text-center">
                     <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p>
                     <h3 id="statTotalPendaftar" class="text-sm sm:text-lg font-bold text-white">0</h3>
                 </div>
-                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2 text-center">
                     <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Tim (5 Orang)</p>
                     <h3 id="statTotalTim" class="text-sm sm:text-lg font-bold text-emerald-accent">0 Tim</h3>
                 </div>
-                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
+                <div class="bg-obsidian border border-obsidian-border rounded-lg p-2 text-center">
                     <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Sisa Pemain</p>
                     <h3 id="statSisaPemain" class="text-sm sm:text-lg font-bold text-amber-400">0</h3>
                 </div>
             </div>
 
-            <!-- HEADER TABEL BERSIH -->
+            <!-- HEADER TABEL BERSIH UNTUK LAYAR DESKTOP -->
             <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
                 <div class="col-span-1">#</div>
                 <div class="col-span-3">NAMA LENGKAP</div>
@@ -150,7 +150,7 @@
                 <div class="col-span-2 text-right">AKSI</div>
             </div>
 
-            <div id="tournamentCardMobile" class="space-y-2 font-tech">
+            <div id="tournamentCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
@@ -499,7 +499,7 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // TAMPILAN BERSIH, TERSTRUKTUR DENGAN LINK WA SIKAT
+        // TAMPILAN RESPORSIF HP & DESKTOP DENGAN WHATSAPP KLIK DIRECT
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -525,20 +525,45 @@
 
                     html += `
                         <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 transition-all hover:border-emerald-accent/40 cursor-pointer" onclick="toggleApplicantDetail('${docSnap.id}')">
-                            <div class="grid grid-cols-12 gap-2 items-center">
+                            <!-- TAMPILAN UNTUK LAYAR HP (STACK VERTICAL RAPI) -->
+                            <div class="block sm:hidden space-y-2">
+                                <div class="flex items-center justify-between border-b border-obsidian-border pb-2">
+                                    <div class="flex items-center gap-2 overflow-hidden mr-2">
+                                        <span class="text-amber-400 font-bold text-xs shrink-0">#${i}</span>
+                                        <h3 class="text-white font-bold text-xs uppercase truncate">${d.nama || '-'}</h3>
+                                    </div>
+                                    <span class="text-[11px] ${isApp ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold'} shrink-0">${d.status || 'Pending'}</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1">
+                                    <span class="text-sky-400 font-bold truncate max-w-[60%]"><i class="fa-solid fa-gamepad text-[10px] mr-1"></i> ${roleDisplay}</span>
+                                    <span class="text-purple-400 font-bold truncate max-w-[35%] text-right"><i class="fa-solid fa-wallet text-[10px] mr-1"></i> ${d.payment || '-'}</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-2 border-t border-obsidian-border/60" onclick="event.stopPropagation()">
+                                    <div class="flex items-center gap-2">
+                                        ${btnAcc}
+                                        <button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="p-1.5 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 flex items-center gap-1 font-bold">
+                                        Detail <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300" id="icon_mobile_${docSnap.id}"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- TAMPILAN UNTUK LAYAR TABLET & KOMPUTER/DESKTOP -->
+                            <div class="hidden sm:grid grid-cols-12 gap-2 items-center">
                                 <div class="col-span-1 text-amber-400 font-bold text-xs">#${i}</div>
-                                <div class="col-span-11 sm:col-span-3 text-white font-bold text-xs uppercase truncate">${d.nama || '-'}</div>
-                                <div class="col-span-12 sm:col-span-3 text-sky-400 font-bold text-xs">${roleDisplay}</div>
-                                <div class="col-span-6 sm:col-span-2 text-purple-400 font-bold text-xs">${d.payment || '-'}</div>
-                                <div class="col-span-6 sm:col-span-1 text-xs ${isApp ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold'}">${d.status || 'Pending'}</div>
-                                <div class="col-span-12 sm:col-span-2 flex items-center justify-end gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-obsidian-border" onclick="event.stopPropagation()">
+                                <div class="col-span-3 text-white font-bold text-xs uppercase truncate">${d.nama || '-'}</div>
+                                <div class="col-span-3 text-sky-400 font-bold text-xs truncate">${roleDisplay}</div>
+                                <div class="col-span-2 text-purple-400 font-bold text-xs truncate">${d.payment || '-'}</div>
+                                <div class="col-span-1 text-xs ${isApp ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold'}">${d.status || 'Pending'}</div>
+                                <div class="col-span-2 flex items-center justify-end gap-2" onclick="event.stopPropagation()">
                                     ${btnAcc}
                                     <button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 ml-1" id="icon_${docSnap.id}"></i>
                                 </div>
                             </div>
 
-                            <!-- DETAIL LENGKAP SAAT DIKLIK (TERMASUK WA KLIK DIRECT) -->
+                            <!-- DETAIL LENGKAP SAAT DIKLIK (ACCORDION) -->
                             <div id="detail_${docSnap.id}" class="hidden mt-3 pt-3 border-t border-obsidian-border grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300 font-tech">
                                 <div><span class="text-slate-500 block text-[10px]">ID MOBILE LEGEND:</span> <strong class="text-white">${d.idMl || '-'}</strong></div>
                                 <div>
@@ -561,11 +586,12 @@
         window.toggleApplicantDetail = function(id) {
             const detailEl = document.getElementById(`detail_${id}`);
             const iconEl = document.getElementById(`icon_${id}`);
+            const iconMobileEl = document.getElementById(`icon_mobile_${id}`);
             if (detailEl) {
                 detailEl.classList.toggle('hidden');
-                if (iconEl) {
-                    iconEl.style.transform = detailEl.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-                }
+                const isHidden = detailEl.classList.contains('hidden');
+                if (iconEl) iconEl.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
+                if (iconMobileEl) iconMobileEl.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
             }
         }
 
