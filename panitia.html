@@ -86,7 +86,6 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
-                <!-- TOMBOL REFRESH PANEL -->
                 <button onclick="handleRefreshAdminPanel()" class="px-3 py-2 bg-sky-500/10 border border-sky-500/30 hover:bg-sky-500/20 text-sky-400 rounded-lg font-tech text-[11px] font-bold transition-all shadow-md cursor-pointer flex items-center gap-1">
                     <i class="fa-solid fa-rotate-right" id="adminRefreshIcon"></i> REFRESH PANEL
                 </button>
@@ -119,12 +118,11 @@
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen (Klik Nama untuk Detail)
+                    <i class="fa-solid fa-list-check text-emerald-accent"></i> Daftar Tim & Peserta Turnamen (ACC untuk Tampil di Web)
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "pendaftar"</span>
             </div>
 
-            <!-- KARTU INFORMASI STATISTIK PEMBAGIAN TIM -->
             <div class="grid grid-cols-3 gap-2 mb-4 font-tech">
                 <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center">
                     <p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p>
@@ -140,19 +138,17 @@
                 </div>
             </div>
 
-            <!-- HEADER LABEL KOLOM (NAMA LENGKAP, ROLE, PEMBAYARAN) -->
             <div class="bg-obsidian border border-obsidian-border rounded-t-lg px-3.5 py-2 font-tech text-[10px] text-slate-400 uppercase tracking-wider font-bold flex justify-between items-center mb-1">
                 <div class="flex items-center gap-2">
                     <span class="w-6">NO</span>
                     <span>NAMA LENGKAP & ROLE (UTAMA / CADANGAN)</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span>PEMBAYARAN</span>
+                    <span>PEMBAYARAN & STATUS</span>
                     <span class="w-3"></span>
                 </div>
             </div>
 
-            <!-- Tampilan List / Card Ringkas yang Bisa Diklik -->
             <div id="tournamentCardMobile" class="space-y-2 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
@@ -166,7 +162,6 @@
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
-
             <div id="usersCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data akun...</div>
             </div>
@@ -185,7 +180,6 @@
                     <i class="fa-solid fa-broom"></i> HAPUS SEMUA CHAT
                 </button>
             </div>
-
             <div id="chatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat chat...</div>
             </div>
@@ -204,7 +198,6 @@
                     <i class="fa-solid fa-broom"></i> HAPUS SEMUA LIVE CHAT
                 </button>
             </div>
-
             <div id="liveChatsCardMobile" class="space-y-2.5 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat live chat...</div>
             </div>
@@ -335,7 +328,7 @@
             }
         }
 
-        // 1. PENDAFTAR TURNAMEN (TAMPILAN RINGKAS + HEADER LABEL + KLIK DETAIL)
+        // 1. PENDAFTAR TURNAMEN DENGAN TOMBOL ACC
         function loadTournamentApplicants() {
             const q = query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -370,10 +363,18 @@
 
                     const waUrl = formatWaUrl(data.whatsapp);
                     const cardDetailId = `detailCard_${docSnap.id}`;
+                    const isApproved = data.status === 'Approved';
+
+                    const statusBadge = isApproved
+                        ? `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/40 rounded text-[10px] font-bold"><i class="fa-solid fa-check mr-1"></i>CONFIRMED</span>`
+                        : `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded text-[10px] font-bold">PENDING</span>`;
+
+                    const accBtnHtml = isApproved
+                        ? `<button onclick="updateApprovalStatus('${docSnap.id}', 'Pending')" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded font-bold transition-all cursor-pointer"><i class="fa-solid fa-xmark mr-1"></i> Batalkan ACC</button>`
+                        : `<button onclick="updateApprovalStatus('${docSnap.id}', 'Approved')" class="px-3 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold rounded shadow transition-all cursor-pointer"><i class="fa-solid fa-check mr-1"></i> ACC / KONFIRMASI KE WEB</button>`;
 
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-xl p-3.5 space-y-2 text-xs transition-all hover:border-emerald-accent/50">
-                            <!-- BARIS RINGKAS (BISA DIKLIK) -->
                             <div onclick="toggleDetailCard('${cardDetailId}')" class="flex items-center justify-between cursor-pointer select-none">
                                 <div class="flex items-center gap-2 overflow-hidden mr-2">
                                     <span class="text-slate-500 font-bold shrink-0">#${i}</span>
@@ -381,21 +382,22 @@
                                     <span class="text-slate-400 text-[11px] shrink-0">— (${combinedRole})</span>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0">
-                                    <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded text-[10px] font-bold">${data.payment || '-'}</span>
+                                    <span class="px-2 py-0.5 bg-obsidian-card text-slate-300 border border-obsidian-border rounded text-[10px] font-bold">${data.payment || '-'}</span>
+                                    ${statusBadge}
                                     <i class="fa-solid fa-chevron-down text-slate-400 text-[10px]"></i>
                                 </div>
                             </div>
 
-                            <!-- BAGIAN DETAIL LENGKAP -->
                             <div id="${cardDetailId}" class="hidden pt-3 border-t border-obsidian-border space-y-2 text-[11px] font-tech bg-obsidian-card p-3 rounded-lg">
                                 <p><strong class="text-slate-400">Akun Web User:</strong> <span class="text-emerald-accent font-bold">${data.usernameDb || '-'}</span></p>
                                 <p><strong class="text-slate-400">ID Mobile Legend:</strong> <span class="text-slate-200">${data.idMl || '-'}</span></p>
                                 <p><strong class="text-slate-400">Nomor WhatsApp:</strong> <a href="${waUrl}" target="_blank" class="text-sky-400 underline"><i class="fa-brands fa-whatsapp mr-1"></i>${data.whatsapp || '-'}</a></p>
                                 <p><strong class="text-slate-400">Waktu Pendaftaran:</strong> <span class="text-slate-400">${timeStr}</span></p>
                                 
-                                <div class="pt-2 text-right">
+                                <div class="pt-2 flex items-center justify-between gap-2">
+                                    <div>${accBtnHtml}</div>
                                     <button onclick="deleteTournamentData('${docSnap.id}', '${data.nama}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded font-bold transition-all cursor-pointer">
-                                        <i class="fa-solid fa-trash mr-1"></i> Hapus Pendaftar Ini
+                                        <i class="fa-solid fa-trash mr-1"></i> Hapus
                                     </button>
                                 </div>
                             </div>
@@ -408,30 +410,37 @@
             });
         }
 
+        // FUNGSI UPDATE STATUS ACC KE FIRESTORE
+        window.updateApprovalStatus = async function(docId, newStatus) {
+            try {
+                const docRef = doc(db, "pendaftar", docId);
+                await updateDoc(docRef, { status: newStatus });
+                alert(newStatus === 'Approved' ? "Peserta berhasil di-ACC dan akan tampil di website!" : "Status peserta dibatalkan.");
+            } catch (err) {
+                console.error(err);
+                alert("Gagal mengubah status.");
+            }
+        }
+
         // 2. AKUN MEMBER
         function loadMemberUsers() {
             const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
             onSnapshot(q, (snapshot) => {
                 const mobileCardBox = document.getElementById('usersCardMobile');
                 document.getElementById('countUsers').innerText = snapshot.size;
-
                 if (snapshot.empty) {
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada akun member.</div>`;
                     return;
                 }
-
                 let htmlMobile = '';
                 let i = 1;
-
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     let timeStr = (data.createdAt && data.createdAt.toDate) ? data.createdAt.toDate().toLocaleString() : '-';
                     const isBanned = data.isBanned === true;
-
                     const statusBadge = isBanned 
                         ? `<span class="px-1.5 py-0.5 bg-red-500/20 text-red-400 border border-red-500/40 rounded text-[9px] font-bold">BANNED</span>`
                         : `<span class="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-[9px] font-bold">AKTIF</span>`;
-
                     const banBtnText = isBanned ? '<i class="fa-solid fa-unlock mr-0.5"></i> Unban' : '<i class="fa-solid fa-ban mr-0.5"></i> Ban';
                     const banBtnClass = isBanned ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
 
@@ -444,18 +453,13 @@
                             <p><strong class="text-slate-400">Password:</strong> <span class="font-mono text-amber-300 bg-obsidian-card px-1.5 py-0.5 rounded">${data.password}</span></p>
                             <p><strong class="text-slate-400">Dibuat:</strong> <span class="text-slate-400 text-[9px]">${timeStr}</span></p>
                             <div class="pt-1.5 border-t border-obsidian-border flex gap-1.5">
-                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px] cursor-pointer">
-                                    ${banBtnText}
-                                </button>
-                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px] cursor-pointer">
-                                    <i class="fa-solid fa-user-xmark"></i> Hapus
-                                </button>
+                                <button onclick="toggleBanUser('${docSnap.id}', '${data.username}', ${!isBanned})" class="flex-1 py-1.5 ${banBtnClass} border rounded font-bold text-[11px] cursor-pointer">${banBtnText}</button>
+                                <button onclick="deleteMemberAccount('${docSnap.id}', '${data.username}')" class="px-2.5 py-1.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded font-bold text-[11px] cursor-pointer"><i class="fa-solid fa-user-xmark"></i> Hapus</button>
                             </div>
                         </div>
                     `;
                     i++;
                 });
-
                 usersCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -466,19 +470,15 @@
             onSnapshot(q, (snapshot) => {
                 const mobileCardBox = document.getElementById('chatsCardMobile');
                 document.getElementById('countChats').innerText = snapshot.size;
-
                 if (snapshot.empty) {
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada obrolan.</div>`;
                     return;
                 }
-
                 let htmlMobile = '';
                 let i = 1;
-
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
-
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
@@ -487,15 +487,12 @@
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
                             <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer">
-                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan
-                                </button>
+                                <button onclick="deleteSingleChatMessage('chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus Pesan</button>
                             </div>
                         </div>
                     `;
                     i++;
                 });
-
                 chatsCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -506,19 +503,15 @@
             onSnapshot(q, (snapshot) => {
                 const mobileCardBox = document.getElementById('liveChatsCardMobile');
                 document.getElementById('countLiveChats').innerText = snapshot.size;
-
                 if (snapshot.empty) {
                     mobileCardBox.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs">Belum ada live chat.</div>`;
                     return;
                 }
-
                 let htmlMobile = '';
                 let i = 1;
-
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     let timeStr = (data.time && data.time.toDate) ? data.time.toDate().toLocaleString() : '-';
-
                     htmlMobile += `
                         <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 space-y-1 text-[11px]">
                             <div class="flex items-center justify-between">
@@ -527,15 +520,12 @@
                             </div>
                             <p class="text-slate-200 bg-obsidian-card p-2 rounded border border-obsidian-border break-words">${escapeHtml(data.message || '')}</p>
                             <div class="text-right pt-0.5">
-                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer">
-                                    <i class="fa-solid fa-trash mr-1"></i> Hapus Komentar
-                                </button>
+                                <button onclick="deleteSingleChatMessage('live_chats', '${docSnap.id}')" class="w-full py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[11px] font-bold cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus Komentar</button>
                             </div>
                         </div>
                     `;
                     i++;
                 });
-
                 liveChatsCardMobile.innerHTML = htmlMobile;
             });
         }
@@ -545,18 +535,12 @@
         }
 
         window.toggleBanUser = async function(docId, username, shouldBan) {
-            const actionText = shouldBan ? "MEMBLOKIR (BANNED)" : "MEMBUKA BLOKIR (UNBANNED)";
-            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${username}?`)) {
+            if (confirm(`Apakah Anda yakin ingin mengubah status banned akun ${username}?`)) {
                 try {
                     const userRef = doc(db, "users", docId);
-                    await updateDoc(userRef, {
-                        isBanned: shouldBan,
-                        sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2)
-                    });
-                    alert(`Status akun ${username} berhasil diperbarui!`);
-                } catch (err) {
-                    alert("Gagal memperbarui status akun.");
-                }
+                    await updateDoc(userRef, { isBanned: shouldBan, sessionToken: shouldBan ? "" : Math.random().toString(36).substring(2) });
+                    alert("Status akun berhasil diperbarui!");
+                } catch (err) { alert("Gagal memperbarui status."); }
             }
         }
 
@@ -580,16 +564,13 @@
 
         window.deleteAllChats = async function(collectionName) {
             const targetName = collectionName === 'chats' ? "CHAT GLOBAL" : "LIVE STREAM CHAT";
-            if (confirm(`PERHATIAN: Apakah Anda yakin ingin MENGHAPUS SEMUA PESAN di ${targetName}?`)) {
+            if (confirm(`PERHATIAN: Hapus semua pesan di ${targetName}?`)) {
                 try {
                     const querySnapshot = await getDocs(collection(db, collectionName));
                     const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, collectionName, docSnap.id)));
                     await Promise.all(deletePromises);
-                    alert(`Seluruh obrolan ${targetName} berhasil dibersihkan!`);
-                } catch (err) {
-                    console.error(err);
-                    alert("Gagal membersihkan pesan.");
-                }
+                    alert("Berhasil dibersihkan!");
+                } catch (err) { alert("Gagal membersihkan pesan."); }
             }
         }
     </script>
