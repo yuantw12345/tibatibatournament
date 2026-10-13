@@ -143,14 +143,30 @@ function startSessionWatcher() {
   }, 10000);
 }
 
-// MEMUAT DATA PENDAFTAR YANG SUDAH DI-ACC KE DALAM MODAL POP-UP (TANPA SYARAT COMPOSITE INDEX)
+// MEMUAT DATA PENDAFTAR & STATISTIK TIM DI MODAL POP-UP
 function initPublicPendaftar() {
   try {
     const q = query(collection(db, "pendaftar"), where("status", "==", "Approved"));
     
     onSnapshot(q, (snapshot) => {
       const container = document.getElementById('publicPendaftarList');
+      const totalEl = document.getElementById('pubStatTotal');
+      const timEl = document.getElementById('pubStatTim');
+      const sisaEl = document.getElementById('pubStatSisa');
+
       if (!container) return;
+
+      const totalPendaftar = snapshot.size;
+
+      // Hitung total tim dan kurang pemain
+      const totalTim = Math.floor(totalPendaftar / 5);
+      const sisaPemain = totalPendaftar % 5;
+      const kurangPemain = sisaPemain === 0 ? 0 : 5 - sisaPemain;
+
+      // Update Tampilan Header Statistik
+      if (totalEl) totalEl.innerText = totalPendaftar;
+      if (timEl) timEl.innerText = totalTim + " Tim";
+      if (sisaEl) sisaEl.innerText = kurangPemain > 0 ? `Kurang ${kurangPemain}` : "Lengkap";
 
       if (snapshot.empty) {
         container.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada peserta yang dikonfirmasi oleh panitia.</div>';
@@ -165,7 +181,7 @@ function initPublicPendaftar() {
       docsData.sort((a, b) => {
         const timeA = a.waktuDaftar && a.waktuDaftar.seconds ? a.waktuDaftar.seconds : 0;
         const timeB = b.waktuDaftar && b.waktuDaftar.seconds ? b.waktuDaftar.seconds : 0;
-        return timeB - timeA;
+        return timeA - timeB;
       });
 
       let html = '';
@@ -174,11 +190,11 @@ function initPublicPendaftar() {
       docsData.forEach((d) => {
         html += `
           <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <span class="text-amber-400 font-bold font-tech">#${i}</span>
-              <h4 class="text-white font-bold text-xs uppercase tracking-wide">${d.nama || '-'}</h4>
+            <div class="flex items-center gap-3 overflow-hidden mr-2">
+              <span class="text-amber-400 font-bold font-tech shrink-0">#${i}</span>
+              <h4 class="text-white font-bold text-xs uppercase tracking-wide truncate">${d.nama || '-'}</h4>
             </div>
-            <span class="px-2 py-0.5 bg-emerald-500/15 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[9px]">CONFIRMED</span>
+            <span class="px-2 py-0.5 bg-emerald-500/15 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[9px] shrink-0">CONFIRMED</span>
           </div>
         `;
         i++;
@@ -189,7 +205,7 @@ function initPublicPendaftar() {
       console.error("Error Firestore listener:", error);
       const container = document.getElementById('publicPendaftarList');
       if (container) {
-        container.innerHTML = '<div class="text-center text-red-400 py-6 text-xs">Gagal memuat data peserta. Cek koneksi atau pendaftaran.</div>';
+        container.innerHTML = '<div class="text-center text-red-400 py-6 text-xs">Gagal memuat data peserta.</div>';
       }
     });
   } catch (e) {
