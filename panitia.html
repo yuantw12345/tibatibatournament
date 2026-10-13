@@ -116,7 +116,7 @@
             </button>
         </div>
 
-        <!-- TAB 1: DATA PENDAFTAR -->
+        <!-- TAB 1: DATA PENDAFTAR (KARTU LENGKAP DIPERBAIKI) -->
         <div id="sectionTournaments" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <h2 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
@@ -140,7 +140,7 @@
                 </div>
             </div>
 
-            <div id="tournamentCardMobile" class="space-y-2 font-tech">
+            <div id="tournamentCardMobile" class="space-y-3 font-tech">
                 <div class="text-center py-6 text-slate-500 text-xs">Memuat data pendaftar...</div>
             </div>
         </div>
@@ -489,6 +489,7 @@
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
+        // TAMPILAN KARTU PENDAFTAR DETAIL DAN LENGKAP
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -499,8 +500,36 @@
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data();
                     const isApp = d.status === 'Approved';
-                    const btnAcc = isApp ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded">Batalkan ACC</button>` : `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-2 py-1 bg-emerald-accent text-black font-bold rounded">ACC</button>`;
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-3 text-xs flex justify-between items-center"><span>#${i} <b>${d.nama}</b> (${d.payment}) - ${d.status}</span><div class="flex gap-2">${btnAcc}<button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="px-2 py-1 bg-red-500/10 text-red-400 rounded">Hapus</button></div></div>`;
+                    const statusBadge = isApp 
+                        ? `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[10px]">Approved (ACC)</span>` 
+                        : `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded font-bold text-[10px]">Pending</span>`;
+
+                    const btnAcc = isApp 
+                        ? `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Pending'})" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition-all cursor-pointer">Batalkan ACC</button>` 
+                        : `<button onclick="updateDoc(doc(db, 'pendaftar', '${docSnap.id}'), {status: 'Approved'})" class="px-3 py-1.5 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md">ACC Peserta</button>`;
+
+                    html += `
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-3 hover:border-emerald-accent/40 transition-all">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-400 font-bold">#${i}</span>
+                                    <h3 class="text-white font-bold text-sm uppercase">${d.nama || '-'}</h3>
+                                    ${statusBadge}
+                                </div>
+                                <div class="grid grid-cols-2 sm:flex sm:items-center gap-2 text-[11px] text-slate-400 pt-1">
+                                    <span><i class="fa-solid fa-gamepad text-sky-400 mr-1"></i> ID ML: <strong class="text-white">${d.idMl || '-'}</strong></span>
+                                    <span><i class="fa-solid fa-star text-amber-400 mr-1"></i> Role: <strong class="text-white">${d.role1 || '-'} / ${d.role2 || '-'}</strong></span>
+                                    <span><i class="fa-brands fa-whatsapp text-emerald-accent mr-1"></i> WA: <strong class="text-white">${d.whatsapp || '-'}</strong></span>
+                                    <span><i class="fa-solid fa-wallet text-purple-400 mr-1"></i> Bayar: <strong class="text-white">${d.payment || '-'}</strong></span>
+                                </div>
+                                <span class="text-[10px] text-slate-500 block">Akun Pendaftar: ${d.usernameDb || '-'}</span>
+                            </div>
+                            <div class="flex items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-obsidian-border shrink-0">
+                                ${btnAcc}
+                                <button onclick="deleteDoc(doc(db, 'pendaftar', '${docSnap.id}'))" class="px-3 py-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                            </div>
+                        </div>
+                    `;
                     i++;
                 });
                 document.getElementById('tournamentCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada pendaftar.</div>';
