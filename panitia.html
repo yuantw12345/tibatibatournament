@@ -145,7 +145,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: KELOLA JADWAL & BAGAN (DENGAN TANGGAL, JAM & DINAMIS MATCHES) -->
+        <!-- TAB 2: KELOLA JADWAL & BAGAN (DENGAN DROPDOWN 2 - 10 TIM) -->
         <div id="sectionJadwal" class="bg-obsidian-card border border-obsidian-border rounded-xl p-3 sm:p-6 shadow-xl hidden">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-obsidian-border">
                 <div>
@@ -159,15 +159,22 @@
                 </button>
             </div>
 
-            <!-- DYNAMIC TEAM SELECTOR -->
+            <!-- DYNAMIC TEAM SELECTOR (2 - 10 TIM) -->
             <div class="bg-obsidian p-4 rounded-xl border border-sky-400/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-tech">
                 <div>
                     <label class="block text-sky-400 font-bold text-xs uppercase mb-1"><i class="fa-solid fa-users mr-1"></i> Pilih Jumlah Tim Terkumpul:</label>
-                    <p class="text-[11px] text-slate-400">Pilih 5 Tim untuk otomatis membuat 10 Match (semua tim saling bertemu 4x).</p>
+                    <p class="text-[11px] text-slate-400">Atur jumlah tim pendaftar untuk otomatis membentuk slot match Group Stage saling bertemu.</p>
                 </div>
-                <select id="selectTotalTeams" onchange="handleTeamCountChange()" class="bg-obsidian-card border border-sky-400 text-sky-400 font-bold rounded-lg px-4 py-2 text-xs focus:outline-none">
-                    <option value="5" selected>5 Tim (10 Match - Saling Bertemu 4x)</option>
+                <select id="selectTotalTeams" onchange="handleTeamCountChange()" class="bg-obsidian-card border border-sky-400 text-sky-400 font-bold rounded-lg px-4 py-2 text-xs focus:outline-none cursor-pointer">
+                    <option value="2">2 Tim (1 Match - Main 1x)</option>
+                    <option value="3">3 Tim (3 Match - Saling Bertemu 2x)</option>
                     <option value="4">4 Tim (6 Match - Saling Bertemu 3x)</option>
+                    <option value="5" selected>5 Tim (10 Match - Saling Bertemu 4x)</option>
+                    <option value="6">6 Tim (15 Match - Saling Bertemu 5x)</option>
+                    <option value="7">7 Tim (21 Match - Saling Bertemu 6x)</option>
+                    <option value="8">8 Tim (28 Match - Saling Bertemu 7x)</option>
+                    <option value="9">9 Tim (36 Match - Saling Bertemu 8x)</option>
+                    <option value="10">10 Tim (45 Match - Saling Bertemu 9x)</option>
                 </select>
             </div>
 
@@ -372,7 +379,7 @@
             alert("Pengaturan disimpan!");
         }
 
-        // GENERATE KOTAK MATCH SESUAI JUMLAH TIM
+        // GENERATE KOTAK MATCH SESUAI JUMLAH TIM (2 - 10 TIM)
         window.handleTeamCountChange = function() {
             const teamCount = parseInt(document.getElementById('selectTotalTeams').value);
             const totalMatches = (teamCount * (teamCount - 1)) / 2;
