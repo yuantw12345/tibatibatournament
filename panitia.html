@@ -226,39 +226,48 @@
             <div class="bg-obsidian p-4 rounded-xl border border-sky-400/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-tech">
                 <div>
                     <label class="block text-sky-400 font-bold text-xs uppercase mb-1"><i class="fa-solid fa-users mr-1"></i> Pilih Jumlah Tim Terkumpul:</label>
-                    <p class="text-[11px] text-slate-400">Atur jumlah tim pendaftar untuk otomatis membentuk slot match Group Stage saling bertemu.</p>
+                    <p class="text-[11px] text-slate-400">Atur jumlah tim untuk otomatis membentuk slot match Group Stage & daftar input nama tim klasemen.</p>
                 </div>
                 <select id="selectTotalTeams" onchange="handleTeamCountChange()" class="bg-obsidian-card border border-sky-400 text-sky-400 font-bold rounded-lg px-4 py-2 text-xs focus:outline-none cursor-pointer">
-                    <option value="2">2 Tim (1 Match - Main 1x)</option>
-                    <option value="3">3 Tim (3 Match - Saling Bertemu 2x)</option>
-                    <option value="4">4 Tim (6 Match - Saling Bertemu 3x)</option>
-                    <option value="5" selected>5 Tim (10 Match - Saling Bertemu 4x)</option>
-                    <option value="6">6 Tim (15 Match - Saling Bertemu 5x)</option>
-                    <option value="7">7 Tim (21 Match - Saling Bertemu 6x)</option>
-                    <option value="8">8 Tim (28 Match - Saling Bertemu 7x)</option>
-                    <option value="9">9 Tim (36 Match - Saling Bertemu 8x)</option>
-                    <option value="10">10 Tim (45 Match - Saling Bertemu 9x)</option>
+                    <option value="2">2 Tim</option>
+                    <option value="3">3 Tim</option>
+                    <option value="4">4 Tim</option>
+                    <option value="5" selected>5 Tim</option>
+                    <option value="6">6 Tim</option>
+                    <option value="7">7 Tim</option>
+                    <option value="8">8 Tim</option>
+                    <option value="9">9 Tim</option>
+                    <option value="10">10 Tim</option>
                 </select>
             </div>
 
             <div class="space-y-6 font-tech text-xs">
+                <!-- INPUT NAMA TIM UNTUK KLASEMEN -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
-                    <p id="groupStageInfoText" class="text-[11px] text-slate-400 mb-4">Total 10 Pertandingan (Setiap Tim Bertanding 4 Kali)</p>
+                    <h3 class="font-bold text-amber-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Masukkan Nama Tim untuk Klasemen</h3>
+                    <p class="text-[11px] text-slate-400 mb-4">Tulis nama resmi setiap tim peserta agar otomatis masuk ke tabel klasemen.</p>
+                    <div id="teamNameInputsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <!-- Dibuat dinamis oleh JS -->
+                    </div>
+                </div>
+
+                <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
+                    <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> Fase Group Stage (BO 2)</h3>
+                    <p id="groupStageInfoText" class="text-[11px] text-slate-400 mb-4">Total Pertandingan Group Stage</p>
                     
                     <div id="groupStageMatchGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     </div>
                 </div>
 
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> 2. Semifinal Bagan (BO 3)</h3>
+                    <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> Semifinal Bagan (BO 3)</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                             <span class="text-white font-bold block mb-1">Semifinal 1 (1st vs 3rd)</span>
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="sf1_datetime" placeholder="Tanggal & Jam (Contoh: 26 Oct, 19:00 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
-                                <input type="text" id="sf1_tim1" placeholder="Tim Peringkat 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <input type="text" id="sf1_tim2" placeholder="Tim Peringkat 3" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf1_datetime" placeholder="Tanggal & Jam" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
+                                <input type="text" id="sf1_tim1" placeholder="Tim 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf1_tim2" placeholder="Tim 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             </div>
                             <div class="grid grid-cols-3 gap-2">
                                 <input type="text" id="sf1_skor" placeholder="Skor (Cth: 2 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
@@ -274,9 +283,9 @@
                         <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                             <span class="text-white font-bold block mb-1">Semifinal 2 (2nd vs 4th)</span>
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="sf2_datetime" placeholder="Tanggal & Jam (Contoh: 26 Oct, 20:30 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
-                                <input type="text" id="sf2_tim1" placeholder="Tim Peringkat 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                                <input type="text" id="sf2_tim2" placeholder="Tim Peringkat 4" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf2_datetime" placeholder="Tanggal & Jam" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
+                                <input type="text" id="sf2_tim1" placeholder="Tim 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                                <input type="text" id="sf2_tim2" placeholder="Tim 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             </div>
                             <div class="grid grid-cols-3 gap-2">
                                 <input type="text" id="sf2_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
@@ -292,13 +301,13 @@
                 </div>
 
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> 3. Grand Final (BO 5)</h3>
+                    <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> Grand Final (BO 5)</h3>
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
                         <span class="text-white font-bold block mb-1">Grand Final Match</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="gf_datetime" placeholder="Tanggal & Jam (Contoh: 27 Oct, 19:30 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-amber-400 font-bold">
-                            <input type="text" id="gf_tim1" placeholder="Pemenang Semifinal 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                            <input type="text" id="gf_tim2" placeholder="Pemenang Semifinal 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="gf_datetime" placeholder="Tanggal & Jam" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-amber-400 font-bold">
+                            <input type="text" id="gf_tim1" placeholder="Tim 1" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="gf_tim2" placeholder="Tim 2" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                         </div>
                         <div class="grid grid-cols-3 gap-2">
                             <input type="text" id="gf_skor" placeholder="Skor (Cth: 3 - 1)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
@@ -337,17 +346,7 @@
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
-            
-            <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
-                <div class="col-span-4">USERNAME MEMBER</div>
-                <div class="col-span-4">PASSWORD</div>
-                <div class="col-span-2">STATUS AKUN</div>
-                <div class="col-span-2 text-right">AKSI (BAN / HAPUS)</div>
-            </div>
-
-            <div id="usersCardMobile" class="space-y-2 font-tech text-xs">
-                <div class="text-center py-6 text-slate-500">Memuat data member...</div>
-            </div>
+            <div id="usersCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat data member...</div></div>
         </div>
 
         <!-- TAB 5: CHAT -->
@@ -457,24 +456,38 @@
 
         window.handleTeamCountChange = function() {
             const teamCount = parseInt(document.getElementById('selectTotalTeams').value);
+            
+            // Render Input Nama Tim Klasemen
+            const teamInputsContainer = document.getElementById('teamNameInputsGrid');
+            let teamInputsHtml = '';
+            for(let t = 1; t <= teamCount; t++) {
+                teamInputsHtml += `
+                    <div>
+                        <label class="block text-[10px] text-slate-400 mb-1">Nama Tim ${t}</label>
+                        <input type="text" id="team_name_${t}" placeholder="Cth: Zenith eSport" class="w-full bg-obsidian-card border border-obsidian-border rounded px-2.5 py-1.5 text-white font-bold">
+                    </div>
+                `;
+            }
+            teamInputsContainer.innerHTML = teamInputsHtml;
+
+            // Render Match Group Stage
             const totalMatches = (teamCount * (teamCount - 1)) / 2;
             const container = document.getElementById('groupStageMatchGrid');
             const infoText = document.getElementById('groupStageInfoText');
-
             infoText.innerText = `Total ${totalMatches} Pertandingan (Setiap Tim Bertanding ${teamCount - 1} Kali)`;
 
-            let html = '';
+            let matchHtml = '';
             for (let i = 1; i <= totalMatches; i++) {
-                html += `
+                matchHtml += `
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                         <span class="text-white font-bold block mb-1">Match ${i}: Group Stage</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="m${i}_datetime" placeholder="Tanggal & Jam (Cth: 25 Oct, 19:00 WIB)" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
-                            <input type="text" id="m${i}_tim1" placeholder="Nama Tim A" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
-                            <input type="text" id="m${i}_tim2" placeholder="Nama Tim B" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="m${i}_datetime" placeholder="Tanggal & Jam" class="col-span-2 bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-sky-400 font-bold">
+                            <input type="text" id="m${i}_tim1" placeholder="Tim A" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="m${i}_tim2" placeholder="Tim B" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                         </div>
                         <div class="grid grid-cols-3 gap-2">
-                            <input type="text" id="m${i}_skor" placeholder="Skor (Cth: 2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
+                            <input type="text" id="m${i}_skor" placeholder="Skor (2 - 0)" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                             <select id="m${i}_status" class="bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white">
                                 <option value="PENDING">PENDING</option>
                                 <option value="LIVE">LIVE</option>
@@ -485,7 +498,7 @@
                     </div>
                 `;
             }
-            container.innerHTML = html;
+            container.innerHTML = matchHtml;
         }
 
         async function loadJadwalDataToPanel() {
@@ -496,6 +509,14 @@
                     const totalTeams = d.totalTeams || "5";
                     document.getElementById('selectTotalTeams').value = totalTeams;
                     handleTeamCountChange();
+
+                    // Load Nama Tim
+                    if (d.teamNames && Array.isArray(d.teamNames)) {
+                        d.teamNames.forEach((name, idx) => {
+                            const inputEl = document.getElementById(`team_name_${idx + 1}`);
+                            if (inputEl) inputEl.value = name;
+                        });
+                    }
 
                     const totalMatches = (parseInt(totalTeams) * (parseInt(totalTeams) - 1)) / 2;
                     for (let i = 1; i <= totalMatches; i++) {
@@ -531,9 +552,16 @@
             btn.innerText = "MENYIMPAN..."; btn.disabled = true;
             try {
                 const totalTeams = document.getElementById('selectTotalTeams').value;
-                const totalMatches = (parseInt(totalTeams) * (parseInt(totalTeams) - 1)) / 2;
+                const teamCountNum = parseInt(totalTeams);
+                
+                let teamNames = [];
+                for(let t=1; t<=teamCountNum; t++) {
+                    const val = document.getElementById(`team_name_${t}`) ? document.getElementById(`team_name_${t}`).value.trim() : `Tim ${t}`;
+                    teamNames.push(val || `Tim ${t}`);
+                }
 
-                const payload = { totalTeams: totalTeams };
+                const totalMatches = (teamCountNum * (teamCountNum - 1)) / 2;
+                const payload = { totalTeams: totalTeams, teamNames: teamNames };
 
                 for (let i = 1; i <= totalMatches; i++) {
                     const id = `m${i}`;
@@ -559,31 +587,21 @@
                 });
 
                 await setDoc(doc(db, "settings", "jadwal_bagan"), payload);
-                alert("Jadwal, Tanggal, Jam & Bagan berhasil diperbarui secara real-time!");
+                alert("Jadwal, Tim Klasemen, & Bagan berhasil diperbarui secara real-time!");
             } catch (err) { alert("Gagal menyimpan."); }
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
 
-        // AKSI ACC DAN HAPUS PENDAFTAR
         window.handleAccPendaftar = async function(id, newStatus) {
-            try {
-                await updateDoc(doc(db, 'pendaftar', id), { status: newStatus });
-            } catch (err) {
-                alert("Gagal mengubah status pendaftar!");
-            }
+            try { await updateDoc(doc(db, 'pendaftar', id), { status: newStatus }); } catch (err) { alert("Gagal!"); }
         }
 
         window.handleDeletePendaftar = async function(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus data pendaftar ini?")) {
-                try {
-                    await deleteDoc(doc(db, 'pendaftar', id));
-                } catch (err) {
-                    alert("Gagal menghapus pendaftar!");
-                }
+            if (confirm("Hapus pendaftar ini?")) {
+                try { await deleteDoc(doc(db, 'pendaftar', id)); } catch (err) { alert("Gagal!"); }
             }
         }
 
-        // TAMPILAN TABEL PENDAFTAR (KIKUTI UKURAN DENGAN FLEX ROW KEKAL UNTUK TOMBOL ACC & HAPUS)
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
@@ -597,106 +615,61 @@
                     const d = docSnap.data();
                     const id = docSnap.id;
                     window.applicantsDataStore[id] = d;
-
                     const isApp = d.status === 'Approved';
-
                     const btnAcc = isApp 
-                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/40 hover:bg-amber-500/20 text-emerald-accent hover:text-amber-400 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1 shrink-0 whitespace-nowrap" title="Klik untuk membatalkan ACC"><i class="fa-solid fa-circle-check text-[9px]"></i> Approved</button>` 
-                        : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2 py-1 bg-emerald-accent hover:bg-emerald-400 text-black rounded-lg text-[10px] font-bold transition-all cursor-pointer shadow-md shrink-0 whitespace-nowrap">ACC Peserta</button>`;
-
-                    const roleDisplay = d.role2 ? `${d.role1 || '-'} / ${d.role2}` : (d.role1 || '-');
+                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-emerald-500/25 text-emerald-accent rounded text-[10px] font-bold">Approved</button>` 
+                        : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2 py-1 bg-emerald-accent text-black rounded text-[10px] font-bold">ACC Peserta</button>`;
 
                     html += `
                         <tr class="hover:bg-obsidian/60 transition-colors">
-                            <td class="py-3 px-2 sm:px-2.5 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent transition-colors align-middle" onclick="openApplicantModal('${id}')">
-                                <div class="flex items-center gap-1">
-                                    <span class="text-amber-400 font-mono shrink-0 text-[10px] sm:text-xs">#${i}</span>
-                                    <span class="underline decoration-dashed decoration-emerald-accent/50 break-words text-[11px] sm:text-xs">${d.nama || '-'}</span>
-                                </div>
+                            <td class="py-3 px-2 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent" onclick="openApplicantModal('${id}')">
+                                <span class="text-amber-400">#${i}</span> ${d.nama || '-'}
                             </td>
-                            <td class="py-3 px-2 sm:px-2.5 text-center font-bold text-sky-400 text-[10px] sm:text-xs align-middle">
-                                <span class="break-words">${roleDisplay}</span>
-                            </td>
-                            <td class="py-3 px-2 sm:px-2.5 text-right align-middle">
-                                <div class="flex items-center justify-end gap-1.5 shrink-0">
+                            <td class="py-3 px-2 text-center text-sky-400 font-bold">${d.role2 ? d.role1+' / '+d.role2 : d.role1}</td>
+                            <td class="py-3 px-2 text-right">
+                                <div class="flex items-center justify-end gap-1.5">
                                     ${btnAcc}
-                                    <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-red-400 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/2ocht text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                     `;
                     i++;
                 });
-                document.getElementById('pendaftarTableBody').innerHTML = html || '<tr><td colspan="3" class="text-center py-6 text-slate-500">Belum ada pendaftar.</td></tr>';
+                document.getElementById('pendaftarTableBody').innerHTML = html || '<tr><td colspan="3" class="text-center py-6 text-slate-500">Belum ada.</td></tr>';
             });
         }
 
-        // BUKA POPUP MODAL DENGAN EFEK SMOOTH FADE & ZOOM
         window.openApplicantModal = function(id) {
             const data = window.applicantsDataStore[id];
             if (!data) return;
-
             document.getElementById('modalNama').innerText = data.nama || '-';
             document.getElementById('modalIdMl').innerText = data.idMl || '-';
-            document.getElementById('modalRole').innerText = data.role2 ? `${data.role1 || '-'} / ${data.role2}` : (data.role1 || '-');
+            document.getElementById('modalRole').innerText = data.role2 ? `${data.role1} / ${data.role2}` : (data.role1 || '-');
             document.getElementById('modalPayment').innerText = data.payment || '-';
-            
-            const statusEl = document.getElementById('modalStatus');
-            statusEl.innerText = data.status || 'Pending';
-            statusEl.className = data.status === 'Approved' ? 'text-emerald-accent font-bold' : 'text-amber-400 font-bold';
-
+            document.getElementById('modalStatus').innerText = data.status || 'Pending';
             document.getElementById('modalUsername').innerText = data.usernameDb || '-';
-
             let cleanWa = (data.whatsapp || '').toString().replace(/[^0-9]/g, '');
             if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
-            
             document.getElementById('modalWaBtn').href = cleanWa ? `https://wa.me/${cleanWa}` : '#';
-            document.getElementById('modalWaText').innerText = data.whatsapp || 'Tidak ada nomor';
+            document.getElementById('modalWaText').innerText = data.whatsapp || '-';
 
             const modal = document.getElementById('applicantDetailModal');
-            const modalContent = modal.querySelector('div');
-            
-            modal.classList.remove('pointer-events-none');
-            modal.classList.remove('opacity-0');
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('scale-100', 'opacity-100');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.querySelector('div').classList.remove('scale-95', 'opacity-0');
         }
 
         window.closeApplicantModal = function() {
             const modal = document.getElementById('applicantDetailModal');
-            const modalContent = modal.querySelector('div');
-            
             modal.classList.add('opacity-0');
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            
-            setTimeout(() => {
-                modal.classList.add('pointer-events-none');
-            }, 300);
+            setTimeout(() => modal.classList.add('pointer-events-none'), 300);
         }
 
-        // AKSI MEMBER USER (BAN & HAPUS)
         window.toggleBanUser = async function(userId, setBanned) {
-            const actionText = setBanned ? "memblokir (ban)" : "membuka blokir (unban)";
-            if (confirm(`Apakah Anda yakin ingin ${actionText} akun ${userId}?`)) {
-                try {
-                    await updateDoc(doc(db, "users", userId), { isBanned: setBanned });
-                    alert(`Akun ${userId} berhasil di-${setBanned ? 'banned' : 'unban'}!`);
-                } catch (err) {
-                    alert("Gagal mengubah status akun.");
-                }
-            }
+            try { await updateDoc(doc(db, "users", userId), { isBanned: setBanned }); } catch (e) {}
         }
-
         window.handleDeleteUser = async function(userId) {
-            if (confirm(`Apakah Anda yakin ingin menghapus akun member ${userId}?`)) {
-                try {
-                    await deleteDoc(doc(db, "users", userId));
-                    alert(`Akun ${userId} berhasil dihapus!`);
-                } catch (err) {
-                    alert("Gagal menghapus akun.");
-                }
-            }
+            if (confirm("Hapus akun?")) { try { await deleteDoc(doc(db, "users", userId)); } catch (e) {} }
         }
 
         function loadMemberUsers() {
@@ -704,93 +677,38 @@
                 document.getElementById('countUsers').innerText = snapshot.size;
                 let html = '';
                 snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    const userId = docSnap.id;
+                    const d = docSnap.data(); const userId = docSnap.id;
                     const isBanned = d.isBanned === true;
-
-                    const statusBadge = isBanned 
-                        ? `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded font-bold text-[10px]">BANNED</span>`
-                        : `<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[10px]">ACTIVE</span>`;
-
-                    const btnBan = isBanned
-                        ? `<button onclick="toggleBanUser('${userId}', false)" class="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-400 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-unlock mr-1"></i> Unban</button>`
-                        : `<button onclick="toggleBanUser('${userId}', true)" class="px-2.5 py-1 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-ban mr-1"></i> Banned</button>`;
-
                     html += `
-                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 sm:p-4 hover:border-emerald-accent/40 transition-all space-y-2 sm:space-y-0">
-                            <div class="block sm:hidden space-y-1.5">
-                                <div class="flex items-center justify-between border-b border-obsidian-border pb-1.5">
-                                    <span class="font-bold text-white text-xs"><i class="fa-solid fa-user text-emerald-accent mr-1"></i> ${d.username}</span>
-                                    ${statusBadge}
-                                </div>
-                                <div class="text-xs text-slate-400">
-                                    <span>Password: <strong class="text-amber-400 font-mono">${d.password || '-'}</strong></span>
-                                </div>
-                                <div class="flex items-center justify-end gap-2 pt-2 border-t border-obsidian-border/60">
-                                    ${btnBan}
-                                    <button onclick="handleDeleteUser('${userId}')" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i> Hapus</button>
-                                </div>
-                            </div>
-
-                            <div class="hidden sm:grid grid-cols-12 gap-2 items-center">
-                                <div class="col-span-4 font-bold text-white text-xs flex items-center gap-1.5">
-                                    <i class="fa-solid fa-user text-emerald-accent"></i> ${d.username}
-                                </div>
-                                <div class="col-span-4 text-amber-400 font-mono text-xs font-bold">
-                                    <i class="fa-solid fa-key text-[10px] text-slate-500 mr-1"></i> ${d.password || '-'}
-                                </div>
-                                <div class="col-span-2">
-                                    ${statusBadge}
-                                </div>
-                                <div class="col-span-2 flex items-center justify-end gap-2">
-                                    ${btnBan}
-                                    <button onclick="handleDeleteUser('${userId}')" class="px-2.5 py-1 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded text-xs font-bold transition-all cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                                </div>
+                        <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
+                            <div><strong class="text-white">${d.username}</strong> <span class="text-amber-400 font-mono text-[11px]">(${d.password})</span></div>
+                            <div class="flex gap-2">
+                                <button onclick="toggleBanUser('${userId}', ${!isBanned})" class="px-2 py-1 bg-red-500/2output text-red-400 rounded text-xs">${isBanned ? 'Unban' : 'Ban'}</button>
+                                <button onclick="handleDeleteUser('${userId}')" class="px-2 py-1 bg-red-600 text-white rounded text-xs">Hapus</button>
                             </div>
                         </div>
                     `;
                 });
-                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Belum ada member terdaftar.</div>';
+                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center text-slate-500">Kosong.</div>';
             });
         }
-
-        window.handleDeleteChat = async function(col, id) {
-            try {
-                await deleteDoc(doc(db, col, id));
-            } catch (e) {
-                alert("Gagal menghapus pesan!");
-            }
-        }
-
+        window.handleDeleteChat = async function(col, id) { await deleteDoc(doc(db, col, id)); }
         function loadGlobalChats() {
-            onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (snapshot) => {
-                document.getElementById('countChats').innerText = snapshot.size;
-                let html = '';
-                snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('chats', '${docSnap.id}')" class="text-red-400 cursor-pointer">Hapus</button></div>`;
-                });
-                document.getElementById('chatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
+            onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (s) => {
+                document.getElementById('countChats').innerText = s.size;
+                let h = ''; s.forEach(docSnap => { const d = docSnap.data(); h += `<div class="bg-obsidian p-2 rounded flex justify-between"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('chats','${docSnap.id}')" class="text-red-400">Hapus</button></div>`; });
+                document.getElementById('chatsCardMobile').innerHTML = h || '<div class="text-center text-slate-500">Kosong.</div>';
             });
         }
-
         function loadLiveChats() {
-            onSnapshot(query(collection(db, "live_chats"), orderBy("time", "desc")), (snapshot) => {
-                document.getElementById('countLiveChats').innerText = snapshot.size;
-                let html = '';
-                snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    html += `<div class="bg-obsidian border border-obsidian-border rounded p-2 text-xs flex justify-between items-center"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('live_chats', '${docSnap.id}')" class="text-red-400 cursor-pointer">Hapus</button></div>`;
-                });
-                document.getElementById('liveChatsCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
+            onSnapshot(query(collection(db, "live_chats"), orderBy("time", "desc")), (s) => {
+                document.getElementById('countLiveChats').innerText = s.size;
+                let h = ''; s.forEach(docSnap => { const d = docSnap.data(); h += `<div class="bg-obsidian p-2 rounded flex justify-between"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('live_chats','${docSnap.id}')" class="text-red-400">Hapus</button></div>`; });
+                document.getElementById('liveChatsCardMobile').innerHTML = h || '<div class="text-center text-slate-500">Kosong.</div>';
             });
         }
-
         window.deleteAllChats = async function(col) {
-            if (confirm("Hapus semua?")) {
-                const snap = await getDocs(collection(db, col));
-                await Promise.all(snap.docs.map(s => deleteDoc(doc(db, col, s.id))));
-            }
+            if (confirm("Hapus semua?")) { const snap = await getDocs(collection(db, col)); await Promise.all(snap.docs.map(s => deleteDoc(doc(db, col, s.id)))); }
         }
     </script>
 </body>
