@@ -364,23 +364,29 @@ window.prevSlide = function() {
 }
 setInterval(nextSlide, 4500);
 
+// FUNGSI TAB DINAMIS (JADWAL & CHAMPIONS)
 window.switchTab = function(tab) {
+  const jadwalTab = document.getElementById('content-jadwal');
   const championsTab = document.getElementById('content-champions');
   const dynamicSection = document.getElementById('dynamic-section');
 
+  if(jadwalTab) jadwalTab.classList.add('hidden');
   if(championsTab) championsTab.classList.add('hidden');
 
-  if(tab === 'champions' && championsTab) {
+  if(tab === 'jadwal' && jadwalTab) {
+    jadwalTab.classList.remove('hidden');
+    if(dynamicSection) dynamicSection.scrollIntoView({ behavior: 'smooth' });
+  } else if(tab === 'champions' && championsTab) {
     championsTab.classList.remove('hidden');
-    if(dynamicSection) {
-      dynamicSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    if(dynamicSection) dynamicSection.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
 window.closeTab = function() { 
+  const jadwalTab = document.getElementById('content-jadwal');
   const championsTab = document.getElementById('content-champions');
-  if(championsTab) championsTab.classList.add('hidden'); 
+  if(jadwalTab) jadwalTab.classList.add('hidden');
+  if(championsTab) championsTab.classList.add('hidden');
 }
 
 window.checkAuthStatus = function() {
@@ -424,7 +430,7 @@ window.checkAuthStatus = function() {
 
     if(cardIcon) cardIcon.className = "fa-solid fa-right-to-bracket";
     if(cardTitle) cardTitle.innerText = "1. LOGIN / BUAT AKUN";
-    if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran.";
+    if(cardDesc) cardDesc.innerText = "Masuk ke akun Anda atau daftar baru.";
     cardAuthAction.onclick = () => openModal('loginModal');
     if(lockStatusText) lockStatusText.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span>';
   }
