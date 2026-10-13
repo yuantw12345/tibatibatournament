@@ -226,41 +226,43 @@
             <div class="bg-obsidian p-4 rounded-xl border border-sky-400/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-tech">
                 <div>
                     <label class="block text-sky-400 font-bold text-xs uppercase mb-1"><i class="fa-solid fa-users mr-1"></i> Pilih Jumlah Tim Terkumpul:</label>
-                    <p class="text-[11px] text-slate-400">Atur jumlah tim untuk otomatis membentuk slot match Group Stage & daftar input nama tim klasemen.</p>
+                    <p class="text-[11px] text-slate-400">Atur jumlah tim pendaftar untuk otomatis membentuk slot match Group Stage & kotak input nama tim klasemen.</p>
                 </div>
                 <select id="selectTotalTeams" onchange="handleTeamCountChange()" class="bg-obsidian-card border border-sky-400 text-sky-400 font-bold rounded-lg px-4 py-2 text-xs focus:outline-none cursor-pointer">
-                    <option value="2">2 Tim</option>
-                    <option value="3">3 Tim</option>
-                    <option value="4">4 Tim</option>
-                    <option value="5" selected>5 Tim</option>
-                    <option value="6">6 Tim</option>
-                    <option value="7">7 Tim</option>
-                    <option value="8">8 Tim</option>
-                    <option value="9">9 Tim</option>
-                    <option value="10">10 Tim</option>
+                    <option value="2">2 Tim (1 Match)</option>
+                    <option value="3">3 Tim (3 Match)</option>
+                    <option value="4">4 Tim (6 Match)</option>
+                    <option value="5" selected>5 Tim (10 Match)</option>
+                    <option value="6">6 Tim (15 Match)</option>
+                    <option value="7">7 Tim (21 Match)</option>
+                    <option value="8">8 Tim (28 Match)</option>
+                    <option value="9">9 Tim (36 Match)</option>
+                    <option value="10">10 Tim (45 Match)</option>
                 </select>
             </div>
 
             <div class="space-y-6 font-tech text-xs">
-                <!-- INPUT NAMA TIM UNTUK KLASEMEN -->
+                <!-- KOTAK INPUT NAMA TIM UNTUK KLASEMEN -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
                     <h3 class="font-bold text-amber-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Masukkan Nama Tim untuk Klasemen</h3>
-                    <p class="text-[11px] text-slate-400 mb-4">Tulis nama resmi setiap tim peserta agar otomatis masuk ke tabel klasemen.</p>
+                    <p class="text-[11px] text-slate-400 mb-4">Tulis nama resmi setiap tim peserta agar otomatis tampil di tabel klasemen website utama.</p>
                     <div id="teamNameInputsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                         <!-- Dibuat dinamis oleh JS -->
                     </div>
                 </div>
 
+                <!-- GROUP STAGE -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> Fase Group Stage (BO 2)</h3>
+                    <h3 class="font-bold text-sky-400 mb-1 uppercase tracking-wider"><i class="fa-solid fa-clock mr-1.5"></i> 1. Fase Group Stage (BO 2)</h3>
                     <p id="groupStageInfoText" class="text-[11px] text-slate-400 mb-4">Total Pertandingan Group Stage</p>
                     
                     <div id="groupStageMatchGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     </div>
                 </div>
 
+                <!-- SEMIFINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> Semifinal Bagan (BO 3)</h3>
+                    <h3 class="font-bold text-amber-400 mb-3 uppercase tracking-wider"><i class="fa-solid fa-sitemap mr-1.5"></i> 2. Semifinal Bagan (BO 3)</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2">
                             <span class="text-white font-bold block mb-1">Semifinal 1 (1st vs 3rd)</span>
@@ -300,8 +302,9 @@
                     </div>
                 </div>
 
+                <!-- GRAND FINAL -->
                 <div class="bg-obsidian border border-obsidian-border rounded-xl p-4 sm:p-5">
-                    <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> Grand Final (BO 5)</h3>
+                    <h3 class="font-bold text-crimson mb-3 uppercase tracking-wider"><i class="fa-solid fa-crown mr-1.5"></i> 3. Grand Final (BO 5)</h3>
                     <div class="bg-obsidian-card border border-obsidian-border p-3.5 rounded-xl space-y-2 max-w-xl">
                         <span class="text-white font-bold block mb-1">Grand Final Match</span>
                         <div class="grid grid-cols-2 gap-2">
@@ -346,7 +349,17 @@
                 </h2>
                 <span class="text-[10px] font-tech text-slate-400">Database "users"</span>
             </div>
-            <div id="usersCardMobile" class="space-y-2 font-tech text-xs"><div class="text-center py-6 text-slate-500">Memuat data member...</div></div>
+            
+            <div class="hidden sm:grid grid-cols-12 gap-2 bg-obsidian px-4 py-2.5 rounded-lg border border-obsidian-border text-[10px] font-tech font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <div class="col-span-4">USERNAME MEMBER</div>
+                <div class="col-span-4">PASSWORD</div>
+                <div class="col-span-2">STATUS AKUN</div>
+                <div class="col-span-2 text-right">AKSI</div>
+            </div>
+
+            <div id="usersCardMobile" class="space-y-2 font-tech text-xs">
+                <div class="text-center py-6 text-slate-500">Memuat data member...</div>
+            </div>
         </div>
 
         <!-- TAB 5: CHAT -->
@@ -457,24 +470,26 @@
         window.handleTeamCountChange = function() {
             const teamCount = parseInt(document.getElementById('selectTotalTeams').value);
             
-            // Render Input Nama Tim Klasemen
+            // 1. Render Input Nama Tim Klasemen
             const teamInputsContainer = document.getElementById('teamNameInputsGrid');
-            let teamInputsHtml = '';
-            for(let t = 1; t <= teamCount; t++) {
-                teamInputsHtml += `
-                    <div>
-                        <label class="block text-[10px] text-slate-400 mb-1">Nama Tim ${t}</label>
-                        <input type="text" id="team_name_${t}" placeholder="Cth: Zenith eSport" class="w-full bg-obsidian-card border border-obsidian-border rounded px-2.5 py-1.5 text-white font-bold">
-                    </div>
-                `;
+            if (teamInputsContainer) {
+                let teamInputsHtml = '';
+                for(let t = 1; t <= teamCount; t++) {
+                    teamInputsHtml += `
+                        <div>
+                            <label class="block text-[10px] text-slate-400 mb-1 font-bold">Nama Tim ${t}</label>
+                            <input type="text" id="team_name_${t}" placeholder="Cth: Zenith eSport" class="w-full bg-obsidian border border-obsidian-border rounded px-2.5 py-1.5 text-white font-bold">
+                        </div>
+                    `;
+                }
+                teamInputsContainer.innerHTML = teamInputsHtml;
             }
-            teamInputsContainer.innerHTML = teamInputsHtml;
 
-            // Render Match Group Stage
+            // 2. Render Match Group Stage
             const totalMatches = (teamCount * (teamCount - 1)) / 2;
             const container = document.getElementById('groupStageMatchGrid');
             const infoText = document.getElementById('groupStageInfoText');
-            infoText.innerText = `Total ${totalMatches} Pertandingan (Setiap Tim Bertanding ${teamCount - 1} Kali)`;
+            if(infoText) infoText.innerText = `Total ${totalMatches} Pertandingan (Setiap Tim Bertanding ${teamCount - 1} Kali)`;
 
             let matchHtml = '';
             for (let i = 1; i <= totalMatches; i++) {
@@ -498,7 +513,7 @@
                     </div>
                 `;
             }
-            container.innerHTML = matchHtml;
+            if(container) container.innerHTML = matchHtml;
         }
 
         async function loadJadwalDataToPanel() {
@@ -510,7 +525,7 @@
                     document.getElementById('selectTotalTeams').value = totalTeams;
                     handleTeamCountChange();
 
-                    // Load Nama Tim
+                    // Load Nama Tim Klasemen
                     if (d.teamNames && Array.isArray(d.teamNames)) {
                         d.teamNames.forEach((name, idx) => {
                             const inputEl = document.getElementById(`team_name_${idx + 1}`);
@@ -555,7 +570,7 @@
                 const teamCountNum = parseInt(totalTeams);
                 
                 let teamNames = [];
-                for(let t=1; t<=teamCountNum; t++) {
+                for(let t = 1; t <= teamCountNum; t++) {
                     const val = document.getElementById(`team_name_${t}`) ? document.getElementById(`team_name_${t}`).value.trim() : `Tim ${t}`;
                     teamNames.push(val || `Tim ${t}`);
                 }
@@ -587,7 +602,7 @@
                 });
 
                 await setDoc(doc(db, "settings", "jadwal_bagan"), payload);
-                alert("Jadwal, Tim Klasemen, & Bagan berhasil diperbarui secara real-time!");
+                alert("Jadwal, Nama Tim Klasemen, & Bagan berhasil disimpan!");
             } catch (err) { alert("Gagal menyimpan."); }
             finally { btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> SIMPAN SEMUA JADWAL'; btn.disabled = false; }
         }
@@ -617,19 +632,21 @@
                     window.applicantsDataStore[id] = d;
                     const isApp = d.status === 'Approved';
                     const btnAcc = isApp 
-                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-emerald-500/25 text-emerald-accent rounded text-[10px] font-bold">Approved</button>` 
+                        ? `<button onclick="handleAccPendaftar('${id}', 'Pending')" class="px-2 py-1 bg-emerald-500/20 text-emerald-accent rounded text-[10px] font-bold">Approved</button>` 
                         : `<button onclick="handleAccPendaftar('${id}', 'Approved')" class="px-2 py-1 bg-emerald-accent text-black rounded text-[10px] font-bold">ACC Peserta</button>`;
+
+                    const roleDisplay = d.role2 ? `${d.role1} / ${d.role2}` : d.role1;
 
                     html += `
                         <tr class="hover:bg-obsidian/60 transition-colors">
                             <td class="py-3 px-2 font-bold text-white uppercase cursor-pointer hover:text-emerald-accent" onclick="openApplicantModal('${id}')">
                                 <span class="text-amber-400">#${i}</span> ${d.nama || '-'}
                             </td>
-                            <td class="py-3 px-2 text-center text-sky-400 font-bold">${d.role2 ? d.role1+' / '+d.role2 : d.role1}</td>
+                            <td class="py-3 px-2 text-center text-sky-400 font-bold">${roleDisplay}</td>
                             <td class="py-3 px-2 text-right">
                                 <div class="flex items-center justify-end gap-1.5">
                                     ${btnAcc}
-                                    <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/2ocht text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="handleDeletePendaftar('${id}')" class="p-1.5 bg-red-500/20 text-red-400 rounded text-xs"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -683,13 +700,13 @@
                         <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
                             <div><strong class="text-white">${d.username}</strong> <span class="text-amber-400 font-mono text-[11px]">(${d.password})</span></div>
                             <div class="flex gap-2">
-                                <button onclick="toggleBanUser('${userId}', ${!isBanned})" class="px-2 py-1 bg-red-500/2output text-red-400 rounded text-xs">${isBanned ? 'Unban' : 'Ban'}</button>
+                                <button onclick="toggleBanUser('${userId}', ${!isBanned})" class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">${isBanned ? 'Unban' : 'Ban'}</button>
                                 <button onclick="handleDeleteUser('${userId}')" class="px-2 py-1 bg-red-600 text-white rounded text-xs">Hapus</button>
                             </div>
                         </div>
                     `;
                 });
-                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center text-slate-500">Kosong.</div>';
+                document.getElementById('usersCardMobile').innerHTML = html || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
         window.handleDeleteChat = async function(col, id) { await deleteDoc(doc(db, col, id)); }
@@ -697,14 +714,14 @@
             onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (s) => {
                 document.getElementById('countChats').innerText = s.size;
                 let h = ''; s.forEach(docSnap => { const d = docSnap.data(); h += `<div class="bg-obsidian p-2 rounded flex justify-between"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('chats','${docSnap.id}')" class="text-red-400">Hapus</button></div>`; });
-                document.getElementById('chatsCardMobile').innerHTML = h || '<div class="text-center text-slate-500">Kosong.</div>';
+                document.getElementById('chatsCardMobile').innerHTML = h || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
         function loadLiveChats() {
             onSnapshot(query(collection(db, "live_chats"), orderBy("time", "desc")), (s) => {
                 document.getElementById('countLiveChats').innerText = s.size;
                 let h = ''; s.forEach(docSnap => { const d = docSnap.data(); h += `<div class="bg-obsidian p-2 rounded flex justify-between"><span><b>${d.username}:</b> ${d.message}</span><button onclick="handleDeleteChat('live_chats','${docSnap.id}')" class="text-red-400">Hapus</button></div>`; });
-                document.getElementById('liveChatsCardMobile').innerHTML = h || '<div class="text-center text-slate-500">Kosong.</div>';
+                document.getElementById('liveChatsCardMobile').innerHTML = h || '<div class="text-center py-6 text-slate-500">Kosong.</div>';
             });
         }
         window.deleteAllChats = async function(col) {
