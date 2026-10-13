@@ -111,8 +111,11 @@ tailwind.config = {
 <span class="block font-tech text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">OFFICIAL ESPORTS ARENA</span>
 </div>
 </a>
-<nav class="hidden md:flex items-center space-x-5 font-tech text-xs tracking-wider uppercase font-semibold">
+<nav class="hidden md:flex items-center space-x-4 font-tech text-xs tracking-wider uppercase font-semibold">
 <a href="#hero-banner" class="text-slate-300 hover:text-white transition-colors">Beranda</a>
+<button onclick="switchTab('pendaftar')" class="text-slate-300 hover:text-amber-400 transition-colors flex items-center gap-1.5 cursor-pointer">
+<i class="fa-solid fa-users text-amber-400 text-sm"></i> Pendaftar
+</button>
 <a href="#live-stream" class="text-slate-300 hover:text-crimson transition-colors flex items-center gap-1.5">
 <span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span> Live & Chat
 </a>
@@ -146,6 +149,9 @@ LOGOUT
 </div>
 <div id="mobileMenu" class="hidden md:hidden bg-obsidian-card/95 backdrop-blur-xl border-b border-emerald-accent/50 px-6 py-5 space-y-3 font-tech text-xs tracking-wider uppercase animate-fade-in shadow-2xl">
 <a href="#hero-banner" onclick="toggleMobileMenu()" class="block text-slate-300 py-1">Beranda</a>
+<button onclick="switchTab('pendaftar'); toggleMobileMenu()" class="w-full text-left text-amber-400 flex items-center gap-2 py-1 font-bold">
+<i class="fa-solid fa-users"></i> Pendaftar Musim Ini
+</button>
 <a href="#live-stream" onclick="toggleMobileMenu()" class="block text-crimson py-1 font-bold">Live & Chat Arena</a>
 <button onclick="openModal('rulesModal'); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1">
 <i class="fa-solid fa-trophy"></i> Juara Season 4
@@ -247,6 +253,7 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 </div>
 </section>
 
+<!-- MENU UTAMA TOURNAMENT -->
 <section id="main-menu" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4 border-b border-obsidian-border pb-4 sm:pb-6">
 <div>
@@ -254,26 +261,50 @@ Siaran langsung pertandingan akan muncul di sini saat turnamen berlangsung.
 <h2 class="font-display font-extrabold text-xl sm:text-3xl text-white mt-1">MENU UTAMA TOURNAMENT</h2>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-<div id="cardAuthAction" onclick="handleCardAuthClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-<div id="cardIconBox" class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-right-to-bracket" id="cardIcon"></i></div>
-<h3 id="cardTitle" class="font-display font-bold text-lg sm:text-xl text-white mb-2">1. LOGIN / BUAT AKUN</h3>
-<p id="cardDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran turnamen.</p>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-5 sm:gap-6">
+<div id="cardAuthAction" onclick="handleCardAuthClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-emerald-accent p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<div id="cardIconBox" class="w-12 h-12 rounded-xl bg-emerald-accent/10 text-emerald-accent flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-accent group-hover:text-black transition-all"><i class="fa-solid fa-right-to-bracket" id="cardIcon"></i></div>
+<h3 id="cardTitle" class="font-display font-bold text-base text-white mb-2">1. LOGIN / BUAT AKUN</h3>
+<p id="cardDesc" class="text-slate-400 text-xs mb-4">Masuk ke akun Anda atau daftar baru untuk membuka akses pendaftaran.</p>
 </div>
-<div id="cardTournament" onclick="handleTournamentCardClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-<div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
-<h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">2. DAFTAR TURNAMEN</h3>
-<p id="cardTournamentDesc" class="text-slate-400 text-xs mb-4 sm:mb-6">Formulir pendaftaran tim bertanding. <span id="lockStatusText" class="text-amber-400 font-semibold block mt-1"><i class="fa-solid fa-lock text-[10px]"></i> (Login terlebih dahulu untuk membuka)</span></p>
+
+<div id="cardTournament" onclick="handleTournamentCardClick()" class="group bg-obsidian-card border border-obsidian-border hover:border-crimson p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<div class="w-12 h-12 rounded-xl bg-crimson/10 text-crimson flex items-center justify-center text-xl mb-4 group-hover:bg-crimson group-hover:text-white transition-all"><i class="fa-solid fa-pen-to-square"></i></div>
+<h3 class="font-display font-bold text-base text-white mb-2">2. DAFTAR TURNAMEN</h3>
+<p class="text-slate-400 text-xs mb-4">Formulir pendaftaran tim bertanding. <span id="lockStatusText" class="text-amber-400 font-semibold block mt-1"><i class="fa-solid fa-lock text-[10px]"></i> (Login dulu)</span></p>
 </div>
-<div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 sm:p-7 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
-<div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 sm:mb-6 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
-<h3 class="font-display font-bold text-lg sm:text-xl text-white mb-2">3. CATATAN JUARA</h3>
-<p class="text-slate-400 text-xs mb-4 sm:mb-6">Eksplorasi rekam jejak tim pemenang dan roster tetap musim ini.</p>
+
+<div onclick="switchTab('pendaftar')" class="group bg-obsidian-card border border-obsidian-border hover:border-amber-400 p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<div class="w-12 h-12 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:bg-amber-400 group-hover:text-black transition-all"><i class="fa-solid fa-users"></i></div>
+<h3 class="font-display font-bold text-base text-white mb-2">3. PENDAFTAR MUSIM INI</h3>
+<p class="text-slate-400 text-xs mb-4">Lihat daftar nama lengkap peserta yang telah dikonfirmasi panitia.</p>
+</div>
+
+<div onclick="switchTab('champions')" class="group bg-obsidian-card border border-obsidian-border hover:border-sky-400 p-6 rounded-2xl cursor-pointer transition-all hover:-translate-y-1">
+<div class="w-12 h-12 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-xl mb-4 group-hover:bg-sky-400 group-hover:text-black transition-all"><i class="fa-solid fa-trophy"></i></div>
+<h3 class="font-display font-bold text-base text-white mb-2">4. CATATAN JUARA</h3>
+<p class="text-slate-400 text-xs mb-4">Eksplorasi rekam jejak tim pemenang dan roster musim lalu.</p>
 </div>
 </div>
 </section>
 
+<!-- SEKSI TAB DINAMIS (PENDAFTAR & CHAMPIONS) -->
 <section id="dynamic-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<!-- KONTEN 1: PENDAFTAR MUSIM INI -->
+<div id="content-pendaftar" class="bg-obsidian-card border border-amber-400/30 rounded-2xl p-6 hidden animate-fade-in shadow-lg">
+<div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
+<div class="flex items-center gap-3">
+<i class="fa-solid fa-users text-amber-400 text-2xl"></i>
+<h3 class="font-display font-bold text-lg sm:text-2xl text-white">DAFTAR PENDAFTAR MUSIM INI (CONFIRMED)</h3>
+</div>
+<button onclick="closeTab()" class="text-slate-400 hover:text-white p-2 transition-colors cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+</div>
+<div id="publicPendaftarList" class="space-y-2.5 font-tech text-xs">
+<div class="text-center py-6 text-slate-500">Memuat data peserta terkonfirmasi...</div>
+</div>
+</div>
+
+<!-- KONTEN 2: CATATAN JUARA -->
 <div id="content-champions" class="bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 hidden animate-fade-in shadow-emerald-glow">
 <div class="flex justify-between items-center mb-6 pb-4 border-b border-obsidian-border">
 <div class="flex items-center gap-3">
