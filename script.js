@@ -613,6 +613,7 @@ window.executeLogout = async function() {
     showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
 }
 
+// Handler Formulir Pendaftaran Turnamen (Sudah disesuaikan dengan Panel Panitia: idMl & waktuDaftar)
 window.handleFormSubmit = async function(event) {
     event.preventDefault();
     const loggedUser = localStorage.getItem('activeMemberUser');
@@ -627,14 +628,14 @@ window.handleFormSubmit = async function(event) {
     try {
         await addDoc(collection(db, "pendaftar"), {
             nama: document.getElementById('tNama').value.trim(),
-            idMI: document.getElementById('tIdMI').value.trim(),
+            idMl: document.getElementById('tIdMI').value.trim(),
             role1: document.getElementById('tRole1').value,
             whatsapp: document.getElementById('tWhatsapp').value.trim(),
             role2: document.getElementById('tRole2').value,
             payment: document.getElementById('tPayment').value,
             usernameDb: loggedUser,
             status: "Pending",
-            waktuDiar: serverTimestamp()
+            waktuDaftar: serverTimestamp()
         });
         closeModal('registerModal');
         showCustomAlert("BERHASIL", "Pendaftaran terkirim! Tunggu konfirmasi panitia (ACC).");
