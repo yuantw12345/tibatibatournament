@@ -105,7 +105,7 @@
             <button onclick="openChampionsModal(); toggleMobileMenu()" class="w-full text-left text-emerald-accent flex items-center gap-2 py-1 font-bold">
                 <i class="fa-solid fa-trophy"></i> Juara Season 4
             </button>
-            <button onclick="openRulesInfoModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1">
+            <button onclick="openRulesInfoModal(); toggleMobileMenu()" class="w-full text-left text-sky-400 flex items-center gap-2 py-1 font-bold">
                 <i class="fa-solid fa-book"></i> Rules Tournament
             </button>
             
@@ -340,17 +340,21 @@
         </div>
     </div>
 
-    <!-- MODAL RULES -->
+    <!-- MODAL RULES LENGKAP -->
     <div id="rulesInfoModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-        <div class="modal-container relative w-full max-w-xl bg-obsidian-card border border-sky-400/40 rounded-2xl p-6 shadow-2xl flex flex-col max-h-[90vh]">
+        <div class="modal-container relative w-full max-w-xl bg-obsidian-card border border-sky-400/40 rounded-2xl p-6 sm:p-7 shadow-2xl flex flex-col max-h-[90vh]">
             <button onclick="closeRulesInfoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer z-10"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-base sm:text-lg text-white mb-3">RULES TOURNAMENT MOBILE LEGENDS</h3>
-            <div class="flex-grow overflow-y-auto space-y-3 text-xs sm:text-sm font-tech text-slate-300">
-                <p>• Sistem pertandingan BO 2 untuk Group Stage.</p>
-                <p>• Semifinal format BO 3 dan Grand Final format BO 5.</p>
-                <p>• NO PAUSE selama pertandingan berlangsung.</p>
+            <div class="flex items-center gap-3 pb-3 border-b border-obsidian-border mb-4 shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center text-base border border-sky-400/30"><i class="fa-solid fa-book"></i></div>
+                <div><h3 class="font-display font-bold text-base sm:text-lg text-white leading-tight">RULES TOURNAMENT MOBILE LEGENDS</h3><p class="text-[10px] sm:text-xs text-slate-400 font-tech">Peraturan Resmi & Format Pertandingan</p></div>
             </div>
-            <button onclick="closeRulesInfoModal()" class="mt-4 w-full py-2.5 bg-sky-500 text-black font-bold text-xs uppercase rounded-xl">MENGERTI</button>
+            <div class="flex-grow overflow-y-auto space-y-4 pr-2 mb-4 text-xs sm:text-sm font-tech text-slate-300 min-h-0 leading-relaxed">
+                <div><p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-users"></i> GROUP STAGE</p><ul class="list-disc list-inside space-y-1 text-slate-300 pl-1"><li>Sistem pertandingan BO 2.</li><li>Setiap tim bertemu seluruh tim.</li></ul></div>
+                <div><p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-star"></i> SISTEM POIN</p><ul class="list-disc list-inside space-y-1 text-slate-300 pl-1"><li>Menang (2-0) = 3 Poin</li><li>Seri (1-1) = 1 Poin</li><li>Kalah (0-2) = 0 Poin</li></ul></div>
+                <div><p class="font-bold text-emerald-accent mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-sitemap"></i> SEMIFINAL & GRAND FINAL</p><ul class="list-disc list-inside space-y-1 text-slate-300 pl-1"><li>Semifinal format BO 3.</li><li>Grand Final format BO 5.</li></ul></div>
+                <div class="pt-3 border-t border-obsidian-border"><p class="font-bold text-crimson mb-2 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> KETENTUAN</p><ul class="space-y-2 text-slate-300 pl-1"><li class="flex items-start gap-2"><i class="fa-solid fa-ban text-crimson mt-0.5 shrink-0"></i> <span>NO PAUSE selama pertandingan.</span></li><li class="flex items-start gap-2"><i class="fa-solid fa-signal text-amber-400 mt-0.5 shrink-0"></i> <span>Kendala sinyal, koneksi, atau perangkat menjadi tanggung jawab masing-masing player/tim.</span></li><li class="flex items-start gap-2"><i class="fa-solid fa-shield-halved text-sky-400 mt-0.5 shrink-0"></i> <span>Keputusan panitia mutlak dan final.</span></li></ul></div>
+            </div>
+            <div class="pt-2 border-t border-obsidian-border text-right"><button onclick="closeRulesInfoModal()" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg cursor-pointer transition-all">MENGERTI / TUTUP</button></div>
         </div>
     </div>
 
