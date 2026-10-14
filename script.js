@@ -22,7 +22,33 @@ window.addEventListener('DOMContentLoaded', () => {
     initRealtimeWebSettings();
     initRealtimeJadwal();
     startSessionWatcher();
+    injectToastContainer();
 });
+
+// Sistem Toast Notification Halus untuk Notifikasi
+function injectToastContainer() {
+    if (!document.getElementById('toastContainer')) {
+        const container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed top-24 right-5 z-[9999] flex flex-col gap-2 pointer-events-none';
+        document.body.appendChild(container);
+    }
+}
+
+window.showToast = function(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const toast = document.createElement('div');
+    const bgClass = type === 'success' ? 'bg-emerald-accent text-black border-emerald-400' : 'bg-crimson text-white border-crimson-dark';
+    toast.className = `px-4 py-3 rounded-xl shadow-2xl font-tech text-xs font-bold border flex items-center gap-2 transform translate-x-10 opacity-0 transition-all duration-300 pointer-events-auto ${bgClass}`;
+    toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'} text-sm"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => { toast.classList.remove('translate-x-10', 'opacity-0'); }, 50);
+    setTimeout(() => {
+        toast.classList.add('translate-x-10', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
+}
 
 window.toggleMobileMenu = function() {
     const menu = document.getElementById('mobileMenu');
@@ -310,36 +336,52 @@ function calculateAndUpdateStandings(data) {
     tableBody.innerHTML = html;
 }
 
+let globalPublicApplicantsCache = [];
 function initPublicPendaftar() {
     try {
         onSnapshot(query(collection(db, "pendaftar"), where("status", "==", "Approved")), (snapshot) => {
-            const container = document.getElementById('publicPendaftarList');
             const totalEl = document.getElementById('pubStatTotal');
             const timEl = document.getElementById('pubStatTim');
-            if (!container) return;
             if (totalEl) totalEl.innerText = snapshot.size;
             if (timEl) timEl.innerText = Math.floor(snapshot.size / 5) + " Tim";
-            if (snapshot.empty) {
-                container.innerHTML = '<div class="text-center text-slate-500 py-8">Belum ada peserta yang dikonfirmasi oleh panitia.</div>';
-                return;
-            }
-            let html = ''; let i = 1;
+            
+            globalPublicApplicantsCache = [];
             snapshot.forEach((d) => {
-                const data = d.data();
-                html += `
-                    <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
-                        <div class="flex items-center gap-3 overflow-hidden mr-2">
-                            <span class="text-amber-400 font-bold font-tech shrink-0">#${i}</span>
-                            <h4 class="text-white font-bold text-xs uppercase tracking-wide truncate">${data.nama || '-'}</h4>
-                        </div>
-                        <span class="px-2 py-0.5 bg-emerald-500/15 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[9px] shrink-0">CONFIRMED</span>
-                    </div>
-                `;
-                i++;
+                globalPublicApplicantsCache.push(d.data());
             });
-            container.innerHTML = html;
+            renderPublicPendaftarList(globalPublicApplicantsCache);
         });
     } catch (e) { console.error(e); }
+}
+
+window.filterPublicPendaftar = function(keyword) {
+    const filtered = globalPublicApplicantsCache.filter(item => 
+        (item.nama && item.nama.toLowerCase().includes(keyword.toLowerCase())) ||
+        (item.idMl && item.idMl.toLowerCase().includes(keyword.toLowerCase()))
+    );
+    renderPublicPendaftarList(filtered);
+}
+
+function renderPublicPendaftarList(listData) {
+    const container = document.getElementById('publicPendaftarList');
+    if (!container) return;
+    if (listData.length === 0) {
+        container.innerHTML = '<div class="text-center text-slate-500 py-8">Tidak ada peserta yang ditemukan.</div>';
+        return;
+    }
+    let html = '';
+    listData.forEach((data, idx) => {
+        html += `
+            <div class="bg-obsidian border border-obsidian-border rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center gap-3 overflow-hidden mr-2">
+                    <span class="text-amber-400 font-bold font-tech shrink-0">#${idx + 1}</span>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wide truncate">${data.nama || '-'}</h4>
+                </div>
+                <span class="px-2 py-0.5 bg-emerald-500/15 text-emerald-accent border border-emerald-500/30 rounded font-bold text-[9px] shrink-0">CONFIRMED</span>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
 }
 
 function initRealtimeChats() {
@@ -539,7 +581,7 @@ window.handleRegisterAccount = async function(event) {
         localStorage.setItem('activeMemberUser', username);
         localStorage.setItem('sessionToken', sessionToken);
         checkAuthStatus();
-        showCustomAlert("BERHASIL", "Akun berhasil dibuat!");
+        showToast("Akun berhasil dibuat dan otomatis login!", "success");
         event.target.reset();
     } catch (error) {
         showCustomAlert("KESALAHAN", "Gagal mendaftar akun.");
@@ -578,7 +620,7 @@ window.handleLogin = async function(event) {
         localStorage.setItem('sessionToken', sessionToken);
         closeModal('loginModal');
         checkAuthStatus();
-        showCustomAlert("BERHASIL", `Selamat datang kembali, ${username}!`);
+        showToast(`Selamat datang kembali, ${username}!`, "success");
         event.target.reset();
     } catch (error) {
         showCustomAlert("KESALAHAN", "Gagal login.");
@@ -588,7 +630,6 @@ window.handleLogin = async function(event) {
     }
 }
 
-// Handler Tombol Logout
 window.handleLogout = function() {
     const modal = document.getElementById('customLogoutModal');
     if (modal) {
@@ -610,10 +651,9 @@ window.executeLogout = async function() {
     localStorage.removeItem('activeMemberUser');
     localStorage.removeItem('sessionToken');
     checkAuthStatus();
-    showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
+    showToast("Anda telah keluar dari akun.", "success");
 }
 
-// Handler Formulir Pendaftaran Turnamen (Sudah disesuaikan dengan Panel Panitia: idMl & waktuDaftar)
 window.handleFormSubmit = async function(event) {
     event.preventDefault();
     const loggedUser = localStorage.getItem('activeMemberUser');
@@ -638,7 +678,7 @@ window.handleFormSubmit = async function(event) {
             waktuDaftar: serverTimestamp()
         });
         closeModal('registerModal');
-        showCustomAlert("BERHASIL", "Pendaftaran terkirim! Tunggu konfirmasi panitia (ACC).");
+        showToast("Pendaftaran berhasil dikirim! Menunggu konfirmasi panitia.", "success");
         event.target.reset();
     } catch (error) {
         showCustomAlert("KESALAHAN", "Gagal menyimpan data.");
