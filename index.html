@@ -27,7 +27,7 @@
             theme: {
                 extend: {
                     colors: {
-                        obsidian: { DEFAULT: '#080a0f', card: '#0f131d', glass: 'rgba(15, 19, 29, 0.75)', border: '#1e2638', lightBorder: '#2a364f' },
+                        obsidian: { DEFAULT: '#080a0f', card: '#0f131d', glass: 'rgba(15, 19, 29, 0.85)', border: '#1e2638', lightBorder: '#2a364f' },
                         crimson: { DEFAULT: '#ff1e56', glow: 'rgba(255, 30, 86, 0.25)', dark: '#c40d3d' },
                         emerald: { accent: '#00e699', glow: 'rgba(0, 230, 153, 0.25)' }
                     },
@@ -52,7 +52,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-crimson selection:text-white relative">
+<body class="min-h-screen flex flex-col justify-between selection:bg-crimson selection:text-white relative bg-obsidian text-slate-100">
+
+    <!-- GLOBAL BACKGROUND IMAGE PALING BELAKANG WEBSITE -->
+    <div class="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-25 pointer-events-none z-[-2]" style="background-image: url('https://i.postimg.cc/W1xPkyVW/Gemini-Generated-Image-twlhf1twlhf1twlh.jpg');"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-[#080a0f]/90 via-[#080a0f]/95 to-[#080a0f] pointer-events-none z-[-1]"></div>
 
     <!-- HEADER / NAVIGASI UTAMA -->
     <header class="fixed top-0 left-0 right-0 w-full z-50 glass-nav transition-all duration-300">
