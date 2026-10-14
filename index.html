@@ -9,7 +9,7 @@
     <meta name="keywords" content="tiba tiba tournament, tiba tiba turnamen, tibatibatournament, turnamen mobile legends, tournament mlbb, jadwal pertandingan mlbb, bagan turnamen mlbb">
     <meta name="author" content="Tiba Tiba Tournament Official">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://tibatibatournament.vercel.app/">
+    <link rel="canonical" href="https://tibatibaturnament.vercel.app/">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tibatibaturnament.vercel.app/">
@@ -324,7 +324,6 @@
                 <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center"><p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Total</p><h3 id="pubStatTotal" class="text-xs sm:text-base font-bold text-white">0</h3></div>
                 <div class="bg-obsidian border border-obsidian-border rounded-lg p-2.5 text-center"><p class="text-[9px] text-slate-400 uppercase tracking-wider mb-0.5">Tim (5 Orang)</p><h3 id="pubStatTim" class="text-xs sm:text-base font-bold text-emerald-accent">0 Tim</h3></div>
             </div>
-            <!-- Fitur Tambahan Search Bar Pendaftar Publik -->
             <div class="mb-3 shrink-0">
                 <input type="text" id="searchPublicPendaftar" oninput="filterPublicPendaftar(this.value)" placeholder="Cari nama peserta / ID tim..." class="w-full bg-obsidian border border-obsidian-border rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-amber-400">
             </div>
@@ -371,36 +370,64 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN -->
-    <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-lg text-white mb-3 text-center">LOGIN AKUN WEBSITE</h3>
-            <form onsubmit="handleLogin(event)" class="space-y-3">
-                <div><label class="block text-[10px] text-slate-400 uppercase mb-1">Username</label><input type="text" id="loginUser" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs"></div>
-                <div><label class="block text-[10px] text-slate-400 uppercase mb-1">Password</label><input type="password" id="loginPass" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs"></div>
-                <button type="submit" id="loginBtn" class="w-full py-3 bg-emerald-accent text-black font-bold text-xs uppercase rounded-xl cursor-pointer hover:bg-emerald-400 transition-all">MASUK AKUN</button>
-            </form>
-            <div class="mt-4 text-center text-xs text-slate-400 font-tech">
-                Belum punya akun? 
-                <button onclick="closeModal('loginModal'); openModal('registerAccountModal');" class="text-emerald-accent font-bold hover:underline cursor-pointer ml-1">Daftar sekarang</button>
+    <!-- MODAL LOGIN (DENGAN BACKGROUND IMAGE & LOGO HEADER) -->
+    <div id="loginModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-[url('https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg')] bg-cover bg-center opacity-15 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-obsidian-card/80 via-obsidian-card/95 to-obsidian-card pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <button onclick="closeModal('loginModal')" class="absolute top-0 right-0 text-slate-400 hover:text-white p-1 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+                
+                <!-- Logo & Text Header -->
+                <div class="flex flex-col items-center text-center mb-4 pt-1">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-12 h-12 object-contain mb-1.5 animate-pulse">
+                    <span class="font-display font-black text-xs tracking-wider text-white">TIBA TIBA <span class="text-crimson">TOURNAMENT</span></span>
+                    <span class="font-tech text-[9px] text-slate-400 tracking-widest uppercase">OFFICIAL ESPORTS ARENA</span>
+                </div>
+
+                <h3 class="font-display font-bold text-base text-white mb-4 text-center border-b border-obsidian-border pb-2">LOGIN AKUN WEBSITE</h3>
+                <form onsubmit="handleLogin(event)" class="space-y-3">
+                    <div><label class="block text-[10px] text-slate-400 uppercase mb-1 font-tech">Username</label><input type="text" id="loginUser" required class="w-full bg-obsidian/80 border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent"></div>
+                    <div><label class="block text-[10px] text-slate-400 uppercase mb-1 font-tech">Password</label><input type="password" id="loginPass" required class="w-full bg-obsidian/80 border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent"></div>
+                    <button type="submit" id="loginBtn" class="w-full py-3 bg-emerald-accent text-black font-bold text-xs uppercase rounded-xl cursor-pointer hover:bg-emerald-400 transition-all font-tech shadow-emerald-glow mt-1">MASUK AKUN</button>
+                </form>
+                <div class="mt-4 text-center text-xs text-slate-400 font-tech">
+                    Belum punya akun? 
+                    <button onclick="closeModal('loginModal'); openModal('registerAccountModal');" class="text-emerald-accent font-bold hover:underline cursor-pointer ml-1">Daftar sekarang</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL REGISTER AKUN BARU -->
-    <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl">
-            <button onclick="closeModal('registerAccountModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="font-display font-bold text-lg text-white mb-3 text-center">BUAT AKUN WEBSITE</h3>
-            <form onsubmit="handleRegisterAccount(event)" class="space-y-3">
-                <div><label class="block text-[10px] text-slate-400 uppercase mb-1">Username Baru</label><input type="text" id="regUser" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs"></div>
-                <div><label class="block text-[10px] text-slate-400 uppercase mb-1">Password Baru</label><input type="password" id="regPass" required class="w-full bg-obsidian border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs"></div>
-                <button type="submit" id="regBtn" class="w-full py-3 bg-emerald-accent text-black font-bold text-xs uppercase rounded-xl cursor-pointer hover:bg-emerald-400 transition-all">DAFTAR</button>
-            </form>
-            <div class="mt-4 text-center text-xs text-slate-400 font-tech">
-                Sudah punya akun? 
-                <button onclick="closeModal('registerAccountModal'); openModal('loginModal');" class="text-emerald-accent font-bold hover:underline cursor-pointer ml-1">Login sekarang</button>
+    <!-- MODAL REGISTER AKUN BARU (DENGAN BACKGROUND IMAGE & LOGO HEADER SERAGAM) -->
+    <div id="registerAccountModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 shadow-2xl overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-[url('https://i.postimg.cc/76dPYL6y/Gemini-Generated-Image-i8rlbpi8rlbpi8rl.jpg')] bg-cover bg-center opacity-15 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-obsidian-card/80 via-obsidian-card/95 to-obsidian-card pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <button onclick="closeModal('registerAccountModal')" class="absolute top-0 right-0 text-slate-400 hover:text-white p-1 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+                
+                <!-- Logo & Text Header -->
+                <div class="flex flex-col items-center text-center mb-4 pt-1">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-12 h-12 object-contain mb-1.5 animate-pulse">
+                    <span class="font-display font-black text-xs tracking-wider text-white">TIBA TIBA <span class="text-crimson">TOURNAMENT</span></span>
+                    <span class="font-tech text-[9px] text-slate-400 tracking-widest uppercase">OFFICIAL ESPORTS ARENA</span>
+                </div>
+
+                <h3 class="font-display font-bold text-base text-white mb-4 text-center border-b border-obsidian-border pb-2">BUAT AKUN WEBSITE</h3>
+                <form onsubmit="handleRegisterAccount(event)" class="space-y-3">
+                    <div><label class="block text-[10px] text-slate-400 uppercase mb-1 font-tech">Username Baru</label><input type="text" id="regUser" required class="w-full bg-obsidian/80 border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent"></div>
+                    <div><label class="block text-[10px] text-slate-400 uppercase mb-1 font-tech">Password Baru</label><input type="password" id="regPass" required class="w-full bg-obsidian/80 border border-obsidian-border rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-accent"></div>
+                    <button type="submit" id="regBtn" class="w-full py-3 bg-emerald-accent text-black font-bold text-xs uppercase rounded-xl cursor-pointer hover:bg-emerald-400 transition-all font-tech shadow-emerald-glow mt-1">DAFTAR AKUN</button>
+                </form>
+                <div class="mt-4 text-center text-xs text-slate-400 font-tech">
+                    Sudah punya akun? 
+                    <button onclick="closeModal('registerAccountModal'); openModal('loginModal');" class="text-emerald-accent font-bold hover:underline cursor-pointer ml-1">Login sekarang</button>
+                </div>
             </div>
         </div>
     </div>
