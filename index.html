@@ -446,6 +446,30 @@
         </div>
     </div>
 
+    <!-- MODAL CUSTOM ALERT / MESSAGE -->
+    <div id="messageModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+        <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-emerald-accent/30 rounded-2xl p-6 text-center shadow-2xl">
+            <h3 id="messageTitle" class="font-display font-bold text-lg text-white mb-2">BERHASIL</h3>
+            <p id="messageText" class="text-slate-400 text-xs mb-5 font-tech">Pesan sistem.</p>
+            <button onclick="closeModal('messageModal')" class="w-full py-2.5 bg-emerald-accent hover:bg-emerald-400 text-black font-bold text-xs uppercase rounded-xl cursor-pointer">OK</button>
+        </div>
+    </div>
+
+    <!-- MODAL KUSTOM LOGOUT -->
+    <div id="customLogoutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+        <div class="relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI KELUAR</h3>
+            <p class="text-slate-400 text-xs mb-5 font-tech">Apakah Anda yakin ingin keluar dari akun ini?</p>
+            <div class="flex gap-2">
+                <button onclick="document.getElementById('customLogoutModal').classList.add('hidden')" class="w-1/2 py-2.5 bg-obsidian border border-obsidian-border text-slate-300 hover:text-white font-bold text-xs rounded-xl cursor-pointer">Batal</button>
+                <button onclick="executeLogout()" class="w-1/2 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs uppercase rounded-xl cursor-pointer shadow-crimson-glow">Ya, Keluar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER WEBSITE -->
     <footer class="bg-obsidian-card border-t border-obsidian-border text-slate-400 pt-12 pb-8 mt-16 font-tech">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
