@@ -33,7 +33,7 @@ window.openModal = function(id) {
     const modal = document.getElementById(id);
     if(modal) {
         modal.classList.add('active');
-        if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'championsModal' && id !== 'customLogoutModal') {
+        if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'championsModal') {
             document.body.style.overflow = 'hidden';
         }
     }
@@ -588,13 +588,19 @@ window.handleLogin = async function(event) {
     }
 }
 
-// Fungsi Custom Logout
+// Handler Tombol Logout
 window.handleLogout = function() {
-    openModal('customLogoutModal');
+    const modal = document.getElementById('customLogoutModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
 }
 
 window.executeLogout = async function() {
-    closeModal('customLogoutModal');
+    const modal = document.getElementById('customLogoutModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
     const loggedUser = localStorage.getItem('activeMemberUser');
     if (loggedUser) {
         try { 
@@ -628,7 +634,7 @@ window.handleFormSubmit = async function(event) {
             payment: document.getElementById('tPayment').value,
             usernameDb: loggedUser,
             status: "Pending",
-            waktuDaftar: serverTimestamp()
+            waktuDiar: serverTimestamp()
         });
         closeModal('registerModal');
         showCustomAlert("BERHASIL", "Pendaftaran terkirim! Tunggu konfirmasi panitia (ACC).");
