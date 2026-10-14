@@ -33,7 +33,7 @@ window.openModal = function(id) {
     const modal = document.getElementById(id);
     if(modal) {
         modal.classList.add('active');
-        if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'championsModal' && id !== 'customConfirmModal') {
+        if(id !== 'chatModal' && id !== 'rulesInfoModal' && id !== 'pendaftarModal' && id !== 'championsModal' && id !== 'customLogoutModal') {
             document.body.style.overflow = 'hidden';
         }
     }
@@ -588,50 +588,23 @@ window.handleLogin = async function(event) {
     }
 }
 
-// Custom Logout Menggunakan Modal Keren (Tanpa Pop-up Bawaan Browser)
+// Fungsi Custom Logout
 window.handleLogout = function() {
-    const modalHtml = `
-        <div id="customLogoutModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-            <div class="modal-container relative w-full max-w-sm bg-obsidian-card border border-crimson/40 rounded-2xl p-6 text-center shadow-2xl">
-                <div class="w-12 h-12 rounded-full bg-crimson/10 text-crimson flex items-center justify-center text-xl mx-auto mb-3 border border-crimson/30">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </div>
-                <h3 class="font-display font-bold text-lg text-white mb-2">KONFIRMASI KELUAR</h3>
-                <p class="text-slate-400 text-xs mb-5 font-tech">Apakah Anda yakin ingin keluar dari akun ini?</p>
-                <div class="flex gap-2">
-                    <button id="cancelLogoutBtn" class="w-1/2 py-2.5 bg-obsidian border border-obsidian-border text-slate-300 hover:text-white font-bold text-xs rounded-xl cursor-pointer">Batal</button>
-                    <button id="confirmLogoutBtn" class="w-1/2 py-2.5 bg-crimson hover:bg-crimson-dark text-white font-bold text-xs uppercase rounded-xl cursor-pointer shadow-crimson-glow">Ya, Keluar</button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    // Hapus modal lama jika ada
-    const existing = document.getElementById('customLogoutModal');
-    if (existing) existing.remove();
+    openModal('customLogoutModal');
+}
 
-    // Masukkan ke body
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-    // Event tombol batal
-    document.getElementById('cancelLogoutBtn').onclick = () => {
-        document.getElementById('customLogoutModal').remove();
-    };
-
-    // Event tombol konfirmasi keluar
-    document.getElementById('confirmLogoutBtn').onclick = async () => {
-        document.getElementById('customLogoutModal').remove();
-        const loggedUser = localStorage.getItem('activeMemberUser');
-        if (loggedUser) {
-            try { 
-                await updateDoc(doc(db, "users", loggedUser), { sessionToken: "" }); 
-            } catch(e){} 
-        }
-        localStorage.removeItem('activeMemberUser');
-        localStorage.removeItem('sessionToken');
-        checkAuthStatus();
-        showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
-    };
+window.executeLogout = async function() {
+    closeModal('customLogoutModal');
+    const loggedUser = localStorage.getItem('activeMemberUser');
+    if (loggedUser) {
+        try { 
+            await updateDoc(doc(db, "users", loggedUser), { sessionToken: "" }); 
+        } catch(e){} 
+    }
+    localStorage.removeItem('activeMemberUser');
+    localStorage.removeItem('sessionToken');
+    checkAuthStatus();
+    showCustomAlert("KELUAR", "Anda telah keluar dari akun.");
 }
 
 window.handleFormSubmit = async function(event) {
