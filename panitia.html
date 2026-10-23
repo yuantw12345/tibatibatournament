@@ -50,6 +50,11 @@
         #applicantDetailModal, #customConfirmModal {
             transition: opacity 0.25s ease, visibility 0.25s ease;
         }
+
+        /* Mobile Drawer Menu Transition */
+        #mobileNavDrawer {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-darkbg text-slate-200 antialiased selection:bg-accentblue selection:text-black">
@@ -148,9 +153,67 @@
     <!-- MAIN DASHBOARD WRAPPER -->
     <div id="adminMainContent" class="min-h-screen flex flex-col md:flex-row hidden">
 
-        <!-- SIDEBAR NAV (RESPONSIF HP) -->
-        <aside class="w-full md:w-64 bg-sidebar border-b md:border-b-0 md:border-r border-bordercolor flex-shrink-0">
-            <div class="p-4 border-b border-bordercolor flex items-center justify-between md:justify-start gap-3">
+        <!-- HEADER FIXED STICKY HP -->
+        <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-sidebar border-b border-bordercolor px-4 py-3 flex items-center justify-between shadow-md">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-darkbg border border-bordercolor flex items-center justify-center p-1 shrink-0">
+                    <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h1 class="font-bold text-xs text-white leading-tight uppercase">PANEL PANITIA</h1>
+                    <span id="activeAdminBadgeMobile" class="inline-block px-1.5 py-0.2 bg-accentblue/10 text-accentblue text-[9px] font-mono font-bold"></span>
+                </div>
+            </div>
+            
+            <!-- TOMBOL GARIS 3 (HAMBURGER) FIXED ATAS -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleMobileNav()" class="p-2 bg-darkbg border border-bordercolor text-slate-200 rounded-lg focus:outline-none hover:text-accentblue active:scale-95 transition-all">
+                    <i class="fa-solid fa-bars text-base" id="mobileNavIcon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- DRAWER MENU POPUP KHUSUS HP -->
+        <div id="mobileNavDrawer" class="md:hidden fixed inset-0 z-30 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 pt-16 px-4 pb-6 flex flex-col">
+            <div class="bg-sidebar border border-bordercolor rounded-2xl p-4 shadow-2xl flex flex-col space-y-2 mt-2">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">Pilih Menu Panel</div>
+                <button onclick="selectMobileTab('tournaments')" id="mTabBtnTournaments" class="w-full px-3.5 py-3 rounded-xl bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-between text-xs">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-trophy"></i> Pendaftar</span>
+                    <span class="px-2 py-0.5 bg-slate-950/20 rounded-full font-mono text-[10px]" id="mCountTournaments">0</span>
+                </button>
+                <button onclick="selectMobileTab('jadwal')" id="mTabBtnJadwal" class="w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-calendar-days"></i> Kelola Jadwal & Bagan</span>
+                </button>
+                <button onclick="selectMobileTab('settings')" id="mTabBtnSettings" class="w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-gear"></i> Pengaturan Web</span>
+                </button>
+                <button onclick="selectMobileTab('users')" id="mTabBtnUsers" class="w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-users-gear"></i> Member</span>
+                    <span class="px-2 py-0.5 bg-darkbg rounded-full font-mono text-[10px]" id="mCountUsers">0</span>
+                </button>
+                <button onclick="selectMobileTab('chats')" id="mTabBtnChats" class="w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-comments"></i> Chat Global</span>
+                    <span class="px-2 py-0.5 bg-darkbg rounded-full font-mono text-[10px]" id="mCountChats">0</span>
+                </button>
+                <button onclick="selectMobileTab('liveChats')" id="mTabBtnLiveChats" class="w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium">
+                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-headset"></i> Live Chat</span>
+                    <span class="px-2 py-0.5 bg-darkbg rounded-full font-mono text-[10px]" id="mCountLiveChats">0</span>
+                </button>
+
+                <div class="pt-3 mt-2 border-t border-bordercolor grid grid-cols-2 gap-2">
+                    <a href="index.html" class="py-2.5 bg-darkbg border border-bordercolor text-slate-300 text-center rounded-xl text-xs font-semibold">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Website
+                    </a>
+                    <button onclick="handleAdminLogout()" class="py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-xs font-semibold">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR NAVIGATION DESKTOP -->
+        <aside class="hidden md:flex w-64 bg-sidebar border-r border-bordercolor flex-col flex-shrink-0 min-h-screen">
+            <div class="p-4 border-b border-bordercolor flex items-center gap-3">
                 <div class="w-9 h-9 rounded-lg bg-darkbg border border-bordercolor flex items-center justify-center p-1 shrink-0">
                     <img src="https://i.postimg.cc/dtQkGVr7/Gemini-Generated-Image-itp7iuitp7iuitp7-removebg-preview.png" alt="Logo" class="w-full h-full object-contain">
                 </div>
@@ -158,40 +221,34 @@
                     <h1 class="font-bold text-sm text-white leading-tight uppercase tracking-wide">PANEL PANITIA</h1>
                     <span id="activeAdminBadge" class="inline-block px-1.5 py-0.5 bg-accentblue/10 text-accentblue border border-accentblue/30 rounded text-[10px] font-mono font-bold mt-0.5"></span>
                 </div>
-                <button onclick="handleAdminLogout()" class="md:hidden text-slate-400 hover:text-red-400 text-sm p-2">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
             </div>
 
-            <!-- MENU TABS (GRID DI HP, VERTICAL DI DESKTOP) -->
-            <nav class="p-2 grid grid-cols-3 md:grid-cols-1 gap-1 font-medium text-xs">
-                <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="w-full px-3 py-2.5 rounded-lg bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-trophy shrink-0"></i>
-                    <span class="truncate">Pendaftar (<span id="countTournaments">0</span>)</span>
+            <nav class="p-3 space-y-1 font-medium text-xs flex-1">
+                <button onclick="switchAdminTab('tournaments')" id="tabBtnTournaments" class="w-full px-3 py-2.5 rounded-lg bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-trophy shrink-0"></i> Pendaftar</span>
+                    <span class="px-1.5 py-0.5 bg-slate-950/20 rounded text-[10px]" id="countTournaments">0</span>
                 </button>
-                <button onclick="switchAdminTab('jadwal')" id="tabBtnJadwal" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-calendar-days shrink-0"></i>
-                    <span class="truncate">Jadwal & Bagan</span>
+                <button onclick="switchAdminTab('jadwal')" id="tabBtnJadwal" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-calendar-days shrink-0"></i> Jadwal & Bagan</span>
                 </button>
-                <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-gear shrink-0"></i>
-                    <span class="truncate">Pengaturan Web</span>
+                <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-gear shrink-0"></i> Pengaturan Web</span>
                 </button>
-                <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-users-gear shrink-0"></i>
-                    <span class="truncate">Member (<span id="countUsers">0</span>)</span>
+                <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-users-gear shrink-0"></i> Member</span>
+                    <span class="px-1.5 py-0.5 bg-darkbg rounded text-[10px]" id="countUsers">0</span>
                 </button>
-                <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-comments shrink-0"></i>
-                    <span class="truncate">Chat (<span id="countChats">0</span>)</span>
+                <button onclick="switchAdminTab('chats')" id="tabBtnChats" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-comments shrink-0"></i> Chat Global</span>
+                    <span class="px-1.5 py-0.5 bg-darkbg rounded text-[10px]" id="countChats">0</span>
                 </button>
-                <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                    <i class="fa-solid fa-headset shrink-0"></i>
-                    <span class="truncate">Live Chat (<span id="countLiveChats">0</span>)</span>
+                <button onclick="switchAdminTab('liveChats')" id="tabBtnLiveChats" class="w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-headset shrink-0"></i> Live Chat</span>
+                    <span class="px-1.5 py-0.5 bg-darkbg rounded text-[10px]" id="countLiveChats">0</span>
                 </button>
             </nav>
 
-            <div class="hidden md:block p-3 border-t border-bordercolor mt-auto">
+            <div class="p-3 border-t border-bordercolor mt-auto">
                 <a href="index.html" class="flex items-center justify-center gap-2 w-full py-2 bg-darkbg hover:bg-cardbg border border-bordercolor text-slate-300 text-xs rounded-lg transition-all font-medium mb-2">
                     <i class="fa-solid fa-arrow-left"></i> Website Utama
                 </a>
@@ -202,7 +259,7 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 p-3 sm:p-6 overflow-y-auto">
+        <main class="flex-1 p-3 sm:p-6 overflow-y-auto pt-16 md:pt-6">
             
             <!-- TOP BAR CONTROL -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-cardbg border border-bordercolor p-3.5 sm:p-4 rounded-xl mb-4 shadow-sm">
@@ -214,9 +271,6 @@
                     <button onclick="handleRefreshAdminPanel()" class="flex-1 sm:flex-none px-3.5 py-2 bg-darkbg hover:bg-bordercolor border border-bordercolor text-accentblue rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-rotate-right" id="adminRefreshIcon"></i> Refresh Data
                     </button>
-                    <a href="index.html" class="md:hidden flex-1 px-3.5 py-2 bg-darkbg border border-bordercolor text-slate-300 rounded-lg text-xs font-semibold text-center">
-                        Website
-                    </a>
                 </div>
             </div>
 
@@ -302,9 +356,7 @@
                     <div class="bg-darkbg border border-bordercolor rounded-xl p-3.5 sm:p-4">
                         <h3 class="font-bold text-amber-400 mb-1 uppercase tracking-wide"><i class="fa-solid fa-shield-halved mr-1"></i> Nama Tim Klasemen</h3>
                         <p class="text-[11px] text-slate-400 mb-3">Tulis nama resmi setiap tim peserta.</p>
-                        <div id="teamNameInputsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-                            <!-- Dibuat dinamis oleh JS -->
-                        </div>
+                        <div id="teamNameInputsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5"></div>
                     </div>
 
                     <!-- GROUP STAGE -->
@@ -461,6 +513,24 @@
             loadJadwalDataToPanel();
         });
 
+        /* --- LOGIK MENUS MOBILE DRAWER --- */
+        window.toggleMobileNav = function() {
+            const drawer = document.getElementById('mobileNavDrawer');
+            const icon = document.getElementById('mobileNavIcon');
+            if (drawer.classList.contains('opacity-0')) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                icon.className = "fa-solid fa-xmark text-base text-accentblue";
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+                icon.className = "fa-solid fa-bars text-base";
+            }
+        }
+
+        window.selectMobileTab = function(tab) {
+            switchAdminTab(tab);
+            toggleMobileNav();
+        }
+
         window.handleRefreshAdminPanel = function() { window.location.reload(); }
 
         function checkAdminAuth() {
@@ -469,6 +539,7 @@
                 document.getElementById('adminLoginModal').classList.add('hidden');
                 document.getElementById('adminMainContent').classList.remove('hidden');
                 document.getElementById('activeAdminBadge').innerText = activePanitia;
+                document.getElementById('activeAdminBadgeMobile').innerText = activePanitia;
                 loadTournamentApplicants(); loadMemberUsers(); loadGlobalChats(); loadLiveChats();
             } else {
                 document.getElementById('adminLoginModal').classList.remove('hidden');
@@ -496,12 +567,20 @@
         window.switchAdminTab = function(tab) {
             ['tournaments', 'jadwal', 'settings', 'users', 'chats', 'liveChats'].forEach(t => {
                 const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                const mBtn = document.getElementById('mTabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
-                if(btn) btn.className = "w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left font-medium";
+                
+                if(btn) btn.className = "w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-cardbg transition-all flex items-center justify-between font-medium";
+                if(mBtn) mBtn.className = "w-full px-3.5 py-3 rounded-xl text-slate-300 hover:bg-cardbg transition-all flex items-center justify-between text-xs font-medium";
                 if(sec) sec.classList.add('hidden');
             });
+
             const currentBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
-            if(currentBtn) currentBtn.className = "w-full px-3 py-2.5 rounded-lg bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-center md:justify-start gap-2 text-center md:text-left";
+            const currentMBtn = document.getElementById('mTabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            
+            if(currentBtn) currentBtn.className = "w-full px-3 py-2.5 rounded-lg bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-between";
+            if(currentMBtn) currentMBtn.className = "w-full px-3.5 py-3 rounded-xl bg-accentblue text-slate-950 font-bold transition-all flex items-center justify-between text-xs";
+            
             document.getElementById('section' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
         }
 
@@ -672,6 +751,7 @@
         function loadTournamentApplicants() {
             onSnapshot(query(collection(db, "pendaftar"), orderBy("waktuDaftar", "desc")), (snapshot) => {
                 document.getElementById('countTournaments').innerText = snapshot.size;
+                document.getElementById('mCountTournaments').innerText = snapshot.size;
                 document.getElementById('statTotalPendaftar').innerText = snapshot.size;
                 document.getElementById('statTotalTim').innerText = Math.floor(snapshot.size / 5) + " Tim";
                 document.getElementById('statSisaPemain').innerText = snapshot.size % 5;
@@ -782,6 +862,7 @@
         function loadMemberUsers() {
             onSnapshot(query(collection(db, "users")), (snapshot) => {
                 document.getElementById('countUsers').innerText = snapshot.size;
+                document.getElementById('mCountUsers').innerText = snapshot.size;
                 let html = '';
                 snapshot.forEach(docSnap => {
                     const d = docSnap.data(); const userId = docSnap.id;
@@ -820,6 +901,7 @@
         function loadGlobalChats() {
             onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (s) => {
                 document.getElementById('countChats').innerText = s.size;
+                document.getElementById('mCountChats').innerText = s.size;
                 let h = ''; s.forEach(docSnap => { 
                     const d = docSnap.data(); 
                     h += `
@@ -835,6 +917,7 @@
         function loadLiveChats() {
             onSnapshot(query(collection(db, "live_chats"), orderBy("time", "desc")), (s) => {
                 document.getElementById('countLiveChats').innerText = s.size;
+                document.getElementById('mCountLiveChats').innerText = s.size;
                 let h = ''; s.forEach(docSnap => { 
                     const d = docSnap.data(); 
                     h += `
