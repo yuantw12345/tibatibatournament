@@ -23,7 +23,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initRealtimeJadwal();
     startSessionWatcher();
     injectToastContainer();
-    startCarouselAutoPlay();
 });
 
 // Sistem Toast Notification Halus untuk Notifikasi
@@ -473,43 +472,32 @@ window.showCustomAlert = function(title, text) {
 }
 
 let currentIndex = 0;
-let carouselTimer = null;
-
-function getSlideCount() {
+function getTotalSlides() {
     const slidesContainer = document.getElementById('carouselSlides');
-    return slidesContainer && slidesContainer.children.length > 0 ? slidesContainer.children.length : 4;
+    return slidesContainer ? slidesContainer.children.length : 4;
 }
 
-function applySlideTransform() {
+function updateSlidePosition() {
     const slidesContainer = document.getElementById('carouselSlides');
     if (!slidesContainer) return;
-    const total = getSlideCount();
-    currentIndex = ((currentIndex % total) + total) % total;
-    requestAnimationFrame(() => {
-        slidesContainer.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
-    });
-}
-
-function startCarouselAutoPlay() {
-    if (carouselTimer) clearInterval(carouselTimer);
-    carouselTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % getSlideCount();
-        applySlideTransform();
-    }, 4500);
+    slidesContainer.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
 }
 
 window.nextSlide = function() {
-    currentIndex = (currentIndex + 1) % getSlideCount();
-    applySlideTransform();
-    startCarouselAutoPlay();
+    const total = getTotalSlides();
+    if (total === 0) return;
+    currentIndex = (currentIndex + 1) % total;
+    updateSlidePosition();
 }
 
 window.prevSlide = function() {
-    const total = getSlideCount();
+    const total = getTotalSlides();
+    if (total === 0) return;
     currentIndex = (currentIndex - 1 + total) % total;
-    applySlideTransform();
-    startCarouselAutoPlay();
+    updateSlidePosition();
 }
+
+setInterval(nextSlide, 4500);
 
 window.checkAuthStatus = function() {
     const loggedUser = localStorage.getItem('activeMemberUser');
