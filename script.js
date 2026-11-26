@@ -23,6 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initRealtimeJadwal();
     startSessionWatcher();
     injectToastContainer();
+    startCarouselAutoPlay();
 });
 
 // Sistem Toast Notification Halus untuk Notifikasi
@@ -472,21 +473,43 @@ window.showCustomAlert = function(title, text) {
 }
 
 let currentIndex = 0;
-window.nextSlide = function() {
+let carouselTimer = null;
+
+function getSlideCount() {
     const slidesContainer = document.getElementById('carouselSlides');
-    if(!slidesContainer) return;
-    currentIndex = (currentIndex + 1) % 4;
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    return slidesContainer && slidesContainer.children.length > 0 ? slidesContainer.children.length : 4;
+}
+
+function applySlideTransform() {
+    const slidesContainer = document.getElementById('carouselSlides');
+    if (!slidesContainer) return;
+    const total = getSlideCount();
+    currentIndex = ((currentIndex % total) + total) % total;
+    requestAnimationFrame(() => {
+        slidesContainer.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+    });
+}
+
+function startCarouselAutoPlay() {
+    if (carouselTimer) clearInterval(carouselTimer);
+    carouselTimer = setInterval(() => {
+        currentIndex = (currentIndex + 1) % getSlideCount();
+        applySlideTransform();
+    }, 4500);
+}
+
+window.nextSlide = function() {
+    currentIndex = (currentIndex + 1) % getSlideCount();
+    applySlideTransform();
+    startCarouselAutoPlay();
 }
 
 window.prevSlide = function() {
-    const slidesContainer = document.getElementById('carouselSlides');
-    if(!slidesContainer) return;
-    currentIndex = (currentIndex - 1 + 4) % 4;
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    const total = getSlideCount();
+    currentIndex = (currentIndex - 1 + total) % total;
+    applySlideTransform();
+    startCarouselAutoPlay();
 }
-
-setInterval(nextSlide, 4500);
 
 window.checkAuthStatus = function() {
     const loggedUser = localStorage.getItem('activeMemberUser');
@@ -687,4 +710,3 @@ window.handleFormSubmit = async function(event) {
         submitBtn.disabled = false;
     }
 }
-```[cite: 2, 10]
