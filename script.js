@@ -475,14 +475,14 @@ let currentIndex = 0;
 window.nextSlide = function() {
     const slidesContainer = document.getElementById('carouselSlides');
     if(!slidesContainer) return;
-    currentIndex = (currentIndex + 1) % 3;
+    currentIndex = (currentIndex + 1) % 4;
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
 window.prevSlide = function() {
     const slidesContainer = document.getElementById('carouselSlides');
     if(!slidesContainer) return;
-    currentIndex = (currentIndex - 1 + 3) % 3;
+    currentIndex = (currentIndex - 1 + 4) % 4;
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
@@ -687,3 +687,4 @@ window.handleFormSubmit = async function(event) {
         submitBtn.disabled = false;
     }
 }
+```[cite: 2, 10]
